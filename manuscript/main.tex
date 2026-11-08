@@ -2,7 +2,7 @@
 Get-Clipboard | Set-Content -Path ".\manuscript\main.tex" -Encoding UTF8
 Compress-Archive -Path ".\manuscript\*" -DestinationPath ".\Journal_of_Big_Data_Manuscript_Overleaf.zip" -Force
 
-# 2. Commit และ Push สคริปต์ 16 (95% Bootstrap CIs, Cliff's Delta, CSCI Validation) และ main.tex ฉบับสมบูรณ์ขึ้น GitHub
+# 2. Commit และ Push ต้นฉบับฉบับปรับโฉมเป็น AST-Route Framework Paper ขึ้น GitHub
 git add .
-git commit -m "Release v9.0.0: Add 95% Bootstrap CIs, Cliff's Delta, CSCI Validation, 25 Refs, and Clean Submission Header"
+git commit -m "Release v10.0.0: Reframe Manuscript as AST-Route Multi-Objective Query Routing Framework Paper"
 git push -u origin main --force
