@@ -1,0 +1,9 @@
+AST_Feature,Importance_Pct
+Total_AST_Nodes,26.35
+CSCI_Score,19.25
+Joins,14.67
+AST_Depth,11.55
+Subqueries_CTEs,10.92
+Case_Branches,7.63
+Window_Funcs,7.34
+Unnest_Ops,2.29

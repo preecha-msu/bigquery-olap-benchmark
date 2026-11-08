@@ -1,13 +1,11 @@
-﻿# 1. ป้องกันไฟล์ฐานข้อมูล SQLite (.db) ขนาดใหญ่ติดขึ้น GitHub
-if (-not (Select-String -Path ".\.gitignore" -Pattern "\*\.db" -Quiet)) {
-    Add-Content -Path ".\.gitignore" -Value "`n*.db`n*.sqlite`n*.sqlite3" -Encoding UTF8
-}
-
-# 2. บันทึกโค้ด LaTeX จาก Clipboard ลงไฟล์ manuscript/main.tex และสร้างไฟล์ Zip สำหรับ Overleaf
+﻿# 1. บันทึกโค้ด LaTeX จาก Clipboard ลงไฟล์ manuscript/main.tex และสร้างไฟล์ Zip สำหรับ Overleaf
 Get-Clipboard | Set-Content -Path ".\manuscript\main.tex" -Encoding UTF8
 Compress-Archive -Path ".\manuscript\*" -DestinationPath ".\Journal_of_Big_Data_Manuscript_Overleaf.zip" -Force
 
-# 3. Commit และ Push สคริปต์ 11-14, ไฟล์ CSV ฮาร์ดแวร์/พลังงาน, กราฟ Figure 6 และใบรับรอง SHA-256 ขึ้น GitHub
+# 2. ตรวจสอบว่า .gitignore บล็อกไฟล์ gcp_credentials.json และไฟล์ .db ขนาดใหญ่เรียบร้อยแล้ว
+git rm --cached config/gcp_credentials.json -ErrorAction SilentlyContinue
+
+# 3. Commit และ Push สคริปต์ 15, ตารางที่ 8, กราฟ Figure 7, ใบรับรอง SHA-256 และ main.tex ล่าสุดขึ้น GitHub
 git add .
-git commit -m "Release v5.0.0: Add Hardware Resource (CPU%, RAM, GPU%, VRAM), Energy (Joules), and Perf/Watt Telemetry (Table 7 & Fig 6)"
+git commit -m "Release v6.0.0: Add AST-Driven Automated Query Routing Model (25-Fold LOSO-CV, Table 8, Fig 7) for Journal of Big Data"
 git push -u origin main --force
