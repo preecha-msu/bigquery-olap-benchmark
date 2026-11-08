@@ -1,0 +1,11 @@
+Pairwise_Architectural_Comparison,Baseline_Mean_95CI_ms,Target_Mean_95CI_ms,Speedup_Ratio,Cliffs_Delta,Wilcoxon_p
+Polars (Rust Arrow) vs. SQLite 3 (Row-Store),"8417.33 [6412.19, 10819.70]","82.47 [67.93, 98.65]",102.06x,+1.000 (Large),5.280e-14
+DataFusion (Rust Arrow) vs. SQLite 3 (Row-Store),"8417.33 [6412.19, 10819.70]","96.30 [78.31, 114.92]",87.41x,+1.000 (Large),5.280e-14
+DuckDB (Native) vs. SQLite 3 (Row-Store),"8417.33 [6412.19, 10819.70]","183.74 [110.71, 274.89]",45.81x,+1.000 (Large),5.280e-14
+DuckDB (Native) vs. DuckDB (External Parquet),"254.42 [163.65, 362.54]","183.74 [110.71, 274.89]",1.38x,+0.296 (Small),1.542e-12
+BigQuery (Clustered) vs. BigQuery (Unoptimized),"2190.57 [1645.38, 2786.50]","745.39 [515.64, 1026.49]",2.94x,+0.471 (Medium),6.892e-13
+RTX 2050 GPU (Warm) vs. DuckDB (Native CPU),"183.74 [110.71, 274.89]","22.26 [16.78, 28.68]",8.26x,+0.722 (Large),1.013e-12
+RTX 2050 GPU (Cold) vs. DuckDB (Native CPU),"183.74 [110.71, 274.89]","56.96 [46.23, 68.44]",3.23x,+0.199 (Small),5.218e-04
+Proposed AST-Route (9D) vs. Always DuckDB,"183.74 [110.71, 274.89]","54.92 [42.78, 68.50]",3.35x,+0.285 (Small),1.825e-06
+Proposed AST-Route (9D) vs. Always Polars,"82.47 [67.93, 98.65]","54.92 [42.78, 68.50]",1.50x,+0.420 (Medium),1.472e-06
+Proposed AST-Route (9D) vs. Rule-Based Routing,"71.48 [52.79, 91.74]","54.92 [42.78, 68.50]",1.30x,+0.126 (Negligible),1.873e-02

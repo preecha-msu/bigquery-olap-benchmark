@@ -1,9 +1,13 @@
-﻿# 1. บันทึกโค้ด LaTeX จาก Clipboard ลงไฟล์ manuscript/main.tex และสร้างไฟล์ Zip สำหรับ Overleaf
+﻿# 1. แก้ SyntaxWarning (\. -> \\.) และปรับการตรวจ Equivalence ในสคริปต์ 19 ให้สะอาด 100%
+(Get-Content .\scripts\19_comprehensive_reviewer_audit_suite.py -Raw) `
+    -replace '"5b\\\."', 'r"5b\."' `
+    -replace '"A5\\\."', 'r"A5\."' | Set-Content .\scripts\19_comprehensive_reviewer_audit_suite.py -Encoding UTF8
+
+# 2. บันทึกโค้ด LaTeX จาก Clipboard ลงไฟล์ manuscript/main.tex และสร้างไฟล์ Zip สำหรับ Overleaf
 Get-Clipboard | Set-Content -Path ".\manuscript\main.tex" -Encoding UTF8
 Compress-Archive -Path ".\manuscript\*" -DestinationPath ".\Journal_of_Big_Data_Manuscript_Overleaf.zip" -Force
 
-# 2. Commit และ Push ต้นฉบับฉบับปรับโฉมเป็น AST-Route Framework Paper ขึ้น GitHub
+# 3. Commit และ Push ตารางที่ 10 (Reviewer Trust & Statistical Audit Matrix) และ main.tex ล่าสุดขึ้น GitHub
 git add .
-git commit -m "Release v10.0.0: Reframe Manuscript as AST-Route Multi-Objective Query Routing Framework Paper"
+git commit -m "Release v13.0.0: Add Comprehensive Reviewer Audit Matrix (Table 10: 95% CIs, Cliff's Delta, CSCI Sensitivity, GPU/CPU Fairness)"
 git push -u origin main --force
-

@@ -1,0 +1,15 @@
+Top1_Acc_Pct,Near_Opt_10Pct,Mean_Latency_ms,P95_Latency_ms,Latency_Regret_Pct,Mean_Energy_J,Experiment_Category,Configuration,Num_Features
+44.0,45.33,103.94,188.33,137.15,2.802,Exp A: Feature Ablation,"A1. Tree Size Only (2D: Depth, Nodes)",2
+45.33,52.0,61.06,136.89,50.87,1.695,Exp A: Feature Ablation,"A2. Operator Counts Only (7D: No CSCI, No Selectivity)",7
+54.67,60.0,56.3,128.74,39.11,1.173,Exp A: Feature Ablation,A3. Compact Index Only (2D: CSCI + Selectivity),2
+49.33,56.0,73.22,164.04,65.78,2.132,Exp A: Feature Ablation,A4. Static AST Syntax Only (8D: No Selectivity),8
+57.33,65.33,54.92,129.37,34.98,1.381,Exp A: Feature Ablation,A5. Full Proposed AST-Route (9D: Operators + CSCI + Selectivity),9
+57.33,65.33,54.92,129.37,34.98,1.381,Exp B: Multi-Objective Pareto,B1. Pure Latency-Optimal Mode (alpha = 1.00),9
+57.33,61.33,54.99,124.13,36.69,1.182,Exp B: Multi-Objective Pareto,B2. Latency-Prioritized Balanced (alpha = 0.75),9
+54.67,58.67,56.8,124.14,47.13,1.007,Exp B: Multi-Objective Pareto,B3. Equal Latency-Energy Pareto (alpha = 0.50),9
+52.0,54.67,59.81,122.84,63.67,0.879,Exp B: Multi-Objective Pareto,B4. Green-Prioritized Balanced (alpha = 0.25),9
+49.33,50.67,70.2,164.6,116.08,0.748,Exp B: Multi-Objective Pareto,B5. Pure Green-Energy Mode (alpha = 0.00),9
+57.33,65.33,54.92,129.37,34.98,1.381,Exp C: Selectivity Noise Robustness,C1. Exact Zone-Map Selectivity (0% Noise),9
+53.79,60.51,80.98,221.85,70.27,2.347,Exp C: Selectivity Noise Robustness,C2. Perturbed Selectivity (+-10% Uniform Noise),9
+52.8,58.83,79.54,223.87,70.57,2.334,Exp C: Selectivity Noise Robustness,C3. Perturbed Selectivity (+-25% Uniform Noise),9
+53.17,58.19,75.0,196.16,68.98,2.179,Exp C: Selectivity Noise Robustness,C4. Severe Selectivity Drift (+-50% Uniform Noise),9
