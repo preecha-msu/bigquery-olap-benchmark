@@ -1,70 +1,60 @@
-﻿# AST-Route: An AST-Aware Multi-Objective Query Routing and Cost-Prediction Framework Across Serverless Cloud, Vectorized CPU (C++/Rust), and GPU-Accelerated OLAP Engines
+# AST-Route: An AST-Aware Multi-Objective Query Routing and Cost-Prediction Framework Across Serverless Cloud, Vectorized CPU (C++/Rust), and GPU-Accelerated OLAP Engines
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Execution Protocol](https://img.shields.io/badge/Protocol-100%25%20Full--Scale%20Zero--Estimation-success.svg)](#)
-[![Validation](https://img.shields.io/badge/Validation-25--Seed%20LOSO--CV%20%7C%2010k%20Bootstrap%2095%25%20CI-informational.svg)](#)
-[![Hardware Telemetry](https://img.shields.io/badge/Telemetry-CPU%20%7C%20RAM%20%7C%20NVIDIA%20NVML%20GPU%20%7C%20Joules-orange.svg)](#)
+[![Big Data Scales](https://img.shields.io/badge/TPC--H%20Scales-SF%3D1%2C%2010%2C%2030%2C%20100%20GB%20(866M%20Rows)-purple.svg)](#)
+[![Validation](https://img.shields.io/badge/Validation-25--Seed%20LOSO--CV%20%7C%20Unseen%20Holdout%20%7C%20TPC--H%20Q1--Q22-informational.svg)](#)
+[![Hardware Telemetry](https://img.shields.io/badge/Telemetry-CPU%20%7C%20RAM%20Spill%20%7C%20NVML%20GPU%20%7C%20Joules-orange.svg)](#)
 
-Official open-source implementation, 75-query factorial SQL workload suite, hardware/energy sensor logs, and automated reproducibility verification pipeline for the **AST-Route Framework**.
-
----
-
-## 1. Overview of the AST-Route Framework
-
-Modern analytical data infrastructures span heterogeneous execution paradigms—serverless cloud data warehouses, in-process C++ and Rust Apache Arrow vectorized CPU engines, and SIMT GPU-accelerated relational engines. However, no single engine dominates across all query topologies: low-complexity scans suffer from PCIe host-to-device (H2D) transfer penalties on GPUs and stateless scheduling overheads on serverless clouds, whereas complex multi-axis window sorting and lateral array unnesting (`UNNEST`) overwhelm single-node CPU pipelines.
-
-**AST-Route** is a four-layer pre-execution query routing and cost-prediction framework that dispatches incoming SQL queries to their optimal execution engine in **< 0.5 ms** without runtime profiling overhead:
-
-1. **Layer 1 (Static AST Structural & Zone-Map Selectivity Profiler):** Parses input SQL queries via `SQLGlot` into a 9-dimensional structural and selectivity vector $\mathbf{x}_q = [D(q), N(q), J(q), S(q), W(q), U(q), C(q), \text{CSCI}(q), \sigma(q)]^\top \in \mathbb{R}^9$, featuring a construct-validated **Composite Structural Complexity Index (CSCI)** (Spearman's $\rho = 0.4935, p = 6.84 \times 10^{-6}$; Monte Carlo weight stability $\bar{\rho} = 0.8189$).
-2. **Layer 2 (Cross-Paradigm Analytical Cost, PCIe Crossover, and Green Energy Models):** Formulates unified analytical models for the GPU PCIe bottleneck fraction ($\Phi_{\text{PCIe}}$), effective analytical scan throughput ($\Theta_{\text{eff}}$), cloud slot concurrency multiplier ($\mathcal{M}_{\text{slot}}$), Cloud FinOps savings ($\Delta C_{\text{1M}}$), and Green OLAP performance per watt ($\eta_{\text{watt}}$ in $\text{MB/J}$).
-3. **Layer 3 (Multi-Output Cost & Resource Regression Engine, $\mathcal{R}_{\text{GBR-9D}}$):** Simultaneously predicts log-transformed execution latency, per-query energy footprint ($\text{Joules}$), and memory consumption ($\text{RAM/VRAM GB}$) across candidate engines ($R^2 = 0.815\text{--}0.875$ under 25-fold Leave-One-Seed-Out cross-validation).
-4. **Layer 4 (Policy-Driven Optimal Engine Dispatcher):** Selects the optimal target engine across **DuckDB (C++ DBMS)**, **Polars / Apache DataFusion (Rust Arrow)**, **CUDA GPU (NVIDIA RTX 2050)**, and **Google BigQuery (Serverless Cloud)** according to user-defined latency, energy, or FinOps objectives.
+Official open-source implementation, 97-query SQL workload suite (75 AST-stratified factorial queries + 22 official TPC-H Q1–Q22 queries), multi-scale execution harnesses ($	ext{SF}=1, 10, 30, 	ext{and } 100	ext{ GB}$), hardware/energy sensor logs, and automated reproducibility verification pipeline for the **AST-Route Framework**.
 
 ---
 
-## 2. Key Empirical & Routing Results (100% Full-Scale TPC-H SF = 1 GB)
+## 1. Overview of the AST-Route Architecture
 
-### 2.1 Six-Engine Cross-Paradigm Telemetry Summary ($N = 75$ Queries, 25 Canonical Seeds $\times$ 3 Horizons)
+Modern analytical data infrastructures span four distinct execution paradigms: serverless cloud data warehouses (**Google BigQuery**), in-process C++ vectorized DBMS (**DuckDB**), Rust Apache Arrow streaming engines (**Polars** and **Apache DataFusion**), traditional B-Tree row-stores (**SQLite 3**), and SIMT GPU-accelerated relational tensor engines (**PyTorch CUDA on NVIDIA GeForce RTX 2050**). Committing an analytical workload to any single static engine incurs severe performance regret, excessive energy consumption, out-of-core disk spilling, or high cloud FinOps expenditure.
 
-| Execution Engine (Paradigm) | Mean Latency (95% Seed-Clustered CI) | Scan Throughput ($\Theta_{\text{eff}}$) | Active Util. (CPU / GPU) | Memory Footprint (RAM / VRAM) | Mean Energy ($E(q)$) | Perf. per Watt ($\eta_{\text{watt}}$) |
-| :--- | :---: | :---: | :---: | :---: | :---: | :---: |
-| **SQLite 3** (Full B-Tree Row-Store) | `8417.33 ms` (`[6412.19, 10819.70]`) | `0.049 GB/s` | `8.86%` CPU | `2.26 GB` RAM | `126.26 J` | `4.05 MB/J` |
-| **Google BigQuery** (Serverless Clustered) | `745.39 ms` (`[515.64, 1026.49]`) | `0.611 GB/s` | $\mathcal{M}_{\text{slot}} = 6.37\times$ | Serverless Slots | `15.72 J` | V1 Prune: `78.4%` |
-| **DuckDB Native** (C++ Vectorized DBMS) | `183.74 ms` (`[110.71, 274.89]`) | `3.03 GB/s` | `66.10%` CPU | `4.71 GB` RAM | `6.40 J` | `243.0 MB/J` |
-| **Apache DataFusion** (Rust Arrow Planner) | `96.30 ms` (`[78.31, 114.92]`) | `4.83 GB/s` | `70.12%` CPU | `4.65 GB` RAM | `3.39 J` | `157.1 MB/J` |
-| **Polars Lazy SQL** (Rust Arrow Streaming) | `82.47 ms` (`[67.93, 98.65]`) | `5.07 GB/s` | `77.44%` CPU | `4.65 GB` RAM | `3.17 J` | `159.7 MB/J` |
-| **CUDA GPU (Cold)** (PCIe H2D + Kernel) | `56.96 ms` (`[46.23, 68.44]`) | $\Phi_{\text{PCIe}} = 60.9\%$ | `31.04%` GPU | `1.30 GB` VRAM | `0.65 J` | `672.3 MB/J` |
-| **CUDA GPU (Warm)** (Pure In-VRAM SIMT) | **`22.26 ms` (`[16.78, 28.68]`)** | **`18.89 GB/s`** | `31.04%` GPU | `1.30 GB` VRAM | **`0.25 J`** | **`1942.8 MB/J`** |
+**AST-Route** is a four-layer pre-execution query routing and cost-prediction framework that dispatches incoming SQL queries in **497.2 µs** inference time (**4.145 ms** total end-to-end SQL parsing + feature walk + inference overhead):
 
-* **Omnibus Non-Parametric Friedman Test:** $\chi^2_F(5) = 321.50, p = 2.382 \times 10^{-67}$, Kendall's Concordance $W = 0.8573$, Exact Equivalence $\text{EX} = 1.000$ ($75/75$ queries).
+1. **Layer 1 (Static AST Structural & Zone-Map Selectivity Profiler):** Parses SQL queries via `SQLGlot` into a 9-dimensional vector $\mathbf{x}_q = [D(q), N(q), J(q), S(q), W(q), U(q), C(q), 	ext{CSCI}(q), \sigma(q)]^	op \in \mathbb{R}^9$, featuring a construct-validated **Composite Structural Complexity Index (CSCI)** (Spearman's $ho = 0.4935, p = 6.84 	imes 10^{-6}$; 10,000-trial Monte Carlo rank stability $ar{ho} = 0.9880$ at $\pm 20\%$ weight perturbation and $ho = 0.9812$ against equal weights).
+2. **Layer 2 (Cross-Paradigm Analytical Cost, PCIe Crossover, Memory Wall & Green Energy Models):** Formulates unified analytical models for the GPU PCIe bottleneck fraction ($\Phi_{	ext{PCIe}}$), effective scan throughput ($\Theta_{	ext{eff}}$), cloud slot-to-wall concurrency proxy ($\mathcal{M}_{	ext{slot}}$), multi-scale Cloud FinOps savings ($\Delta C_{	ext{1M}}$), and Green OLAP performance per watt ($\eta_{	ext{watt}}$ in $	ext{MB/J}$).
+3. **Layer 3 (Multi-Output Cost & Resource Regression Engine, $\mathcal{R}_{	ext{GBR-9D}}$):** Simultaneously predicts log-latency, energy footprint ($	ext{Joules}$), and working-set memory ($	ext{GB}$), achieving median multiplicative **Q-Errors (P50)** of **1.053** on CUDA GPU ($R^2 = 0.875$), **1.095** on Polars ($R^2 = 0.822$), **1.105** on DataFusion, **1.172** on Energy ($R^2 = 0.815$), and **1.007** on Memory ($	ext{MAPE} = 2.21\%$).
+4. **Layer 4 (Pareto-Configurable Multi-Objective Dispatcher):** Navigates the Latency–Energy Pareto frontier ($lpha \in [0, 1]$) across local CPU, discrete GPU, and serverless cloud backends.
 
-### 2.2 Five-Policy Automated Query Routing Comparison (Leak-Free 25-Seed LOSO-CV)
+---
 
-| Routing Model / Policy | Top-1 Acc. | Near-Opt. ($\le 10\%$) | Mean Latency (95% CI) | P95 Latency | Latency Regret | Energy Cost | Memory Cost | Cloud FinOps | Router Overhead |
+## 2. Key Empirical Results (100% Full-Scale Real Execution)
+
+### 2.1 Four-Scale Big Data Evaluation ($	ext{SF} = 1, 10, 30, 	ext{and } 100	ext{ GB}$) & Memory/VRAM Wall Profiling
+
+| Scale Factor (TPC-H Spec) | Dataset Rows (`lineitem` / Total) | DuckDB Out-of-Core | Polars Arrow Stream | DataFusion Arrow | RTX 2050 GPU (PCIe Chunks) | BigQuery Cloud | **Proposed AST-Route** | Host RAM Cap & Disk Spill | GPU VRAM & Energy Efficiency |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| **1. Always DuckDB** | `28.00%` | `32.00%` | `183.74 ms` (`[110.7, 274.9]`) | `731.22 ms` | `271.10%` | `6.397 J` | `4.71 GB` | `$0.00` | `0.00 µs` |
-| **2. Always GPU (Cold)** | `49.33%` | `50.67%` | `56.96 ms` (`[46.2, 68.4]`) | `113.70 ms` | `60.76%` | `0.644 J` | `1.30 GB` | `$0.00` | `0.00 µs` |
-| **3. Always BigQuery** | `0.00%` | `0.00%` | `745.39 ms` (`[515.6, 1026.5]`) | `2794.05 ms` | `1709.86%` | `15.720 J` | `2.13 GB` | `$1267.66/1M` | `0.00 µs` |
-| **4. Rule-Based Routing** | `49.33%` | `58.67%` | `71.48 ms` (`[52.8, 91.7]`) | `230.71 ms` | `65.63%` | `2.374 J` | `3.43 GB` | `$0.00` | `34.07 µs` |
-| **5a. AST-Route RF (9D)** | `52.00%` | `56.00%` | `62.46 ms` (`[48.9, 77.4]`) | `138.17 ms` | `51.94%` | `1.467 J` | `2.65 GB` | `$0.00` | `425.53 µs` |
-| **5b. AST-Route Cost-Reg (9D)** | **`57.33%`** | **`65.33%`** | **`54.92 ms` (`[42.8, 68.5]`)** | **`129.37 ms`** | **`34.98%`** | **`1.381 J`** | **`2.91 GB`** | **`$0.00`** | **`497.16 µs`** |
-| *Oracle Ideal Lower Bound* | `100.00%` | `100.00%` | `42.64 ms` | `101.92 ms` | `0.00%` | `0.975 J` | `3.01 GB` | `$0.00` | `0.00 µs` |
+| **SF = 1 GB** | `6.0M / 8.7M` | `51.12 ms` | `52.69 ms` | `61.95 ms` | **`6.70 ms` (`1x`)** | `745.40 ms` | **`6.70 ms` (`7.63x`)** | `4.71 GB` / `0.0 MB` Spill | `1.30 GB` VRAM / `5934 MB/J` |
+| **SF = 10 GB** | `60.0M / 86.6M` | `489.40 ms` | `482.56 ms` | `591.59 ms` | **`105.75 ms` (`4x`)** | `1252.27 ms` | **`105.75 ms` (`4.63x`)** | `7.85 GB` / `125.0 MB` Spill | `3.45 GB` VRAM / `11886 MB/J` |
+| **SF = 30 GB** | `180.0M / 259.8M` | `1588.05 ms` | `1619.46 ms` | `1555.46 ms` | `256.82 ms` (`12x`) | `1788.96 ms` | **`250.70 ms` (`6.33x`)** | `9.00 GB` Cap / `864.0 MB` Spill | `3.68 GB` VRAM / `10987 MB/J` |
+| **SF = 100 GB** | `600.1M / 866.1M` | `6414.31 ms` | `6906.39 ms` | `6972.37 ms` | `870.96 ms` (`40x`) | `2571.63 ms`* | **`846.41 ms` (`7.58x`)** | `9.00 GB` Cap / `3302.0 MB` Spill | `3.85 GB` VRAM / `11882 MB/J` |
+
+* *Note:* At **$	ext{SF} = 100	ext{ GB}$**, Google BigQuery Serverless Cloud (`1493.51 ms` in L1, `1700.85 ms` in L3, `1286.16 ms` in L4) overtakes all local CPU engines (`4729.95–12860.49 ms`) by **3.17x–10.00x** via horizontal slot elasticity.
+
+### 2.2 Evaluation Across 25-Seed LOSO-CV ($N=75$), Unseen Holdout Seeds ($N=15$), and Official TPC-H Q1–Q22 ($N=22$)
+
+| Validation Protocol & Workload Suite | Top-1 Routing Acc. | Near-Optimal Hit Rate | Mean Latency (95% CI) | Median / Mean Regret | Mean Energy | Speedup vs. Baselines |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: |
+| **1. 25-Seed LOSO-CV** ($N=75$ Factorial Queries, L1–L5) | **`57.33%`** | **`65.33%`** | **`54.92 ms`** (`[42.78, 68.50]`) | **`0.00%`** / `34.98%` | `1.381 J` | `3.35x` vs. DuckDB ($p=1.83	imes 10^{-6}$), `1.50x` vs. Polars, `1.30x` vs. Rule-Based ($p=0.0187$) |
+| **2. Strict Unseen Seed Holdout** (5 Locked Seeds `L1_S5`–`L5_S5`, $N=15$) | **`73.33%`** | **`73.33%`** | **`47.01 ms`** (P95: `79.64 ms`) | **`0.00%`** / `44.88%` | `1.112 J` | Matches exact Oracle P95 (`79.64 ms`); `4.48x` vs. DuckDB, `1.73x` vs. Polars, `1.37x` vs. Rule-Based |
+| **3. Official Standard TPC-H Q1–Q22** (22-Fold LOO-CV, $N=22$) | **`72.73%`** | **`90.91%`** | **`15.84 ms`** (Oracle: `12.79 ms`) | **`0.00%`** / `18.47%` | `0.413 J` | `1.44x` vs. Always DuckDB (`22.82 ms`), `1.75x` vs. Always GPU (`27.71 ms`), `2.70x` vs. Polars (`42.79 ms`) |
 
 ---
 
-## 3. Repository Structure & Cryptographic SHA-256 Telemetry Audit
+## 3. Repository Structure & Reproducibility Scripts
 
-- `workloads/`: 75 stratified SQL queries across `L1_scan_filter` through `L5_array_unnest` and `ast_complexity_summary.csv` (`SHA-256: 4cb5f7477fd24dc77a6fd2b5...`).
-- `results/raw_logs/`:
-  - `raw_benchmark_sf1.csv` (DuckDB Parquet vs. Native, `SHA-256: 7d69610e86863845ae7cbb5c...`)
-  - `raw_bigquery_cloud_sf1.csv` (Google BigQuery Unoptimized vs. Clustered, `SHA-256: 7aee23711627a085062c7cf8...`)
-  - `raw_gpu_cuda_sf1.csv` (NVIDIA RTX 2050 Hardware-Timed PCIe H2D & Warm Kernel, `SHA-256: 50201ab2ea90e96f4b49796c...`)
-  - `raw_multi_software_sf1.csv` (Polars, Apache DataFusion, and Full-Scale SQLite 3, `SHA-256: 4d6ba9d612f4c309ec096d61...`)
-  - `raw_hardware_energy_sf1.csv` (CPU/GPU Utilization %, RAM/VRAM GB, Energy Joules, `SHA-256: 366d77e7426a78b6089254eb...`)
-  - `raw_query_routing_predictions_sf1.csv` (25-Seed LOSO-CV Routing Predictions, `SHA-256: 8d077e29f9b9f3fd40cc7f3e...`)
-- `results/summary_tables/`: Aggregated CSV tables (`six_software_comparison_sf1.csv`, `hardware_energy_summary_sf1.csv`, `query_routing_evaluation_sf1.csv`, `bootstrap_ci_and_validation_sf1.csv`, `framework_ablation_and_robustness_sf1.csv`).
-- `scripts/`: End-to-end execution, telemetry, validation, and figure generation scripts (`00_init_and_dryrun.py` through `18_run_framework_reviewer_defense_experiments.py`).
-- `manuscript/`: Complete LaTeX source (`main.tex`) and unified 300 DPI vector figures (`figures/`).
+- `workloads/`: 75 TPC-H-derived factorial SQL queries (`L1_scan_filter` through `L5_array_unnest`) and `ast_complexity_summary.csv`.
+- `results/raw_logs/`: Per-trial ground-truth execution logs across all 6 engines (`raw_benchmark_sf1.csv`, `raw_bigquery_cloud_sf1.csv`, `raw_gpu_cuda_sf1.csv`, `raw_multi_software_sf1.csv`, `raw_hardware_energy_sf1.csv`, `raw_query_routing_predictions_sf1.csv`).
+- `results/summary_tables/`: All 13 manuscript tables exported directly from raw logs (`six_software_comparison_sf1.csv` through `environment_manifest_sf1_sf100.csv`).
+- `results/figures_300dpi/` & `manuscript/figures/`: All 11 vector PDF figures (`300 DPI`) rendered in unified academic serif typography.
+- `manuscript/main.tex`: Complete LaTeX source code for *Journal of Big Data* (SpringerOpen) submission.
+- `scripts/`: End-to-end execution, telemetry, validation, and figure generation scripts (`00_init_and_dryrun.py` through `27_sync_github_readme_and_sha256_certificate.py`).
+- `REPRODUCTION_CERTIFICATE.md`: Full 64-character cryptographic SHA-256 verification table for every dataset and summary file.
 
 ---
 

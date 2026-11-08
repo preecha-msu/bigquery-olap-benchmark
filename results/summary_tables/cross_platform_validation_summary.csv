@@ -1,0 +1,4 @@
+Hardware_Platform_Profile,CPU_Threads,Memory_Cap,SF1_DuckDB_ms,SF1_Polars_ms,SF1_AST_Route_ms,SF10_AST_Route_ms,SF30_AST_Route_ms,SF100_AST_Route_ms,Mean_Speedup_vs_DuckDB
+"Platform A: Edge/Container (2-Threads, 4GB RAM, No GPU)",2,4GB,104.62,104.78,103.32,1110.36,3773.94,13109.33,1.01x
+"Platform B: Mid-Range Node (4-Threads, 8GB RAM, No GPU)",4,8GB,70.82,73.76,69.9,681.79,2383.25,8790.6,1.01x
+"Platform C: Workstation + GPU + Cloud (8-Threads, 16GB RAM, RTX 2050)",8,9GB,66.17,66.44,6.7,105.75,250.7,846.41,9.18x

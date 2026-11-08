@@ -1,0 +1,11 @@
+Category,Component_or_Parameter,Version_or_Specification
+Host CPU & Architecture,"Intel64 Family 6 Model 186 Stepping 2, GenuineIntel",8 Physical Cores / 12 Logical Threads (AVX2 SIMD)
+Host System Memory (DRAM),System Physical RAM & DBMS Cap,63.7 GB Total DRAM (Configured DBMS Cap: 9.0 GB + Out-of-Core Spill)
+Discrete GPU Accelerator,NVIDIA GeForce RTX 2050,"4.00 GB GDDR6 VRAM, PCIe Gen4 Interconnect, CUDA 12.4"
+Operating System & Runtime,Windows 11,"Build 10.0.26200 (64-bit), Python 3.13.9"
+C++ Vectorized DBMS,DuckDB In-Process Columnar Engine,"v2.0.0 (Native Columnar & ZSTD Parquet, Morsel Parallelism)"
+Rust Apache Arrow Engines,Polars & Apache DataFusion,Polars v2.1.0 (Lazy Streaming) | DataFusion v55.0.0
+Row-Store Baseline DBMS,SQLite 3 B-Tree Engine,v3.51.0 (Full-Scale Un-Extrapolated B-Tree with PK/FK Indexes)
+SIMT GPU Tensor Engine,PyTorch CUDA Relational Engine,PyTorch v2.6.0+cu124 (Strict 64-bit IEEE 754 torch.float64 & cudaEvent)
+Serverless Cloud Warehouse,Google BigQuery (Dremel/Capacitor),"Enterprise Serverless Slot Pool, use_query_cache=False, Clustered Keys"
+AST Parser & ML Router,"SQLGlot, Scikit-Learn & SciPy","SQLGlot v30.24.0, Scikit-Learn v1.7.2, SciPy v1.16.3"

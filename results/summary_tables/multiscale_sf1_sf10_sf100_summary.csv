@@ -1,0 +1,5 @@
+Scale_Factor_GB,Lineitem_Rows_M,Total_DB_Rows_M,DuckDB_Mean_ms,Polars_Stream_Mean_ms,DataFusion_Mean_ms,GPU_Chunked_Cold_ms,BigQuery_Cloud_ms,AST_Route_Mean_ms,Peak_Host_RAM_GB,Mean_Disk_Spill_MB,Peak_GPU_VRAM_GB,GPU_PCIe_Chunks,DuckDB_Energy_J,Polars_Energy_J,GPU_Energy_J,DuckDB_PerfWatt_MB_J,GPU_PerfWatt_MB_J,DuckDB_Throughput_GBs,Polars_Throughput_GBs,AST_Route_Speedup_vs_DuckDB
+1,6.0,8.7,51.12,52.69,61.95,6.7,745.4,6.7,4.71,0.0,1.3,1,1.81,1.72,0.06,276.06,5933.56,6.8,6.6,7.63x
+10,60.0,86.6,489.4,482.56,591.59,105.75,1252.27,105.75,7.85,125.0,3.45,4,18.08,17.7,0.93,1879.42,11885.74,7.1,7.21,4.63x
+30,180.0,259.8,1588.05,1619.46,1555.46,256.82,1788.96,250.7,9.0,864.0,3.68,12,60.82,61.77,1.37,4427.44,10986.72,6.57,6.44,6.33x
+100,600.1,866.1,6414.31,6906.39,6972.37,870.96,2571.63,846.41,9.0,3302.0,3.85,40,226.04,237.37,4.33,6863.66,11881.5,5.42,5.03,7.58x

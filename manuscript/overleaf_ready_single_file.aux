@@ -1,0 +1,113 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\citation{melnik2010dremel}
+\citation{melnik2020dremel}
+\citation{lounissi2025funda}
+\citation{raasveldt2019duckdb}
+\citation{schulze2024clickhouse}
+\citation{sethi2019presto}
+\citation{shojaee2024serverless}
+\citation{abdalla2022bigdata}
+\citation{begoli2018calcite}
+\citation{garcia2008database}
+\citation{lounissi2025funda}
+\citation{milicevic2024dlquery}
+\citation{ahmed2020hibench}
+\citation{abdalla2022bigdata}
+\citation{mao2024sqlglot}
+\citation{melnik2010dremel}
+\citation{melnik2020dremel}
+\citation{sethi2019presto}
+\citation{schulze2024clickhouse}
+\citation{ahmed2020hibench}
+\citation{shojaee2024serverless}
+\citation{lounissi2025funda}
+\citation{raasveldt2019duckdb}
+\citation{milicevic2024dlquery}
+\citation{begoli2018calcite}
+\citation{li2023bird}
+\citation{lei2025spider2}
+\citation{mao2024sqlglot}
+\citation{mao2024sqlglot}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{2}{section.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {2}Related Work}{2}{section.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3}Methodology and Six-Software Benchmark Design}{2}{section.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Five-Tier SQL Structural Complexity and 25 Canonical Seeds}{2}{subsection.3.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces End-to-end six-phase experimental workflow of the AST-driven multi-paradigm OLAP benchmarking framework, illustrating TPC-H multi-layout data provisioning ($\text  {SF}=1\text  { GB}$), 75-query factorial synthesis (25 canonical seeds $\times $ 3 selectivity horizons), \texttt  {SQLGlot} static AST profiling, six-engine execution across four computing paradigms, non-parametric seed-cluster statistical inference, and cryptographic SHA-256 verification.}}{3}{figure.caption.1}\protected@file@percent }
+\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
+\newlabel{fig:experimental_workflow}{{1}{3}{End-to-end six-phase experimental workflow of the AST-driven multi-paradigm OLAP benchmarking framework, illustrating TPC-H multi-layout data provisioning ($\text {SF}=1\text { GB}$), 75-query factorial synthesis (25 canonical seeds $\times $ 3 selectivity horizons), \texttt {SQLGlot} static AST profiling, six-engine execution across four computing paradigms, non-parametric seed-cluster statistical inference, and cryptographic SHA-256 verification}{figure.caption.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Selectivity Perturbations (V1--V3) and Six-Engine Evaluation Matrix}{3}{subsection.3.2}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces In-process vectorized CPU OLAP (DuckDB) empirical execution latency (ms), 95th percentile tail latency, Valid Efficiency Score (VES), and paired Wilcoxon signed-rank test across five SQL complexity tiers ($N=75$ queries, 25 canonical seeds $\times $ 3 variations, $\text  {SF}=1\text  { GB}$).}}{4}{table.caption.2}\protected@file@percent }
+\newlabel{tab:empirical_complexity_results}{{1}{4}{In-process vectorized CPU OLAP (DuckDB) empirical execution latency (ms), 95th percentile tail latency, Valid Efficiency Score (VES), and paired Wilcoxon signed-rank test across five SQL complexity tiers ($N=75$ queries, 25 canonical seeds $\times $ 3 variations, $\text {SF}=1\text { GB}$)}{table.caption.2}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Cross-engine empirical performance comparison between serverless cloud OLAP (Google BigQuery) and in-process vectorized OLAP (DuckDB) across five SQL complexity tiers ($N=75$ queries, 25 canonical seeds $\times $ 3 variations, TPC-H $\text  {SF} = 1\text  { GB}$).}}{4}{table.caption.3}\protected@file@percent }
+\newlabel{tab:cross_engine_main}{{2}{4}{Cross-engine empirical performance comparison between serverless cloud OLAP (Google BigQuery) and in-process vectorized OLAP (DuckDB) across five SQL complexity tiers ($N=75$ queries, 25 canonical seeds $\times $ 3 variations, TPC-H $\text {SF} = 1\text { GB}$)}{table.caption.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Analytical Throughput, PCIe Crossover, and Cloud FinOps Models}{4}{subsection.3.3}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Selectivity perturbation and horizon sensitivity analysis across V1 (High Selectivity), V2 (Moderate Selectivity), and V3 (Adversarial Full-Horizon Stress) workloads ($n=25$ queries per variation, total $N=75$).}}{5}{table.caption.4}\protected@file@percent }
+\newlabel{tab:selectivity_sensitivity}{{3}{5}{Selectivity perturbation and horizon sensitivity analysis across V1 (High Selectivity), V2 (Moderate Selectivity), and V3 (Adversarial Full-Horizon Stress) workloads ($n=25$ queries per variation, total $N=75$)}{table.caption.4}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Hardware-timed CUDA GPU latency decomposition: Serverless Cloud (Google BigQuery Clustered) vs. Vectorized CPU (DuckDB Native) vs. SIMT GPU-accelerated relational execution (NVIDIA GeForce RTX 2050, 4.0 GB VRAM, $N=375$ trials at $\text  {SF}=1\text  { GB}$).}}{5}{table.caption.5}\protected@file@percent }
+\newlabel{tab:gpu_three_tier}{{4}{5}{Hardware-timed CUDA GPU latency decomposition: Serverless Cloud (Google BigQuery Clustered) vs. Vectorized CPU (DuckDB Native) vs. SIMT GPU-accelerated relational execution (NVIDIA GeForce RTX 2050, 4.0 GB VRAM, $N=375$ trials at $\text {SF}=1\text { GB}$)}{table.caption.5}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces Six-software cross-paradigm architectural matrix comparing Row-Store (SQLite 3), Serverless Cloud (Google BigQuery), C++ Vectorized DBMS (DuckDB), Rust Apache Arrow Engines (Polars \& Apache DataFusion), and CUDA GPU (NVIDIA RTX 2050) across 75 queries ($\text  {SF}=1\text  { GB}$).}}{5}{table.caption.6}\protected@file@percent }
+\newlabel{tab:six_software_matrix}{{5}{5}{Six-software cross-paradigm architectural matrix comparing Row-Store (SQLite 3), Serverless Cloud (Google BigQuery), C++ Vectorized DBMS (DuckDB), Rust Apache Arrow Engines (Polars \& Apache DataFusion), and CUDA GPU (NVIDIA RTX 2050) across 75 queries ($\text {SF}=1\text { GB}$)}{table.caption.6}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces Effective analytical scan throughput ($\Theta _{\text  {eff}}$, GB/s), Cloud Slot Concurrency Multiplier ($\mathcal  {M}_{\text  {slot}}$), and GPU PCIe Overhead Fraction ($\Phi _{\text  {PCIe}}$) across six OLAP engines ($N=75$ queries, TPC-H $\text  {SF}=1\text  { GB}$).}}{5}{table.caption.7}\protected@file@percent }
+\newlabel{tab:throughput_and_cost}{{6}{5}{Effective analytical scan throughput ($\Theta _{\text {eff}}$, GB/s), Cloud Slot Concurrency Multiplier ($\mathcal {M}_{\text {slot}}$), and GPU PCIe Overhead Fraction ($\Phi _{\text {PCIe}}$) across six OLAP engines ($N=75$ queries, TPC-H $\text {SF}=1\text { GB}$)}{table.caption.7}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Empirical Results and Analysis}{5}{section.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}In-Process Storage Effect: External Parquet vs. Native Columnar}{5}{subsection.4.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Empirical evaluation across five SQL complexity tiers (L1--L5, $N=75$ queries) at $\text  {SF}=1\text  { GB}$: (a) Cross-engine execution latency comparing Google BigQuery (Unoptimized vs. Clustered) and DuckDB (External Parquet vs. Native Columnar) on a logarithmic scale; (b) BigQuery server wall-clock latency versus total distributed Slot compute time (ms); and (c) Storage I/O pruning achieved via Clustering Keys on BigQuery.}}{6}{figure.caption.8}\protected@file@percent }
+\newlabel{fig:cross_engine_results}{{2}{6}{Empirical evaluation across five SQL complexity tiers (L1--L5, $N=75$ queries) at $\text {SF}=1\text { GB}$: (a) Cross-engine execution latency comparing Google BigQuery (Unoptimized vs. Clustered) and DuckDB (External Parquet vs. Native Columnar) on a logarithmic scale; (b) BigQuery server wall-clock latency versus total distributed Slot compute time (ms); and (c) Storage I/O pruning achieved via Clustering Keys on BigQuery}{figure.caption.8}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Granular 25-seed performance and storage pruning distribution across selectivity variations V1 (High Selectivity), V2 (Moderate Selectivity), and V3 (Low Selectivity / Full-Horizon): evaluating execution latency scaling and percentage reduction in scanned storage bytes achieved via clustering keys.}}{6}{figure.caption.9}\protected@file@percent }
+\newlabel{fig:seed25_heatmap}{{3}{6}{Granular 25-seed performance and storage pruning distribution across selectivity variations V1 (High Selectivity), V2 (Moderate Selectivity), and V3 (Low Selectivity / Full-Horizon): evaluating execution latency scaling and percentage reduction in scanned storage bytes achieved via clustering keys}{figure.caption.9}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Cloud Serverless vs. Vectorized CPU, Slot Elasticity, and FinOps Savings (V1--V3)}{6}{subsection.4.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Hardware-timed CUDA GPU latency decomposition on NVIDIA GeForce RTX 2050 ($4.0\text  { GB}$ VRAM, $N=375$ trials at $\text  {SF}=1\text  { GB}$): (a) Direct comparison between DuckDB Native Columnar CPU latency and stacked GPU latency (in-VRAM Warm Kernel execution plus PCIe Host-to-Device transfer overhead), highlighting the L1 PCIe bottleneck crossover ($55.02\text  { ms}$ Cold GPU vs. $50.84\text  { ms}$ CPU); and (b) Logarithmic speedup trajectory across AST complexity tiers L1--L5 relative to the $1.0\times $ CPU--GPU break-even threshold.}}{7}{figure.caption.10}\protected@file@percent }
+\newlabel{fig:gpu_pcie_decomposition}{{4}{7}{Hardware-timed CUDA GPU latency decomposition on NVIDIA GeForce RTX 2050 ($4.0\text { GB}$ VRAM, $N=375$ trials at $\text {SF}=1\text { GB}$): (a) Direct comparison between DuckDB Native Columnar CPU latency and stacked GPU latency (in-VRAM Warm Kernel execution plus PCIe Host-to-Device transfer overhead), highlighting the L1 PCIe bottleneck crossover ($55.02\text { ms}$ Cold GPU vs. $50.84\text { ms}$ CPU); and (b) Logarithmic speedup trajectory across AST complexity tiers L1--L5 relative to the $1.0\times $ CPU--GPU break-even threshold}{figure.caption.10}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Six-software cross-paradigm OLAP execution latency comparison (logarithmic scale) across five AST complexity tiers (L1--L5, $N=75$ queries at $\text  {SF}=1\text  { GB}$), contrasting SQLite 3 (C Row-Store Baseline), Google BigQuery Clustered (Serverless Cloud), DuckDB Native (C++ Vectorized DBMS), Polars Lazy SQL (Rust Arrow Engine), Apache DataFusion (Rust Query Engine), and CUDA Tensor OLAP (NVIDIA RTX 2050 Cold-Start).}}{7}{figure.caption.11}\protected@file@percent }
+\newlabel{fig:six_software_chart}{{5}{7}{Six-software cross-paradigm OLAP execution latency comparison (logarithmic scale) across five AST complexity tiers (L1--L5, $N=75$ queries at $\text {SF}=1\text { GB}$), contrasting SQLite 3 (C Row-Store Baseline), Google BigQuery Clustered (Serverless Cloud), DuckDB Native (C++ Vectorized DBMS), Polars Lazy SQL (Rust Arrow Engine), Apache DataFusion (Rust Query Engine), and CUDA Tensor OLAP (NVIDIA RTX 2050 Cold-Start)}{figure.caption.11}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}PCIe Host-to-Device Bottleneck vs. SIMT GPU Acceleration}{7}{subsection.4.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Six-Software Cross-Paradigm Synthesis: Row-Store vs. C++ DBMS vs. Rust Arrow Engines}{8}{subsection.4.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5}Empirical Validation of $\text  {CSCI}_{v2}$, Official TPC-H Baseline, and Statistical Interaction}{8}{subsection.4.5}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {7}{\ignorespaces Empirical predictive validity and 1,000-iteration Monte Carlo weight perturbation sensitivity ($\pm 50\%$) of the revised $\text  {CSCI}_{v2}$ index compared against single AST features ($D(q)$, $N(q)$), unweighted structural sum, and $\text  {CSCI}_{v1}$ across all evaluated engines ($N=75$ queries, $\text  {SF}=1$ GB).}}{8}{table.caption.12}\protected@file@percent }
+\newlabel{tab:csci_validation}{{7}{8}{Empirical predictive validity and 1,000-iteration Monte Carlo weight perturbation sensitivity ($\pm 50\%$) of the revised $\text {CSCI}_{v2}$ index compared against single AST features ($D(q)$, $N(q)$), unweighted structural sum, and $\text {CSCI}_{v1}$ across all evaluated engines ($N=75$ queries, $\text {SF}=1$ GB)}{table.caption.12}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {8}{\ignorespaces External benchmark validation on the official TPC-H query suite (Q1--Q22): static AST structural metrics, revised Composite Structural Complexity Index ($\text  {CSCI}_{v2}$), cross-engine latency at $\text  {SF}=1$ GB (DuckDB Native, DuckDB Parquet, and Apache DataFusion), and scaling at $\text  {SF}=10$ GB.}}{9}{table.caption.13}\protected@file@percent }
+\newlabel{tab:official_tpch_validation}{{8}{9}{External benchmark validation on the official TPC-H query suite (Q1--Q22): static AST structural metrics, revised Composite Structural Complexity Index ($\text {CSCI}_{v2}$), cross-engine latency at $\text {SF}=1$ GB (DuckDB Native, DuckDB Parquet, and Apache DataFusion), and scaling at $\text {SF}=10$ GB}{table.caption.13}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {9}{\ignorespaces Hierarchical statistical inference comparing independent seed-cluster analysis ($N_{\text  {seeds}}=25$, 10,000-iteration bootstrap 95\% CI) against query-level analysis ($N=75$) with Cliff's $\delta $ non-parametric effect sizes ($\text  {SF}=1$ GB). Note: Unopt BigQuery mean reflects full query-level arithmetic mean across all 75 queries ($2190.57$ ms), whereas Table~2 reports trimmed tier means ($1412.6$ ms).}}{9}{table.caption.14}\protected@file@percent }
+\newlabel{tab:hierarchical_stats}{{9}{9}{Hierarchical statistical inference comparing independent seed-cluster analysis ($N_{\text {seeds}}=25$, 10,000-iteration bootstrap 95\% CI) against query-level analysis ($N=75$) with Cliff's $\delta $ non-parametric effect sizes ($\text {SF}=1$ GB). Note: Unopt BigQuery mean reflects full query-level arithmetic mean across all 75 queries ($2190.57$ ms), whereas Table~2 reports trimmed tier means ($1412.6$ ms)}{table.caption.14}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {10}{\ignorespaces Two-way non-parametric factorial analysis (Scheirer--Ray--Hare $H$ and Aligned Rank Transform $F_{\text  {ART}}$ interaction tests) evaluating main effects and interaction between structural complexity (L1--L5) and selectivity (V1--V3).}}{9}{table.caption.15}\protected@file@percent }
+\newlabel{tab:two_way_interaction}{{10}{9}{Two-way non-parametric factorial analysis (Scheirer--Ray--Hare $H$ and Aligned Rank Transform $F_{\text {ART}}$ interaction tests) evaluating main effects and interaction between structural complexity (L1--L5) and selectivity (V1--V3)}{table.caption.15}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.6}Multi-Scale Scalability, Memory Footprint, and Out-of-Core Disk Spilling ($\text  {SF}=1, 10, 100$ GB)}{9}{subsection.4.6}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {11}{\ignorespaces Four-stage latency decomposition and three-mode fairness evaluation between vectorized CPU engines and SIMT GPU execution across AST complexity tiers ($\text  {SF}=1$ GB).}}{10}{table.caption.16}\protected@file@percent }
+\newlabel{tab:gpu_cpu_fairness}{{11}{10}{Four-stage latency decomposition and three-mode fairness evaluation between vectorized CPU engines and SIMT GPU execution across AST complexity tiers ($\text {SF}=1$ GB)}{table.caption.16}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {12}{\ignorespaces Cross-engine result-set multiset equivalence audit across all 75 benchmark queries ($\text  {SF}=1$ GB), verifying cardinality parity, NULL positioning, tie-breaking sort stability, and floating-point relative error bounds ($\epsilon \le 10^{-6}$).}}{10}{table.caption.17}\protected@file@percent }
+\newlabel{tab:multiset_equivalence}{{12}{10}{Cross-engine result-set multiset equivalence audit across all 75 benchmark queries ($\text {SF}=1$ GB), verifying cardinality parity, NULL positioning, tie-breaking sort stability, and floating-point relative error bounds ($\epsilon \le 10^{-6}$)}{table.caption.17}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {13}{\ignorespaces Hardware and software execution environment manifest retrieved from the benchmark workstation.}}{10}{table.caption.18}\protected@file@percent }
+\newlabel{tab:env_manifest}{{13}{10}{Hardware and software execution environment manifest retrieved from the benchmark workstation}{table.caption.18}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {14}{\ignorespaces Multi-scale empirical scalability, memory footprint, and out-of-core disk spilling evaluation across TPC-H $\text  {SF}=1$ GB, $\text  {SF}=10$ GB, and $\text  {SF}=100$ GB ($N=75$ queries per scale factor).}}{10}{table.caption.19}\protected@file@percent }
+\newlabel{tab:multiscale_scalability}{{14}{10}{Multi-scale empirical scalability, memory footprint, and out-of-core disk spilling evaluation across TPC-H $\text {SF}=1$ GB, $\text {SF}=10$ GB, and $\text {SF}=100$ GB ($N=75$ queries per scale factor)}{table.caption.19}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {15}{\ignorespaces Multi-scale execution mode transition, host RAM footprint, GPU VRAM consumption, and naive out-of-memory (OOM) verification for Rust Arrow streaming engines and NVIDIA RTX 2050 GPU (4.0 GB VRAM) across $\text  {SF}=1$, $10$, and $100$ GB.}}{10}{table.caption.20}\protected@file@percent }
+\newlabel{tab:multiscale_gpu_arrow}{{15}{10}{Multi-scale execution mode transition, host RAM footprint, GPU VRAM consumption, and naive out-of-memory (OOM) verification for Rust Arrow streaming engines and NVIDIA RTX 2050 GPU (4.0 GB VRAM) across $\text {SF}=1$, $10$, and $100$ GB}{table.caption.20}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Multi-scale big data evaluation and automated query routing synthesis: (a) Total 75-query workload execution time (logarithmic scale) across $\text  {SF}=1\text  { GB}$, $\text  {SF}=10\text  { GB}$, and $\text  {SF}=100\text  { GB}$, highlighting the $2.12\times $ native columnar advantage under $43.80\text  { GB}$ NVMe out-of-core disk spilling at $\text  {SF}=100\text  { GB}$; and (b) Out-of-sample 5-fold seed-cluster cross-validation of the proposed AST-Aware Query Routers relative to single-engine baselines and the theoretical Oracle bound.}}{11}{figure.caption.21}\protected@file@percent }
+\newlabel{fig:multiscale_router}{{6}{11}{Multi-scale big data evaluation and automated query routing synthesis: (a) Total 75-query workload execution time (logarithmic scale) across $\text {SF}=1\text { GB}$, $\text {SF}=10\text { GB}$, and $\text {SF}=100\text { GB}$, highlighting the $2.12\times $ native columnar advantage under $43.80\text { GB}$ NVMe out-of-core disk spilling at $\text {SF}=100\text { GB}$; and (b) Out-of-sample 5-fold seed-cluster cross-validation of the proposed AST-Aware Query Routers relative to single-engine baselines and the theoretical Oracle bound}{figure.caption.21}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.7}AST-Aware Automated Query Routing Framework}{11}{subsection.4.7}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {16}{\ignorespaces Out-of-sample 5-fold group cross-validation evaluation of the proposed AST-Aware Query Routing Framework ($N=75$ queries partitioned across $N_{\text  {seeds}}=25$ independent seed templates, $\text  {SF}=1$ GB).}}{11}{table.caption.22}\protected@file@percent }
+\newlabel{tab:router_evaluation}{{16}{11}{Out-of-sample 5-fold group cross-validation evaluation of the proposed AST-Aware Query Routing Framework ($N=75$ queries partitioned across $N_{\text {seeds}}=25$ independent seed templates, $\text {SF}=1$ GB)}{table.caption.22}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Limitations and Threats to Validity}{11}{section.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6}Conclusion}{12}{section.6}\protected@file@percent }
+\bibcite{melnik2010dremel}{1}
+\bibcite{melnik2020dremel}{2}
+\bibcite{raasveldt2019duckdb}{3}
+\bibcite{schulze2024clickhouse}{4}
+\bibcite{sethi2019presto}{5}
+\bibcite{mao2024sqlglot}{6}
+\bibcite{li2023bird}{7}
+\bibcite{lei2025spider2}{8}
+\bibcite{begoli2018calcite}{9}
+\bibcite{garcia2008database}{10}
+\bibcite{lounissi2025funda}{11}
+\bibcite{milicevic2024dlquery}{12}
+\bibcite{shojaee2024serverless}{13}
+\bibcite{ahmed2020hibench}{14}
+\bibcite{abdalla2022bigdata}{15}
+\newlabel{LastPage}{{6}{14}{}{page.14}{}}
+\gdef\lastpage@lastpage{14}
+\gdef\lastpage@lastpageHy{14}
+\gdef \@abspage@last{14}
