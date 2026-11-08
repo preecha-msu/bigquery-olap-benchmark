@@ -100,7 +100,7 @@ def build_workflow_diagram(root: Path):
         [
             "• Parses all 75 SQL queries into canonical AST representations to extract structural operator vectors:",
             "  Tree Depth D(q), Total Operator Nodes N(q), Join Count J(q), Nested CTE/Subquery Depth S(q), Window Specs W(q), and Array UNNEST U(q)",
-            "• Composite Structural Complexity Index:  CSCI(q) = 1.5 D(q) + 2.5 J(q) + 3.0 S(q) + 3.5 W(q) + 4.0 U(q) + 1.5 C(q)   [Range: 21.0 (L1) to 36.4 (L5)]"
+            "• Composite Structural Complexity Index:  CSCI(q) = 1.5 D(q) + 2.5 J(q) + 3.0 S(q) + 3.5 W(q) + 4.0 U(q) + 1.5 C(q)   [Range: 15.3 (L1) to 37.1 (L4)]"
         ],
         facecolor="#FFFBEB", edgecolor="#B45309", title_bg="#B45309"
     )
@@ -121,7 +121,7 @@ def build_workflow_diagram(root: Path):
             "• Execution: Tuple-at-a-Time",
             "  Volcano Iterator Model",
             "• Role: Traditional Row-Store",
-            "  Baseline (Mean: 5071.1 ms)"
+            "  Baseline (Mean: 8417.3 ms)"
         ],
         facecolor="#F3F4F6", edgecolor="#4B5563", title_bg="#4B5563", fontsize=7.9
     )
@@ -148,9 +148,9 @@ def build_workflow_diagram(root: Path):
             "• 1) DuckDB (C++ Columnar)",
             "  Parquet vs. Native (183.7ms)",
             "• 2) Polars SQL (Rust Arrow)",
-            "  Lazy Streaming (66.5 ms)",
+            "  Lazy Streaming (82.5 ms)",
             "• 3) Apache DataFusion (Rust)",
-            "  Arrow Planner (88.2 ms)"
+            "  Arrow Planner (96.3 ms)"
         ],
         facecolor="#ECFDF5", edgecolor="#065F46", title_bg="#065F46", fontsize=7.9
     )
@@ -193,10 +193,10 @@ def build_workflow_diagram(root: Path):
         ax, 0.52, 0.04, 0.46, 0.22,
         "PHASE 6: Cryptographic Audit & Manuscript Artifacts",
         [
-            "• Automated LaTeX Booktabs Tables (Tables I-V) & 300 DPI Figures",
+            "• Automated LaTeX Booktabs Tables (Tables 1-8) & 300 DPI Figures",
             "• Zero-Discrepancy Verification Suite (08_verify_paper_statistics.py)",
             "• SHA-256 Telemetry Audit Certificate (REPRODUCTION_CERTIFICATE.md)",
-            "• Complete Open-Source Benchmark Repository & IEEE Access Manuscript:",
+            "• Complete Open-Source Benchmark Repository & Journal of Big Data Manuscript:",
             "  https://github.com/preecha-msu/bigquery-olap-benchmark"
         ],
         facecolor="#F0FDF4", edgecolor="#166534", title_bg="#166534"
@@ -253,3 +253,4 @@ def inject_workflow_figure_into_main_tex(root: Path):
 if __name__ == "__main__":
     build_workflow_diagram(PROJECT_ROOT)
     inject_workflow_figure_into_main_tex(PROJECT_ROOT)
+

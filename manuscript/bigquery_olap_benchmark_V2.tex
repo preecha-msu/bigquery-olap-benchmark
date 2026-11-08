@@ -1,0 +1,618 @@
+\documentclass[10pt,a4paper]{article}
+
+% =============================================================================
+% SPRINGER NATURE / JOURNAL OF BIG DATA (CLEAN SUBMISSION FORMAT)
+% =============================================================================
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{mathptmx}
+\usepackage[scaled=0.90]{helvet}
+\usepackage{courier}
+\usepackage[a4paper,top=24mm,bottom=24mm,left=22mm,right=22mm]{geometry}
+\usepackage{amsmath,amsfonts,amssymb}
+% Fix mathptmx calligraphic font rendering (\mathcal{M}, \mathcal{B}, \mathcal{R}, \mathcal{E})
+\DeclareMathAlphabet{\mathcal}{OMS}{cmsy}{m}{n}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage[labelfont={bf,sf,small},textfont={sf,small},labelsep=period]{caption}
+\usepackage{xurl}
+\usepackage[colorlinks=true,linkcolor=blue!70!black,citecolor=blue!70!black,urlcolor=blue!70!black]{hyperref}
+
+\definecolor{springerblue}{RGB}{0, 102, 153}
+
+% Clean submission running header without volume/page/DOI placeholders
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\footnotesize\sffamily Noiumkar \quad \textit{Journal of Big Data} --- Research Article Submission}
+\fancyhead[R]{\footnotesize\sffamily Page \thepage\ of \pageref*{LastPage}}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\titleformat{\section}{\large\sffamily\bfseries\color{springerblue}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\normalsize\sffamily\bfseries}{\thesubsection}{0.6em}{}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.55em}
+
+\begin{document}
+
+% =============================================================================
+% SPRINGEROPEN / JOURNAL OF BIG DATA FRONTMATTER (NO PLACEHOLDER TOKENS)
+% =============================================================================
+{\footnotesize\sffamily\color{springerblue}\textbf{RESEARCH ARTICLE} \hfill \textbf{Journal of Big Data (SpringerOpen)}}\\[0.8em]
+
+{\LARGE\sffamily\bfseries AST-Driven Empirical Benchmarking and Automated Query Routing Across Serverless Cloud, Vectorized CPU (C++/Rust), and GPU-Accelerated OLAP Engines}\\[0.9em]
+
+{\normalsize\sffamily\textbf{Preecha Noiumkar}\textsuperscript{1*}}\\[0.4em]
+{\footnotesize\sffamily
+\textsuperscript{1}Department of Information Technology, Faculty of Informatics, Mahasarakham University, Kham Riang, Kantharawichai, Maha Sarakham 44150, Thailand.\\
+\textsuperscript{*}Correspondence: Preecha Noiumkar (\href{mailto:preecha.n@msu.ac.th}{preecha.n@msu.ac.th})
+}\\[0.8em]
+
+\noindent\rule{\textwidth}{0.8pt}
+\begin{quote}
+\small\sffamily
+\textbf{\color{springerblue}Abstract}\\[0.3em]
+\textbf{Background:} Evaluating modern analytical database architectures requires decoupling fixed distributed cloud orchestration and PCIe host-to-device transfer overheads from intrinsic structural query complexity, predicate selectivity, hardware resource utilization, and energy efficiency. Prior OLAP benchmarks rely on narrow engine pairs and unstratified query sets where memory layout, operator depth, and power consumption are confounded, lacking automated mechanisms to route queries across heterogeneous paradigms prior to execution.\\[0.25em]
+\textbf{Methodology:} Following a strict zero-estimation, 100\% full-scale execution protocol, we present a reproducible empirical benchmarking and automated query routing framework across a factorial workload of 75 analytical queries instantiated from 25 canonical seed templates spanning five structural complexity levels (L1--L5) and three selectivity perturbation horizons (V1--V3). Query complexity is formally quantified via static Abstract Syntax Tree (AST) profiling---capturing tree depth, total AST operator nodes, multi-way join fan-out, nested CTEs, window frames, conditional branches, array unnesting (\texttt{UNNEST}), and predicate selectivity ($\sigma(q)$)---into a 9-dimensional feature vector and a validated Composite Structural Complexity Index (CSCI, mean $29.66$, Monte Carlo rank stability $\bar{\rho}=0.8189$). We evaluate six representative software engines spanning four computing paradigms on the un-truncated TPC-H benchmark ($\text{SF}=1\text{ GB}$, $6.00\times 10^6$ \texttt{lineitem} rows): (1) Google BigQuery (serverless cloud OLAP), (2) DuckDB (C++ morsel-driven vectorized DBMS), (3) Polars Lazy SQL (Rust Apache Arrow streaming engine), (4) Apache DataFusion (Rust Arrow physical query planner), (5) SQLite 3 (full-scale C B-tree row-store baseline), and (6) a SIMT GPU-accelerated relational tensor engine on an NVIDIA GeForce RTX 2050 GPU ($4.0\text{ GB}$ VRAM). High-frequency hardware telemetry captures CPU/GPU utilization ($\%$), host RAM/VRAM footprint ($\text{GB}$), per-query energy consumption ($\text{Joules}$), and performance per watt ($\text{MB/J}$). Statistical inference employs 10,000-iteration seed-clustered bootstrap 95\% confidence intervals (95\% CI), non-parametric Cliff's delta ($\delta$) effect sizes, and seed-grouped 25-fold Leave-One-Seed-Out cross-validation (LOSO-CV).\\[0.25em]
+\textbf{Results:} Omnibus non-parametric Friedman testing confirms highly significant performance stratification across the six engines ($\chi^2_F(5) = 321.50, p = 2.382 \times 10^{-67}$, Kendall's concordance $W = 0.8573$) with $100.0\%$ exact result-set equivalence ($\text{EX}=1$). Columnar vectorization---Polars at $82.47\text{ ms}$ (95\% CI: $[67.93, 98.65]\text{ ms}$), DataFusion at $96.30\text{ ms}$ (95\% CI: $[78.31, 114.92]\text{ ms}$), and DuckDB at $183.74\text{ ms}$ (95\% CI: $[110.71, 274.89]\text{ ms}$)---outperforms the full-scale row-store baseline ($8417.33\text{ ms}$, 95\% CI: $[6412.19, 10819.70]\text{ ms}$; Cliff's $\delta = 1.000, p = 5.28 \times 10^{-14}$) by $45.8\times\text{--}102.1\times$. On Google BigQuery, storage clustering reduces mean server latency from $1412.6\text{ ms}$ (unoptimized client-observed $2190.57\text{ ms}$, 95\% CI: $[1645.38, 2786.50]\text{ ms}$) to $745.39\text{ ms}$ (95\% CI: $[515.64, 1026.49]\text{ ms}$; Cliff's $\delta = 0.471, p = 6.89 \times 10^{-13}$, $\mathcal{M}_{\text{slot}}=6.37\times$) and prunes scanned I/O by $78.4\%$ in V1, saving $\$1.47\text{ USD}$ per million queries. Hardware telemetry reveals that vectorized CPU engines ($66.1\%\text{--}77.4\%$ CPU utilization, $4.65\text{--}4.71\text{ GB}$ RAM) reduce per-query energy from $126.26\text{ J}$ (SQLite 3) to $3.17\text{--}6.40\text{ J}$ ($157.1\text{--}243.0\text{ MB/J}$), while RTX 2050 GPU execution ($31.0\%$ mean SM utilization, $1.30\text{ GB}$ VRAM) achieves $56.96\text{ ms}$ cold latency (95\% CI: $[46.23, 68.44]\text{ ms}$, $0.65\text{ J}$, $672.3\text{ MB/J}$; Cliff's $\delta = 0.199$ vs. DuckDB) and $22.26\text{ ms}$ warm latency (95\% CI: $[16.78, 28.68]\text{ ms}$, $0.25\text{ J}$, $1942.8\text{ MB/J}$; Cliff's $\delta = 0.722$). Under 25-seed LOSO-CV, our Proposed 9-Dimensional AST-Aware Cost-Regression Router ($\mathcal{R}_{\text{GBR-9D}}$) achieves a $57.33\%$ Top-1 accuracy ($65.33\%$ near-optimal hit rate), a mean latency of $54.92\text{ ms}$ (95\% CI: $[42.78, 68.50]\text{ ms}$), a performance regret of $34.98\%$, and an energy footprint of $1.381\text{ J}$---statistically outperforming Always DuckDB ($183.74\text{ ms}$, $271.10\%$ regret), Always GPU ($56.96\text{ ms}$, $60.76\%$ regret), Always BigQuery ($745.39\text{ ms}$, $1709.86\%$ regret), and Rule-Based Routing ($71.48\text{ ms}$, 95\% CI: $[52.79, 91.74]\text{ ms}$, $65.63\%$ regret; Wilcoxon $p = 0.0187$, Cliff's $\delta = 0.126$).\\[0.25em]
+\textbf{Conclusion:} Combining static AST structural features with lightweight selectivity metadata enables sub-millisecond automated query routing across heterogeneous CPU, GPU, and cloud OLAP engines. All 75 SQL workloads, AST routers, and SHA-256 telemetry logs are publicly available at \url{https://github.com/preecha-msu/bigquery-olap-benchmark}.\\[0.45em]
+\textbf{\color{springerblue}Keywords:} Abstract syntax tree (AST), Apache Arrow, Apache DataFusion, Automated query routing, Columnar storage, CUDA GPU acceleration, DuckDB, Energy efficiency, Google BigQuery, Polars.
+\end{quote}
+\noindent\rule{\textwidth}{0.8pt}
+
+% =============================================================================
+% 1. INTRODUCTION
+% =============================================================================
+\section{Introduction}
+The rapid evolution of analytical data infrastructures has diversified enterprise architectures across four distinct computing paradigms: elastic serverless cloud data warehouses such as Google BigQuery \cite{melnik2010dremel,melnik2020dremel,lounissi2025funda}, in-process C++ vectorized analytical database systems such as DuckDB \cite{raasveldt2019duckdb}, Rust-based Apache Arrow streaming query engines such as Polars and Apache DataFusion, and SIMT GPU-accelerated relational engines \cite{chrysogelos2019hetexchange,shanbhag2020crystal}, alongside distributed multi-node systems like ClickHouse \cite{schulze2024clickhouse} and Trino \cite{sethi2019presto}. While cloud-native disaggregated storage-compute architectures provide massive horizontal slot concurrency for petabyte-scale workloads \cite{shojaee2024serverless,abdalla2022bigdata}, they introduce non-trivial stateless scheduling and distributed shuffle overheads on moderate-scale datasets \cite{begoli2018calcite,garcia2008database,lounissi2025funda}. Concurrently, modern local hardware offers a complex trade-off between CPU SIMD vectorization over Apache Arrow buffers and discrete GPU offloading across the PCIe bus \cite{milicevic2024dlquery,root2019mapd,kim2022blazingsql}.
+
+Despite extensive benchmarking of individual database systems \cite{ahmed2020hibench,oneil2009ssb,leis2015job}, three critical research gaps remain unresolved in the literature:
+\begin{itemize}[leftmargin=1.5em,itemsep=2pt]
+    \item \textbf{Research Gap 1 (Confounded Complexity and Selectivity in Narrow Engine Comparisons):} Prior OLAP evaluations \cite{ahmed2020hibench,abdalla2022bigdata} predominantly compare two or three engines using unstratified benchmark suites where structural operator complexity (e.g., multi-way joins vs. window framing vs. lateral array unnesting), storage layout (row-store vs. compressed Parquet vs. in-memory Arrow), and predicate selectivity are entangled.
+    \item \textbf{Research Gap 2 (Unquantified PCIe Crossover Thresholds and Green OLAP Energy Costs):} Existing GPU database studies \cite{shanbhag2020crystal,root2019mapd,kim2022blazingsql} often report warm in-VRAM kernel speedups while omitting cold-start PCIe Host-to-Device (H2D) transfer penalties and failing to cross-examine hardware utilization (CPU/GPU $\%$, RAM/VRAM $\text{GB}$), energy consumption ($\text{Joules}$), and performance per watt ($\text{MB/J}$) against modern C++ and Rust vectorized CPU engines.
+    \item \textbf{Research Gap 3 (Lack of Leak-Free, Pre-Execution Cross-Paradigm Query Routers):} While learned query optimizers such as Neo \cite{marcus2019neo} and Bao \cite{marcus2021bao} steer physical execution plans within a \emph{single} database engine, and cloud routers \cite{tan2023stage} schedule jobs across homogeneous cloud clusters, there is a lack of lightweight, pre-execution routing frameworks that map static Abstract Syntax Tree (AST) features and predicate selectivity directly to the optimal engine across heterogeneous CPU, Rust Arrow, CUDA GPU, and serverless cloud backends without data leakage across query template variations.
+\end{itemize}
+
+To bridge these three research gaps under a strict \emph{zero-estimation, 100\% real execution} protocol, this study makes four primary contributions:
+\begin{enumerate}[leftmargin=1.5em,itemsep=2pt]
+    \item \textbf{Stratified 75-Query AST Benchmark and Construct-Validated CSCI:} We design a factorial workload of 75 queries derived from $N_{\text{seeds}}=25$ canonical seed templates across five complexity tiers (L1--L5) and three selectivity horizons (V1--V3) on the full-scale TPC-H dataset ($\text{SF}=1\text{ GB}$). We formulate and empirically validate the Composite Structural Complexity Index ($\text{CSCI}$) via Spearman rank correlation ($\rho=0.4935, p=6.84\times 10^{-6}$) and 1,000-trial Monte Carlo weight perturbation ($\bar{\rho}=0.8189$).
+    \item \textbf{Six-Software, Four-Paradigm Empirical Synthesis with Seed-Clustered 95\% CIs:} We evaluate six canonical software systems---SQLite 3, Google BigQuery, DuckDB, Polars, Apache DataFusion, and a hardware-timed CUDA Tensor Engine on an NVIDIA GeForce RTX 2050 GPU---quantifying latency, effective throughput ($\Theta_{\text{eff}}$), cloud slot concurrency ($\mathcal{M}_{\text{slot}}$), and FinOps cost savings ($\Delta C_{\text{1M}}$) with 10,000-iteration bootstrap 95\% CIs and Cliff's delta ($\delta$) effect sizes.
+    \item \textbf{High-Frequency Hardware Resource and Green OLAP Energy Telemetry:} Using hardware performance counters (\texttt{psutil}, NVIDIA \texttt{NVML}, and \texttt{torch.cuda}), we measure active CPU/GPU utilization, host RAM/VRAM footprint, per-query energy in Joules, and performance per watt ($\text{MB/J}$), mathematically proving the L1 PCIe crossover condition ($\Phi_{\text{PCIe}}=55.5\%$).
+    \item \textbf{Proposed 9-Dimensional AST-Aware Query Routing Framework:} We develop a multi-output cost and resource regression router ($\mathcal{R}_{\text{GBR-9D}}$) evaluated via leak-free, seed-grouped 25-fold Leave-One-Seed-Out cross-validation against Always DuckDB, Always GPU, Always BigQuery, and Rule-Based Routing.
+\end{enumerate}
+
+% =============================================================================
+% 2. RELATED WORK
+% =============================================================================
+\section{Related Work and Architectural Representativeness}
+\subsection{Cloud MPP Warehouses, Distributed Query Engines, and Vectorized CPU Systems}
+Disaggregated cloud data warehouses pioneered by Google Dremel/BigQuery \cite{melnik2010dremel,melnik2020dremel} and distributed MPP query engines such as Presto/Trino \cite{sethi2019presto}, ClickHouse \cite{schulze2024clickhouse}, and Apache Spark \cite{ahmed2020hibench} decouple compute workers from durable storage. Recent studies in serverless data pipelines \cite{shojaee2024serverless} and in-situ serverless query processing such as FunDa \cite{lounissi2025funda} highlight the fundamental tension between cold-start scheduling overhead and horizontal slot elasticity. Specifically, while Trino \cite{sethi2019presto} excels at federated cross-source query execution over distributed object stores and ClickHouse \cite{schulze2024clickhouse} achieves high throughput via shared-nothing merge-tree storage and SIMD vectorization across cluster nodes, both introduce network serialization and coordinator scheduling overheads when deployed on single-node or moderate-scale datasets. Conversely, embeddable C++ vectorized engines such as DuckDB \cite{raasveldt2019duckdb} process columnar Row Groups in-process using morsel-driven parallelism, whereas next-generation Rust engines (Polars and Apache DataFusion) execute zero-copy SIMD operations directly over standardized Apache Arrow memory buffers.
+
+\subsection{GPU-Accelerated Databases, Learned Query Optimizers, and OLAP Benchmarks}
+In the domain of GPU-accelerated relational analytics, systems such as HeavyDB (formerly OmniSci/MapD) \cite{root2019mapd}, BlazingSQL over RAPIDS cuDF \cite{kim2022blazingsql}, Crystal \cite{shanbhag2020crystal}, and HetExchange \cite{chrysogelos2019hetexchange} leverage massive SIMT parallelism and high-bandwidth device memory (VRAM) to accelerate relational joins and group-by aggregations. However, as demonstrated by Chrysogelos et al. \cite{chrysogelos2019hetexchange} and Shanbhag et al. \cite{shanbhag2020crystal}, discrete GPU execution is fundamentally constrained by the PCIe interconnect when data resides in host DRAM, necessitating rigorous separation of PCIe transfer latency from kernel compute time. Concurrently, recent surveys on deep learning in query execution \cite{milicevic2024dlquery} and learned optimizers---including Neo \cite{marcus2019neo}, Bao \cite{marcus2021bao}, Zero-Shot Cost Models \cite{hilprecht2022zeroshot}, and stage-level cloud routers \cite{tan2023stage}---demonstrate that structural query features can guide physical execution decisions. In parallel, while classical OLAP benchmarks such as the Star Schema Benchmark (SSB) \cite{oneil2009ssb} focus on denormalized star-join rollups and the Join Order Benchmark (JOB) \cite{leis2015job} stresses cardinality estimation across multi-way inner joins, modern text-to-SQL benchmarks such as BIRD \cite{li2023bird} and Spider 2.0 \cite{lei2025spider2} incorporate the Valid Efficiency Score (VES), and AST transpilers such as \texttt{SQLGlot} \cite{mao2024sqlglot} and Apache Calcite \cite{begoli2018calcite} enable deterministic structural analysis.
+
+\subsection{Rationale for Selecting Six Canonical Architectural Representatives}
+Rather than exhaustively benchmarking every commercial and open-source DBMS, we select six software engines that serve as canonical, non-redundant representatives of the four foundational execution paradigms in modern data engineering:
+\begin{enumerate}[leftmargin=1.5em,itemsep=2pt]
+    \item \textbf{SQLite 3 (Canonical Tuple-at-a-Time B-Tree Row-Store Baseline):} Represents traditional ANSI C row-oriented storage using a Volcano-style iterator model, establishing the exact performance and energy baseline of B-tree page traversal without columnar compression or SIMD vectorization.
+    \item \textbf{Google BigQuery (Canonical Serverless Disaggregated Cloud OLAP):} Represents petabyte-scale cloud-native execution (Dremel/Capacitor columnar storage with dynamic slot allocation) \cite{melnik2020dremel}, isolating distributed cloud orchestration overhead and storage clustering FinOps economics without local hardware bottlenecks.
+    \item \textbf{DuckDB (Canonical C++ Morsel-Driven Columnar DBMS):} Represents state-of-the-art in-process C++ analytical database design \cite{raasveldt2019duckdb} with tightly integrated storage block management, parallel segment-tree window framing, and push-based vectorized execution.
+    \item \textbf{Polars \& Apache DataFusion (Canonical Rust Apache Arrow Engines):} Represent the emerging Rust Arrow ecosystem via two distinct optimizer philosophies: \emph{Polars} exemplifies a dataframe-native lazy streaming engine over Arrow arrays, whereas \emph{Apache DataFusion} exemplifies a modular SQL physical query planner (used as the core execution engine in modern distributed systems such as InfluxDB 3.0 and Ballista).
+    \item \textbf{PyTorch CUDA Relational Tensor Engine (Canonical SIMT GPU Execution):} Represents hardware-timed GPU relational tensor processing over contiguous device buffers (analogous to cuDF/BlazingSQL \cite{kim2022blazingsql} and Crystal \cite{shanbhag2020crystal}), enabling exact hardware-counter decomposition of PCIe H2D transfers versus in-VRAM SIMT kernel execution on consumer/edge GPU hardware (NVIDIA RTX 2050).
+\end{enumerate}
+
+\begin{figure}[t!]
+\centering
+\includegraphics[width=0.98\textwidth]{figures/fig_experimental_workflow_300dpi.pdf}
+\caption{End-to-end six-phase experimental workflow of the AST-driven multi-paradigm OLAP benchmarking framework, illustrating TPC-H multi-layout data provisioning ($\text{SF}=1\text{ GB}$), 75-query factorial synthesis (25 canonical seeds $\times$ 3 selectivity horizons), \texttt{SQLGlot} static AST profiling, six-engine execution across four computing paradigms, non-parametric seed-cluster statistical inference, and cryptographic SHA-256 verification.}
+\label{fig:experimental_workflow}
+\end{figure}
+
+% =============================================================================
+% 3. METHODOLOGY
+% =============================================================================
+\section{Methodology, Telemetry Models, and Automated Query Router Design}
+\subsection{Five-Tier SQL Structural Complexity and 25 Canonical Seeds}
+As illustrated in the end-to-end experimental workflow (Fig.~\ref{fig:experimental_workflow}), each benchmark query $q \in \mathcal{Q}$ ($|\mathcal{Q}|=75$) is parsed into an Abstract Syntax Tree (AST) using \texttt{SQLGlot} \cite{mao2024sqlglot} to extract structural complexity features: tree depth $D(q)$, total AST operator nodes $N(q)$, relational join count $J(q)$, nested CTE/subquery depth $S(q)$, window specifications $W(q)$, repeated field unnesting operators $U(q)$, and conditional \texttt{CASE} branches $C(q)$. We define the Composite Structural Complexity Index ($\text{CSCI}$) as:
+\begin{equation}
+    \text{CSCI}(q) = 1.5 D(q) + 2.5 J(q) + 3.0 S(q) + 3.5 W(q) + 4.0 U(q) + 1.5 C(q)
+\end{equation}
+Across the full-scale TPC-H schema ($\text{SF}=1\text{ GB}$, 8 relational tables totaling $8.66\times 10^6$ rows; \texttt{lineitem} $= 6,001,215$ rows), we design 5 canonical seeds per tier ($5 \times 5 = 25$ independent seeds, overall mean $\text{CSCI} = 29.66$):
+\begin{enumerate}[leftmargin=1.5em,itemsep=2pt]
+    \item \textbf{L1 (Scan, SARGability, \& Monotonic Conditional Branching):} Single-table columnar scans with multi-branch \texttt{CASE WHEN} expressions and distinct cardinality aggregations ($D = 9.0, J = 0.0, \text{CSCI} = 15.3$).
+    \item \textbf{L2 (Multi-Way Star, Snowflake, \& Bilateral Joins):} 4-way to 8-way relational joins, composite \texttt{partsupp} joins, and non-equi late-delivery predicates ($D = 9.2, J = 4.8, \text{CSCI} = 26.8$).
+    \item \textbf{L3 (Multi-Stage CTE Pipelines, Null-Safe Anti-Joins, \& One-Grain-Per-CTE):} 3-stage to 4-stage Common Table Expressions enforcing pre-aggregated grain isolation and null-safe anti-joins ($D = 10.8, J = 2.6, \text{CSCI} = 36.7$).
+    \item \textbf{L4 (Multi-Axis Window Ranking, Lead/Lag, \& Sliding Frames):} Concurrent window partitions (\texttt{RANK}, \texttt{DENSE\_RANK}, \texttt{NTILE(10)}, \texttt{LAG}, \texttt{LEAD}, and bounded \texttt{ROWS BETWEEN} sliding windows; $D = 10.8, J = 1.6, \text{CSCI} = 37.1$).
+    \item \textbf{L5 (Semi-Structured Array Construction \& Lateral UNNEST):} Multi-stage \texttt{ARRAY\_AGG} vector construction followed by lateral \texttt{CROSS JOIN UNNEST} re-aggregation ($D = 10.6, J = 2.2, \text{CSCI} = 32.4$).
+\end{enumerate}
+
+\subsection{Selectivity Perturbations (V1--V3) and Zero-Estimation Six-Engine Protocol}
+Each of the 25 canonical seeds is instantiated across three selectivity variations ($25 \times 3 = 75$ queries): \textbf{V1 (High Selectivity, $\sim$1--5\% data)}, \textbf{V2 (Medium Selectivity, $\sim$15--30\% data)}, and \textbf{V3 (Adversarial Full-Horizon, $\sim$65--95\% data)}. All six software engines execute against 100\% un-truncated tables without row slicing or scaling multipliers across Paradigm 1 (SQLite 3 full B-tree), Paradigm 2 (Google BigQuery Unoptimized and Clustered with \texttt{use\_query\_cache=False}), Paradigm 3 (DuckDB, Polars, and Apache DataFusion), and Paradigm 4 (PyTorch CUDA Tensor Engine on an NVIDIA GeForce RTX 2050, $4.0\text{ GB}$ VRAM):
+\begin{equation}
+    T_{\text{GPU\_Cold}}(q) = T_{\text{PCIe\_H2D}}(q) + T_{\text{GPU\_Warm}}(q)
+\end{equation}
+
+\subsection{Analytical Throughput, PCIe Crossover, FinOps, and Green Energy Models}
+To establish unified cross-paradigm efficiency metrics beyond raw wall-clock latency, we formulate six analytical and hardware telemetry models:
+\begin{enumerate}[leftmargin=1.5em,itemsep=3pt]
+    \item \textbf{PCIe Bottleneck Fraction ($\Phi_{\text{PCIe}}$) and Break-Even Condition:} We define the host-to-device transfer fraction on GPU as:
+    \begin{equation}
+        \Phi_{\text{PCIe}}(q) = \frac{T_{\text{PCIe\_H2D}}(q)}{T_{\text{PCIe\_H2D}}(q) + T_{\text{GPU\_Warm}}(q)} \times 100\%
+    \end{equation}
+    Cold-start GPU offloading outperforms vectorized CPU execution ($T_{\text{GPU\_Cold}}(q) < T_{\text{CPU}}(q)$) if and only if the warm kernel speedup satisfies $\text{Speedup}_{\text{Warm}}(q) > (1 - \Phi_{\text{PCIe}}(q)/100)^{-1}$.
+    \item \textbf{Effective Analytical Scan Throughput ($\Theta_{\text{eff}}$):} Normalizing unpruned columnar volume $\mathcal{B}_{\text{unopt}}(q)$ (in MB) against execution time $T_{e}(q)$ (in ms) yields effective processing throughput in $\text{GB/s}$:
+    \begin{equation}
+        \Theta_{\text{eff}}(q, e) = \frac{\mathcal{B}_{\text{unopt}}(q)}{1.024 \cdot T_{e}(q)} \quad [\text{GB/s}]
+    \end{equation}
+    \item \textbf{Cloud Slot Concurrency Multiplier ($\mathcal{M}_{\text{slot}}$):} Quantifies the degree of horizontal parallelism dynamically provisioned by BigQuery relative to server wall-clock time:
+    \begin{equation}
+        \mathcal{M}_{\text{slot}}(q) = \frac{T_{\text{BQ\_Slot}}(q)}{T_{\text{BQ\_Wall}}(q)}
+    \end{equation}
+    \item \textbf{Cloud FinOps Cost Savings ($\Delta C_{\text{1M}}$):} Under serverless on-demand bytes-scanned pricing ($\alpha_{\text{TB}} = \$6.25\text{ USD/TiB}$), the financial savings per $10^6$ query executions achieved via storage clustering is:
+    \begin{equation}
+        \Delta C_{\text{1M}}(q) = 10^6 \times \left( \frac{\mathcal{B}_{\text{unopt}}(q) - \mathcal{B}_{\text{clustered}}(q)}{1024^2} \right) \times \alpha_{\text{TB}}
+    \end{equation}
+    \item \textbf{Per-Query Energy Consumption ($E(q,e)$) and Performance per Watt ($\eta_{\text{watt}}$):} High-frequency hardware polling ($250\text{ Hz}$ via \texttt{psutil}, NVIDIA \texttt{NVML}, and \texttt{torch.cuda} memory counters) records active CPU utilization ($\text{CPU}_{\text{util}}\%$), peak working-set RAM ($\text{RAM}_{\text{used}}$ in $\text{GB}$), GPU SM utilization ($\text{GPU}_{\text{util}}\%$), and peak device memory ($\text{VRAM}_{\text{used}}$ in $\text{GB}$). Integrating active package power draw $\bar{P}_e(q)$ (in Watts) over execution duration $T_e(q)$ yields per-query energy in Joules and Green OLAP performance per watt ($\text{MB/s/W} \equiv \text{MB/J}$):
+    \begin{equation}
+        E(q, e) = \int_{t_0}^{t_0 + T_e(q)} P_e(t)\,dt \approx \bar{P}_e(q) \cdot \left(\frac{T_e(q)}{1000}\right) \quad [\text{Joules}]
+    \end{equation}
+    \begin{equation}
+        \eta_{\text{watt}}(q, e) = \frac{1024 \cdot \Theta_{\text{eff}}(q, e)}{\bar{P}_e(q)} = \frac{\mathcal{B}_{\text{unopt}}(q)}{E(q, e)} \quad [\text{MB/s/W} \equiv \text{MB/J}]
+    \end{equation}
+\end{enumerate}
+
+\begin{figure}[t!]
+\centering
+\includegraphics[width=0.88\textwidth]{figures/fig_proposed_ast_routing_framework_300dpi.pdf}
+\caption{Proposed AST-Aware Query Routing Framework: parsing an input SQL query into a 9-dimensional structural and selectivity vector ($\text{CSCI}$, join count, window specifications, \texttt{UNNEST}, predicate selectivity $\sigma(q)$, tree depth, AST nodes, and CTEs) to drive multi-output cost and resource prediction across DuckDB (CPU OLAP), Polars/DataFusion (Rust Arrow engines), CUDA GPU, and Google BigQuery (Cloud OLAP).}
+\label{fig:proposed_ast_framework}
+\end{figure}
+
+\subsection{Proposed AST-Aware Query Routing Framework and Seed-Grouped Validation}
+As depicted in Fig.~\ref{fig:proposed_ast_framework}, to automate engine selection prior to query execution without incurring runtime profiling overhead \cite{marcus2021bao,hilprecht2022zeroshot,tan2023stage}, we augment the 8 static AST syntax features with a lightweight predicate selectivity factor $\sigma(q) \in (0, 1]$ derived from AST literal range constants and storage zone-map metadata, forming a 9-dimensional feature vector:
+\begin{equation}
+    \mathbf{x}_q = \big[\, D(q),\; N(q),\; J(q),\; S(q),\; W(q),\; U(q),\; C(q),\; \text{CSCI}(q),\; \sigma(q) \,\big]^{\top} \in \mathbb{R}^{9}
+\end{equation}
+In the \emph{Cost and Resource Prediction} stage (Fig.~\ref{fig:proposed_ast_framework}), a multi-output Gradient Boosting Regressor $f_{\Theta}: \mathbb{R}^{9} \rightarrow \mathbb{R}^{M}$ simultaneously estimates log-transformed execution latency $\widehat{\ln(1 + T_e)}(\mathbf{x}_q)$, energy consumption $\hat{E}_e(\mathbf{x}_q)$, and memory footprint ($\widehat{\text{RAM}}_e, \widehat{\text{VRAM}}_e$) across the candidate execution engines $\mathcal{E} = \{\text{DuckDB}, \text{Polars}, \text{DataFusion}, \text{GPU}_{\text{Cold}}, \text{BigQuery}\}$. Let $e^*(q) = \arg\min_{e \in \mathcal{E}} T_e(q)$ denote the ground-truth Oracle optimal engine.
+
+To rigorously prevent data leakage across query variations sharing the same template structure, we partition the 75 queries by their 25 canonical seeds ($G=25$ disjoint groups of 3 variations V1--V3) and apply **25-fold Leave-One-Seed-Out cross-validation (LOSO-CV)**. We benchmark our **Proposed AST-Aware Routing** models ($\mathcal{R}_{\text{RF-9D}}$ and $\mathcal{R}_{\text{GBR-9D}}$) against four baseline policies: **(1) Always DuckDB**, **(2) Always GPU (Cold-Start)**, **(3) Always BigQuery (Cloud OLAP)**, and **(4) Rule-Based Routing** (a static heuristic router that assigns simple scans with $J=W=U=0$ to DuckDB, unnesting $U \ge 1$ or flat multi-way joins $J \ge 3, S \le 1$ to Polars/DataFusion, and window/CTE queries $W \ge 1 \lor S \ge 2$ to $\text{GPU}_{\text{Cold}}$). Routing performance is quantified across Execution Time ($T_{\pi}$), Routing Accuracy ($\text{Acc}_{\text{top1}}$ and $\le 10\%$ near-optimal hit rate), Resource Cost (Energy $E_{\pi}$ in Joules, Memory in GB, and Cloud FinOps in USD/1M queries), and Normalized Performance Regret ($\mathcal{R}_{\text{regret}}$):
+\begin{equation}
+    \hat{e}_{\text{GBR}}(q) = \arg\min_{e \in \mathcal{E}} \exp\!\left(\widehat{\ln(1 + T_e)}(\mathbf{x}_q)\right) - 1, \qquad \mathcal{R}_{\text{regret}}(q) = \frac{T_{\hat{e}(q)}(q) - T_{e^*(q)}(q)}{T_{e^*(q)}(q)} \times 100\%
+\end{equation}
+
+\subsection{CSCI Construct Validation, Weight Sensitivity Ablation, and GPU Timer Reliability}
+To address methodological validity regarding the formulation of Eq.~(1) and the fidelity of our GPU tensor execution harness, we conducted three dedicated validation experiments across all 75 queries ($N=375$ trials):
+\begin{enumerate}[leftmargin=1.5em,itemsep=2pt]
+    \item \textbf{CSCI Construct Validity Against Empirical Hardware Speedup:} The operator weights in Eq.~(1) ($w = [1.5, 2.5, 3.0, 3.5, 4.0, 1.5]$) reflect the algorithmic time-complexity hierarchy of relational operators: linear $\mathcal{O}(N)$ scan/branch evaluation ($D, C$ weighted at $1.5$), hash-table probing and staged materialization ($J, S$ weighted at $2.5\text{--}3.0$), $\mathcal{O}(N \log N)$ partition sorting in window frames ($W$ weighted at $3.5$), and super-linear cardinality expansion during lateral array unnesting ($U$ weighted at $4.0$). Empirical validation confirms that $\text{CSCI}(q)$ exhibits a highly significant positive correlation with SIMT GPU kernel speedup over CPU execution (Spearman's rank correlation $\rho = \mathbf{0.4935}, p = \mathbf{6.84 \times 10^{-6}}$; Kendall's $\tau = \mathbf{0.3575}$).
+    \item \textbf{Monte Carlo Weight Perturbation Sensitivity Analysis:} To verify that complexity stratification is not an artifact of ad-hoc weight tuning, we performed a 1,000-iteration Monte Carlo sensitivity ablation in which all six weights were independently perturbed by $\pm 20\%$ under a continuous uniform distribution $w'_k \sim \mathcal{U}(0.8 w_k, 1.2 w_k)$. Across all 1,000 perturbed weight vectors, query complexity rankings remained highly invariant, yielding a mean Spearman rank correlation of $\bar{\rho} = \mathbf{0.8189} \pm \mathbf{0.0083}$ ($\min \rho = \mathbf{0.7900}, p < 10^{-18}$).
+    \item \textbf{GPU Hardware Timer Precision and Numerical Equivalence:} To prevent asynchronous CUDA kernel launch queuing from distorting latency measurements, all GPU timings enforce explicit device synchronization (\texttt{torch.cuda.synchronize()}) bracketed by hardware-level \texttt{cudaEventRecord} timers. Across $N=375$ trials, intra-query kernel timing repeatability achieved a low mean Coefficient of Variation of $\text{CV} = \mathbf{3.28\%}$, while 64-bit floating-point (\texttt{FP64}) aggregation checksums matched DuckDB, Polars, DataFusion, SQLite 3, and BigQuery within $\epsilon < 10^{-9}$ ($\text{EX}=1.000$ across $75/75$ queries).
+\end{enumerate}
+
+% =============================================================================
+% TABLES 1 - 8 (100% REAL EXECUTION TELEMETRY, FITTED TO \textwidth)
+% =============================================================================
+\begin{table}[t!]
+\centering
+\caption{In-process vectorized CPU OLAP (DuckDB) empirical execution latency (ms), 95th percentile tail latency, Valid Efficiency Score (VES), and paired Wilcoxon signed-rank test across five SQL complexity tiers ($N=75$ queries, 25 canonical seeds $\times$ 3 variations, $\text{SF}=1\text{ GB}$).}
+\label{tab:empirical_complexity_results}
+\renewcommand{\arraystretch}{1.20}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}lcccccccccc@{}}
+\toprule
+\multirow{2}{*}{\textbf{Complexity Category}} & \multicolumn{2}{c}{\textbf{AST Metrics}} & \multicolumn{2}{c}{\textbf{External Parquet (ms)}} & \multicolumn{2}{c}{\textbf{Native Columnar (ms)}} & \multirow{2}{*}{\textbf{Speedup}} & \multicolumn{2}{c}{\textbf{Efficiency (VES)}} & \multirow{2}{*}{\textbf{Wilcoxon $p$}} \\
+\cmidrule(lr){2-3} \cmidrule(lr){4-5} \cmidrule(lr){6-7} \cmidrule(lr){9-10}
+ & \textbf{Depth} & \textbf{Joins} & \textbf{Mean $\pm$ SD} & \textbf{P95} & \textbf{Mean $\pm$ SD} & \textbf{P95} & & \textbf{Ext.} & \textbf{Native} & \\
+\midrule
+\textbf{L1: Scan \& Filter} & $9.0$ & $0.0$ & $81.60 \pm 42.15$ & $148.30$ & $\mathbf{50.84 \pm 28.40}$ & $\mathbf{96.12}$ & $1.60\times$ & $99.6$ & $\mathbf{137.3}$ & $<0.001^{*}$ \\
+\textbf{L2: Multi-Way Joins} & $9.2$ & $4.8$ & $403.94 \pm 185.60$ & $712.45$ & $\mathbf{264.53 \pm 118.20}$ & $\mathbf{468.90}$ & $1.53\times$ & $84.8$ & $\mathbf{112.9}$ & $<0.001^{*}$ \\
+\textbf{L3: Nested CTEs} & $10.8$ & $2.6$ & $232.34 \pm 96.40$ & $398.10$ & $\mathbf{121.92 \pm 54.80}$ & $\mathbf{215.40}$ & $1.91\times$ & $99.6$ & $\mathbf{141.8}$ & $<0.001^{*}$ \\
+\textbf{L4: Window Func.} & $10.8$ & $1.6$ & $111.52 \pm 48.90$ & $194.20$ & $\mathbf{78.16 \pm 35.10}$ & $\mathbf{138.60}$ & $1.43\times$ & $99.4$ & $\mathbf{129.0}$ & $<0.001^{*}$ \\
+\textbf{L5: Array / UNNEST} & $10.6$ & $2.2$ & $442.70 \pm 210.30$ & $824.50$ & $\mathbf{403.27 \pm 192.40}$ & $\mathbf{756.80}$ & $1.10\times$ & $75.7$ & $\mathbf{87.2}$ & $<0.001^{*}$ \\
+\midrule
+\textbf{Overall ($N=75$ Queries)} & $\mathbf{10.1}$ & $\mathbf{2.2}$ & $\mathbf{254.42 \pm 196.80}$ & $\mathbf{645.20}$ & $\mathbf{183.74 \pm 164.50}$ & $\mathbf{512.30}$ & $\mathbf{1.38\times}$ & $\mathbf{91.8}$ & $\mathbf{121.6}$ & $\mathbf{<0.001^{*}}$ \\
+\bottomrule
+\end{tabular}%
+}
+\vspace{2pt}
+\parbox{\textwidth}{\scriptsize $^{*}$Statistically significant difference between External Parquet (seed-clustered 95\% CI: $[163.65, 362.54]\text{ ms}$) and Native Columnar storage modes (95\% CI: $[110.71, 274.89]\text{ ms}$) at $\alpha = 0.05$ after Holm-Bonferroni correction ($p = 1.542 \times 10^{-12}$ query-level, $p = 1.783 \times 10^{-55}$ trial-level; Cliff's delta $\delta = 0.296$).}
+\end{table}
+
+\begin{table}[t!]
+\centering
+\caption{Cross-engine empirical performance comparison between serverless cloud OLAP (Google BigQuery) and in-process vectorized OLAP (DuckDB) across five SQL complexity tiers ($N=75$ queries, 25 canonical seeds $\times$ 3 variations, TPC-H $\text{SF} = 1\text{ GB}$).}
+\label{tab:cross_engine_main}
+\renewcommand{\arraystretch}{1.20}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}lcccccccccc@{}}
+\toprule
+\multirow{2}{*}{\textbf{Complexity Tier}} & \multicolumn{3}{c}{\textbf{AST Profile ($n=15$/Tier)}} & \multicolumn{4}{c}{\textbf{Google BigQuery Serverless (Cloud)}} & \multicolumn{2}{c}{\textbf{DuckDB Vectorized (Local)}} & \multirow{2}{*}{\textbf{Ratio}} \\
+\cmidrule(lr){2-4} \cmidrule(lr){5-8} \cmidrule(lr){9-10}
+ & \textbf{Depth} & \textbf{Joins} & \textbf{CSCI} & \textbf{Unopt (ms)} & \textbf{Clustered (ms)} & \textbf{Slot (ms)} & \textbf{Scanned (MB)} & \textbf{Parquet (ms)} & \textbf{Native (ms)} & \textbf{(BQ/Duck)} \\
+\midrule
+\textbf{L1: Scan \& Filter} & $9.0$ & $0.0$ & $15.3$ & $684 \pm 312$ & $\mathbf{432.9 \pm 142}$ & $1980.8$ & $332.5 \rightarrow 166.9$ & $81.6 \pm 42.2$ & $\mathbf{50.8 \pm 28.4}$ & $8.5\times$ \\
+\textbf{L2: Multi-Way Joins} & $9.2$ & $4.8$ & $26.8$ & $1842 \pm 745$ & $\mathbf{667.3 \pm 265}$ & $5193.6$ & $474.0 \rightarrow 308.4$ & $403.9 \pm 185.6$ & $\mathbf{264.5 \pm 118.2}$ & $2.5\times$ \\
+\textbf{L3: Nested CTEs} & $10.8$ & $2.6$ & $36.7$ & $1265 \pm 518$ & $\mathbf{493.0 \pm 195}$ & $4637.3$ & $417.3 \rightarrow 246.2$ & $232.3 \pm 96.4$ & $\mathbf{121.9 \pm 54.8}$ & $4.0\times$ \\
+\textbf{L4: Window Func.} & $10.8$ & $1.6$ & $37.1$ & $1380 \pm 690$ & $\mathbf{372.8 \pm 168}$ & $1907.5$ & $241.5 \rightarrow 132.6$ & $111.5 \pm 48.9$ & $\mathbf{78.2 \pm 35.1}$ & $4.8\times$ \\
+\textbf{L5: Array / UNNEST} & $10.6$ & $2.2$ & $32.4$ & $1892 \pm 810$ & $\mathbf{1761.0 \pm 580}$ & $8737.2$ & $273.4 \rightarrow 184.4$ & $442.7 \pm 210.3$ & $\mathbf{403.3 \pm 192.4}$ & $4.4\times$ \\
+\midrule
+\textbf{Overall Mean} & $\mathbf{10.1}$ & $\mathbf{2.2}$ & $\mathbf{29.66}$ & $\mathbf{1412.6}$ & $\mathbf{745.4}$ & $\mathbf{4491.3}$ & $\mathbf{347.7 \rightarrow 207.7}$ & $\mathbf{254.4}$ & $\mathbf{183.7}$ & $\mathbf{4.1\times}$ \\
+\bottomrule
+\end{tabular}%
+}
+\vspace{2pt}
+\parbox{\textwidth}{\scriptsize \textit{Note:} CSCI denotes the Composite Structural Complexity Index. BigQuery Clustered 95\% CI: $[515.64, 1026.49]\text{ ms}$ ($p = 6.89 \times 10^{-13}$, Cliff's $\delta = 0.471$ vs. Unoptimized). All measurements were executed with query caching disabled (\texttt{use\_query\_cache=False}).}
+\end{table}
+
+\begin{table}[t!]
+\centering
+\caption{Selectivity perturbation and horizon sensitivity analysis across V1 (High Selectivity), V2 (Moderate Selectivity), and V3 (Adversarial Full-Horizon Stress) workloads ($n=25$ queries per variation, total $N=75$).}
+\label{tab:selectivity_sensitivity}
+\renewcommand{\arraystretch}{1.20}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}lccccccccc@{}}
+\toprule
+\textbf{Selectivity Variation} & \textbf{Queries} & \textbf{BQ Unopt (ms)} & \textbf{BQ Clust. (ms)} & \textbf{BQ Slot (ms)} & \textbf{Unopt Scan (MB)} & \textbf{Clust. Scan (MB)} & \textbf{I/O Pruning (\%)} & \textbf{FinOps $\Delta C_{\text{1M}}$} & \textbf{DuckDB Nat. (ms)} \\
+\midrule
+\textbf{V1: High Selectivity (Narrow)} & $25$ & $1124.5$ & $\mathbf{468.2}$ & $2145$ & $347.7$ & $\mathbf{75.1}$ & $\mathbf{78.4\%}$ & $\mathbf{\$1.47\text{ USD}}$ & $118.45$ \\
+\textbf{V2: Medium Selectivity (Moderate)} & $25$ & $1398.2$ & $\mathbf{712.6}$ & $4218$ & $347.7$ & $\mathbf{206.5}$ & $\mathbf{40.6\%}$ & $\mathbf{\$0.76\text{ USD}}$ & $179.62$ \\
+\textbf{V3: Low Selectivity (Full-Horizon)} & $25$ & $1715.1$ & $\mathbf{1055.4}$ & $7111$ & $347.7$ & $\mathbf{345.6}$ & $\mathbf{0.6\%}$ & $\$0.01\text{ USD}$ & $253.15$ \\
+\bottomrule
+\end{tabular}%
+}
+\vspace{2pt}
+\parbox{\textwidth}{\scriptsize \textit{Note:} V1 filters narrow temporal/segment horizons ($\sim$1--5\% selectivity); V2 spans moderate multi-year horizons ($\sim$15--30\%); V3 stresses full-table multi-year horizons ($\sim$65--95\%). FinOps $\Delta C_{\text{1M}}$ quantifies cloud cost savings per $10^6$ queries at $\$6.25\text{ USD/TiB}$.}
+\end{table}
+
+\begin{table}[t!]
+\centering
+\caption{Hardware-timed CUDA GPU latency decomposition: Serverless Cloud (Google BigQuery Clustered) vs. Vectorized CPU (DuckDB Native) vs. SIMT GPU-accelerated relational execution (NVIDIA GeForce RTX 2050, 4.0 GB VRAM, $N=375$ trials at $\text{SF}=1\text{ GB}$).}
+\label{tab:gpu_three_tier}
+\renewcommand{\arraystretch}{1.20}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}lcccccccc@{}}
+\toprule
+\multirow{2}{*}{\textbf{Complexity Tier}} & \textbf{Cloud Serverless} & \textbf{Vectorized CPU} & \multicolumn{3}{c}{\textbf{CUDA GPU Latency Decomposition (ms)}} & \multicolumn{3}{c}{\textbf{Architectural Speedup Ratios}} \\
+\cmidrule(lr){4-6} \cmidrule(lr){7-9}
+ & \textbf{BQ Clust. (ms)} & \textbf{DuckDB Nat. (ms)} & \textbf{PCIe H2D} & \textbf{Warm Kernel} & \textbf{Cold Total} & \textbf{Warm GPU / CPU} & \textbf{Cold GPU / CPU} & \textbf{Warm GPU / BQ} \\
+\midrule
+\textbf{L1: Scan \& Filter} & $432.9$ & $\mathbf{50.84}$ & $30.56$ & $24.46$ & $55.02$ & $2.08\times$ & $0.92\times^{\dagger}$ & $17.7\times$ \\
+\textbf{L2: Multi-Way Joins} & $667.3$ & $264.53$ & $55.83$ & $49.05$ & $\mathbf{104.88}$ & $5.39\times$ & $\mathbf{2.52\times}$ & $13.6\times$ \\
+\textbf{L3: Nested CTEs} & $493.0$ & $121.92$ & $43.26$ & $14.98$ & $\mathbf{58.24}$ & $8.14\times$ & $\mathbf{2.09\times}$ & $32.9\times$ \\
+\textbf{L4: Window Func.} & $372.8$ & $78.16$ & $9.43$ & $9.94$ & $\mathbf{19.37}$ & $7.86\times$ & $\mathbf{4.03\times}$ & $37.5\times$ \\
+\textbf{L5: Array / UNNEST} & $1761.0$ & $403.27$ & $34.46$ & $12.84$ & $\mathbf{47.31}$ & $\mathbf{31.40\times}$ & $\mathbf{8.52\times}$ & $137.1\times$ \\
+\midrule
+\textbf{Overall Mean ($N=75$)} & $\mathbf{745.4}$ & $\mathbf{183.74}$ & $\mathbf{34.71}$ & $\mathbf{22.25}$ & $\mathbf{56.96}$ & $\mathbf{8.26\times}$ & $\mathbf{3.23\times}$ & $\mathbf{33.5\times}$ \\
+\bottomrule
+\end{tabular}%
+}
+\vspace{2pt}
+\parbox{\textwidth}{\scriptsize $^{\dagger}$Indicates the PCIe Host-to-Device (H2D) bottleneck crossover point in L1 low-complexity scans where PCIe transfer overhead ($30.56\text{ ms}$, $\Phi_{\text{PCIe}}=55.5\%$) exceeds pure GPU kernel compute time ($24.46\text{ ms}$). Seed-clustered 95\% CIs: Warm GPU $[16.78, 28.68]\text{ ms}$ (Cliff's $\delta = 0.722$ vs. DuckDB); Cold GPU $[46.23, 68.44]\text{ ms}$ (Cliff's $\delta = 0.199$).}
+\end{table}
+
+\begin{table}[t!]
+\centering
+\caption{Six-software cross-paradigm architectural matrix (100\% real execution, zero estimation) comparing full-scale Row-Store (SQLite 3), Serverless Cloud (Google BigQuery), C++ Vectorized DBMS (DuckDB), Rust Apache Arrow Engines (Polars \& Apache DataFusion), and CUDA GPU (NVIDIA RTX 2050) across 75 queries ($\text{SF}=1\text{ GB}$).}
+\label{tab:six_software_matrix}
+\renewcommand{\arraystretch}{1.20}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}lccccccccc@{}}
+\toprule
+\multirow{2}{*}{\textbf{Complexity Tier}} & \textbf{Full Row-Store} & \textbf{Cloud OLAP} & \multicolumn{3}{c}{\textbf{Vectorized CPU Engines (C++ \& Rust Arrow)}} & \multicolumn{2}{c}{\textbf{SIMT GPU (RTX 2050)}} & \multicolumn{2}{c}{\textbf{Key Speedup Ratios}} \\
+\cmidrule(lr){4-6} \cmidrule(lr){7-8} \cmidrule(lr){9-10}
+ & \textbf{SQLite 3 (ms)} & \textbf{BigQuery (ms)} & \textbf{DuckDB (ms)} & \textbf{Polars (ms)} & \textbf{DataFusion (ms)} & \textbf{Warm (ms)} & \textbf{Cold (ms)} & \textbf{Polars / SQLite} & \textbf{DuckDB / DF} \\
+\midrule
+\textbf{L1: Scan \& Filter} & $6789.6$ & $432.9$ & $50.84$ & $38.00$ & $\mathbf{33.58}$ & $\mathbf{24.46}$ & $55.02$ & $178.7\times$ & $0.66\times$ \\
+\textbf{L2: Multi-Way Joins} & $19374.0$ & $667.3$ & $264.53$ & $\mathbf{81.68}$ & $92.76$ & $\mathbf{49.05}$ & $104.88$ & $\mathbf{237.2\times}$ & $0.35\times$ \\
+\textbf{L3: Nested CTEs} & $5108.1$ & $493.0$ & $121.92$ & $\mathbf{66.81}$ & $71.66$ & $\mathbf{14.98}$ & $58.24$ & $76.5\times$ & $0.59\times$ \\
+\textbf{L4: Window Func.} & $6023.7$ & $372.8$ & $78.16$ & $\mathbf{71.11}$ & $173.16$ & $\mathbf{9.94}$ & $\mathbf{19.37}$ & $84.7\times$ & $\mathbf{2.22\times}$ \\
+\textbf{L5: Array / UNNEST} & $4791.2$ & $1761.0$ & $403.27$ & $154.76$ & $\mathbf{110.31}$ & $\mathbf{12.84}$ & $\mathbf{47.31}$ & $31.0\times$ & $0.27\times$ \\
+\midrule
+\textbf{Overall Mean ($N=75$)} & $\mathbf{8417.3}$ & $\mathbf{745.4}$ & $\mathbf{183.74}$ & $\mathbf{82.47}$ & $\mathbf{96.29}$ & $\mathbf{22.25}$ & $\mathbf{56.96}$ & $\mathbf{121.6\times}$ & $\mathbf{0.82\times}$ \\
+\bottomrule
+\end{tabular}%
+}
+\vspace{2pt}
+\parbox{\textwidth}{\scriptsize \textit{Note:} Seed-clustered 10,000-bootstrap 95\% CIs across $N=75$ queries: SQLite 3 $[6412.19, 10819.70]\text{ ms}$; BigQuery $[515.64, 1026.49]\text{ ms}$; DuckDB $[110.71, 274.89]\text{ ms}$; Polars $[67.93, 98.65]\text{ ms}$ (Cliff's $\delta = 1.000, p = 5.28 \times 10^{-14}$ vs. SQLite 3); DataFusion $[78.31, 114.92]\text{ ms}$; GPU Warm $[16.78, 28.68]\text{ ms}$; GPU Cold $[46.23, 68.44]\text{ ms}$.}
+\end{table}
+
+\begin{table}[t!]
+\centering
+\caption{Effective analytical scan throughput ($\Theta_{\text{eff}}$, GB/s), Cloud Slot Concurrency Multiplier ($\mathcal{M}_{\text{slot}}$), and GPU PCIe Overhead Fraction ($\Phi_{\text{PCIe}}$) across six OLAP engines ($N=75$ queries, 100\% full-scale TPC-H $\text{SF}=1\text{ GB}$).}
+\label{tab:throughput_and_cost}
+\renewcommand{\arraystretch}{1.20}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}lccccccccc@{}}
+\toprule
+\multirow{2}{*}{\textbf{Complexity Tier}} & \textbf{Base Scan} & \textbf{Cloud Slot} & \textbf{GPU PCIe} & \multicolumn{6}{c}{\textbf{Effective Analytical Scan Throughput $\Theta_{\text{eff}}$ (GB/s, Higher is Better)}} \\
+\cmidrule(lr){5-10}
+ & \textbf{$\mathcal{B}_{\text{unopt}}$ (MB)} & \textbf{$\mathcal{M}_{\text{slot}}$ Ratio} & \textbf{$\Phi_{\text{PCIe}}$ (\%)} & \textbf{SQLite 3} & \textbf{BigQuery} & \textbf{DuckDB} & \textbf{Polars} & \textbf{DataFusion} & \textbf{GPU Warm} \\
+\midrule
+\textbf{L1: Scan \& Filter} & $332.5$ & $4.58\times$ & $55.5\%$ & $0.048$ & $0.750$ & $6.39$ & $8.55$ & $\mathbf{9.67}$ & $\mathbf{13.28}$ \\
+\textbf{L2: Multi-Way Joins} & $474.0$ & $7.78\times$ & $53.2\%$ & $0.024$ & $0.694$ & $1.75$ & $\mathbf{5.67}$ & $4.99$ & $\mathbf{9.44}$ \\
+\textbf{L3: Nested CTEs} & $417.3$ & $\mathbf{9.41\times}$ & $74.3\%$ & $0.080$ & $0.827$ & $3.34$ & $\mathbf{6.10}$ & $5.69$ & $\mathbf{27.20}$ \\
+\textbf{L4: Window Func.} & $241.5$ & $5.12\times$ & $\mathbf{48.7\%}$ & $0.039$ & $0.633$ & $3.02$ & $\mathbf{3.32}$ & $1.36$ & $\mathbf{23.73}$ \\
+\textbf{L5: Array / UNNEST} & $273.4$ & $4.96\times$ & $72.9\%$ & $0.056$ & $0.152$ & $0.66$ & $1.73$ & $\mathbf{2.42}$ & $\mathbf{20.79}$ \\
+\midrule
+\textbf{Overall Mean ($N=75$)} & $\mathbf{347.7}$ & $\mathbf{6.37\times}$ & $\mathbf{60.9\%}$ & $\mathbf{0.049}$ & $\mathbf{0.611}$ & $\mathbf{3.03}$ & $\mathbf{5.07}$ & $\mathbf{4.83}$ & $\mathbf{18.89}$ \\
+\bottomrule
+\end{tabular}%
+}
+\vspace{2pt}
+\parbox{\textwidth}{\scriptsize \textit{Note:} $\Theta_{\text{eff}} = \mathcal{B}_{\text{unopt}} / (1.024 \cdot T_{\text{engine}})$ normalizes effective processing throughput against the unpruned columnar projection size ($\text{GB/s}$). Omnibus Friedman test across all six engines confirms highly significant performance stratification ($\chi^2_F(5) = 321.50, p = 2.382 \times 10^{-67}$, Kendall's concordance $W = 0.8573$).}
+\end{table}
+
+\begin{table}[t!]
+\centering
+\caption{Hardware resource telemetry (CPU Utilization \%, Host RAM GB, GPU Utilization \%, VRAM GB), per-query Energy Consumption (Joules), and Green OLAP Performance per Watt ($\eta_{\text{watt}}$, MB/Joule $\equiv$ MB/s/W) across local CPU and CUDA GPU engines ($N=75$ queries, 100\% full-scale TPC-H $\text{SF}=1\text{ GB}$).}
+\label{tab:hardware_energy_telemetry}
+\renewcommand{\arraystretch}{1.20}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}lccccccccccccccc@{}}
+\toprule
+\multirow{2}{*}{\textbf{Complexity Tier}} & \multicolumn{4}{c}{\textbf{CPU Utilization (\%)}} & \multicolumn{2}{c}{\textbf{Host RAM (GB)}} & \multicolumn{2}{c}{\textbf{RTX 2050 GPU}} & \multicolumn{4}{c}{\textbf{Energy per Query $E(q)$ (Joules, Lower is Better)}} & \multicolumn{3}{c}{\textbf{Perf per Watt $\eta_{\text{watt}}$ (MB/J, Higher is Better)}} \\
+\cmidrule(lr){2-5} \cmidrule(lr){6-7} \cmidrule(lr){8-9} \cmidrule(lr){10-13} \cmidrule(lr){14-16}
+ & \textbf{SQLite} & \textbf{DuckDB} & \textbf{Polars} & \textbf{DF} & \textbf{SQLite} & \textbf{Columnar} & \textbf{Util (\%)} & \textbf{VRAM (GB)} & \textbf{SQLite} & \textbf{DuckDB} & \textbf{Polars} & \textbf{GPU Warm (Cold)} & \textbf{SQLite} & \textbf{DuckDB / Polars} & \textbf{GPU Warm (Cold)} \\
+\midrule
+\textbf{L1: Scan \& Filter} & $8.7\%$ & $74.4\%$ & $70.2\%$ & $73.2\%$ & $2.14$ & $4.46\text{--}4.48$ & $27.1\%$ & $1.24$ & $101.0$ & $1.79$ & $1.36$ & $\mathbf{0.27}\ (0.60)$ & $4.06$ & $515.2\ /\ 285.9$ & $\mathbf{1398.5}\ (569.6)$ \\
+\textbf{L2: Multi-Way Joins} & $9.5\%$ & $66.4\%$ & $\mathbf{89.1\%}$ & $66.4\%$ & $2.30$ & $4.65\text{--}4.78$ & $32.1\%$ & $1.33$ & $293.4$ & $8.99$ & $3.39$ & $\mathbf{0.60}\ (1.29)$ & $2.28$ & $177.7\ /\ 163.0$ & $\mathbf{910.3}\ (383.0)$ \\
+\textbf{L3: Nested CTEs} & $8.7\%$ & $57.7\%$ & $77.5\%$ & $74.1\%$ & $2.27$ & $4.71\text{--}4.72$ & $30.5\%$ & $1.33$ & $76.0$ & $4.00$ & $2.56$ & $\mathbf{0.17}\ (0.68)$ & $6.21$ & $215.4\ /\ 186.9$ & $\mathbf{2558.0}\ (619.6)$ \\
+\textbf{L4: Window Func.} & $8.7\%$ & $58.6\%$ & $74.3\%$ & $65.6\%$ & $2.28$ & $4.73\text{--}4.74$ & $32.4\%$ & $1.33$ & $89.6$ & $2.54$ & $2.65$ & $\mathbf{0.11}\ (0.21)$ & $3.38$ & $202.7\ /\ 103.2$ & $\mathbf{2502.1}\ (1178.3)$ \\
+\textbf{L5: Array / UNNEST} & $8.7\%$ & $73.4\%$ & $76.1\%$ & $71.3\%$ & $2.33$ & $4.69\text{--}4.85$ & $\mathbf{33.1\%}$ & $1.29$ & $71.3$ & $14.67$ & $5.89$ & $\mathbf{0.12}\ (0.45)$ & $4.30$ & $104.0\ /\ 59.6$ & $\mathbf{2345.0}\ (611.2)$ \\
+\midrule
+\textbf{Overall Mean ($N=75$)} & $\mathbf{8.86\%}$ & $\mathbf{66.10\%}$ & $\mathbf{77.44\%}$ & $\mathbf{70.12\%}$ & $\mathbf{2.26}$ & $\mathbf{4.65\text{--}4.71}$ & $\mathbf{31.04\%}$ & $\mathbf{1.30}$ & $\mathbf{126.26}$ & $\mathbf{6.40}$ & $\mathbf{3.17}$ & $\mathbf{0.25}\ (\mathbf{0.65})$ & $\mathbf{4.05}$ & $\mathbf{243.0\ /\ 159.7}$ & $\mathbf{1942.8}\ (\mathbf{672.3})$ \\
+\bottomrule
+\end{tabular}%
+}
+\vspace{2pt}
+\parbox{\textwidth}{\scriptsize \textit{Note:} Hardware telemetry sampled via \texttt{psutil}, NVIDIA \texttt{NVML} (\texttt{pynvml}), and \texttt{torch.cuda} hardware counters. Apache DataFusion (DF) incurs a mean energy footprint of $3.39\text{ J}$ ($1.23\text{--}5.99\text{ J}$) and a mean performance per watt of $157.1\text{ MB/J}$ ($303.4\text{ MB/J}$ in L1; $85.6\text{ MB/J}$ in L5).}
+\end{table}
+
+\begin{table}[t!]
+\centering
+\caption{Head-to-head comparison of five routing models---(1) Always DuckDB, (2) Always GPU, (3) Always BigQuery, (4) Rule-Based Routing, and (5) Proposed AST-Aware Routing---evaluated under seed-grouped 25-fold Leave-One-Seed-Out cross-validation ($N=75$ queries, $\text{SF}=1\text{ GB}$, zero data leakage) across Routing Accuracy, Execution Time, Performance Regret, and Resource Cost.}
+\label{tab:ast_query_routing}
+\renewcommand{\arraystretch}{1.20}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}lccccccccc@{}}
+\toprule
+\multirow{2}{*}{\textbf{Routing Model / Policy}} & \multicolumn{2}{c}{\textbf{Routing Accuracy (\%)}} & \multicolumn{2}{c}{\textbf{Execution Time (ms)}} & \textbf{Performance} & \multicolumn{3}{c}{\textbf{Resource Cost per Query / Workload}} & \textbf{Router} \\
+\cmidrule(lr){2-3} \cmidrule(lr){4-5} \cmidrule(lr){7-9}
+ & \textbf{Top-1 Acc.} & \textbf{$\le 10\%$ Opt. Hit} & \textbf{Mean (ms)} & \textbf{P95 (ms)} & \textbf{Regret (\%)} & \textbf{Energy (J)} & \textbf{Memory (GB)} & \textbf{Cloud ($\$/\text{1M}$)} & \textbf{Time ($\mu\text{s}$)} \\
+\midrule
+\textbf{1. Always DuckDB (CPU DBMS)} & $28.00\%$ & $32.00\%$ & $183.74$ & $731.22$ & $271.10\%$ & $6.397$ & $4.71$ & $\$0.00$ & $0.00$ \\
+\textbf{2. Always GPU (CUDA Cold-Start)} & $49.33\%$ & $50.67\%$ & $56.96$ & $113.70$ & $60.76\%$ & $\mathbf{0.644}$ & $\mathbf{1.30}$ & $\$0.00$ & $0.00$ \\
+\textbf{3. Always BigQuery (Cloud OLAP)} & $0.00\%$ & $0.00\%$ & $745.39$ & $2794.05$ & $1709.86\%$ & $15.720$ & $2.13$ & $\$1267.66$ & $0.00$ \\
+\quad \textit{Always Polars (Rust Arrow Ref.)} & $13.33\%$ & $26.67\%$ & $82.47$ & $230.71$ & $132.61\%$ & $3.170$ & $4.65$ & $\$0.00$ & $0.00$ \\
+\quad \textit{Always DataFusion (Rust Arrow Ref.)} & $9.33\%$ & $13.33\%$ & $96.30$ & $258.18$ & $213.65\%$ & $3.393$ & $4.65$ & $\$0.00$ & $0.00$ \\
+\textbf{4. Rule-Based Routing (Heuristic)} & $49.33\%$ & $58.67\%$ & $71.48$ & $230.71$ & $65.63\%$ & $2.374$ & $3.43$ & $\$0.00$ & $34.07$ \\
+\quad \textit{Syntax-Only AST Router (8-Dim)} & $52.00\%$ & $57.33\%$ & $78.31$ & $175.67$ & $56.33\%$ & $2.216$ & $2.86$ & $\$0.00$ & $497.16$ \\
+\textbf{5a. Proposed AST-Aware RF (9-Dim)} & $52.00\%$ & $56.00\%$ & $62.46$ & $138.17$ & $51.94\%$ & $1.467$ & $2.65$ & $\$0.00$ & $425.53$ \\
+\textbf{5b. Proposed AST-Aware Cost-Reg (9-Dim)} & $\mathbf{57.33\%}$ & $\mathbf{65.33\%}$ & $\mathbf{54.92}$ & $\mathbf{129.37}$ & $\mathbf{34.98\%}$ & $\mathbf{1.381}$ & $2.91$ & $\mathbf{\$0.00}$ & $497.16$ \\
+\midrule
+\textit{Oracle Ideal Router (Lower Bound)} & $100.00\%$ & $100.00\%$ & $42.64$ & $101.92$ & $0.00\%$ & $0.975$ & $3.01$ & $\$0.00$ & $0.00$ \\
+\bottomrule
+\end{tabular}%
+}
+\vspace{2pt}
+\parbox{\textwidth}{\scriptsize \textit{Note:} Evaluated via seed-grouped 25-fold Leave-One-Seed-Out cross-validation (25 disjoint canonical seed groups, zero data leakage). Seed-clustered 95\% CI for Proposed 9D Router: $[42.78, 68.50]\text{ ms}$ vs. Rule-Based Router $[52.79, 91.74]\text{ ms}$ (paired Wilcoxon $p = 0.0187$, Cliff's $\delta = 0.126$). Out-of-fold regression $R^2$: GPU latency $R^2 = 0.875$, Polars latency $R^2 = 0.822$, and Energy $R^2 = 0.815$.}
+\end{table}
+
+% =============================================================================
+% FIGURES 3 - 8
+% =============================================================================
+\begin{figure}[t!]
+\centering
+\includegraphics[width=0.98\textwidth]{figures/fig_cross_engine_bq_duckdb_sf1_300dpi.pdf}
+\caption{Empirical evaluation across five SQL complexity tiers (L1--L5, $N=75$ queries) at $\text{SF}=1\text{ GB}$: (a) Cross-engine execution latency comparing Google BigQuery (Unoptimized vs. Clustered) and DuckDB (External Parquet vs. Native Columnar) on a logarithmic scale; (b) BigQuery server wall-clock latency versus total distributed Slot compute time (ms); and (c) Storage I/O pruning achieved via Clustering Keys on BigQuery.}
+\label{fig:cross_engine_results}
+\end{figure}
+
+\begin{figure}[t!]
+\centering
+\includegraphics[width=0.95\textwidth]{figures/fig_seed25_heatmap_sf1_300dpi.pdf}
+\caption{Granular 25-seed performance and storage pruning distribution across selectivity variations V1 (High Selectivity), V2 (Moderate Selectivity), and V3 (Low Selectivity / Full-Horizon): evaluating execution latency scaling and percentage reduction in scanned storage bytes achieved via clustering keys.}
+\label{fig:seed25_heatmap}
+\end{figure}
+
+\begin{figure}[t!]
+\centering
+\includegraphics[width=0.98\textwidth]{figures/fig_gpu_pcie_decomposition_sf1_300dpi.pdf}
+\caption{Hardware-timed CUDA GPU latency decomposition on NVIDIA GeForce RTX 2050 ($4.0\text{ GB}$ VRAM, $N=375$ trials at $\text{SF}=1\text{ GB}$): (a) Direct comparison between DuckDB Native Columnar CPU latency and stacked GPU latency (in-VRAM Warm Kernel execution plus PCIe Host-to-Device transfer overhead), highlighting the L1 PCIe bottleneck crossover ($55.02\text{ ms}$ Cold GPU vs. $50.84\text{ ms}$ CPU); and (b) Logarithmic speedup trajectory across AST complexity tiers L1--L5 relative to the $1.0\times$ CPU--GPU break-even threshold.}
+\label{fig:gpu_pcie_decomposition}
+\end{figure}
+
+\begin{figure}[t!]
+\centering
+\includegraphics[width=0.96\textwidth]{figures/fig_six_software_comparison_sf1_300dpi.pdf}
+\caption{Six-software cross-paradigm OLAP execution latency comparison (logarithmic scale) across five AST complexity tiers (L1--L5, $N=75$ queries at 100\% full-scale $\text{SF}=1\text{ GB}$), contrasting SQLite 3 (C Row-Store Baseline), Google BigQuery Clustered (Serverless Cloud), DuckDB Native (C++ Vectorized DBMS), Polars Lazy SQL (Rust Arrow Engine), Apache DataFusion (Rust Query Engine), and CUDA Tensor OLAP (NVIDIA RTX 2050 Cold-Start).}
+\label{fig:six_software_chart}
+\end{figure}
+
+\begin{figure}[t!]
+\centering
+\includegraphics[width=0.98\textwidth]{figures/fig_hardware_energy_efficiency_sf1_300dpi.pdf}
+\caption{Hardware resource and green OLAP energy efficiency evaluation across five AST complexity tiers (L1--L5, $N=75$ queries at 100\% full-scale $\text{SF}=1\text{ GB}$): (a) Per-query energy consumption in Joules (logarithmic scale, lower is better) across SQLite 3, DuckDB, Polars, and NVIDIA RTX 2050 GPU (Cold vs. Warm); and (b) Performance per Watt in MB scanned per Joule ($\text{MB/s/W}$, logarithmic scale, higher is better).}
+\label{fig:hardware_energy_chart}
+\end{figure}
+
+\begin{figure}[t!]
+\centering
+\includegraphics[width=0.98\textwidth]{figures/fig_ast_query_router_sf1_300dpi.pdf}
+\caption{Evaluation of the five routing models across 75 benchmark queries under seed-grouped 25-fold Leave-One-Seed-Out cross-validation: (a) Mean execution time (ms, log scale) and performance regret (\%) comparing Always BigQuery, Always DuckDB, Always Polars, Rule-Based Routing, Syntax-Only AST (8D), Always GPU (Cold), Proposed AST-Aware Routing (9D), and the Oracle Ideal Router; and (b) Grouped comparison of Top-1 Routing Accuracy (\%), Near-Optimal Hit Rate ($\le 10\%$ Oracle, \%), and Performance Regret (\%).}
+\label{fig:ast_query_router}
+\end{figure}
+
+% =============================================================================
+% 4. EMPIRICAL RESULTS AND ANALYSIS
+% =============================================================================
+\section{Empirical Results and Analysis}
+\subsection{In-Process Storage Effect: External Parquet vs. Native Columnar}
+Table~\ref{tab:empirical_complexity_results} summarizes the local execution telemetry on DuckDB across all 75 queries ($N=375$ trial executions). Overall, native columnar storage reduces mean latency from $254.42\text{ ms}$ (seed-clustered 95\% CI: $[163.65, 362.54]\text{ ms}$) to $183.74\text{ ms}$ (95\% CI: $[110.71, 274.89]\text{ ms}$). Across L1 scans ($81.60\text{ ms} \rightarrow 50.84\text{ ms}$, $1.60\times$), L2 multi-way joins ($403.94\text{ ms} \rightarrow 264.53\text{ ms}$), L3 staged CTE pipelines ($232.34\text{ ms} \rightarrow 121.92\text{ ms}$, $1.91\times$), and L4 window functions ($111.52\text{ ms} \rightarrow 78.16\text{ ms}$), native columnar storage consistently outperforms external Parquet decoding ($p = 1.542 \times 10^{-12}$ across queries, $p = 1.783 \times 10^{-55}$ across trials; Cliff's delta $\delta = 0.296$) by eliminating repeated ZSTD decompression overhead.
+
+\subsection{Cloud Serverless vs. Vectorized CPU, Slot Elasticity, and FinOps Savings (V1--V3)}
+Tables~\ref{tab:cross_engine_main}, \ref{tab:selectivity_sensitivity}, and \ref{tab:throughput_and_cost}, together with Figs.~\ref{fig:cross_engine_results} and \ref{fig:seed25_heatmap}, demonstrate that while DuckDB executes L1--L5 queries in $50.8\text{--}403.3\text{ ms}$ (mean $183.74\text{ ms}$), Google BigQuery exhibits a serverless scheduling floor of $372.8\text{--}1761.0\text{ ms}$ server wall-clock time (mean $745.39\text{ ms}$, 95\% CI: $[515.64, 1026.49]\text{ ms}$, reduced from $1412.6\text{ ms}$ server / $2190.57\text{ ms}$ client-observed unoptimized latency, 95\% CI: $[1645.38, 2786.50]\text{ ms}$; Cliff's $\delta = 0.471, p = 6.89 \times 10^{-13}$) while dynamically allocating $4491.3\text{ ms}$ of parallel slot compute time. This corresponds to a mean Cloud Slot Concurrency Multiplier of $\mathcal{M}_{\text{slot}} = 6.37\times$, peaking at $9.41\times$ in L3 staged CTE pipelines ($4637.3\text{ ms}$ slot time vs. $493.0\text{ ms}$ wall-clock time). Under V1 high-selectivity predicates, BigQuery clustering keys reduce mean scanned bytes by $\mathbf{78.4\%}$ ($347.7\text{ MB} \rightarrow 75.1\text{ MB}$), yielding a direct Cloud FinOps cost reduction of $\Delta C_{\text{1M}} = \mathbf{\$1.47\text{ USD}}$ per million queries, compared to $40.6\%$ pruning ($\Delta C_{\text{1M}} = \$0.76$) in V2 and $0.6\%$ in V3.
+
+\subsection{PCIe Host-to-Device Bottleneck vs. SIMT GPU Acceleration}
+Tables~\ref{tab:gpu_three_tier} and \ref{tab:throughput_and_cost}, alongside Fig.~\ref{fig:gpu_pcie_decomposition}, present the hardware-timed CUDA execution telemetry on the NVIDIA GeForce RTX 2050 GPU ($4.0\text{ GB}$ VRAM, $N=375$ trials):
+\begin{itemize}[leftmargin=1.5em,itemsep=2pt]
+    \item \textbf{Mathematical Proof of the L1 PCIe Crossover:} In L1 scan-and-filter workloads ($\text{CSCI}=15.3$), pure in-VRAM GPU kernel execution requires $24.46\text{ ms}$ ($\Theta_{\text{eff}} = 13.28\text{ GB/s}$), whereas PCIe Host-to-Device transfer incurs $30.56\text{ ms}$, yielding a PCIe bottleneck fraction of $\Phi_{\text{PCIe}} = 55.5\%$. By Eq.~(3), the required break-even kernel speedup is $(1 - 0.555)^{-1} = \mathbf{2.25\times}$. Because L1's low arithmetic intensity yields a warm kernel speedup of only $2.08\times < 2.25\times$, cold-start GPU execution ($55.02\text{ ms}$) is slower than DuckDB CPU ($50.84\text{ ms}$, $0.92\times$), Polars ($38.00\text{ ms}$), and DataFusion ($33.58\text{ ms}$).
+    \item \textbf{Non-Linear GPU Speedup in High-CSCI Workloads (L2--L5):} As structural query complexity increases ($\text{CSCI} \in [26.8, 37.1]$), cold-start GPU execution ($56.96\text{ ms}$ overall, 95\% CI: $[46.23, 68.44]\text{ ms}$; Cliff's $\delta = 0.199, p = 5.22 \times 10^{-4}$ vs. DuckDB) outperforms DuckDB Native CPU by $\mathbf{2.52\times}$ in L2 multi-way joins ($104.88\text{ ms}$ vs. $264.53\text{ ms}$), $\mathbf{2.09\times}$ in L3 staged CTEs ($58.24\text{ ms}$ vs. $121.92\text{ ms}$), $\mathbf{4.03\times}$ in L4 multi-axis window sorting ($19.37\text{ ms}$ vs. $78.16\text{ ms}$), and $\mathbf{8.52\times}$ in L5 array unnesting ($47.31\text{ ms}$ vs. $403.27\text{ ms}$). When columnar tensors reside in warm VRAM ($22.26\text{ ms}$ overall, 95\% CI: $[16.78, 28.68]\text{ ms}$; Cliff's $\delta = 0.722, p = 1.01 \times 10^{-12}$ vs. DuckDB), GPU kernel execution achieves a mean throughput of $\Theta_{\text{eff}} = \mathbf{18.89\text{ GB/s}}$ (peaking at $\mathbf{27.20\text{ GB/s}}$ in L3 and $\mathbf{23.73\text{ GB/s}}$ in L4), outperforming DuckDB CPU by $\mathbf{8.26\times}$ overall.
+\end{itemize}
+
+\subsection{Six-Software Cross-Paradigm Synthesis: Full Row-Store vs. C++ DBMS vs. Rust Arrow Engines}
+Tables~\ref{tab:six_software_matrix} and \ref{tab:throughput_and_cost} and Fig.~\ref{fig:six_software_chart} synthesize execution characteristics across all six software engines under 100\% full-scale execution. An omnibus non-parametric Friedman test across the 75 queries confirms highly significant performance differentiation across the six engines ($\chi^2_F(5) = 321.50, p = 2.382 \times 10^{-67}$, Kendall's coefficient of concordance $W = 0.8573$), revealing three critical software engineering insights:
+\begin{enumerate}[leftmargin=1.5em,itemsep=2pt]
+    \item \textbf{Two-Orders-of-Magnitude Superiority Over Full-Scale Row-Store Baselines:} Full-scale tuple-at-a-time B-tree execution in SQLite 3 incurs a mean latency of $8417.33\text{ ms}$ (95\% CI: $[6412.19, 10819.70]\text{ ms}$, $\Theta_{\text{eff}} = 0.049\text{ GB/s}$), peaking at $19374.0\text{ ms}$ ($\Theta_{\text{eff}} = 0.024\text{ GB/s}$) in L2 multi-way joins due to random B-tree page traversal across $6.00\times 10^6$ rows. Vectorized columnar CPU engines achieve complete stochastic dominance (Cliff's $\delta = 1.000, p = 5.28 \times 10^{-14}$) with overall mean speedups of $45.8\times$ in DuckDB ($183.74\text{ ms}$), $87.4\times$ in Apache DataFusion ($96.30\text{ ms}$, 95\% CI: $[78.31, 114.92]\text{ ms}$, $4.83\text{ GB/s}$), and $102.1\times$ in Polars ($82.47\text{ ms}$, 95\% CI: $[67.93, 98.65]\text{ ms}$, $5.07\text{ GB/s}$; mean tier speedup $121.6\times$, peaking at $237.2\times$ in L2).
+    \item \textbf{Zero-Copy Apache Arrow Advantage in Full-Table Unnesting (L1 \& L5):} On un-truncated $6.00\times 10^6$-row tables, Apache DataFusion ($33.58\text{ ms}$, $9.67\text{ GB/s}$ in L1; $110.31\text{ ms}$, $2.42\text{ GB/s}$ in L5) and Polars ($38.00\text{ ms}$ in L1; $154.76\text{ ms}$ in L5) outperform DuckDB ($50.84\text{ ms}$ in L1; $403.27\text{ ms}$ in L5) by $2.61\times\text{--}3.66\times$ in L5 array unnesting because Arrow \texttt{ListArray} structures maintain contiguous offset buffers in RAM. Meanwhile, in L5 full-table unnesting, GPU radix expansion ($47.31\text{ ms}$ cold, $12.84\text{ ms}$ warm at $20.79\text{ GB/s}$) surpasses all CPU engines.
+    \item \textbf{C++ Segment-Tree/Streaming Window Optimization vs. Rust Sort-Based Windows (L4):} In L4 multi-axis window ranking and sliding-frame queries, Polars ($71.11\text{ ms}$, $3.32\text{ GB/s}$) and DuckDB ($78.16\text{ ms}$, $3.02\text{ GB/s}$) closely lead CPU execution, with DuckDB surpassing Apache DataFusion ($173.16\text{ ms}$, $1.36\text{ GB/s}$) by $\mathbf{2.22\times}$, reflecting the efficiency of DuckDB's parallel segment-tree window framing compared to DataFusion's sort-based partition evaluators. Meanwhile, GPU execution ($9.94\text{ ms}$ warm at $23.73\text{ GB/s}$, $19.37\text{ ms}$ cold) remains the fastest overall paradigm for L4 window workloads.
+\end{enumerate}
+
+\subsection{Hardware Resource Utilization, Energy Footprint, and Performance-per-Watt Analysis}
+Table~\ref{tab:hardware_energy_telemetry} and Fig.~\ref{fig:hardware_energy_chart} report empirical hardware sensor telemetry across all 75 benchmark workloads, establishing three key systems-level insights:
+\begin{enumerate}[leftmargin=1.5em,itemsep=2pt]
+    \item \textbf{Multi-Core SIMD Saturation vs. Single-Thread B-Tree Bottleneck:} SQLite 3 is inherently bound to single-thread tuple iteration, utilizing only $8.86\%$ mean CPU capacity ($2.26\text{ GB}$ RAM) while prolonging active package power draw over $8.42\text{ s}$, resulting in an energy footprint of $\mathbf{126.26\text{ J/query}}$ (peaking at $293.4\text{ J}$ in L2 joins) and a mere $\mathbf{4.05\text{ MB/J}}$ in performance per watt. Conversely, vectorized CPU engines effectively saturate multi-core execution pipelines---achieving mean CPU utilizations of $\mathbf{77.44\%}$ in Polars (peaking at $89.1\%$ in L2 joins), $\mathbf{70.12\%}$ in Apache DataFusion, and $\mathbf{66.10\%}$ in DuckDB within a $4.65\text{--}4.71\text{ GB}$ host RAM envelope.
+    \item \textbf{Order-of-Magnitude Energy Reduction via Columnar Vectorization:} By compressing execution durations into tens of milliseconds, columnar CPU engines reduce mean per-query energy consumption by $19.7\times\text{--}39.8\times$ compared to SQLite 3, requiring only $\mathbf{3.17\text{ J}}$ in Polars ($159.7\text{ MB/J}$), $\mathbf{3.39\text{ J}}$ in DataFusion ($157.1\text{ MB/J}$), and $\mathbf{6.40\text{ J}}$ in DuckDB (which achieves the highest CPU energy efficiency of $\mathbf{243.0\text{ MB/J}}$ overall and $515.2\text{ MB/J}$ in L1 scans due to lower average CPU package power during morsel-driven scans).
+    \item \textbf{Green OLAP Superiority of SIMT GPU Offloading:} On the NVIDIA GeForce RTX 2050 GPU, relational tensor execution occupies a compact $\mathbf{1.30\text{ GB}}$ VRAM footprint ($32.5\%$ of the $4.0\text{ GB}$ device buffer) with a mean SM utilization of $\mathbf{31.04\%}$ across sub-$50\text{ ms}$ kernels. GPU acceleration reduces mean energy consumption to $\mathbf{0.65\text{ J/query}}$ under cold-start PCIe transfers ($\mathbf{672.3\text{ MB/J}}$) and $\mathbf{0.25\text{ J/query}}$ in warm VRAM ($\mathbf{1942.8\text{ MB/J}}$, peaking at $2558.0\text{ MB/J}$ in L3 and $2502.1\text{ MB/J}$ in L4)---delivering a $\mathbf{505.0\times}$ energy reduction over row-store baselines and a $\mathbf{12.7\times\text{--}25.6\times}$ energy reduction over vectorized CPU engines.
+\end{enumerate}
+
+\subsection{Head-to-Head Comparison of Five Routing Models Under Seed-Grouped Cross-Validation}
+Table~\ref{tab:ast_query_routing} and Fig.~\ref{fig:ast_query_router} present the comparative evaluation of our Proposed AST-Aware Query Routing Framework (Fig.~\ref{fig:proposed_ast_framework}) against four baseline policies under 25-seed Leave-One-Seed-Out cross-validation (guaranteeing zero data leakage across variations V1--V3):
+\begin{enumerate}[leftmargin=1.5em,itemsep=2pt]
+    \item \textbf{Comparison Against Static Single-Engine Baselines (Models 1--3):} Relying on a single static engine incurs severe performance regret and resource penalties across heterogeneous workloads. \textbf{(1) Always DuckDB} achieves a $28.00\%$ Top-1 accuracy but suffers from a $\mathbf{271.10\%}$ performance regret ($183.74\text{ ms}$ mean, $731.22\text{ ms}$ P95, $6.397\text{ J}$, $4.71\text{ GB}$ RAM) due to slower multi-way joins (L2) and array unnesting (L5). \textbf{(2) Always GPU (Cold-Start)} achieves $49.33\%$ Top-1 accuracy ($56.96\text{ ms}$ mean, $0.644\text{ J}$, $1.30\text{ GB}$ VRAM) but incurs a $\mathbf{60.76\%}$ performance regret because low-complexity L1 scans and narrow V1 joins are penalized by PCIe Host-to-Device transfer overhead. \textbf{(3) Always BigQuery} incurs a $745.39\text{ ms}$ mean latency ($2794.05\text{ ms}$ P95), a $\mathbf{1709.86\%}$ latency regret on $\text{SF}=1\text{ GB}$ workloads, $15.720\text{ J}$ of slot energy, and a cloud FinOps expenditure of $\mathbf{\$1267.66\text{ USD}}$ per million queries.
+    \item \textbf{Comparison Against Rule-Based and Syntax-Only Routing (Model 4 vs. Model 5):} \textbf{(4) Rule-Based Routing} (using fixed operator thresholds on $J, W, U, S$ in $34.07\text{ }\mu\text{s}$) improves upon static CPU engines ($71.48\text{ ms}$ mean, 95\% CI: $[52.79, 91.74]\text{ ms}$, $49.33\%$ Top-1 accuracy, $65.63\%$ regret, $2.374\text{ J}$), while the 8-dimensional \emph{Syntax-Only AST Router} achieves $52.00\%$ accuracy and $56.33\%$ regret ($78.31\text{ ms}$). However, neither approach accounts for predicate selectivity $\sigma(q)$. By integrating $\sigma(q)$ into our 9-dimensional \textbf{(5b) Proposed AST-Aware Cost-Regression Router ($\mathcal{R}_{\text{GBR-9D}}$)}, out-of-fold regression accurately predicts multi-engine latency and energy ($\text{GPU } R^2 = \mathbf{0.875}$, $\text{Polars } R^2 = \mathbf{0.822}$, $\text{Energy } R^2 = \mathbf{0.815}$) in $497.16\text{ }\mu\text{s}$. Consequently, $\mathcal{R}_{\text{GBR-9D}}$ achieves the highest Top-1 accuracy ($\mathbf{57.33\%}$) and near-optimal hit rate ($\mathbf{65.33\%}$), the lowest mean execution time ($\mathbf{54.92\text{ ms}}$, 95\% CI: $[42.78, 68.50]\text{ ms}$, P95: $129.37\text{ ms}$), and the lowest performance regret ($\mathbf{34.98\%}$) at a modest resource footprint of $\mathbf{1.381\text{ J}}$ and $\mathbf{2.91\text{ GB}}$ memory ($\mathbf{\$0.00}$ cloud cost)---statistically outperforming Rule-Based Routing ($p = 0.0187$, Cliff's $\delta = 0.126$, $43.9\%$ lower P95 tail latency), outperforming Always DuckDB by $\mathbf{3.35\times}$, and reducing latency regret by $25.78$ percentage points relative to Always GPU.
+    \item \textbf{Interpretable AST+Selectivity Routing Rules:} Feature importance analysis confirms that \texttt{Total\_AST\_Nodes} ($\mathbf{19.95\%}$), \texttt{Selectivity} ($\mathbf{19.81\%}$), \texttt{CSCI\_Score} ($\mathbf{15.95\%}$), and \texttt{Joins} ($\mathbf{11.01\%}$) govern $66.72\%$ of routing decisions. Specifically, $\mathcal{R}_{\text{GBR-9D}}$ routes $100.0\%$ of L1 scans to CPU engines ($80.0\%$ DuckDB, $13.3\%$ DataFusion, $6.7\%$ Polars), routes narrow/medium L2 joins ($\sigma(q) \le 0.76$) to Polars/DataFusion ($80.0\%$) while offloading full-horizon V3 joins ($\sigma(q) > 0.76$) to $\text{GPU}_{\text{Cold}}$ ($20.0\%$), and offloads $60.0\%$ of L3 CTEs, $100.0\%$ of L4 windows, and $80.0\%$ of L5 \texttt{UNNEST} workloads to the GPU.
+\end{enumerate}
+
+% =============================================================================
+% 5. LIMITATIONS & 6. CONCLUSION
+% =============================================================================
+\section{Limitations and Threats to Validity}
+To ensure a balanced interpretation of our findings, we categorize the limitations and threats to validity across three dimensions:
+\begin{enumerate}[leftmargin=1.5em,itemsep=2pt]
+    \item \textbf{Hardware Envelope and Memory-Hierarchy Threats:} Our local in-memory and GPU experiments were conducted at $\text{SF}=1\text{ GB}$ within a $4.0\text{ GB}$ discrete GPU VRAM envelope (NVIDIA GeForce RTX 2050 over PCIe Gen4) and a $16\text{ GB}$ host RAM envelope. While this hardware profile accurately reflects modern edge servers, developer workstations, and cost-efficient cloud instances, enterprise data center GPUs equipped with NVLink or HBM3e memory (e.g., NVIDIA H100/B200) exhibit higher interconnect bandwidth that would shift the PCIe break-even threshold ($\Phi_{\text{PCIe}}$) toward lower-CSCI queries. Conversely, datasets exceeding device VRAM or host RAM capacity ($\text{SF} \ge 100\text{ GB}$) trigger out-of-core disk spilling or require multi-node cloud slot elasticity.
+    \item \textbf{Workload, Schema, and Data-Distribution Skew Threats:} Although our 75-query factorial benchmark spans five structural complexity tiers (L1--L5) and three selectivity horizons (V1--V3), it is grounded in the uniform key distributions of the canonical TPC-H schema. Real-world production workloads---such as those modeled in the Join Order Benchmark (JOB) \cite{leis2015job} with heavy zipfian data skew and string-heavy predicates, or wide denormalized tables in the Star Schema Benchmark (SSB) \cite{oneil2009ssb}---can induce hash-join partition skew and cardinality estimation errors. Integrating multi-column sketches and join-key skew histograms into our 9-dimensional feature vector $\mathbf{x}_q$ is necessary to handle highly skewed schemas.
+    \item \textbf{External Generalizability to Distributed Clusters and Concurrent Multi-Tenancy:} Our experimental protocol evaluates single-query sequential execution with caching disabled to isolate intrinsic operator and hardware costs. Under high-concurrency multi-tenant workloads or multi-node distributed deployments (such as ClickHouse \cite{schulze2024clickhouse} and Trino \cite{sethi2019presto} clusters), memory-bus contention,VRAM capacity fragmentation, and admission-control queuing introduce dynamic state variables beyond static query syntax. Extending our AST-aware router into a stateful, concurrency-aware scheduler across distributed ClickHouse/Trino clusters and multi-terabyte scale factors is a primary direction for future research.
+\end{enumerate}
+
+\section{Conclusion}
+We presented a 75-query, 25-seed AST-driven empirical benchmarking and automated query routing framework evaluating SQL query complexity (L1--L5) and selectivity perturbations (V1--V3) across six software systems spanning four paradigms: SQLite 3 (full-scale row-store), Google BigQuery (serverless cloud), DuckDB (C++ vectorized DBMS), Polars and Apache DataFusion (Rust Arrow engines), and CUDA GPU execution (NVIDIA RTX 2050). Validated via 10,000-iteration seed-clustered bootstrap 95\% confidence intervals, Cliff's delta effect sizes, and leak-free 25-seed Leave-One-Seed-Out cross-validation against Always DuckDB, Always GPU, Always BigQuery, and Rule-Based Routing, our Proposed 9-Dimensional AST-Aware Cost-Regression Router ($\mathcal{R}_{\text{GBR-9D}}$) autonomously predicts multi-engine latency and resource costs ($R^2 = 0.815\text{--}0.875$) in $497.2\text{ }\mu\text{s}$ to achieve a $54.92\text{ ms}$ mean execution time (95\% CI: $[42.78, 68.50]\text{ ms}$), $34.98\%$ performance regret, and $1.381\text{ J}$ energy consumption, outperforming all static single-engine and heuristic baselines.
+
+% =============================================================================
+% SPRINGER NATURE MANDATORY DECLARATIONS
+% =============================================================================
+\section*{Declarations}
+
+\subsection*{Abbreviations}
+AST: Abstract Syntax Tree; B-Tree: Balanced Tree; CI: Confidence Interval; CPU: Central Processing Unit; CSCI: Composite Structural Complexity Index; CTE: Common Table Expression; CV: Coefficient of Variation; CUDA: Compute Unified Device Architecture; DBMS: Database Management System; DT: Decision Tree; EX: Execution Accuracy; FinOps: Cloud Financial Operations; GBR: Gradient Boosting Regressor; GCS: Google Cloud Storage; GPU: Graphics Processing Unit; H2D: Host-to-Device; I/O: Input/Output; JOB: Join Order Benchmark; LOSO-CV: Leave-One-Seed-Out Cross-Validation; MPP: Massively Parallel Processing; NVML: NVIDIA Management Library; OLAP: Online Analytical Processing; PCIe: Peripheral Component Interconnect Express; RAM: Random-Access Memory; RF: Random Forest; SARGable: Search Argument Able; SIMD: Single Instruction, Multiple Data; SIMT: Single Instruction, Multiple Threads; SQL: Structured Query Language; SSB: Star Schema Benchmark; TPC-H: Transaction Processing Performance Council Ad-Hoc Benchmark; VES: Valid Efficiency Score; VRAM: Video Random-Access Memory; ZSTD: Zstandard Compression.
+
+\subsection*{Ethics approval and consent to participate}
+Not applicable. This study utilizes synthetic benchmark data generated via the industry-standard TPC-H benchmark specification and does not involve human participants, animal subjects, or personally identifiable data.
+
+\subsection*{Consent for publication}
+Not applicable.
+
+\subsection*{Availability of data and materials}
+All TPC-H data generation scripts, the 75-query factorial SQL workload suite (25 canonical seeds $\times$ 3 selectivity variations across \path{workloads/L1_scan_filter} through \path{workloads/L5_array_unnest}), static AST structural metrics (\path{ast_complexity_summary.csv}, SHA-256: \path{4cb5f7477fd24dc77a6fd2b5...}), per-trial execution logs across DuckDB (\path{raw_benchmark_sf1.csv}, SHA-256: \path{7d69610e86863845ae7cbb5c...}), Google BigQuery (\path{raw_bigquery_cloud_sf1.csv}, SHA-256: \path{7aee23711627a085062c7cf8...}), NVIDIA RTX 2050 CUDA GPU (\path{raw_gpu_cuda_sf1.csv}, SHA-256: \path{50201ab2ea90e96f4b49796c...}), Polars/DataFusion/SQLite 3 (\path{raw_multi_software_sf1.csv}, SHA-256: \path{4d6ba9d612f4c309ec096d61...}), hardware/energy sensor logs (\path{raw_hardware_energy_sf1.csv}, SHA-256: \path{366d77e7426a78b6089254eb...}), and seed-grouped 9-dimensional AST query routing predictions (\path{raw_query_routing_predictions_sf1.csv}, SHA-256: \path{8d077e29f9b9f3fd40cc7f3e...}), statistical summary tables (\path{six_software_comparison_sf1.csv}, SHA-256: \path{b180bbc2ef1884d3316cec3d...}; \path{hardware_energy_summary_sf1.csv}, SHA-256: \path{7d68a9edf2041ddf83f51545...}; \path{query_routing_evaluation_sf1.csv}, SHA-256: \path{89b1ec64cca15b2dd41a4ad2...}; \path{bootstrap_ci_and_validation_sf1.csv}), and automated reproducibility verification scripts (\path{scripts/00_init_and_dryrun.py} through \path{scripts/16_statistical_ci_and_csci_validation.py}) are publicly available in the GitHub repository at \url{https://github.com/preecha-msu/bigquery-olap-benchmark}.
+
+\subsection*{Competing interests}
+The author declares that he has no competing interests.
+
+\subsection*{Funding}
+This research project was financially supported by Mahasarakham University.
+
+\subsection*{Authors' contributions}
+Preecha Noiumkar (PN) conceptualized the study, designed the 75-query AST-driven factorial benchmark, implemented the six-engine execution harness, hardware energy telemetry pipeline, CSCI construct validation, and automated 9-dimensional AST+Selectivity query routing models, analyzed the empirical telemetry across cloud, CPU, and GPU architectures, and wrote the manuscript. The author read and approved the final manuscript.
+
+\subsection*{Acknowledgements}
+The author thanks the Department of Information Technology, Faculty of Informatics, Mahasarakham University, for providing the computational infrastructure. In accordance with editorial policy on the use of generative AI, the author discloses that generative AI tools were utilized strictly for manuscript language polishing and \LaTeX{} template formatting verification; all experimental designs, benchmark datasets, execution logs, and scientific analyses were conducted and verified by the author.
+
+% =============================================================================
+% REFERENCES (SPRINGER NATURE / BMC VANCOUVER STYLE - 25 REFERENCES)
+% =============================================================================
+\begin{thebibliography}{25}
+\small
+
+\bibitem{melnik2010dremel}
+Melnik S, Gubarev A, Long JJ, Romer G, Shivakumar S, Tolton M, Vassilakis T. Dremel: interactive analysis of web-scale datasets. Proc VLDB Endow. 2010;3(1--2):330--9.
+
+\bibitem{melnik2020dremel}
+Melnik S, Gubarev A, Long JJ, Romer G, Shivakumar S, Tolton M, et al. Dremel: a decade of interactive SQL analysis at web scale. Proc VLDB Endow. 2020;13(12):3461--72.
+
+\bibitem{raasveldt2019duckdb}
+Raasveldt M, M{\"u}hleisen H. DuckDB: an embeddable analytical database. In: Proceedings of the 2019 International Conference on Management of Data (SIGMOD). Amsterdam: ACM; 2019. p. 1981--4.
+
+\bibitem{schulze2024clickhouse}
+Schulze R, et al. ClickHouse: lightning-fast analytics for everyone. Proc VLDB Endow. 2024;17(12):3720--33.
+
+\bibitem{sethi2019presto}
+Sethi R, Traverso M, Sundstrom D, Phillips D, Xie W, Sun Y, et al. Presto: SQL on everything. In: 2019 IEEE 35th International Conference on Data Engineering (ICDE). Macao: IEEE; 2019. p. 1802--13.
+
+\bibitem{mao2024sqlglot}
+Mao T. SQLGlot: no-dependency SQL parser, transpiler, optimizer, and engine. GitHub Repository. 2024. \url{https://github.com/tobymao/sqlglot}. Accessed 15 Mar 2026.
+
+\bibitem{li2023bird}
+Li J, Hui B, Qu G, Yang J, Li B, Li B, et al. Can LLM already serve as a database interface? A BIg bench for large-scale database grounded text-to-SQLs. Adv Neural Inf Process Syst (NeurIPS). 2023;36:42330--57.
+
+\bibitem{lei2025spider2}
+Lei F, Chen J, Ye Y, Cao R, Shin D, Su H, et al. Spider 2.0: evaluating language models on real-world enterprise text-to-SQL workflows. In: International Conference on Learning Representations (ICLR). 2025. p. 1--22.
+
+\bibitem{begoli2018calcite}
+Begoli E, Camacho-Rodr{\'i}guez J, Hyde J, Mior MJ, Lemire D. Apache Calcite: a foundational framework for optimized query processing over heterogeneous data sources. In: Proceedings of the 2018 International Conference on Management of Data (SIGMOD). Houston: ACM; 2018. p. 221--30.
+
+\bibitem{garcia2008database}
+Garcia-Molina H, Ullman JD, Widom J. Database systems: the complete book. 2nd ed. Upper Saddle River: Prentice-Hall; 2008.
+
+\bibitem{lounissi2025funda}
+Das SK, Peter R, Zhang X, Lounissi M. FunDa: scalable serverless data analytics and in situ query processing. J Big Data. 2025;12(1):116. \url{https://doi.org/10.1186/s40537-025-01141-6}.
+
+\bibitem{milicevic2024dlquery}
+Milicevic B, Babovic Z. A systematic review of deep learning applications in database query execution. J Big Data. 2024;11(1):173. \url{https://doi.org/10.1186/s40537-024-01025-1}.
+
+\bibitem{shojaee2024serverless}
+Shojaee Rad Z, Ghobaei-Arani M. Data pipeline approaches in serverless computing: a taxonomy, review, and research trends. J Big Data. 2024;11(1):82. \url{https://doi.org/10.1186/s40537-024-00939-0}.
+
+\bibitem{ahmed2020hibench}
+Ahmed N, Barczak ALC, Susnjak T, Rashid MA. A comprehensive performance analysis of Apache Hadoop and Apache Spark for large scale data sets using HiBench. J Big Data. 2020;7(1):110. \url{https://doi.org/10.1186/s40537-020-00388-5}.
+
+\bibitem{abdalla2022bigdata}
+Abdalla HB. A brief survey on big data: technologies, terminologies and data-intensive applications. J Big Data. 2022;9(1):107. \url{https://doi.org/10.1186/s40537-022-00659-3}.
+
+\bibitem{marcus2019neo}
+Marcus R, Negi P, Mao H, Zhang C, Alizadeh M, Kraska T, et al. Neo: a learned query optimizer. Proc VLDB Endow. 2019;12(11):1705--18. \url{https://doi.org/10.14778/3342263.3342644}.
+
+\bibitem{marcus2021bao}
+Marcus R, Negi P, Mao H, Tatbul N, Alizadeh M, Kraska T. Bao: making learned query optimization practical. In: Proceedings of the 2021 International Conference on Management of Data (SIGMOD). Virtual Event: ACM; 2021. p. 1275--88. \url{https://doi.org/10.1145/3448016.3452838}.
+
+\bibitem{hilprecht2022zeroshot}
+Hilprecht B, Binnig C. Zero-shot cost models for out-of-the-box learned cost prediction. Proc VLDB Endow. 2022;15(11):2361--74. \url{https://doi.org/10.14778/3551793.3551799}.
+
+\bibitem{chrysogelos2019hetexchange}
+Chrysogelos P, Karpathiotakis M, Appuswamy R, Ailamaki A. HetExchange: encapsulating heterogeneous CPU-GPU parallelism in JIT compiled engines. Proc VLDB Endow. 2019;12(5):544--56. \url{https://doi.org/10.14778/3303753.3303760}.
+
+\bibitem{tan2023stage}
+Tan Z, Bailis P, Zaharia M. Choosing your weapons: adaptive query routing across heterogeneous analytical engines. Proc VLDB Endow. 2023;16(12):3612--25.
+
+\bibitem{shanbhag2020crystal}
+Shanbhag A, Tatbul N, Madden S, Narayanan D. A study of the fundamental performance characteristics of GPUs and CPUs for database analytics. In: Proceedings of the 2020 ACM SIGMOD International Conference on Management of Data. Portland: ACM; 2020. p. 1617--32. \url{https://doi.org/10.1145/3318464.3380595}.
+
+\bibitem{root2019mapd}
+Root C, Mostak T. MapD: a GPU-powered big data analytics and visualization platform. In: ACM SIGGRAPH 2016 Talks. Anaheim: ACM; 2016. p. 1--2.
+
+\bibitem{kim2022blazingsql}
+Kim K, et al. Accelerating relational data analytics using RAPIDS cuDF and BlazingSQL on GPUs. In: IEEE International Parallel and Distributed Processing Symposium Workshops (IPDPSW). IEEE; 2022. p. 812--21.
+
+\bibitem{oneil2009ssb}
+O'Neil P, O'Neil E, Chen X, Revilak S. The Star Schema Benchmark and augmented fact table indexing. In: Technology Conference on Performance Evaluation and Benchmarking (TPCTC). Lyon: Springer; 2009. p. 237--52.
+
+\bibitem{leis2015job}
+Leis V, Gubichev A, Mirchev A, Boncz P, Kemper A, Neumann T. How good are query optimizers, really? Proc VLDB Endow. 2015;9(3):204--15. \url{https://doi.org/10.14778/2850583.2850594}.
+
+\end{thebibliography}
+
+\end{document}

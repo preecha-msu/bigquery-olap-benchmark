@@ -2,10 +2,7 @@
 Get-Clipboard | Set-Content -Path ".\manuscript\main.tex" -Encoding UTF8
 Compress-Archive -Path ".\manuscript\*" -DestinationPath ".\Journal_of_Big_Data_Manuscript_Overleaf.zip" -Force
 
-# 2. ตรวจสอบว่า .gitignore บล็อกไฟล์ gcp_credentials.json และไฟล์ .db ขนาดใหญ่เรียบร้อยแล้ว
-git rm --cached config/gcp_credentials.json -ErrorAction SilentlyContinue
-
-# 3. Commit และ Push สคริปต์ 15, ตารางที่ 8, กราฟ Figure 7, ใบรับรอง SHA-256 และ main.tex ล่าสุดขึ้น GitHub
+# 2. Commit และ Push สคริปต์ 16 (95% Bootstrap CIs, Cliff's Delta, CSCI Validation) และ main.tex ฉบับสมบูรณ์ขึ้น GitHub
 git add .
-git commit -m "Release v6.0.0: Add AST-Driven Automated Query Routing Model (25-Fold LOSO-CV, Table 8, Fig 7) for Journal of Big Data"
+git commit -m "Release v9.0.0: Add 95% Bootstrap CIs, Cliff's Delta, CSCI Validation, 25 Refs, and Clean Submission Header"
 git push -u origin main --force

@@ -16,5 +16,5 @@
 - `six_software_comparison_sf1.csv`: `b180bbc2ef1884d3316cec3d69d581bc4639f3e95796d75ba1e007eda99d9fd9`
 - `raw_hardware_energy_sf1.csv`: `366d77e7426a78b6089254ebac3d89d84fe4a7ec069e18e5abffe008eb9bd612`
 - `hardware_energy_summary_sf1.csv`: `7d68a9edf2041ddf83f51545ad0d0cc6aa7eb6fdd812b82f9f26f579cc3493aa`
-- `query_routing_evaluation_sf1.csv`: `de0fbd69eb59555770ee01ffb15772bfee46eeeba568b268ca0f70ab6e429b88`
-- `raw_query_routing_predictions_sf1.csv`: `90fa26a9403ebce065f6d42cf978f9768a503d4fd27a14e38089e0ba89661a10`
+- `query_routing_evaluation_sf1.csv`: `89b1ec64cca15b2dd41a4ad2f6f547529a4d14dd64dab4a49ca66f4ae7ce0838`
+- `raw_query_routing_predictions_sf1.csv`: `8d077e29f9b9f3fd40cc7f3e1d267b14a47bf50f624a9268c4912698701aeca9`
