@@ -1,0 +1,15 @@
+project_settings:
+  gcp_project_id: msu-sql-benchmark
+  gcp_location: asia-southeast1
+  gcs_bucket: gs://msu-sql-benchmark-sf10
+  credentials_path: config/gcp_credentials.json
+experiment_controls:
+  scale_factor: 1
+  warmup_runs: 1
+  measurement_trials: 10
+  disable_query_cache: true
+  alpha_significance: 0.05
+datasets:
+  bq_external_dataset: tpch_external
+  bq_native_dataset: tpch_native
+  local_parquet_dir: data/raw_parquet/sf1_1gb

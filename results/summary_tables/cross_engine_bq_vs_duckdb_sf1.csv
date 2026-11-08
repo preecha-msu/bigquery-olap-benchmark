@@ -1,0 +1,6 @@
+Complexity_Tier,AST_Depth,BQ_Unopt_ms,BQ_Clustered_ms,BQ_Slot_ms,BQ_Unopt_Scan_MB,BQ_Clustered_Scan_MB,BQ_Shuffle_MB,DuckDB_Parquet_ms,DuckDB_Native_ms,Wilcoxon_p
+L1: Scan & Filter,6.7,641.2,172.6,835.4,242.95,152.04,0.0,34.96,11.59,0.0039
+L2: Multi-Way Joins,7.7,1485.2,257.6,1043.9,332.6,272.36,0.0,75.18,20.19,0.0039
+L3: Nested CTEs,8.3,528.4,245.8,1712.4,190.51,110.39,0.0,76.4,43.59,0.0039
+L4: Window Func.,8.3,545.4,294.4,902.9,112.08,53.58,0.0,101.27,84.95,0.0547
+L5: Array / UNNEST,7.0,856.4,681.6,2770.3,65.67,56.65,24.23,36.2,20.39,0.1641

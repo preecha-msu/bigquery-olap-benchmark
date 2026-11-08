@@ -1,0 +1,37 @@
+﻿# Ignore large TPC-H raw/parquet/duckdb data files (>100MB GitHub limit)
+data/
+*.duckdb
+*.duckdb.wal
+*.parquet
+*.db
+*.sqlite
+
+# Ignore Python cache & virtual environments
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Ignore LaTeX temporary build artifacts
+*.aux
+*.log
+*.out
+*.toc
+*.bbl
+*.blg
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+# Security: Never commit GCP Service Account keys
+config/gcp_credentials.json
+*credentials*.json
+*service_account*.json
+*.pem
+*.key
+
+# Large local database binaries
+*.db
+*.sqlite
+*.sqlite3
+data/sf100/
+data/raw_parquet/

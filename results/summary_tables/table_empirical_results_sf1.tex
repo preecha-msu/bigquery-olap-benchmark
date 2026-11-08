@@ -1,0 +1,26 @@
+\begin{table*}[t!]
+\centering
+\begin{threeparttable}
+\caption{Empirical Execution Latency (ms), Valid Efficiency Score (VES), and Wilcoxon Signed-Rank Test Across Five SQL Complexity Levels (Scale Factor = 1 GB)}
+\label{tab:empirical_complexity_results}
+\setlength{\tabcolsep}{5.5pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{@{}lcccccccccc@{}}
+\toprule
+\multirow{2}{*}{\textbf{Complexity Category}} & \multicolumn{2}{c}{\textbf{AST Metrics}} & \multicolumn{2}{c}{\textbf{External Parquet (ms)}} & \multicolumn{2}{c}{\textbf{Native Storage (ms)}} & \multirow{2}{*}{\textbf{Speedup}} & \multicolumn{2}{c}{\textbf{Efficiency (VES)}} & \multirow{2}{*}{\textbf{Wilcoxon $p$}} \\
+\cmidrule(lr){2-3} \cmidrule(lr){4-5} \cmidrule(lr){6-7} \cmidrule(lr){9-10}
+ & \textbf{Depth} & \textbf{Joins} & \textbf{Mean $\pm$ SD} & \textbf{P95} & \textbf{Mean $\pm$ SD} & \textbf{P95} & & \textbf{Ext.} & \textbf{Native} & \\
+\midrule
+\textbf{L1: Scan \& Filter} & $9.0$ & $0.0$ & $81.60 \pm 110.66$ & $454.11$ & $\mathbf{50.84 \pm 90.53}$ & $\mathbf{362.55}$ & $1.60\times$ & $99.6$ & $\mathbf{137.3}$ & $< 0.001$$^{*}$ \\
+\textbf{L2: Multi-Way Joins} & $9.2$ & $5.2$ & $403.94 \pm 521.65$ & $1708.08$ & $\mathbf{264.53 \pm 378.70}$ & $\mathbf{1353.15}$ & $1.53\times$ & $84.8$ & $\mathbf{112.9}$ & $< 0.001$$^{*}$ \\
+\textbf{L3: Nested CTEs} & $10.8$ & $4.6$ & $232.34 \pm 264.08$ & $1076.15$ & $\mathbf{121.92 \pm 140.94}$ & $\mathbf{574.91}$ & $1.91\times$ & $99.6$ & $\mathbf{141.8}$ & $< 0.001$$^{*}$ \\
+\textbf{L4: Window Func.} & $10.8$ & $1.2$ & $111.52 \pm 80.60$ & $315.64$ & $\mathbf{78.16 \pm 70.17}$ & $\mathbf{240.27}$ & $1.43\times$ & $99.4$ & $\mathbf{129.0}$ & $< 0.001$$^{*}$ \\
+\textbf{L5: Array / UNNEST} & $10.6$ & $3.0$ & $442.70 \pm 683.60$ & $2644.40$ & $\mathbf{403.27 \pm 640.04}$ & $\mathbf{2411.00}$ & $1.10\times$ & $75.7$ & $\mathbf{87.2}$ & $< 0.001$$^{*}$ \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}\footnotesize
+\item[*] Statistically significant difference between External Parquet and Native Storage modes using paired Wilcoxon signed-rank test ($\alpha = 0.05$).
+\item \textit{Acknowledgment:} This research project was financially supported by Mahasarakham University.
+\end{tablenotes}
+\end{threeparttable}
+\end{table*}

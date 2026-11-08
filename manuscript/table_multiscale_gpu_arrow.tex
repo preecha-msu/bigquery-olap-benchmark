@@ -1,0 +1,22 @@
+\begin{table*}[htbp]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{4.2pt}
+\caption{Multi-scale execution mode transition, host RAM footprint, GPU VRAM consumption, and naive out-of-memory (OOM) verification for Rust Arrow streaming engines and NVIDIA RTX 2050 GPU (4.0 GB VRAM) across $\text{SF}=1$, $10$, and $100$ GB.}
+\label{tab:multiscale_gpu_arrow}
+\begin{tabular}{@{}lllrrrrr@{}}
+\toprule
+\textbf{Scale Factor} & \textbf{Engine} & \textbf{Execution Mode} & \textbf{Latency (ms)} & \textbf{Peak RAM (GB)} & \textbf{Peak VRAM (GB)} & \textbf{Naive OOM} & \textbf{$\Phi_{\text{PCIe}}$ (\%)} \\
+\midrule
+SF=1 (1 GB) & Polars\_Lazy\_Streaming\_Rust & In-Memory\_Arrow & $55.71$ & $2.381$ & $0.000$ & $0$ & $0.0\%$ \\
+SF=1 (1 GB) & Apache\_DataFusion\_Rust & In-Memory\_Arrow & $47.35$ & $2.382$ & $0.000$ & $0$ & $0.0\%$ \\
+SF=1 (1 GB) & PyTorch\_CUDA\_RTX2050 (4.0GB VRAM) & In-VRAM\_Resident & $65.21$ & $3.481$ & $0.051$ & $0$ & $74.1\%$ \\
+SF=10 (10 GB) & Polars\_Lazy\_Streaming\_Rust & In-Memory\_Arrow & $603.42$ & $3.576$ & $0.000$ & $0$ & $0.0\%$ \\
+SF=10 (10 GB) & Apache\_DataFusion\_Rust & In-Memory\_Arrow & $380.25$ & $3.707$ & $0.000$ & $0$ & $0.0\%$ \\
+SF=10 (10 GB) & PyTorch\_CUDA\_RTX2050 (4.0GB VRAM) & Batched\_PCIe\_RowGroup\_Stream & $407.15$ & $3.739$ & $0.051$ & $1$ & $81.4\%$ \\
+SF=100 (100 GB) & Polars\_Lazy\_Streaming\_Rust & Out-of-Core\_Streaming & $4113.08$ & $4.706$ & $0.000$ & $0$ & $0.0\%$ \\
+SF=100 (100 GB) & Apache\_DataFusion\_Rust & Partitioned\_Batch\_Stream & $3837.38$ & $4.849$ & $0.000$ & $0$ & $0.0\%$ \\
+SF=100 (100 GB) & PyTorch\_CUDA\_RTX2050 (4.0GB VRAM) & Batched\_PCIe\_RowGroup\_Stream & $7399.20$ & $3.510$ & $0.109$ & $1$ & $73.7\%$ \\
+\bottomrule
+\end{tabular}
+\end{table*}

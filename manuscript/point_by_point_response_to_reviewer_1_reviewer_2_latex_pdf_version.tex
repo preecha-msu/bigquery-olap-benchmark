@@ -1,0 +1,119 @@
+\documentclass[11pt, a4paper]{article}
+
+% --- UNIVERSAL & OVERLEAF-COMPATIBLE PREAMBLE BLOCK ---
+\usepackage[a4paper, margin=0.8in]{geometry}
+\usepackage{iftex}
+
+\ifPDFTeX
+  \usepackage[utf8]{inputenc}
+  \usepackage[T1]{fontenc}
+  \usepackage[english]{babel}
+  \usepackage{lmodern}
+\else
+  \usepackage{fontspec}
+  \usepackage[english, bidi=basic, provide=*]{babel}
+  \babelprovide[import, onchar=ids fonts]{english}
+  \babelfont{rm}{Noto Serif}
+  \babelfont{sf}{Noto Sans}
+\fi
+
+\usepackage{amsmath, amssymb}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{hyperref}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5em}
+\renewcommand{\arraystretch}{1.35}
+
+\begin{document}
+
+\begin{center}
+    {\large\textbf{Point-by-Point Response to Reviewer 1 and Reviewer 2 (\textit{Frontiers in Education})}} \\[0.4em]
+    \normalsize\textbf{Manuscript ID:} 2038914 \\[0.2em]
+    \normalsize\textbf{Title:} \textit{An Empirically Evaluated Online Classroom Framework for Enhancing 21st-Century Competencies in Higher Education: A Mixed-Methods Study}
+\end{center}
+
+\vspace{0.3em}
+We sincerely thank both Reviewer 1 and Reviewer 2 for their constructive evaluations. Below we document our point-by-point revisions addressing all comments from **Reviewer 1** (Major Revision) and **Reviewer 2** (Minor Revision / Endorsed).
+
+\small
+\begin{longtable}{@{} >{\raggedright\arraybackslash}p{3.9cm} >{\raggedright\arraybackslash}p{8.8cm} >{\raggedright\arraybackslash}p{2.9cm} @{}}
+\toprule
+\textbf{Reviewer Comment} & \textbf{Author's Revision and Verification} & \textbf{Location in Revised Manuscript} \tabularnewline
+\midrule
+\endhead
+
+\multicolumn{3}{@{}l}{\textbf{PART 1: RESPONSES TO REVIEWER 1}} \tabularnewline
+\midrule
+
+\textbf{R1.1 Statistical errors:} Table 4 $F$-value mismatch; Table 5 aspect means (Aspects 1, 2, 3); explain why lecturers and students were combined in Phase 1 regression. 
+& 
+\textbf{Resolved.} (1) Corrected the Phase 1 regression $F$-statistic in Table 5 (formerly Table 4) to match $N = 290, R^2 = .659$: $F(3, 286) = 184.24, p < .001$ (with exact matching $t$-values: $8.995, 8.050, 5.195$). (2) Corrected all aspect means in Table 6 (formerly Table 5) to match exact item averages: Aspect 1 $= 4.83$ ($SD = 0.20$), Aspect 2 $= 4.92$ ($SD = 0.17$), Aspect 3 $= 4.67$ ($SD = 0.58$), Aspect 4 $= 4.33$ ($SD = 0.46$), Aspect 5 $= 4.53$ ($SD = 0.12$), 22-item grand mean $= 4.64$ ($SD = 0.34$), 5-aspect mean $= 4.66$. (3) Explained in Sections 3.6 and 4.1 why lecturers ($n = 40$) and students ($n = 250$) were pooled (parallel role-neutral items assessing the same institutional LMS) and reported sensitivity checks confirming no role difference ($\beta_{\text{role}} = .028, p = .421$) and consistent separate subsample regressions ($n = 250$ students: $R^2 = .654, p < .001$; $n = 40$ lecturers: $R^2 = .682, p < .001$).
+& 
+\textbf{Sections 3.6, 4.1, 4.2}, \newline \textbf{Table 5}, \newline \textbf{Table 6}. \tabularnewline
+\midrule
+
+\textbf{R1.2 Measurement validity:} Add a confirmatory factor analysis (CFA) to show construct distinctiveness given high correlations. 
+& 
+\textbf{Resolved.} Added a 10-factor CFA and HTMT evaluation in Section 3.4 ($\chi^2/df = 1.46, \text{CFI} = 0.94, \text{TLI} = 0.92, \text{RMSEA} = 0.068, \text{SRMR} = 0.054$; $\text{CR} = 0.85\text{--}0.93$; $\text{AVE} = 0.66\text{--}0.79$; outperforming single-factor $\text{CFI} = 0.61, \Delta\chi^2 = 1192.4, p < .001$). Also reported a process-only sensitivity regression in Section 4.4 ($X_4\text{--}X_{10}$ excluding $X_2, X_3$: $R^2 = .7351, \text{Adjusted } R^2 = .7149, F(7, 92) = 36.48, p < .001$).
+& 
+\textbf{Section 3.4}, \newline \textbf{Section 4.4}, \newline \textbf{Tables 8 \& 9}. \tabularnewline
+\midrule
+
+\textbf{R1.3 Claims not directly measured:} Present the cognitive load explanation for the negative $X_6$ result as a possible reason, not a finding. 
+& 
+\textbf{Resolved.} Explicitly framed the collaborative cognitive load / transaction cost explanation as a \textit{possible theoretical explanation (hypothesis)} rather than a direct finding across the Abstract, Section 5 (Discussion), and Section 5.2 (Limitations), alongside compensatory help-seeking ($r = .29$ with quiz retries) and statistical suppression.
+& 
+\textbf{Abstract}, \newline \textbf{Sections 5 \& 5.2}. \tabularnewline
+\midrule
+
+\textbf{R1.4 References:} Add key literature on collaborative cognitive load, collaboration scripts, and AI tutoring. 
+& 
+\textbf{Resolved.} Integrated key literature on collaborative cognitive load (\textbf{Kirschner et al., 2009}; \textbf{Janssen et al., 2010}; \textbf{Leppink et al., 2013}), CSCL collaboration scripts (\textbf{Fischer et al., 2013}; \textbf{Dillenbourg, 2002}), and step-based/AI tutoring (\textbf{VanLehn, 2011}; \textbf{Kasneci et al., 2023}; \textbf{Ouyang et al., 2022}).
+& 
+\textbf{Sections 1, 2.2, 2.3, 5}, \newline \textbf{References}. \tabularnewline
+\midrule
+
+\textbf{R1.5 Effectiveness claims:} Soften words such as ``confirmed'' and ``proven,'' and add objective grades and system log data. 
+& 
+\textbf{Resolved.} Softened all definitive/causal terms (``confirmed,'' ``proven'') and added objective pre-/post-module quiz scores (1st-attempt un-gated: $54.2\% \rightarrow 78.4\%, d_z = 1.99$; gated: $84.6\%, d_z = 2.42$), rubric-graded group ER deliverables ($83.2\%$), historical cohort final exam comparisons ($N_{\text{hist}} = 96$: $81.45\%$ vs.\ $74.10\%, d = 0.81$), and system telemetry logs in Section 4.3 while preserving the usability evaluation table (Table 7) in full.
+& 
+\textbf{Abstract}, \newline \textbf{Section 4.3}, \newline \textbf{Section 5}. \tabularnewline
+\midrule
+
+\textbf{R1.6 Replication details:} Provide a short outline of the course design. 
+& 
+\textbf{Resolved.} Added a structured 16-week course design outline across Modules 1--5 (topics, weekly synchronous/asynchronous tasks, 28 small groups, and grading weights) in Section 3.2.
+& 
+\textbf{Section 3.2}. \tabularnewline
+\midrule
+
+\textbf{R1 Minor points:} Redraw Figures 1 \& 2 clearly, and split Table 7 into two tables. 
+& 
+\textbf{Resolved.} Redrew Figures 1 and 2 as clean TikZ vector diagrams and split the original combined correlation/regression table into two separate tables: \textbf{Table 8} (Descriptive Statistics and Zero-Order Correlations) and \textbf{Table 9} (Multiple Linear Regression Coefficients, 95\% CIs, and VIF).
+& 
+\textbf{Figures 1 \& 2}, \newline \textbf{Tables 8 \& 9}. \tabularnewline
+\midrule
+
+\multicolumn{3}{@{}l}{\textbf{PART 2: RESPONSES TO REVIEWER 2 (ENDORSED)}} \tabularnewline
+\midrule
+
+\textbf{R2.1 Mixed-methods design \& integration:} Clarify which phases were QUAL/QUAN/mixed, how Phase 1 informed the framework, how QUAL \& QUAN were integrated in interpretation, and map RQs to phases in a phase-by-phase table. 
+& 
+\textbf{Resolved.} (1) Added a comprehensive \textbf{Phase-by-Phase Mixed-Methods Design, Research Question Mapping, and Integration Matrix (Table 1)} in Section 3.1 detailing the strand (\texttt{QUAL}, \texttt{QUAN}, \texttt{MIXED}), mapped RQs (\texttt{RQ1--RQ4}), sample/data sources, analyses, and sequential integration mechanisms (\textit{building}, \textit{translating}, \textit{connecting}, \textit{merging}). (2) Added a \textbf{Mixed-Methods Joint Display (Table 10)} in Section 4.4 integrating quantitative, log, and qualitative findings into meta-inferences.
+& 
+\textbf{Section 3.1 (Table 1)}, \newline \textbf{Section 4.4 (Table 10)}, \newline \textbf{Section 5}. \tabularnewline
+\midrule
+
+\textbf{R2.2 Clarify regression analyses \& interpret cautiously:} Report $B$, $\beta$, $SE$, 95\% CIs, exact $p$-values, Adjusted $R^2$, overall model test, and evidence of assumption checks (linearity, residuals, influential observations, multicollinearity). 
+& 
+\textbf{Resolved.} (1) Added 95\% confidence intervals for $B$, exact $p$-values, Adjusted $R^2$, and omnibus $F$-tests to both regression tables (\textbf{Table 5} for Phase 1 and \textbf{Table 9} for Phase 4). (2) Reported explicit assumption diagnostics in Section 3.6: linearity, Breusch--Pagan homoscedasticity ($p = .312$ and $.248$), Shapiro--Wilk residual normality ($p = .184$ and $.215$), Durbin--Watson ($1.89$ and $1.94$), Cook's distance ($\max D_i = 0.074$ and $0.132 < 1.0$), and VIF ($1.42\text{--}3.84 < 5.0$). (3) Interpreted $R^2 = .8601$ cautiously alongside the process-only sensitivity model ($R^2 = .7351$, Adjusted $R^2 = .7149$).
+& 
+\textbf{Section 3.6}, \newline \textbf{Section 4.1 (Table 5)}, \newline \textbf{Section 4.4 (Table 9)}, \newline \textbf{Section 5}. \tabularnewline
+\bottomrule
+\end{longtable}
+
+\end{document}

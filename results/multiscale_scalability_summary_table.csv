@@ -1,0 +1,7 @@
+Scale_Factor,Engine_Mode,Total_75Q_Time_s,Mean_Latency_ms,Median_Latency_ms,P95_Latency_ms,Mean_RAM_GB,Peak_RAM_GB,Peak_Disk_Spill_GB,Spilled_Queries,OOM_Limit_Events
+SF=1 (1 GB),DuckDB_Native,15.01,200.08,133.45,628.79,1.11,2.27,0.0,0,0
+SF=1 (1 GB),DuckDB_Parquet,18.68,249.08,162.35,779.11,1.13,2.4,0.0,0,0
+SF=10 (10 GB),DuckDB_Native,678.13,9041.76,1301.7,34162.58,2.95,11.18,0.0,0,0
+SF=10 (10 GB),DuckDB_Parquet,920.64,12275.2,2036.19,46676.02,2.8,12.24,0.0,0,0
+SF=100 (100 GB),DuckDB_Native,9703.82,129384.3,17845.92,653954.7,13.64,50.62,43.8,3,9
+SF=100 (100 GB),DuckDB_Parquet,20585.14,274468.53,24993.35,900000.0,9.01,51.59,20.42,3,10

@@ -1,0 +1,19 @@
+\begin{table*}[htbp]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{4.2pt}
+\caption{Multi-scale empirical scalability, memory footprint, and out-of-core disk spilling evaluation across TPC-H $\text{SF}=1$ GB, $\text{SF}=10$ GB, and $\text{SF}=100$ GB ($N=75$ queries per scale factor).}
+\label{tab:multiscale_scalability}
+\begin{tabular}{@{}llrrrrrrrr@{}}
+\toprule
+\textbf{Scale Factor} & \textbf{Storage Mode} & \textbf{Total (s)} & \textbf{Mean (ms)} & \textbf{Median (ms)} & \textbf{P95 (ms)} & \textbf{Peak RAM (GB)} & \textbf{Peak Spill (GB)} & \textbf{Spill Qs} & \textbf{OOM/Limit} \\
+\midrule
+SF=1 (1 GB) & DuckDB\_Native & $15.01$ & $200.08$ & $133.45$ & $628.79$ & $2.27$ & $0.00$ & $0$ & $0$ \\
+SF=1 (1 GB) & DuckDB\_Parquet & $18.68$ & $249.08$ & $162.35$ & $779.11$ & $2.40$ & $0.00$ & $0$ & $0$ \\
+SF=10 (10 GB) & DuckDB\_Native & $678.13$ & $9041.76$ & $1301.70$ & $34162.58$ & $11.18$ & $0.00$ & $0$ & $0$ \\
+SF=10 (10 GB) & DuckDB\_Parquet & $920.64$ & $12275.20$ & $2036.19$ & $46676.02$ & $12.24$ & $0.00$ & $0$ & $0$ \\
+SF=100 (100 GB) & DuckDB\_Native & $9703.82$ & $129384.30$ & $17845.92$ & $653954.70$ & $50.62$ & $43.80$ & $3$ & $9$ \\
+SF=100 (100 GB) & DuckDB\_Parquet & $20585.14$ & $274468.53$ & $24993.35$ & $900000.00$ & $51.59$ & $20.42$ & $3$ & $10$ \\
+\bottomrule
+\end{tabular}
+\end{table*}

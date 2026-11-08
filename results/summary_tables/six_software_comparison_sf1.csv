@@ -1,0 +1,6 @@
+Complexity_Tier,CSCI_Score,Base_Scan_MB,SQLite3_Full_ms,BigQuery_Cloud_ms,BigQuery_Slot_ms,Slot_Multiplier,DuckDB_Native_ms,Polars_Rust_ms,DataFusion_Rust_ms,GPU_PCIe_H2D_ms,GPU_RTX2050_Warm_ms,GPU_RTX2050_Cold_ms,PCIe_Fraction_Pct,Throughput_SQLite_GBs,Throughput_BQ_GBs,Throughput_DuckDB_GBs,Throughput_Polars_GBs,Throughput_DataFusion_GBs,Throughput_GPU_Warm_GBs,Speedup_Polars_vs_SQLite,Speedup_DuckDB_vs_DF
+L1: Scan & Filter,15.3,332.5,6789.6,432.9,1980.8,4.58,50.84,38.0,33.58,30.56,24.46,55.02,55.5,0.048,0.75,6.39,8.55,9.67,13.28,178.7,0.66
+L2: Multi-Way Joins,26.8,474.0,19374.0,667.3,5193.6,7.78,264.53,81.68,92.76,55.83,49.05,104.88,53.2,0.024,0.694,1.75,5.67,4.99,9.44,237.2,0.35
+L3: Nested CTEs,36.7,417.3,5108.1,493.0,4637.3,9.41,121.92,66.81,71.66,43.26,14.98,58.24,74.3,0.08,0.827,3.34,6.1,5.69,27.2,76.5,0.59
+L4: Window Func.,37.1,241.5,6023.7,372.8,1907.5,5.12,78.16,71.11,173.16,9.43,9.94,19.37,48.7,0.039,0.633,3.02,3.32,1.36,23.73,84.7,2.22
+L5: Array / UNNEST,32.4,273.4,4791.2,1761.0,8737.2,4.96,403.27,154.76,110.31,34.46,12.84,47.31,72.9,0.056,0.152,0.66,1.73,2.42,20.79,31.0,0.27

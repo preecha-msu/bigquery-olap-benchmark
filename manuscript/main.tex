@@ -1,0 +1,13 @@
+﻿# 1. ป้องกันไฟล์ฐานข้อมูล SQLite (.db) ขนาดใหญ่ติดขึ้น GitHub
+if (-not (Select-String -Path ".\.gitignore" -Pattern "\*\.db" -Quiet)) {
+    Add-Content -Path ".\.gitignore" -Value "`n*.db`n*.sqlite`n*.sqlite3" -Encoding UTF8
+}
+
+# 2. บันทึกโค้ด LaTeX จาก Clipboard ลงไฟล์ manuscript/main.tex และสร้างไฟล์ Zip สำหรับ Overleaf
+Get-Clipboard | Set-Content -Path ".\manuscript\main.tex" -Encoding UTF8
+Compress-Archive -Path ".\manuscript\*" -DestinationPath ".\Journal_of_Big_Data_Manuscript_Overleaf.zip" -Force
+
+# 3. Commit และ Push สคริปต์ 11-14, ไฟล์ CSV ฮาร์ดแวร์/พลังงาน, กราฟ Figure 6 และใบรับรอง SHA-256 ขึ้น GitHub
+git add .
+git commit -m "Release v5.0.0: Add Hardware Resource (CPU%, RAM, GPU%, VRAM), Energy (Joules), and Perf/Watt Telemetry (Table 7 & Fig 6)"
+git push -u origin main --force

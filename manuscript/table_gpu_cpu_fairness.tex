@@ -1,0 +1,18 @@
+\begin{table*}[htbp]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{3.5pt}
+\caption{Four-stage latency decomposition and three-mode fairness evaluation between vectorized CPU engines and SIMT GPU execution across AST complexity tiers ($\text{SF}=1$ GB).}
+\label{tab:gpu_cpu_fairness}
+\begin{tabular}{@{}lrrrrrrrrrrr@{}}
+\toprule
+\textbf{Tier} & \textbf{Plan} & \textbf{I/O} & \textbf{PCIe} & \textbf{M1:Duck} & \textbf{M1:GPU} & \textbf{M1 Spd.} & \textbf{M2:GPU} & \textbf{M2 Spd.} & \textbf{M3:Duck} & \textbf{M3:GPU} & \textbf{M3 Spd.} \\
+\midrule
+L1\_scan\_filter & $0.85$ & $30.76$ & $30.56$ & $49.99$ & $24.46$ & $2.04\times$ & $55.87$ & $0.91\times$ & $81.60$ & $86.64$ & $0.94\times$ \\
+L2\_multi\_joins & $0.85$ & $139.42$ & $55.83$ & $263.68$ & $49.05$ & $5.38\times$ & $105.73$ & $2.50\times$ & $403.94$ & $245.14$ & $1.65\times$ \\
+L3\_nested\_cte & $0.85$ & $110.42$ & $43.26$ & $121.07$ & $14.98$ & $8.08\times$ & $59.09$ & $2.06\times$ & $232.34$ & $169.52$ & $1.37\times$ \\
+L4\_window\_analytical & $0.85$ & $33.36$ & $9.43$ & $77.31$ & $9.94$ & $7.78\times$ & $20.22$ & $3.87\times$ & $111.52$ & $53.58$ & $2.08\times$ \\
+L5\_array\_unnest & $0.85$ & $57.33$ & $34.46$ & $402.42$ & $12.84$ & $31.34\times$ & $48.16$ & $8.37\times$ & $442.70$ & $105.49$ & $4.20\times$ \\
+\bottomrule
+\end{tabular}
+\end{table*}

@@ -1,0 +1,6 @@
+Complexity_Tier,CPU_Util_SQLite_Pct,CPU_Util_DuckDB_Pct,CPU_Util_Polars_Pct,CPU_Util_DataFusion_Pct,RAM_SQLite_GB,RAM_DuckDB_GB,RAM_Polars_Arrow_GB,GPU_Util_RTX2050_Pct,VRAM_RTX2050_GB,Energy_SQLite_J,Energy_DuckDB_J,Energy_Polars_J,Energy_DataFusion_J,Energy_GPU_Warm_J,Energy_GPU_Cold_J,PerfWatt_SQLite_MB_per_J,PerfWatt_DuckDB_MB_per_J,PerfWatt_Polars_MB_per_J,PerfWatt_DataFusion_MB_per_J,PerfWatt_GPU_Warm_MB_per_J,PerfWatt_GPU_Cold_MB_per_J
+L1: Scan & Filter,8.7,74.4,70.2,73.2,2.14,4.46,4.48,27.1,1.24,101.0,1.79,1.36,1.23,0.27,0.6,4.06,515.2,285.9,303.4,1398.5,569.6
+L2: Multi-Way Joins,9.5,66.4,89.1,66.4,2.3,4.78,4.65,32.1,1.33,293.4,8.99,3.39,3.18,0.6,1.29,2.28,177.7,163.0,171.6,910.3,383.0
+L3: Nested CTEs,8.7,57.7,77.5,74.1,2.27,4.72,4.71,30.5,1.33,76.0,4.0,2.56,2.64,0.17,0.68,6.21,215.4,186.9,173.6,2558.0,619.6
+L4: Window Func.,8.7,58.6,74.3,65.6,2.28,4.74,4.73,32.4,1.33,89.6,2.54,2.65,5.99,0.11,0.21,3.38,202.7,103.2,51.5,2502.1,1178.3
+L5: Array / UNNEST,8.7,73.4,76.1,71.3,2.33,4.85,4.69,33.1,1.29,71.3,14.67,5.89,3.92,0.12,0.45,4.3,104.0,59.6,85.6,2345.0,611.2

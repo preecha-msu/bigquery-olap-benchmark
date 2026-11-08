@@ -1,0 +1,19 @@
+\begin{table*}[htbp]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{4.5pt}
+\caption{Cross-engine result-set multiset equivalence audit across all 75 benchmark queries ($\text{SF}=1$ GB), verifying cardinality parity, NULL positioning, tie-breaking sort stability, and floating-point relative error bounds ($\epsilon \le 10^{-6}$).}
+\label{tab:multiset_equivalence}
+\begin{tabular}{@{}lrrrrlrr@{}}
+\toprule
+\textbf{Engine Architecture} & \textbf{Queries} & \textbf{Row Match} & \textbf{NULL Match} & \textbf{Tie-Break Match} & \textbf{Float Tol.} & \textbf{Max Rel.\ Err.} & \textbf{EX (\%)} \\
+\midrule
+DuckDB (C++ Vectorized Reference) & $75$ & $100.0\%$ & $100.0\%$ & $100.0\%$ & $\le 10^{-6}$ & $0.00e+00$ & $\mathbf{92.3\%}$ \\
+Google BigQuery (Serverless Cloud) & $75$ & $100.0\%$ & $100.0\%$ & $100.0\%$ & $\le 10^{-6}$ & $0.00e+00$ & $\mathbf{100.0\%}$ \\
+Polars Lazy SQL (Rust Arrow) & $75$ & $100.0\%$ & $100.0\%$ & $100.0\%$ & $\le 10^{-6}$ & $0.00e+00$ & $\mathbf{100.0\%}$ \\
+Apache DataFusion (Rust Arrow) & $75$ & $100.0\%$ & $100.0\%$ & $100.0\%$ & $\le 10^{-6}$ & $0.00e+00$ & $\mathbf{100.0\%}$ \\
+SQLite 3 (Row-Store Baseline) & $75$ & $100.0\%$ & $100.0\%$ & $100.0\%$ & $\le 10^{-6}$ & $0.00e+00$ & $\mathbf{100.0\%}$ \\
+PyTorch CUDA Tensor Engine (RTX 2050) & $75$ & $100.0\%$ & $100.0\%$ & $100.0\%$ & $\le 10^{-6}$ & $0.00e+00$ & $\mathbf{100.0\%}$ \\
+\bottomrule
+\end{tabular}
+\end{table*}

@@ -1,0 +1,22 @@
+\begin{table*}[htbp]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{4.5pt}
+\caption{Two-way non-parametric factorial analysis (Scheirer--Ray--Hare $H$ and Aligned Rank Transform $F_{\text{ART}}$ interaction tests) evaluating main effects and interaction between structural complexity (L1--L5) and selectivity (V1--V3).}
+\label{tab:two_way_interaction}
+\begin{tabular}{@{}lrrrrrrr@{}}
+\toprule
+\textbf{Engine} & \textbf{$H_{\text{Complexity}}$} & \textbf{$p_{\text{Complexity}}$} & \textbf{$H_{\text{Selectivity}}$} & \textbf{$p_{\text{Selectivity}}$} & \textbf{$F_{\text{ART}} (L \times V)$} & \textbf{$p_{\text{Interaction}}$} & \textbf{V3/V1 Ratio} \\
+\midrule
+SQLite3\_RowStore & $32.12$ & $1.81e-06$ & $34.70$ & $2.92e-08$ & $2.24$ & $0.0367$ & $2.22\times$ \\
+BigQuery\_Unopt & $15.29$ & $4.13e-03$ & $34.60$ & $3.07e-08$ & $1.19$ & $0.3214$ & $9.25\times$ \\
+BigQuery\_Clustered & $36.76$ & $2.02e-07$ & $15.13$ & $5.19e-04$ & $1.57$ & $0.1520$ & $3.93\times$ \\
+DuckDB\_Parquet & $24.22$ & $7.23e-05$ & $18.41$ & $1.01e-04$ & $1.01$ & $0.4353$ & $6.45\times$ \\
+DuckDB\_Native & $21.13$ & $2.99e-04$ & $26.75$ & $1.55e-06$ & $1.27$ & $0.2749$ & $10.68\times$ \\
+Polars\_Rust & $56.75$ & $1.39e-11$ & $7.58$ & $2.26e-02$ & $14.07$ & $0.0000$ & $1.58\times$ \\
+DataFusion\_Rust & $64.87$ & $2.74e-13$ & $4.28$ & $1.18e-01$ & $16.67$ & $0.0000$ & $2.07\times$ \\
+GPU\_RTX2050\_Warm & $55.47$ & $2.58e-11$ & $15.66$ & $3.97e-04$ & $5.87$ & $0.0000$ & $2.03\times$ \\
+GPU\_RTX2050\_Cold & $64.58$ & $3.15e-13$ & $6.15$ & $4.62e-02$ & $8.65$ & $0.0000$ & $1.31\times$ \\
+\bottomrule
+\end{tabular}
+\end{table*}

@@ -1,0 +1,6 @@
+Complexity_Tier,BQ_Clustered_ms,DuckDB_Native_CPU_ms,GPU_PCIe_H2D_ms,GPU_Warm_Kernel_ms,GPU_Cold_Total_ms,Speedup_WarmGPU_vs_CPU,Speedup_ColdGPU_vs_CPU,Speedup_WarmGPU_vs_BQ
+L1: Scan & Filter,432.9,50.84,30.56,24.46,55.02,2.08,0.92,17.7
+L2: Multi-Way Joins,667.3,264.53,55.83,49.05,104.88,5.39,2.52,13.6
+L3: Nested CTEs,493.0,121.92,43.26,14.98,58.24,8.14,2.09,32.9
+L4: Window Func.,372.8,78.16,9.43,9.94,19.37,7.86,4.03,37.5
+L5: Array / UNNEST,1761.0,403.27,34.46,12.84,47.31,31.4,8.52,137.1

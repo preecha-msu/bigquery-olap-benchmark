@@ -1,0 +1,9 @@
+Routing Strategy,Mean Latency (ms),Median Latency (ms),P95 Tail Latency (ms),Total 75-Query Time (s),Mean Regret vs Oracle (ms),Exact Match (%),Within-5ms Optimal (%),Speedup vs Always-DuckDB
+Always BigQuery (Clustered Cloud),745.39,421.5,2794.05,55.904,705.94,0.0,0.0,0.25x
+Always DuckDB (C++ Vectorized CPU),183.74,63.83,731.22,13.781,144.29,28.0,36.0,1.00x
+Always DataFusion (Rust Arrow CPU),88.2,73.49,284.11,6.615,48.75,28.0,30.7,2.08x
+Always Polars (Rust Arrow CPU),66.53,64.46,130.02,4.989,27.08,8.0,13.3,2.76x
+Always CUDA GPU (RTX 2050 Cold-Start),56.96,53.32,113.7,4.272,17.51,36.0,40.0,3.23x
+Proposed Rule-Based AST Router,46.43,31.66,113.7,3.482,6.98,64.0,70.7,3.96x
+Proposed Learned AST Cost Router (5-Fold Seed CV),45.09,31.19,125.71,3.382,5.64,74.7,81.3,4.07x
+Oracle Optimal (Theoretical Lower Bound),39.45,23.89,102.0,2.959,0.0,100.0,100.0,4.66x

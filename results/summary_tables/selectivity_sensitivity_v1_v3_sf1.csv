@@ -1,0 +1,4 @@
+Variation,Queries,BQ_Unopt_ms,BQ_Opt_ms,BQ_Slot_ms,Scan_Unopt_MB,Scan_Opt_MB,Pruning_Pct,Duck_Parquet_ms,Duck_Native_ms
+V1: High Selectivity (Narrow),25,504.7,330.7,613.7,347.73,105.87,69.6,81.2,38.51
+V2: Medium Selectivity (Moderate),25,1397.5,604.4,2285.4,347.73,184.71,46.9,158.28,101.5
+V3: Low Selectivity (Full-Horizon),25,4669.6,1301.1,10574.7,347.73,347.46,0.1,523.77,411.22

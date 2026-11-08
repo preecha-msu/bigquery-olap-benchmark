@@ -1,0 +1,18 @@
+E:\TeachPree\Research_Academic_Services\bigquery_script
+E:\TeachPree\Research_Academic_Services\bigquery-olap-benchmark
+
+google Cloud -> msu-sql-benchmark -> IAM & Admin -> Service Accounts --????
+click Account Created -> Key -> Add Key -> JSON
+
+
+Journal of Big Data Q1 1.964
+Future Generation Computer Systems (FGCS) Q1 1.484
+Information Systems Q1 0.981
+
+E:\TeachPree\Research_Academic_Services\bigquery-olap-benchmark
+
+การประเมินจากมุมมอง Reviewer ของวารสารระดับนานาชาติ โดยพิจารณาทั้ง Novelty, Methodological Rigor, Experimental Design, Statistical Validity, Reproducibility, Research Contribution และความเหมาะสมกับวารสาร Journal of Big Data
+
+โดยยึดหลักการ "Zero Estimation / 100% Real Execution" (ไม่มีการประมาณการหรือจำลองตัวเลข ทุกค่าต้องเกิดจากการรันจริง วัดผลจริง และมี Log พร้อม SHA-256 ยืนยันความสอดคล้องทุกตาราง)
+
+แต่ละงานต้องอัปเดตสถานะ Checklist ในการทำงาน
