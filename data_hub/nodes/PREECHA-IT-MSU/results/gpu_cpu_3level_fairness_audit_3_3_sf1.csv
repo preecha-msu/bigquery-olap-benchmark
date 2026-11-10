@@ -1,0 +1,6 @@
+Complexity_Tier,AST_Plan_ms,Storage_IO_ms,PCIe_H2D_ms,M1_Kernel_DuckDB_ms,M1_Kernel_Polars_ms,M1_Kernel_DataFusion_ms,M1_Kernel_GPU_Warm_ms,M1_Speedup_GPU_vs_Duck,M2_Transfer_DuckDB_ms,M2_Transfer_GPU_Cold_ms,M2_Speedup_GPU_vs_Duck,M3_EndToEnd_Duck_PQ_ms,M3_EndToEnd_GPU_Disk_ms,M3_Speedup_GPU_vs_Duck
+L1_scan_filter,0.85,30.76,30.56,49.99,40.19,32.34,24.46,2.04,50.84,55.87,0.91,81.6,86.64,0.94
+L2_multi_joins,0.85,139.42,55.83,263.68,102.79,113.69,49.05,5.38,264.53,105.73,2.5,403.94,245.14,1.65
+L3_nested_cte,0.85,110.42,43.26,121.07,76.46,82.77,14.98,8.08,121.92,59.09,2.06,232.34,169.52,1.37
+L4_window_analytical,0.85,33.36,9.43,77.31,84.27,192.35,9.94,7.78,78.16,20.22,3.87,111.52,53.58,2.08
+L5_array_unnest,0.85,57.33,34.46,402.42,24.66,15.61,12.84,31.34,403.27,48.16,8.37,442.7,105.49,4.2

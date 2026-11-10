@@ -1,0 +1,9 @@
+Metric,AST-Route,Always Polars,Always GPU,Always DuckDB (Ref.),Always DataFusion (Ref.)
+Mean Latency,6.75 ms,6.75 ms,9.05 ms,19.55 ms,31.25 ms
+Median Latency,6.52 ms,6.52 ms,4.45 ms,15.68 ms,25.64 ms
+P95 Latency,10.51 ms,10.51 ms,29.26 ms,40.96 ms,63.58 ms
+Mean Regret,"84.49% (Med: 43.84%, P95: 97.0%)","84.49% (Med: 43.84%, P95: 97.0%)","127.29% (Med: 0.00%, P95: 607.1%)","390.25% (Med: 282.00%, P95: 884.6%)","683.48% (Med: 524.11%, P95: 1427.1%)"
+Near-optimal <=5%,21.21% (7/33),21.21% (7/33),78.79% (26/33),0.00% (0/33),0.00% (0/33)
+Near-optimal <=10%,30.30% (10/33),30.30% (10/33),78.79% (26/33),0.00% (0/33),0.00% (0/33)
+"Paired CI (10,000-Bootstrap)",Reference (0.00 ms),"0.00 [0.00, 0.00] ms","-2.30 [-6.29, +1.29] ms","-12.80 [-16.94, -9.14] ms","-24.50 [-30.67, -19.09] ms"
+Paired Wilcoxon (Holm-Adjusted),Reference,p = 1.000 (Tied),p = 2.14e-01 (Holm p = 2.14e-01),p = 2.33e-10 (Holm p = 6.98e-10),p = 2.33e-10 (Holm p = 6.98e-10)

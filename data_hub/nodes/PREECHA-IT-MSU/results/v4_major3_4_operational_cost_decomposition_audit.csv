@@ -1,0 +1,6 @@
+Execution_Paradigm,Cloud_Query_Scan_Charge_per_1M_USD,Mean_Energy_per_Query_J,Electricity_Cost_per_1M_USD_at_012kWh,Hardware_Amortization_per_1M_USD,Total_Operational_Cost_per_1M_USD,Role_in_Eq8_Dispatcher
+"DuckDB Native (Local C++ CPU, SF=1 GB)",0.0,6.4,0.21,1.94,2.15,Local Energy modeled in Beta term; Cloud Scan Charge = $0.00
+"Polars Arrow (Local Rust CPU, SF=1 GB)",0.0,3.17,0.11,0.87,0.98,Local Energy modeled in Beta term; Cloud Scan Charge = $0.00
+"RTX 2050 GPU Cold (Local SIMT GPU, SF=1 GB)",0.0,0.65,0.02,0.6,0.62,Local Energy modeled in Beta term; Cloud Scan Charge = $0.00
+"Google BigQuery Clustered (Serverless Cloud, SF=1 GB)",1267.66,15.72,0.0,0.0,1267.66,On-Demand Bytes-Scanned Charge modeled in Gamma term ($6.25/TiB)
+Proposed AST-Route (SF=1 GB Latency-Energy-Cost Pareto),0.0,1.38,0.05,0.58,0.63,"Jointly minimizes Latency (Alpha), Energy (Beta), & Cloud Charge (Gamma)"

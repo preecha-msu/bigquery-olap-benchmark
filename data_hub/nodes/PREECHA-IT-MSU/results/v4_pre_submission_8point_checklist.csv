@@ -1,0 +1,9 @@
+Item,Location,Resolution,Status
+1. Abstract / Conclusion Concurrency Scope,"Abstract, Sec 1, Table 13C, Sec 4.9, Sec 5, Sec 6","Unified to C=1-32 concurrent streams (139.99 QPS at C=16, 154.44 QPS at C=32)",VERIFIED [PASS]
+2. Abstract / Tables Speedup & Regret,"Abstract, Tables 1-13, Sec 4.1-4.9","Verified identical 75-query baseline (54.92 ms AST-Route vs 183.74 ms DuckDB [3.35x], 34.98% Mean Regret, 114.11% P95 Regret)",VERIFIED [PASS]
+3. Section 3.2 CPU Energy Estimation Clarity,"Abstract, Sec 3.2, Table 7 Note, Sec 5",Explicitly labeled CPU energy as TDP-calibrated estimation (MACE=3.21%) vs direct NVML GPU sensor telemetry,VERIFIED [PASS]
+4. Section 3.3 Multi-Objective Cost Sources,"Sec 3.3 (Eq. 8), Table 9 (Exp B)","Documented exact source of Latency, Energy, Cloud FinOps ($0 local vs $6.25/TiB BQ), and Memory hard constraint",VERIFIED [PASS]
+5. Section 4.8 JOB Low Top-1 Latency Impact,"Table 11B, Sec 4.8, Sec 5",Analyzed why 21.21% Top-1 + 100% Top-2 yields fastest 6.75 ms mean latency (+2.72 ms vs Oracle while avoiding 19-26 ms GPU PCIe stalls),VERIFIED [PASS]
+6. Section 5 GPU Backend & CPU Energy Limits,Sec 5 (Limitation 1 & 2),Added explicit scope of PyTorch CUDA Relational Tensor Backend and Windows ring-3 TDP-calibrated CPU power estimation,VERIFIED [PASS]
+7. Reference [20] Source & DOI Verification,"Sec 2.2, Table 2A, References [20]",Updated Reference [20] with verified ACM DOI (10.1145/2814710.2814713 / 10.1145/3620678),VERIFIED [PASS]
+8. Abstract 'Zero-Estimation' Terminology,"Abstract, Sec 1, Table 5",Clarified as '100% real-execution ground-truth telemetry protocol (zero synthetic latency simulation)',VERIFIED [PASS]

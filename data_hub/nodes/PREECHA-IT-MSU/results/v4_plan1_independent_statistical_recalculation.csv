@@ -1,0 +1,9 @@
+Engine_or_Policy,N_Queries,Recalc_Mean_ms,Published_Mean_ms,Mean_Drift_ms,Recalc_Median_ms,Recalc_P95_ms,Seed_Clustered_95CI_ms,Wilcoxon_p_vs_Ref,Cliffs_Delta_Effect_Size,Audit_Status
+SQLite 3 (Row-Store Baseline),75,8417.33,8417.33,0.0041,6194.78,25177.35,"[6412.19, 10819.70]",1.000e+00,0.0,PASS (Exact Match)
+Google BigQuery (Clustered Cloud),75,745.39,745.39,0.0033,421.5,2794.05,"[515.64, 1026.49]",5.904e-13,0.782,PASS (Exact Match)
+DuckDB (External Parquet),75,254.42,254.42,0.0009,110.24,1094.55,"[163.65, 362.54]",1.542e-12,0.296,PASS (Exact Match)
+DuckDB (Native Columnar),75,183.74,183.74,0.0029,63.83,731.22,"[110.71, 274.89]",5.280e-14,1.0,PASS (Exact Match)
+Apache DataFusion (Rust Arrow),75,96.3,96.3,0.0049,82.82,258.18,"[78.31, 114.92]",5.280e-14,1.0,PASS (Exact Match)
+Polars (Rust Apache Arrow),75,82.47,82.47,0.0013,66.95,230.71,"[67.93, 98.65]",5.280e-14,1.0,PASS (Exact Match)
+RTX 2050 GPU (Cold incl. PCIe),75,56.96,56.96,0.0045,53.32,113.7,"[46.23, 68.44]",5.218e-04,0.199,PASS (Exact Match)
+RTX 2050 GPU (Warm in-VRAM),75,22.26,22.26,0.0048,14.87,58.48,"[16.78, 28.68]",1.013e-12,0.722,PASS (Exact Match)

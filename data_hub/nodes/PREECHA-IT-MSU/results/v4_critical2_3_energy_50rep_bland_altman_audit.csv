@@ -1,0 +1,7 @@
+Energy_Scope_Engine,Telemetry_Class,Measurement_Source,Calibration_Repetitions_R,Mean_Active_Energy_J,Net_Dynamic_Energy_J,MAE_Joules,Relative_Error_MACE_Pct,Bland_Altman_Bias_J,Bland_Altman_SD_J,Bland_Altman_95_LoA_J,Spearman_Rank_Concordance_rho
+DuckDB (CPU Package E_CPU),TDP-Calibrated Package Estimate,TDP-Calibrated Utilization Model (14.5W Idle - 45.0W TDP),50,6.4,3.731,0.2351,3.21,0.0888,0.6542,"[-1.193, +1.371]",0.9984
+Polars (CPU Package E_CPU),TDP-Calibrated Package Estimate,TDP-Calibrated Utilization Model (14.5W Idle - 45.0W TDP),50,3.17,1.969,0.102,3.08,0.0327,0.1444,"[-0.250, +0.316]",0.998
+DataFusion (CPU Package E_CPU),TDP-Calibrated Package Estimate,TDP-Calibrated Utilization Model (14.5W Idle - 45.0W TDP),50,3.39,2.0,0.0985,3.15,0.0323,0.1237,"[-0.210, +0.275]",0.9984
+RTX 2050 Cold (GPU Board E_GPU),Direct Physical Hardware Sensor,Direct NVML Hardware Sensor (nvmlDeviceGetPowerUsage @ 250 Hz),50,0.65,0.14,0.0062,0.95,-0.0004,0.0085,"[-0.017, +0.016]",0.9969
+RTX 2050 Warm (GPU Board E_GPU),Direct Physical Hardware Sensor,Direct NVML Hardware Sensor (nvmlDeviceGetPowerUsage @ 250 Hz),50,0.25,0.054,0.0027,1.06,0.0004,0.0044,"[-0.008, +0.009]",0.9968
+Composite Host+GPU Cold (E_sys),TDP-Calibrated Package Estimate,Concurrent Host CPU Package Estimate + Direct NVML GPU Sensor,50,1.58,0.34,0.0305,1.94,-0.0119,0.036,"[-0.083, +0.059]",0.9942

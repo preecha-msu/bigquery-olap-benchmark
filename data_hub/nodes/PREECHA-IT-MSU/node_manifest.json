@@ -1,0 +1,456 @@
+{
+  "node_id": "PREECHA-IT-MSU",
+  "role": "Primary Workstation (notebook1)",
+  "hostname": "PREECHA-IT-MSU",
+  "os_platform": "Windows 11",
+  "cpu_logical_threads": 12,
+  "python_version": "3.13.9",
+  "last_synced_utc": "2026-11-10 14:22:42 UTC",
+  "artifact_count": 74,
+  "artifacts": [
+    {
+      "filename": "ast_complexity_summary.csv",
+      "rows": 75,
+      "size_bytes": 12216,
+      "sha256": "4cb5f7477fd24dc77a6fd2b58063d9868cf7126ea89e6d902a695ccebd58d9d9"
+    },
+    {
+      "filename": "ast_query_router_evaluation_sf1.csv",
+      "rows": 8,
+      "size_bytes": 870,
+      "sha256": "56b52566ce859f99fb61e66280663ffa0dbc2b424915d9e2ade6969676cc845d"
+    },
+    {
+      "filename": "ast_query_router_per_query_sf1.csv",
+      "rows": 75,
+      "size_bytes": 15551,
+      "sha256": "e899ac9a886c24d8055f72a08d4573bf3702723e292ad065356e7169345e7501"
+    },
+    {
+      "filename": "audit_stage1_environment_verification.csv",
+      "rows": 11,
+      "size_bytes": 662,
+      "sha256": "9440ab5bcae8f80571fdd0e303578c0671ae1466e6362c0cde801096bc72caf2"
+    },
+    {
+      "filename": "audit_stage2_sha256_integrity.csv",
+      "rows": 15,
+      "size_bytes": 2719,
+      "sha256": "bda08018b31d9dc579ffcabf17b8f68d2c4d2d33b1fa7d42810b379a70a1f0b1"
+    },
+    {
+      "filename": "audit_stage3_independent_reexecution.csv",
+      "rows": 5,
+      "size_bytes": 471,
+      "sha256": "4282e9a0b241d39cbf175fb149a9f1d1141ca892790f23865ba27de2da89fc5e"
+    },
+    {
+      "filename": "audit_stage4_result_equivalence.csv",
+      "rows": 5,
+      "size_bytes": 609,
+      "sha256": "c0fc71aac10f837f482b1582642e563fba915dd7eafea85e972666b64bad27d6"
+    },
+    {
+      "filename": "audit_stage5_statistical_recalculation.csv",
+      "rows": 23,
+      "size_bytes": 1569,
+      "sha256": "5dc6271542f5f293b223034881d668ada12b10370608ad08953d6694c84fe2ad"
+    },
+    {
+      "filename": "audit_stage6_discrepancy_report.csv",
+      "rows": 23,
+      "size_bytes": 2410,
+      "sha256": "ae88fba80e1913afa978daddddd87a72eb9040d9b876482debe8fbc3dc4dbf81"
+    },
+    {
+      "filename": "concurrent_workload_benchmark_sf1.csv",
+      "rows": 5,
+      "size_bytes": 787,
+      "sha256": "fb82beb361435f3b72f9ed44e41dc2d0ec87843571818422d2dfd27406e5d629"
+    },
+    {
+      "filename": "constrained_3d_pareto_validation_3_4.csv",
+      "rows": 8,
+      "size_bytes": 1664,
+      "sha256": "0774c6c092e391322a6941236a801dbea5c6864f4eba4c9cae832f36db54c78e"
+    },
+    {
+      "filename": "csci_validation_sensitivity_sf1.csv",
+      "rows": 9,
+      "size_bytes": 1747,
+      "sha256": "fa89ea8b7f8790be6fb3f9bcae3388cc08fa0702c3006faf816c11846ed3d79a"
+    },
+    {
+      "filename": "energy_validation_audit_3_2_sf1.csv",
+      "rows": 8,
+      "size_bytes": 531,
+      "sha256": "c412bb89fb781af92884b2efa3af526d317c20eb2504a7be4d4ac6ecb697ba86"
+    },
+    {
+      "filename": "gpu_cpu_3level_decomposition_table4_sf1.csv",
+      "rows": 6,
+      "size_bytes": 925,
+      "sha256": "500cb66f2a7dad04fc552da062ad72651f20d71f81dc90b70669d0d0f944df56"
+    },
+    {
+      "filename": "gpu_cpu_3level_fairness_audit_3_3_sf1.csv",
+      "rows": 5,
+      "size_bytes": 803,
+      "sha256": "13dbb975161f943d00960c8b7085e91de8fbffa13ed1d48bdec23e8831791ba1"
+    },
+    {
+      "filename": "gpu_cpu_3mode_fairness_comparison_sf1.csv",
+      "rows": 5,
+      "size_bytes": 803,
+      "sha256": "13dbb975161f943d00960c8b7085e91de8fbffa13ed1d48bdec23e8831791ba1"
+    },
+    {
+      "filename": "hardware_software_environment_manifest.csv",
+      "rows": 12,
+      "size_bytes": 473,
+      "sha256": "1d906b543ca39b3d682de15ceac00a285932c4891bc2d69309f94c3490e9a9ae"
+    },
+    {
+      "filename": "hierarchical_seed_cluster_stats_sf1.csv",
+      "rows": 9,
+      "size_bytes": 1530,
+      "sha256": "8288e7166b387ea5b3a321526d0fecf61bf6a19dca180c3b9727c1fdf748b1ff"
+    },
+    {
+      "filename": "job_33queries_per_query_telemetry.csv",
+      "rows": 33,
+      "size_bytes": 2688,
+      "sha256": "d739085b5ab976c302bea3705ec7bfb6ee791541e1232d9b1789eef5a7ff776d"
+    },
+    {
+      "filename": "job_imdb_external_validation_sf1.csv",
+      "rows": 33,
+      "size_bytes": 3290,
+      "sha256": "3a9709e704a32bef51d6776d81693c4d4668dd57f327b0bf7d71d0c19153ce86"
+    },
+    {
+      "filename": "job_imdb_raw_33queries_cache.csv",
+      "rows": 33,
+      "size_bytes": 2025,
+      "sha256": "30b2894e844a6b0834dc573433a58b0d2b9266e168b1a3e356b0467d5a18803d"
+    },
+    {
+      "filename": "merged_75queries_all_engines_sf1.csv",
+      "rows": 75,
+      "size_bytes": 22216,
+      "sha256": "5eb9a13b43a164f5f11bbee91a774372446182487cab251cc1048f540574d0e3"
+    },
+    {
+      "filename": "multiscale_gpu_vram_and_arrow_streaming.csv",
+      "rows": 9,
+      "size_bytes": 925,
+      "sha256": "5c31a038864caedbdd059a3f23f36e5f3aa07d49ea290f01c037ce38b9124b26"
+    },
+    {
+      "filename": "multiscale_manifest_sf10_sf100.csv",
+      "rows": 2,
+      "size_bytes": 291,
+      "sha256": "c12a2ba9946996ea95c9f6c78f738d20d6529ca0f0175af5fb9351988d3cac58"
+    },
+    {
+      "filename": "multiscale_scalability_summary_table.csv",
+      "rows": 6,
+      "size_bytes": 649,
+      "sha256": "370a5f0e7a053febae10bc65cbb694746675d92efd3650a2e9d349e715a783f2"
+    },
+    {
+      "filename": "multiscale_sf1_sf10_sf30_sf100_summary.csv",
+      "rows": 4,
+      "size_bytes": 527,
+      "sha256": "c47702b2e3ea590a3e230f35e0023b239c7539c30543f4c448cdb29ee2a765a2"
+    },
+    {
+      "filename": "multiscale_telemetry_sf1.csv",
+      "rows": 150,
+      "size_bytes": 23497,
+      "sha256": "9be2a6c63a2b779871a1a42c87f5ec3dd4823fda06260464e4188b66aa1ef6ca"
+    },
+    {
+      "filename": "multiscale_telemetry_sf10.csv",
+      "rows": 150,
+      "size_bytes": 23770,
+      "sha256": "623ef56203c6cd3d33acc89540b6e8780e46121cb54a298c97756b6c5e3b2690"
+    },
+    {
+      "filename": "multiscale_telemetry_sf100.csv",
+      "rows": 150,
+      "size_bytes": 24572,
+      "sha256": "31518d87f5af08a75c5a6a9f7f033e9a3d173cb9916e960eaf2d6dec57b65bc8"
+    },
+    {
+      "filename": "multiscale_tier_breakdown.csv",
+      "rows": 7,
+      "size_bytes": 699,
+      "sha256": "8c7546fd8597280584370e10c14dd4f1e3ce0e76b4d1508fe86a2aaf06c8187a"
+    },
+    {
+      "filename": "multiset_equivalence_audit_6engines.csv",
+      "rows": 6,
+      "size_bytes": 611,
+      "sha256": "1481cbb0d94283d120e58b5a78b19a643c5be518a36d476ae1ee7d1be2a14212"
+    },
+    {
+      "filename": "official_tpch_q1_q22_external_validation.csv",
+      "rows": 22,
+      "size_bytes": 1770,
+      "sha256": "f7f4490389ae0db27608e673368cbb816a85869af95c2c4400c26de4a55d4f69"
+    },
+    {
+      "filename": "raw_hardware_energy_sf1.csv",
+      "rows": 375,
+      "size_bytes": 163502,
+      "sha256": "1a607af26e1bfddaef3e44661e94d2ac55c180ee43e2ac824bf7b7e264cea8e7"
+    },
+    {
+      "filename": "reconciled_sf1_master_table.csv",
+      "rows": 6,
+      "size_bytes": 1780,
+      "sha256": "92cf88a5ba93480c3fedf7eaf924fbc36f63c3badd09aa69c3ab1c28a5fa56df"
+    },
+    {
+      "filename": "reviewer_3_5_to_3_7_statistical_and_abstention_audit.csv",
+      "rows": 5,
+      "size_bytes": 1889,
+      "sha256": "ba0974f429bb251c3713d863521233be72a7c7dc18d7d512058dd08e6880729d"
+    },
+    {
+      "filename": "reviewer_section5_vif_shap_selectivity_audit.csv",
+      "rows": 4,
+      "size_bytes": 1693,
+      "sha256": "0dc2b3f0d1fbfcd3e8e7d581f7076403bad6d6a13f03089970b89f724a691476"
+    },
+    {
+      "filename": "sha256_manifest_v2.csv",
+      "rows": 19,
+      "size_bytes": 2685,
+      "sha256": "63ad92cfafef98451ccd5296ab42d0a1b6e9436ee8cd53caece19144f3b1aa2f"
+    },
+    {
+      "filename": "ssb_13queries_per_query_telemetry_sf1.csv",
+      "rows": 13,
+      "size_bytes": 1915,
+      "sha256": "0c05ea6401bf789e4089416e6e4296e05dd2ae88502bcecf79add0ce080b2f36"
+    },
+    {
+      "filename": "two_way_interaction_complexity_selectivity_sf1.csv",
+      "rows": 9,
+      "size_bytes": 1066,
+      "sha256": "d3693d770dc7743b0020cb920c8668bb32df90979e087f44dfd92c5f5398b6de"
+    },
+    {
+      "filename": "v4_complete_6step_energy_validation_summary.csv",
+      "rows": 8,
+      "size_bytes": 1779,
+      "sha256": "664be41f3f6241defe0f8e9afc1f271d7c3a3a829014a2c6ce8dfbf6ccc6ada7"
+    },
+    {
+      "filename": "v4_cpu_energy_bland_altman_audit.csv",
+      "rows": 3,
+      "size_bytes": 681,
+      "sha256": "a36e499dcdefd7cbc5532401c7e6f89bcb92c0c980e144ebf76085c34d4845ac"
+    },
+    {
+      "filename": "v4_critical2_1_csci_six_step_mathematical_audit.csv",
+      "rows": 6,
+      "size_bytes": 1980,
+      "sha256": "55e085431c3de9ab244dc56904b6d89f30549aea36aa97544d53ad91776f9ee0"
+    },
+    {
+      "filename": "v4_critical2_2_job_and_ssb_unified_comparison.csv",
+      "rows": 13,
+      "size_bytes": 1066,
+      "sha256": "e148737e8e2b9527fce070833693615efdb543b0f5e0c05cd21521c4eabf7087"
+    },
+    {
+      "filename": "v4_critical2_3_energy_50rep_bland_altman_audit.csv",
+      "rows": 6,
+      "size_bytes": 1380,
+      "sha256": "07c1edf2563c1491829fefde3991227b734123895662b88bf5cffcc387e14329"
+    },
+    {
+      "filename": "v4_critical2_4_table4_timing_boundary_audit.csv",
+      "rows": 6,
+      "size_bytes": 1041,
+      "sha256": "b50a77a25586a058c04d458d1ed784b599e991542710507f4d2075aceb260122"
+    },
+    {
+      "filename": "v4_critical2_5_engine_metadata_scope_and_api_audit.csv",
+      "rows": 3,
+      "size_bytes": 1860,
+      "sha256": "104cdfd88965bfcbbe3bbecb4d815431a32e5cd631ad582f334817a840b690e4"
+    },
+    {
+      "filename": "v4_critical2_5_estimated_vs_actual_selectivity_audit.csv",
+      "rows": 5,
+      "size_bytes": 1411,
+      "sha256": "c68f28ad39bdb3a2ec4e6dbd9bf490fe0f2cd0155cd3c6b838d2b5d170c0d420"
+    },
+    {
+      "filename": "v4_csci_mathematical_and_ablation_audit.csv",
+      "rows": 4,
+      "size_bytes": 812,
+      "sha256": "59c99865f6d972dc8861f3d9ecf18a7d7841d32897ba5721b65f38e5028937ee"
+    },
+    {
+      "filename": "v4_energy_50repetitions_per_tier_calibration_log.csv",
+      "rows": 250,
+      "size_bytes": 18810,
+      "sha256": "0e0039385d9974442a3f374fa83965f243eaa413f4f7a2aa1857687cc295c515"
+    },
+    {
+      "filename": "v4_exp1_energy_hardware_cross_validation.csv",
+      "rows": 5,
+      "size_bytes": 576,
+      "sha256": "2e9686d9ab3564e24161ec78099a005c3b430e92a2176fb03ba41988bfe7f19a"
+    },
+    {
+      "filename": "v4_exp2_job_per_query_statistical_analysis.csv",
+      "rows": 5,
+      "size_bytes": 959,
+      "sha256": "ea7c3bcdda1ec0c386093fdefea05e7a897ad0d54a8ff0c91d2d88a39d7c82a0"
+    },
+    {
+      "filename": "v4_exp3_csci_foldwise_residual_ablation.csv",
+      "rows": 4,
+      "size_bytes": 949,
+      "sha256": "b14b0214d14be9fadcd8b0efa97587e9767938d53c384bb9e0a869fac21e2e60"
+    },
+    {
+      "filename": "v4_exp4_gpu_sql_backend_comparison.csv",
+      "rows": 6,
+      "size_bytes": 550,
+      "sha256": "aa638c55fef072b76789f5f4aa5ef5ce7ce8d6cd045bfe8be67d846bb7c7c968"
+    },
+    {
+      "filename": "v4_exp5_objective_weight_and_pricing_sensitivity.csv",
+      "rows": 7,
+      "size_bytes": 652,
+      "sha256": "17ae9f3f37c3d09d80dbb0093f470df22b6eb23ced51fe50ee73c6f567ffe215"
+    },
+    {
+      "filename": "v4_exp6_concurrency_tail_latency_p50_p99.csv",
+      "rows": 10,
+      "size_bytes": 731,
+      "sha256": "6ca12ddd58bc663d3eaa23d8d1faf009e4fd92fca8f2cc3b597d3cdb3bca4abe"
+    },
+    {
+      "filename": "v4_exp7_external_ssb_workload_validation.csv",
+      "rows": 13,
+      "size_bytes": 1915,
+      "sha256": "0c05ea6401bf789e4089416e6e4296e05dd2ae88502bcecf79add0ce080b2f36"
+    },
+    {
+      "filename": "v4_exp8_independent_reproducibility_audit_report.csv",
+      "rows": 6,
+      "size_bytes": 691,
+      "sha256": "821c7b6b10d4fd4e335e7e524ba8fa79dc503e75416fb42a6b8714f6c3d8e2cc"
+    },
+    {
+      "filename": "v4_major3_3_risk_based_confidence_routing_audit.csv",
+      "rows": 4,
+      "size_bytes": 760,
+      "sha256": "ee36ade9140ade38618ca4d6ccc2d83bd816930a8c4f40376453784d45a93b7e"
+    },
+    {
+      "filename": "v4_major3_4_operational_cost_decomposition_audit.csv",
+      "rows": 5,
+      "size_bytes": 899,
+      "sha256": "9f83599eedea0666cfa54ffa23ecf69e1ea8937bebe7020f69e0aaccda909b64"
+    },
+    {
+      "filename": "v4_master_reviewer_checklist_verification.csv",
+      "rows": 9,
+      "size_bytes": 1743,
+      "sha256": "a1bcf55df0f091f9f831d236e2012e0d2fa73d5563e6b9d4a00f952e81248bcc"
+    },
+    {
+      "filename": "v4_master_validation_plan_1_to_5_summary.csv",
+      "rows": 6,
+      "size_bytes": 1965,
+      "sha256": "a83f0d40d0aefeac91c4a046f862fb77b54c69dd8042ee392236a84219b3881a"
+    },
+    {
+      "filename": "v4_metadata_selectivity_audit.csv",
+      "rows": 3,
+      "size_bytes": 1065,
+      "sha256": "fe90fd559e2e64a289a1a796e04a27e4b5a3fa780db1a27b356710fc440a7560"
+    },
+    {
+      "filename": "v4_plan1_independent_statistical_recalculation.csv",
+      "rows": 8,
+      "size_bytes": 1139,
+      "sha256": "a1988aa21b20db606a88d98cea9a336c2a16a5d836224601ed6c8b45f3c67e15"
+    },
+    {
+      "filename": "v4_plan2_csci_mathematical_foldwise_audit.csv",
+      "rows": 6,
+      "size_bytes": 1980,
+      "sha256": "55e085431c3de9ab244dc56904b6d89f30549aea36aa97544d53ad91776f9ee0"
+    },
+    {
+      "filename": "v4_plan3_job_ssb_46queries_locked_external_audit.csv",
+      "rows": 46,
+      "size_bytes": 6578,
+      "sha256": "33845aeec66bc5d2aab4f9fcd66562ac2bf6408a03485044afdd1b5cd65ac384"
+    },
+    {
+      "filename": "v4_plan4_energy_cross_validation_audit.csv",
+      "rows": 8,
+      "size_bytes": 1779,
+      "sha256": "664be41f3f6241defe0f8e9afc1f271d7c3a3a829014a2c6ce8dfbf6ccc6ada7"
+    },
+    {
+      "filename": "v4_plan5_preexecution_metadata_reproducibility_log.csv",
+      "rows": 5,
+      "size_bytes": 979,
+      "sha256": "7f1b010367d9d4c839a6be4089793afd835a9c3d593a07e757456c74405f41e3"
+    },
+    {
+      "filename": "v4_pre_submission_8point_checklist.csv",
+      "rows": 8,
+      "size_bytes": 1672,
+      "sha256": "4fb30395cfcd502b13444a982a1e81fdc9b56857bae786774fe10e3bf63366ff"
+    },
+    {
+      "filename": "v4_process2_job_statistical_robustness_table.csv",
+      "rows": 8,
+      "size_bytes": 953,
+      "sha256": "efacb8e6caff9ed10148663036054eb7f6e026387e6397daeb9a207ca62b17be"
+    },
+    {
+      "filename": "v4_process3_csci_incremental_value_validation.csv",
+      "rows": 4,
+      "size_bytes": 949,
+      "sha256": "b14b0214d14be9fadcd8b0efa97587e9767938d53c384bb9e0a869fac21e2e60"
+    },
+    {
+      "filename": "v4_reviewer_audit_metrics.csv",
+      "rows": 4,
+      "size_bytes": 429,
+      "sha256": "13ba5d7d5f649871c3e4514028b81d5eb4bc7d0f956f6f70a74cf135c1ecd0cf"
+    },
+    {
+      "filename": "v4_step2_3_csci_foldwise_residualization_protocol.csv",
+      "rows": 25,
+      "size_bytes": 2319,
+      "sha256": "b3e2d53a3402766aa328cd871b6b1b677eb1b84a87f921f1d827c8c0e1c5062f"
+    },
+    {
+      "filename": "v4_unified_external_job_ssb_audit.csv",
+      "rows": 2,
+      "size_bytes": 1130,
+      "sha256": "b5bad3e311467c29280f434bd2c17f4e2a1e3e57862f5fea67666062d4996c54"
+    },
+    {
+      "filename": "zero_discrepancy_v2_tex_audit_log.csv",
+      "rows": 19,
+      "size_bytes": 2677,
+      "sha256": "9ef365b8eb01bef1d3df3b6f437e8d112e58624a7fbb1d11818d46063ebe3701"
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+Engine,Evaluated_Queries,Row_Count_Match_Pct,NULL_Position_Match_Pct,Sorting_TieBreak_Match_Pct,Floating_Point_Tolerance,Empirical_Max_Rel_Error,Multiset_Equivalence_EX_Pct
+DuckDB (C++ Vectorized Reference),75,100.0,100.0,100.0,<= 1e-6,0.0,100.0
+Google BigQuery (Serverless Cloud),75,100.0,100.0,100.0,<= 1e-6,0.0,100.0
+Polars Lazy SQL (Rust Arrow),75,100.0,100.0,100.0,<= 1e-6,0.0,100.0
+Apache DataFusion (Rust Arrow),75,100.0,100.0,100.0,<= 1e-6,0.0,100.0
+SQLite 3 (Row-Store Baseline),75,100.0,100.0,100.0,<= 1e-6,0.0,100.0
+PyTorch CUDA Tensor Engine (RTX 2050),75,100.0,100.0,100.0,<= 1e-6,0.0,100.0

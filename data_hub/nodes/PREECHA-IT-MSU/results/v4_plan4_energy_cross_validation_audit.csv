@@ -1,0 +1,9 @@
+Boundary_Scope,Engine_Configuration,Telemetry_Source_Type,Calibration_Reps_R,Mean_Active_Energy_J,Net_Dynamic_Energy_J,Absolute_Error_MAE_J,Absolute_Error_RMSE_J,Relative_Error_MACE_Pct,Bland_Altman_Bias_J,Bland_Altman_95_LoA_J,Repeat_Trial_CV_Pct,Spearman_Concordance_rho
+Scope I: Estimated CPU Package (E_CPU),SQLite 3 (Row-Store CPU),TDP-Calibrated Utilization Estimate (14.5W-45.0W),50,126.26,4.21,3.9983,5.3964,3.27,-1.667,"[-11.740, +8.406]",2.84,0.9958
+Scope I: Estimated CPU Package (E_CPU),DuckDB Native (Vectorized C++),TDP-Calibrated Utilization Estimate (14.5W-45.0W),50,6.4,3.73,0.2351,0.6593,3.21,0.0888,"[-1.193, +1.371]",3.12,0.9984
+Scope I: Estimated CPU Package (E_CPU),Polars (Rust Apache Arrow),TDP-Calibrated Utilization Estimate (14.5W-45.0W),50,3.17,1.97,0.102,0.1478,3.08,0.0327,"[-0.250, +0.316]",2.95,0.998
+Scope I: Estimated CPU Package (E_CPU),Apache DataFusion (Rust Arrow),TDP-Calibrated Utilization Estimate (14.5W-45.0W),50,3.39,2.0,0.0985,0.1276,3.15,0.0323,"[-0.210, +0.275]",3.08,0.9984
+Scope II: Measured GPU Board (E_GPU),RTX 2050 Cold (Incl. PCIe H2D/D2H),Direct Physical NVML Hardware Sensor (250 Hz),50,0.65,0.14,0.0057,0.0078,0.9,-0.0002,"[-0.016, +0.015]",3.28,0.997
+Scope II: Measured GPU Board (E_GPU),RTX 2050 Warm (In-VRAM Kernel),Direct Physical NVML Hardware Sensor (250 Hz),50,0.25,0.05,0.0026,0.0041,1.07,-0.0001,"[-0.008, +0.008]",3.45,0.9967
+Scope III: Composite Host+GPU (E_sys),Host CPU Assist + RTX 2050 Cold,Hybrid: Host TDP Estimate + Direct NVML Sensor,50,1.58,0.24,0.0309,0.0381,1.95,-0.0117,"[-0.083, +0.059]",3.36,0.9942
+Scope III: Composite Host+GPU (E_sys),Host CPU Assist + RTX 2050 Warm,Hybrid: Host TDP Estimate + Direct NVML Sensor,50,0.61,0.09,0.0119,0.0161,1.91,-0.0064,"[-0.035, +0.023]",3.52,0.9979

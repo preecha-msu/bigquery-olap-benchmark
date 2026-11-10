@@ -1,0 +1,6 @@
+Query_ID,Inspected_Column,Predicate_Literal,PreExec_Metadata_RowGroups,PreExec_ZoneMap_Min,PreExec_ZoneMap_Max,PreExec_Null_Count,Metadata_Retrieval_Time_us,PreExec_Estimated_Selectivity,PreExec_Router_Decision,PostExec_Actual_Selectivity,Abs_Selectivity_Error_Pct,PostExec_Query_Time_ms
+L1_V1_HighSel,l_shipdate,< 1992-04-15,5,1992-01-02,1998-11-30,0,14451.1,0.0412,Route -> Polars/DuckDB CPU (Avoid PCIe Overhead),0.0413,0.01,3.766
+L1_V2_MedSel,l_shipdate,< 1993-06-01,5,1992-01-02,1998-11-30,0,437.7,0.2044,Route -> Polars/DuckDB CPU (Avoid PCIe Overhead),0.2044,0.0,0.836
+L1_V3_FullSel,l_shipdate,< 1998-06-01,5,1992-01-02,1998-11-30,0,306.8,0.9279,Route -> Evaluate CSCI + GPU/CPU Cost Model,0.9275,0.04,0.775
+L2_NonPart_Num,l_quantity,<= 10.0,5,1.0,50.0,0,434.4,0.1837,Route -> Polars/DuckDB CPU (Avoid PCIe Overhead),0.2,1.63,0.955
+L3_NonPart_Price,l_extendedprice,<= 450.0,5,115.0,1148.85,0,294.6,0.324,Route -> Evaluate CSCI + GPU/CPU Cost Model,0.3247,0.07,0.866

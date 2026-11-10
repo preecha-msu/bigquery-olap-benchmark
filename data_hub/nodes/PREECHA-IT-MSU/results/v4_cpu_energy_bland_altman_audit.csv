@@ -1,0 +1,4 @@
+Energy_Domain,Measurement_Method,Repetitions_Per_Workload,Mean_Energy_J,MAE_J,Relative_Error_MACE_Pct,Bland_Altman_Bias_J,Bland_Altman_95_LoA_J,Rank_Concordance_Spearman_rho
+GPU Board Energy (E_GPU),Direct Physical Hardware Sensor (NVIDIA NVML nvmlDeviceGetPowerUsage @ 250 Hz),50,0.65,0.008,1.24,0.001,"[-0.018, +0.020]",0.9994
+"CPU Package Energy (E_CPU, DuckDB/Polars/DF)",TDP-Calibrated Utilization Model (14.5W Idle - 45.0W TDP) vs. Non-Linear DVFS Curve,50,3.17,0.224,3.21,-0.027,"[-0.592, +0.539]",0.9982
+Composite Host+Device System Energy (E_sys),Concurrent Host CPU Package Estimate + Physical NVML GPU Board Sensor,50,1.58,0.051,3.18,0.012,"[-0.095, +0.119]",0.9986

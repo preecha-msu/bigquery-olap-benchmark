@@ -1,0 +1,14 @@
+Metric,JOB (IMDB Snowflake/Cyclic Joins),SSB (Dimensional Star Schema)
+Number of Queries,33 (Templates 1a-33a),13 (Flights Q1.1-Q4.3)
+Dataset & Scale Factor,"IMDB Real-World (~3.6 GB, 21 Tables)",SSB Star Schema SF=1 GB (6.0M lineorder rows)
+Training Protocol,"Zero-Shot (Trained 100% on TPC-H, Locked)","Zero-Shot (Trained 100% on TPC-H, Locked)"
+Top-1 Accuracy,21.21% (7/33),92.31% (12/13)
+Top-2 Accuracy,100.00% (33/33),100.00% (13/13)
+Mean Latency (AST-Route),6.75 ms (Matches Polars 6.75 ms),11.38 ms (vs. Polars 12.98 ms)
+Median / P95 Latency,6.52 ms / 10.51 ms,10.80 ms / 18.79 ms
+Oracle Latency (Abs. Gap),4.03 ms (+2.72 ms gap),10.98 ms (+0.40 ms gap)
+Mean / Median / P95 Regret,84.49% / 43.84% / 97.0%,2.82% / 0.00% / 14.7%
+Near-optimal <=5%,21.21% (7/33),92.31% (12/13)
+Near-optimal <=10%,30.30% (10/33),92.31% (12/13)
+95% Paired CI (vs. Always GPU),"-2.30 [-3.42, -1.21] ms (p=0.0398)","-2.53 [-3.85, -1.21] ms (p=0.0156)"
+95% Paired CI (vs. Always DuckDB),"-12.80 [-16.73, -9.34] ms (p=5.39e-07)","-8.25 [-10.29, -6.39] ms (p=2.4414e-04)"

@@ -1,0 +1,10 @@
+Scale_Factor,Engine,Execution_Mode,Canonical_Scan_Agg_ms,Peak_Host_RAM_GB,Peak_GPU_VRAM_GB,Naive_FullLoad_OOM,PCIe_Transfer_Share_Pct
+SF=1 (1 GB),Polars_Lazy_Streaming_Rust,In-Memory_Arrow,55.71,2.381,0.0,0,0.0
+SF=1 (1 GB),Apache_DataFusion_Rust,In-Memory_Arrow,47.35,2.382,0.0,0,0.0
+SF=1 (1 GB),PyTorch_CUDA_RTX2050 (4.0GB VRAM),In-VRAM_Resident,65.21,3.481,0.051,0,74.11
+SF=10 (10 GB),Polars_Lazy_Streaming_Rust,In-Memory_Arrow,603.42,3.576,0.0,0,0.0
+SF=10 (10 GB),Apache_DataFusion_Rust,In-Memory_Arrow,380.25,3.707,0.0,0,0.0
+SF=10 (10 GB),PyTorch_CUDA_RTX2050 (4.0GB VRAM),Batched_PCIe_RowGroup_Stream,407.15,3.739,0.051,1,81.42
+SF=100 (100 GB),Polars_Lazy_Streaming_Rust,Out-of-Core_Streaming,4113.08,4.706,0.0,0,0.0
+SF=100 (100 GB),Apache_DataFusion_Rust,Partitioned_Batch_Stream,3837.38,4.849,0.0,0,0.0
+SF=100 (100 GB),PyTorch_CUDA_RTX2050 (4.0GB VRAM),Batched_PCIe_RowGroup_Stream,7399.2,3.51,0.109,1,73.73
