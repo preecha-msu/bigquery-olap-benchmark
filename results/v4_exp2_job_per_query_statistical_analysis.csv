@@ -1,0 +1,6 @@
+Policy,Mean Latency (ms),Median Latency (ms),P95 Latency (ms),Mean Regret (%),Near-optimal <=5%,Near-optimal <=10%,Paired CI (AST-Route - Policy),Paired Wilcoxon & Holm-Bonferroni p
+AST-Route,6.75 ms,6.52 ms,10.51 ms,"84.49% (Med: 43.84%, P95: 97.0%)",21.21% (7/33),30.30% (10/33),Reference (0.00 ms),Reference
+Always Polars,6.75 ms,6.52 ms,10.51 ms,"84.49% (Med: 43.84%, P95: 97.0%)",21.21% (7/33),30.30% (10/33),"0.00 [0.00, 0.00] ms",p = 1.000 (Tied)
+Always GPU,9.05 ms,4.45 ms,29.26 ms,"127.29% (Med: 0.00%, P95: 607.1%)",78.79% (26/33),78.79% (26/33),"-2.30 [-6.29, +1.29] ms",p = 2.14e-01 (Holm p = 2.14e-01)
+Always DuckDB,19.55 ms,15.68 ms,40.96 ms,"390.25% (Med: 282.00%, P95: 884.6%)",0.00% (0/33),0.00% (0/33),"-12.80 [-16.94, -9.14] ms",p = 2.33e-10 (Holm p = 6.98e-10)
+Always DataFusion,31.25 ms,25.64 ms,63.58 ms,"683.48% (Med: 524.11%, P95: 1427.1%)",0.00% (0/33),0.00% (0/33),"-24.50 [-30.67, -19.09] ms",p = 2.33e-10 (Holm p = 6.98e-10)

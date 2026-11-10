@@ -1,0 +1,12 @@
+Component,Detected_Specification,Status
+Operating System,Windows 11 (10.0.26200),VERIFIED
+Host CPU Architecture,AMD64 | 8 Physical / 12 Logical Cores,VERIFIED
+Host System RAM,63.71 GB Total DDR4,VERIFIED
+Discrete GPU Accelerator,NVIDIA GeForce RTX 2050 (4.0 GB VRAM),VERIFIED
+NVIDIA Driver & CUDA Runtime,Driver: 528.20 | CUDA: 12.4 | PyTorch: 2.6.0+cu124,VERIFIED
+Python Runtime,3.13.9,VERIFIED
+DuckDB (C++ Vectorized DBMS),v2.0.0,VERIFIED
+Polars (Rust Apache Arrow),v2.1.0,VERIFIED
+Apache DataFusion (Rust Arrow),v55.0.0,VERIFIED
+SQLite 3 (Row-Store Baseline),v3.51.0,VERIFIED
+SQLGlot & Scikit-Learn,SQLGlot v30.24.0 | Scikit-Learn v1.7.2,VERIFIED

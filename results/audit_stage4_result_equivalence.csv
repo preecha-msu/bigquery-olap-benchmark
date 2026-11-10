@@ -1,0 +1,6 @@
+Query_ID,Tier,Row_Count_Exact_Match,NULL_Semantics_Match,Duplicate_Preservation,Max_FP64_Relative_Error,Tolerance_Threshold,Equivalence_Verdict
+L1_Scan_Filter_Rep,L1,PASS (100%),PASS (100%),PASS (100%),6.66e-15,1.00e-09,PASS (EX=1.000)
+L2_Multi_Join_Rep,L2,PASS (100%),PASS (100%),PASS (100%),9.20e-15,1.00e-09,PASS (EX=1.000)
+L3_Staged_CTE_Rep,L3,PASS (100%),PASS (100%),PASS (100%),4.95e-16,1.00e-09,PASS (EX=1.000)
+L4_Window_Rank_Rep,L4,PASS (100%),PASS (100%),PASS (100%),5.00e-16,1.00e-09,PASS (EX=1.000)
+L5_Array_Unnest_Rep,L5,PASS (100%),PASS (100%),PASS (100%),3.92e-15,1.00e-09,PASS (EX=1.000)

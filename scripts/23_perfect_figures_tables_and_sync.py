@@ -2,13 +2,9 @@
 r"""
 scripts/23_perfect_figures_tables_and_sync.py
 แก้ไขทุกจุดบกพร่องที่ตรวจพบใน overleaf_project_bundle.pdf:
-1. วาดรูป Figure 1, 2, 4, 5 ใหม่ (ลบคำว่า IEEE Access -> Journal of Big Data, อัปเดตค่า CSCI_v2 จริง)
-   และสร้างรูปใหม่ Figure 6 (Multi-Scale SF1/10/100 & AST Query Router) ที่ความละเอียด 300 DPI
-2. แก้โค้ดพังใน Table 2 แถว L5, ซิงค์ค่า BigQuery Unopt, แก้ค่าสลับช่องใน Table 4 และ Table 5 แถว L5
-3. แก้ปัญหาตารางล้นขอบกระดาษ (Overfull \hbox) ใน Table 7, 8, 9, 10, 11, 12, 14, 15, 16
-   ทำให้คอลัมน์ใน Table 9, 15, 16 แสดงครบทุกคอลัมน์โดยไม่ตกขอบขวา
-4. เพิ่มรายละเอียดอัลกอริทึม GPU (ข้อ 3.2) และพารามิเตอร์ Cloud BigQuery (ข้อ 3.5) พร้อมอัปเดต Abstract & Limitations
-5. คอมไพล์ PDF และสร้าง overleaf_project_bundle.zip ใหม่พร้อมส่งทันที
+1. วาดรูป Figure 1, 2, 4, 5 ใหม่ และสร้างรูปใหม่ Figure 6 ที่ความละเอียด 300 DPI
+2. ปรับปรุงการอ่านไฟล์ต้นฉบับจาก overleaf_ready_single_file.tex โดยตรง ป้องกัน FileNotFoundError
+3. แพ็กใส่ manuscript/overleaf_project_bundle.zip และสร้าง PDF ใหม่ทันที
 """
 
 import re
@@ -28,7 +24,6 @@ FIGURES_DIR = MANUSCRIPT_DIR / "figures"
 
 
 def _cf(val) -> float:
-    """แปลงสตริงที่มีเครื่องหมาย %, x, × ติดอยู่ให้เป็น float อย่างปลอดภัย"""
     s = str(val).replace("%", "").replace("x", "").replace("×", "").replace("+", "").strip()
     return float(s)
 
@@ -45,15 +40,12 @@ def tex_escape(val) -> str:
     return s
 
 
-# =====================================================================
-# STEP 1: วาดรูปภาพ Figure 1, 4, 5 ใหม่ และสร้าง Figure 6 (Multi-Scale & Router)
-# =====================================================================
 def regenerate_all_figures_v2() -> None:
     FIGURES_DIR.mkdir(parents=True, exist_ok=True)
     plt.rcParams["font.family"] = "sans-serif"
     plt.rcParams["font.size"] = 9.5
 
-    # 1. วาด Figure 1 ใหม่ (เปลี่ยน IEEE Access -> Journal of Big Data + CSCI_v2 + Multi-Scale)
+    # 1. Figure 1
     fig, ax = plt.subplots(figsize=(13.5, 7.8), dpi=300)
     ax.set_xlim(0, 100)
     ax.set_ylim(0, 100)
@@ -82,128 +74,82 @@ def regenerate_all_figures_v2() -> None:
             ax.text(x + 1.2, text_y, b, ha="left", va="top", fontsize=8.0, color="#1a1a1a")
             text_y -= 3.1
 
-    draw_box(
-        1.5, 73, 46.5, 21,
-        "PHASE 1: Multi-Scale TPC-H Provisioning (SF = 1, 10, 100 GB)",
-        [
-            "• Multi-Scale Datasets: SF=1 (8.66M rows), SF=10 (86.6M), SF=100 (866M rows)",
-            "• Local Columnar: ZSTD Parquet + DuckDB Native + Apache Arrow Streaming",
-            "• Local Row-Store Baseline: SQLite 3 B-Tree with PK/FK Indexes",
-            "• Cloud Serverless: Google BigQuery Unoptimized vs. Clustered (US Multi-Region)",
-            "• External Validation Suite: Official 22-Query TPC-H Benchmark (Q1–Q22)",
-        ],
-        "#1f618d", "#ebf5fb"
-    )
+    draw_box(1.5, 73, 46.5, 21, "PHASE 1: Multi-Scale TPC-H Provisioning (SF = 1, 10, 100 GB)", [
+        "• Multi-Scale Datasets: SF=1 (8.66M rows), SF=10 (86.6M), SF=100 (866M rows)",
+        "• Local Columnar: ZSTD Parquet + DuckDB Native + Apache Arrow Streaming",
+        "• Local Row-Store Baseline: SQLite 3 B-Tree with PK/FK Indexes",
+        "• Cloud Serverless: Google BigQuery Unoptimized vs. Clustered (US Multi-Region)",
+        "• External Validation Suite: Official 22-Query TPC-H Benchmark (Q1–Q22)",
+    ], "#1f618d", "#ebf5fb")
 
-    draw_box(
-        52.0, 73, 46.5, 21,
-        "PHASE 2: 75-Query Factorial Workload Design (25 Seeds × 3 Variations)",
-        [
-            "• 5 Structural Tiers (5 Canonical Seeds/Tier = 25 Independent Seeds):",
-            "  L1 (Scan/Filter), L2 (4–8 Way Joins), L3 (Staged CTEs), L4 (Window), L5 (UNNEST)",
-            "• 3 Selectivity Perturbations per Seed (Total N = 75 Factorial Queries):",
-            "  V1: High Selectivity (1–5%) | V2: Medium (15–30%) | V3: Full-Horizon (65–95%)",
-            "• Orthogonal Design: Decouples AST operator depth from predicate selectivity",
-        ],
-        "#1e8449", "#e9f7ef"
-    )
+    draw_box(52.0, 73, 46.5, 21, "PHASE 2: 75-Query Factorial Workload Design (25 Seeds × 3 Variations)", [
+        "• 5 Structural Tiers (5 Canonical Seeds/Tier = 25 Independent Seeds):",
+        "  L1 (Scan/Filter), L2 (4–8 Way Joins), L3 (Staged CTEs), L4 (Window), L5 (UNNEST)",
+        "• 3 Selectivity Perturbations per Seed (Total N = 75 Factorial Queries):",
+        "  V1: High Selectivity (1–5%) | V2: Medium (15–30%) | V3: Full-Horizon (65–95%)",
+        "• Orthogonal Design: Decouples AST operator depth from predicate selectivity",
+    ], "#1e8449", "#e9f7ef")
 
-    draw_box(
-        1.5, 52, 97.0, 18,
-        "PHASE 3: Static Abstract Syntax Tree (AST) Profiling & Revised CSCI_v2 Quantification (SQLGlot Parser)",
-        [
-            "• Parses all 75 factorial queries + 22 official TPC-H queries into canonical AST representations to extract 7 operator dimensions:",
-            "  Tree Depth D(q), Total Operator Nodes N(q), Join Count J(q), Nested CTE/Subquery Depth S(q), Window Specs W(q), Array UNNEST U(q), Branches C(q)",
-            "• Revised Composite Structural Complexity Index: CSCI_v2(q) = 1.5 D(q) + 1.0 log2 N(q) + 2.5 J(q) + 3.0 S(q) + 3.5 W(q) + 4.0 U(q) + 1.5 C(q)",
-            "• Tier Progression: Mean CSCI_v2 progresses from 27.9 (L1) and 36.2 (L2) to 41.4 (L3), 41.7 (L4), and 43.6 (L5) [Validated via ±50% Monte Carlo Sensitivity]",
-        ],
-        "#b9770e", "#fef9e7"
-    )
+    draw_box(1.5, 52, 97.0, 18, "PHASE 3: Static Abstract Syntax Tree (AST) Profiling & Revised CSCI_v2 Quantification (SQLGlot Parser)", [
+        "• Parses all 75 factorial queries + 22 official TPC-H queries into canonical AST representations to extract 7 operator dimensions:",
+        "  Tree Depth D(q), Total Operator Nodes N(q), Join Count J(q), Nested CTE/Subquery Depth S(q), Window Specs W(q), Array UNNEST U(q), Branches C(q)",
+        "• Revised Composite Structural Complexity Index: CSCI_v2(q) = 1.5 D(q) + 1.0 log2 N(q) + 2.5 J(q) + 3.0 S(q) + 3.5 W(q) + 4.0 U(q) + 1.5 C(q)",
+        "• Tier Progression: Mean CSCI_v2 progresses from 27.9 (L1) and 36.2 (L2) to 41.4 (L3), 41.7 (L4), and 43.6 (L5) [Validated via ±50% Monte Carlo Sensitivity]",
+    ], "#b9770e", "#fef9e7")
 
-    draw_box(
-        1.5, 25, 22.8, 24,
-        "Paradigm 1: Row-Store",
-        [
-            "• Engine: SQLite 3 (ANSI C)",
-            "• Storage: B-Tree Row-Store",
-            "• Execution: Tuple-at-a-Time",
-            "  Volcano Iterator Model",
-            "• Baseline Mean: 5071.1 ms",
-            "  (Throughput: 0.064 GB/s)",
-        ],
-        "#5d6d7e", "#f2f4f4"
-    )
-    draw_box(
-        26.2, 25, 22.8, 24,
-        "Paradigm 2: Serverless Cloud",
-        [
-            "• Engine: Google BigQuery",
-            "• Storage: Capacitor Columnar",
-            "  (Unopt: 2190.6ms, Clust: 745.4ms)",
-            "• Controls: Cache Disabled,",
-            "  Zero-Billing Sandbox Quota",
-            "• Pruning: 78.4% in V1 ($1.47/1M)",
-        ],
-        "#2874a6", "#ebf5fb"
-    )
-    draw_box(
-        51.0, 25, 22.8, 24,
-        "Paradigm 3: Vectorized CPU",
-        [
-            "• 1) DuckDB (C++ Columnar)",
-            "  Parquet (254.4ms) vs Native (183.7ms)",
-            "  SF100 Out-of-Core Spill: 43.8 GB",
-            "• 2) Polars SQL (Rust Arrow: 66.5ms)",
-            "• 3) Apache DataFusion (Rust: 88.2ms)",
-            "  Peak L5 UNNEST: 18.87 GB/s",
-        ],
-        "#117a65", "#e8f8f5"
-    )
-    draw_box(
-        75.7, 25, 22.8, 24,
-        "Paradigm 4: SIMT CUDA GPU",
-        [
-            "• Engine: PyTorch CUDA Tensor",
-            "• GPU: NVIDIA RTX 2050 (4GB VRAM)",
-            "• 3 Fairness Modes (M1, M2, M3)",
-            "• Mean PCIe H2D: 34.71 ms",
-            "• Mean Warm Kernel: 22.25 ms",
-            "• SF10/100 Batched PCIe Stream",
-        ],
-        "#a93226", "#fdedec"
-    )
+    draw_box(1.5, 25, 22.8, 24, "Paradigm 1: Row-Store", [
+        "• Engine: SQLite 3 (ANSI C)",
+        "• Storage: B-Tree Row-Store",
+        "• Execution: Tuple-at-a-Time",
+        "  Volcano Iterator Model",
+        "• Baseline Mean: 5071.1 ms",
+        "  (Throughput: 0.064 GB/s)",
+    ], "#5d6d7e", "#f2f4f4")
+    draw_box(26.2, 25, 22.8, 24, "Paradigm 2: Serverless Cloud", [
+        "• Engine: Google BigQuery",
+        "• Storage: Capacitor Columnar",
+        "  (Unopt: 2190.6ms, Clust: 745.4ms)",
+        "• Controls: Cache Disabled,",
+        "  Zero-Billing Sandbox Quota",
+        "• Pruning: 78.4% in V1 ($1.47/1M)",
+    ], "#2874a6", "#ebf5fb")
+    draw_box(51.0, 25, 22.8, 24, "Paradigm 3: Vectorized CPU", [
+        "• 1) DuckDB (C++ Columnar)",
+        "  Parquet (254.4ms) vs Native (183.7ms)",
+        "  SF100 Out-of-Core Spill: 43.8 GB",
+        "• 2) Polars SQL (Rust Arrow: 66.5ms)",
+        "• 3) Apache DataFusion (Rust: 88.2ms)",
+        "  Peak L5 UNNEST: 18.87 GB/s",
+    ], "#117a65", "#e8f8f5")
+    draw_box(75.7, 25, 22.8, 24, "Paradigm 4: SIMT CUDA GPU", [
+        "• Engine: PyTorch CUDA Tensor",
+        "• GPU: NVIDIA RTX 2050 (4GB VRAM)",
+        "• 3 Fairness Modes (M1, M2, M3)",
+        "• Mean PCIe H2D: 34.71 ms",
+        "• Mean Warm Kernel: 22.25 ms",
+        "• SF10/100 Batched PCIe Stream",
+    ], "#a93226", "#fdedec")
 
-    draw_box(
-        1.5, 2, 46.5, 20,
-        "PHASE 5: Hierarchical Statistical Verification & Fairness",
-        [
-            "• 6-Engine Row-Level Multiset Equivalence Audit: EX = 100.0% (tol <= 1e-6)",
-            "• Hierarchical Inference: 25-Seed Bootstrap 95% CIs vs. 75-Query Wilcoxon",
-            "• Two-Way Non-Parametric Interaction: Scheirer-Ray-Hare H & ART F-Tests",
-            "• Three-Mode CPU/GPU Fairness: Kernel-only (M1), Transfer (M2), End-to-End (M3)",
-        ],
-        "#6c3483", "#f5eef8"
-    )
-
-    draw_box(
-        52.0, 2, 46.5, 20,
-        "PHASE 6: AST-Aware Query Router & Cryptographic Audit",
-        [
-            "• Learned AST Cost Router (5-Fold Out-of-Seed CV): 45.09 ms Mean Latency",
-            "  (4.07x Speedup vs. DuckDB, 74.7% Exact Match, 81.3% Within-5ms Optimal)",
-            "• 19-File SHA-256 Telemetry Audit Certificate (REPRODUCTION_CERTIFICATE_V2.md)",
-            "• Open-Source Benchmark Repository & Journal of Big Data Manuscript:",
-            "  https://github.com/preecha-msu/bigquery-olap-benchmark",
-        ],
-        "#196f3d", "#eafaf1"
-    )
+    draw_box(1.5, 2, 46.5, 20, "PHASE 5: Hierarchical Statistical Verification & Fairness", [
+        "• 6-Engine Row-Level Multiset Equivalence Audit: EX = 100.0% (tol <= 1e-6)",
+        "• Hierarchical Inference: 25-Seed Bootstrap 95% CIs vs. 75-Query Wilcoxon",
+        "• Two-Way Non-Parametric Interaction: Scheirer-Ray-Hare H & ART F-Tests",
+        "• Three-Mode CPU/GPU Fairness: Kernel-only (M1), Transfer (M2), End-to-End (M3)",
+    ], "#6c3483", "#f5eef8")
+    draw_box(52.0, 2, 46.5, 20, "PHASE 6: AST-Aware Query Router & Cryptographic Audit", [
+        "• Learned AST Cost Router (5-Fold Out-of-Seed CV): 45.09 ms Mean Latency",
+        "  (4.07x Speedup vs. DuckDB, 74.7% Exact Match, 81.3% Within-5ms Optimal)",
+        "• 19-File SHA-256 Telemetry Audit Certificate (REPRODUCTION_CERTIFICATE_V2.md)",
+        "• Open-Source Benchmark Repository & Journal of Big Data Manuscript:",
+        "  https://github.com/preecha-msu/bigquery-olap-benchmark",
+    ], "#196f3d", "#eafaf1")
 
     fig.tight_layout()
     for ext in ["pdf", "png"]:
         fig.savefig(FIGURES_DIR / f"fig_architecture_workflow_300dpi.{ext}", dpi=300, bbox_inches="tight")
     plt.close(fig)
 
-    # 2. วาด Figure 4 ใหม่ (อัปเดตแกน X เป็น CSCI_v2 = 27.9, 36.2, 41.4, 41.7, 43.6)
+    # 2. Figure 4
     tiers_lbl = [
         "L1: Scan/Filter\n(CSCI_v2=27.9)",
         "L2: Multi-Join\n(CSCI_v2=36.2)",
@@ -222,10 +168,7 @@ def regenerate_all_figures_v2() -> None:
 
     ax1.bar(x - w / 2, duck_nat, w, label="DuckDB Native Columnar (Vectorized CPU)", color="#2e5984", edgecolor="black")
     ax1.bar(x + w / 2, gpu_warm, w, label="GPU Warm Kernel Compute (In-VRAM)", color="#2ca02c", edgecolor="black")
-    ax1.bar(
-        x + w / 2, gpu_pcie, w, bottom=gpu_warm,
-        label="PCIe Host-to-Device (H2D) Transfer Overhead", color="#ff7f0e", edgecolor="black", hatch="//"
-    )
+    ax1.bar(x + w / 2, gpu_pcie, w, bottom=gpu_warm, label="PCIe Host-to-Device (H2D) Transfer Overhead", color="#ff7f0e", edgecolor="black", hatch="//")
     for i in range(len(x)):
         ax1.text(x[i] - w / 2, duck_nat[i] + 6, f"{duck_nat[i]:.1f}", ha="center", fontsize=8, fontweight="bold")
         ax1.text(x[i] + w / 2, gpu_cold[i] + 6, f"{gpu_cold[i]:.1f}", ha="center", fontsize=8, fontweight="bold", color="#b33000")
@@ -273,7 +216,7 @@ def regenerate_all_figures_v2() -> None:
             fig.savefig(FIGURES_DIR / f"{fname}.{ext}", dpi=300, bbox_inches="tight")
     plt.close(fig)
 
-    # 3. วาด Figure 5 ใหม่ (6-Engine Cross-Paradigm พร้อมค่า CSCI_v2 ใหม่)
+    # 3. Figure 5
     fig, ax = plt.subplots(figsize=(12.5, 4.3), dpi=300)
     sqlite_v = [3450.2, 8493.5, 4757.7, 3484.2, 5170.0]
     bq_v = [432.9, 667.3, 493.0, 372.8, 1761.0]
@@ -302,9 +245,8 @@ def regenerate_all_figures_v2() -> None:
             fig.savefig(FIGURES_DIR / f"{fname}.{ext}", dpi=300, bbox_inches="tight")
     plt.close(fig)
 
-    # 4. สร้าง Figure 6 ใหม่: Multi-Scale Scalability (SF1, SF10, SF100) & AST Query Router
+    # 4. Figure 6
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12.8, 4.5), dpi=300)
-
     scales = ["SF=1\n(1 GB, 8.66M rows)", "SF=10\n(10 GB, 86.6M rows)", "SF=100\n(100 GB, 866M rows)"]
     xs = np.arange(len(scales))
     tot_nat = [15.01, 678.13, 9703.82]
@@ -332,13 +274,8 @@ def regenerate_all_figures_v2() -> None:
     ax1.legend(loc="upper left", fontsize=8)
 
     policies = [
-        "Always\nDuckDB",
-        "Always\nDataFusion",
-        "Always\nPolars",
-        "Always\nGPU Cold",
-        "Rule-Based\nAST Router",
-        "Learned AST\nCost Router",
-        "Oracle\nLower Bound",
+        "Always\nDuckDB", "Always\nDataFusion", "Always\nPolars", "Always\nGPU Cold",
+        "Rule-Based\nAST Router", "Learned AST\nCost Router", "Oracle\nLower Bound"
     ]
     lat_pol = [183.74, 88.20, 66.53, 56.96, 46.43, 45.09, 39.45]
     cols_pol = ["#7f7f7f", "#8172b3", "#dd8452", "#c44e52", "#4c72b0", "#2ca02c", "#111111"]
@@ -364,16 +301,11 @@ def regenerate_all_figures_v2() -> None:
     for ext in ["pdf", "png"]:
         fig.savefig(FIGURES_DIR / f"fig_multiscale_and_router_300dpi.{ext}", dpi=300, bbox_inches="tight")
     plt.close(fig)
-    print("[OK] วาดและอัปเดตรูปภาพ 300 DPI ทั้งหมด (Figure 1, 4, 5 และ Figure 6 ใหม่) เรียบร้อยแล้ว!")
+    print("[OK] วาดและอัปเดตรูปภาพ 300 DPI ทั้งหมดเรียบร้อยแล้ว!")
 
 
-# =====================================================================
-# STEP 2: สร้างตารางใหม่ที่กระชับพอดีหน้ากระดาษ (ไม่ล้นขอบขวา 100%)
-# =====================================================================
 def build_perfect_inline_tables() -> dict:
     tables = {}
-
-    # Table 7: CSCI Validation
     df_csci = pd.read_csv(RESULTS_DIR / "csci_validation_sensitivity_sf1.csv")
     rows = []
     for _, r in df_csci.iterrows():
@@ -397,7 +329,6 @@ def build_perfect_inline_tables() -> dict:
         r"\end{table*}",
     ])
 
-    # Table 8: Official TPC-H Q1-Q22
     df_tpch = pd.read_csv(RESULTS_DIR / "official_tpch_q1_q22_external_validation.csv")
     rows = []
     for _, r in df_tpch.iterrows():
@@ -431,7 +362,6 @@ def build_perfect_inline_tables() -> dict:
         r"\end{table*}",
     ])
 
-    # Table 9: Hierarchical Stats (ย่อชื่อหัวคอลัมน์ให้ไม่ล้นขอบขวา 100%)
     df_hier = pd.read_csv(RESULTS_DIR / "hierarchical_seed_cluster_stats_sf1.csv")
     rows = []
     for _, r in df_hier.iterrows():
@@ -459,7 +389,6 @@ def build_perfect_inline_tables() -> dict:
         r"\end{table*}",
     ])
 
-    # Table 10: Two-Way Interaction
     df_inter = pd.read_csv(RESULTS_DIR / "two_way_interaction_complexity_selectivity_sf1.csv")
     rows = []
     for _, r in df_inter.iterrows():
@@ -483,7 +412,6 @@ def build_perfect_inline_tables() -> dict:
         r"\end{table*}",
     ])
 
-    # Table 11: 3-Mode GPU/CPU Fairness
     df_fair = pd.read_csv(RESULTS_DIR / "gpu_cpu_3mode_fairness_comparison_sf1.csv")
     rows = []
     for _, r in df_fair.iterrows():
@@ -508,7 +436,6 @@ def build_perfect_inline_tables() -> dict:
         r"\end{table*}",
     ])
 
-    # Table 12: Multiset Equivalence (EX% = 100.0% ตรงกับ Table 1-6)
     df_eq = pd.read_csv(RESULTS_DIR / "multiset_equivalence_audit_6engines.csv")
     df_eq["Multiset_Equivalence_EX_Pct"] = 100.0
     df_eq.to_csv(RESULTS_DIR / "multiset_equivalence_audit_6engines.csv", index=False)
@@ -534,7 +461,6 @@ def build_perfect_inline_tables() -> dict:
         r"\end{table*}",
     ])
 
-    # Table 13: Environment Manifest
     df_env = pd.read_csv(RESULTS_DIR / "hardware_software_environment_manifest.csv")
     rows = [f"{tex_escape(r.iloc[0])} & {tex_escape(r.iloc[1])} \\\\" for _, r in df_env.iterrows()]
     tables["table_env_manifest.tex"] = "\n".join([
@@ -552,7 +478,6 @@ def build_perfect_inline_tables() -> dict:
         r"\end{table*}",
     ])
 
-    # Table 14: Multi-Scale Scalability (SF1, SF10, SF100)
     df_ms = pd.read_csv(RESULTS_DIR / "multiscale_scalability_summary_table.csv")
     rows = []
     for _, r in df_ms.iterrows():
@@ -578,7 +503,6 @@ def build_perfect_inline_tables() -> dict:
         r"\end{table*}",
     ])
 
-    # Table 15: Multi-Scale GPU VRAM & Rust Arrow (ปรับความกว้างไม่ให้ล้นขอบขวา)
     df_gms = pd.read_csv(RESULTS_DIR / "multiscale_gpu_vram_and_arrow_streaming.csv")
     rows = []
     for _, r in df_gms.iterrows():
@@ -602,7 +526,6 @@ def build_perfect_inline_tables() -> dict:
         r"\end{table*}",
     ])
 
-    # Table 16: AST-Aware Query Router (ใช้ _cf แปลงค่า '0.25x' / '74.7%' อย่างปลอดภัยและแสดงครบทั้ง 9 คอลัมน์!)
     df_rt = pd.read_csv(RESULTS_DIR / "ast_query_router_evaluation_sf1.csv")
     rows = []
     for _, r in df_rt.iterrows():
@@ -630,124 +553,18 @@ def build_perfect_inline_tables() -> dict:
     return tables
 
 
-# =====================================================================
-# STEP 3: ซิงค์ตัวเลขในหน้า 1-7, Abstract, Limitations และใส่ Figure 6
-# =====================================================================
 def sync_full_manuscript_text(inline_tables: dict) -> None:
-    backup_tex = MANUSCRIPT_DIR / "main_backup_v1.tex"
+    # ดึงเนื้อหาจาก overleaf_ready_single_file.tex โดยตรง ป้องกัน FileNotFoundError
+    overleaf_tex = MANUSCRIPT_DIR / "overleaf_ready_single_file.tex"
     main_tex = MANUSCRIPT_DIR / "main.tex"
     alt_tex = MANUSCRIPT_DIR / "ast_driven_multi_paradigm_olap_benchmark_manuscript_journal_of_big_data_format.tex"
-    overleaf_tex = MANUSCRIPT_DIR / "overleaf_ready_single_file.tex"
 
-    tex = backup_tex.read_text(encoding="utf-8")
+    if overleaf_tex.exists():
+        tex = overleaf_tex.read_text(encoding="utf-8")
+    else:
+        tex = main_tex.read_text(encoding="utf-8")
 
-    # 1. แก้สมการ CSCI และอัปเดตค่า CSCI_v2 ในหน้า 3, Table 2, และหน้า 6-7 ให้ตรงกันทั้งหมด
-    tex = re.sub(
-        r"1\.5\s*\\cdot\s*D\(q\)\s*\+\s*2\.5\s*\\cdot\s*J\(q\)",
-        r"1.5 \\cdot D(q) + 1.0 \\cdot \\log_2 N(q) + 2.5 \\cdot J(q)",
-        tex,
-    )
-    tex = re.sub(
-        r"1\.5\s*D\(q\)\s*\+\s*2\.5\s*J\(q\)",
-        r"1.5 D(q) + 1.0 \\log_2 N(q) + 2.5 J(q)",
-        tex,
-    )
-    tex = tex.replace("CSCI} = 21.0", "CSCI}_{v2} = 27.9")
-    tex = tex.replace("CSCI} = 28.8", "CSCI}_{v2} = 36.2")
-    tex = tex.replace("CSCI} = 33.5", "CSCI}_{v2} = 41.4")
-    tex = tex.replace("CSCI} = 34.2", "CSCI}_{v2} = 41.7")
-    tex = tex.replace("CSCI} = 36.4", "CSCI}_{v2} = 43.6")
-    tex = tex.replace("CSCI = 21.0", "CSCI_{v2} = 27.9")
-    tex = tex.replace("[28.8, 36.4]", "[36.2, 43.6]")
-
-    # อัปเดตคอลัมน์ CSCI ใน Table 2
-    tex = tex.replace("& 21.0 &", "& 27.9 &")
-    tex = tex.replace("& 28.8 &", "& 36.2 &")
-    tex = tex.replace("& 33.5 &", "& 41.4 &")
-    tex = tex.replace("& 34.2 &", "& 41.7 &")
-    tex = tex.replace("& 36.4 &", "& 43.6 &")
-    tex = tex.replace("& 30.8 &", "& 38.2 &")
-
-    # 2. แก้ค่า DuckDB L2 ใน Table 2 และแก้โค้ดพังในแถว L5 ของ Table 2
-    tex = tex.replace("318.4 \\pm 142.6", "403.9 \\pm 185.6")
-    tex = tex.replace("198.2 \\pm 86.4", "264.5 \\pm 118.2")
-    tex = tex.replace("12.6\\times", "2.5\\times")
-    tex = re.sub(
-        r"442\.7\s*\\pm\s*210\.3\s*&\s*[^&]+&\s*4\.4\\times",
-        r"442.7 \\pm 210.3 & \\mathbf{403.3 \\pm 192.4} & 4.4\\times",
-        tex,
-    )
-
-    # 3. แก้ค่า GPU L3 สลับช่องใน Table 4, 5, 6 และแก้ค่า GPU L5 สลับช่องใน Table 5
-    tex = tex.replace("14.98 \\pm 4.65 & 43.26 \\pm 6.24", "43.26 \\pm 6.24 & 14.98 \\pm 4.65")
-    tex = tex.replace("14.98 & 43.26 & 58.24", "43.26 & 14.98 & 58.24")
-    tex = tex.replace("47.31 & 12.84", "12.84 & 47.31")
-    tex = tex.replace("25.72\\%", "74.28\\%")
-    tex = tex.replace("3.23\\times & 8.26\\times", "8.26\\times & 3.23\\times")
-    tex = tex.replace("\\textbf{3.23$\\times$} & \\textbf{8.26$\\times$}", "\\textbf{8.26$\\times$} & \\textbf{3.23$\\times$}")
-
-    # 4. เพิ่มรายละเอียด Cloud Region/Edition (ข้อ 3.5) และอัลกอริทึมของ GPU (ข้อ 3.2) ใน Section 3.2
-    tex = tex.replace(
-        "across unoptimized and clustered storage layouts.",
-        "across unoptimized and clustered storage layouts (provisioned in the US multi-region serverless environment under on-demand slot scheduling within zero-billing Sandbox controls, where $\\mathcal{M}_{\\text{slot}}$ serves as a slot-to-wall-time concurrency proxy).",
-    )
-    tex = tex.replace(
-        "and pure in-VRAM kernel compute time",
-        "(utilizing vectorized CUDA tensor hash/broadcast joins, parallel radix-sort window partitioning, and segmented tensor reductions) and pure in-VRAM kernel compute time",
-    )
-
-    # 5. อัปเดต Abstract (เพิ่ม Multi-Scale SF=1, 10, 100 GB, Official TPC-H Q1-Q22, และ AST Query Router)
-    tex = tex.replace(
-        "on the TPC-H benchmark ($\\text{SF}=1\\text{ GB}$):",
-        "across multi-scale TPC-H datasets ($\\text{SF} \\in \\{1, 10, 100\\}\\text{ GB}$) and the official 22-query TPC-H suite ($Q1$--$Q22$):",
-    )
-    tex = tex.replace(
-        "Our empirical synthesis establishes quantitative query routing rules across serverless cloud, C++/Rust vectorized CPU, and CUDA GPU architectures.",
-        "Scaling to $\\text{SF}=100\\text{ GB}$ ($8.66\\times 10^8$ rows) triggers up to $43.80\\text{ GB}$ of out-of-core NVMe disk spilling in multi-way joins, widening DuckDB's native columnar advantage over ZSTD Parquet to $2.12\\times$, while our batched row-group PCIe streaming engine bounds RTX 2050 VRAM usage to $\\le 0.149\\text{ GB}$ without out-of-memory failures. Finally, a learned AST-aware query router evaluated via 5-fold seed-cluster cross-validation achieves a $4.07\\times$ speedup over single-engine DuckDB ($74.7\\%$ exact optimal match, $81.3\\%$ within-$5\\text{ ms}$ optimal).",
-    )
-
-    # 6. แทรก Section 4.5, 4.6, 4.7 พร้อม Figure 6 และตาราง Inline ทั้ง 10 ตาราง
-    new_sections_latex = r"""
-\subsection{Empirical Validation of $\text{CSCI}_{v2}$, Official TPC-H Baseline, and Statistical Interaction}
-To verify that the revised Composite Structural Complexity Index ($\text{CSCI}_{v2}$, incorporating $1.0 \log_2 N(q)$) captures intrinsic operator complexity rather than arbitrary weight selection, we evaluated Spearman ($\rho$) and Kendall ($\tau$) rank correlations alongside a 1,000-iteration Monte Carlo weight perturbation sensitivity analysis ($\pm 50\%$ uniform scaling, Table~\ref{tab:csci_validation}). On in-memory vectorized CPU engines, $\text{CSCI}_{v2}$ achieves statistically significant positive rank correlation with execution latency—peaking on Apache DataFusion ($\rho = 0.3839, p = 0.0007$), Polars ($\rho = 0.3137, p = 0.0061$), DuckDB Parquet ($\rho = 0.2746, p = 0.0171$), and DuckDB Native ($\rho = 0.2371, p = 0.0406$)—substantially outperforming AST depth alone ($\rho \in [-0.0071, 0.1450]$). Conversely, SIMT GPU execution exhibits a negative correlation ($\rho = -0.4643, p < 0.0001$ warm), proving that compute-dense L4/L5 queries amortize fixed launch overheads.
-
-__TABLE_CSCI_VALIDATION__
-
-To establish an external baseline (Reviewer Comment 3.6), we executed the official 22-query TPC-H benchmark ($Q1$--$Q22$) across DuckDB Native, DuckDB Parquet, and Apache DataFusion at $\text{SF}=1\text{ GB}$ and $\text{SF}=10\text{ GB}$ (Table~\ref{tab:official_tpch_validation}). On unstratified official TPC-H queries, static AST complexity exhibits near-zero correlation with execution latency ($\rho = 0.0525, p = 0.816$ at $\text{SF}=1$; $\rho = -0.1293, p = 0.566$ at $\text{SF}=10$) because structural depth is heavily confounded with base-table cardinality (e.g., $\text{TPC-H Q02}$ has $J=7, \text{CSCI}_{v2}=48.59$ but executes in $13.47\text{ ms}$ on small supply tables, whereas $\text{TPC-H Q01}$ has $J=0, \text{CSCI}_{v2}=19.89$ but scans $98\%$ of \texttt{lineitem} in $30.14\text{ ms}$ at $\text{SF}=1$ and $276.77\text{ ms}$ at $\text{SF}=10$). Moreover, official TPC-H contains zero window functions ($W=0$) and zero array unnesting operators ($U=0$), confirming the necessity of our 75-query stratified factorial design.
-
-__TABLE_OFFICIAL_TPCH__
-
-To prevent pseudoreplication across selectivity perturbations (V1--V3), Table~\ref{tab:hierarchical_stats} reports both seed-level cluster statistics ($N_{\text{seeds}}=25$ independent templates with 10,000-iteration bootstrap 95\% confidence intervals and Cliff's $\delta$ effect sizes) and query-level summaries ($N=75$), while Table~\ref{tab:two_way_interaction} presents two-way non-parametric Scheirer--Ray--Hare ($H$) and Aligned Rank Transform ($F_{\text{ART}}$) interaction tests between complexity tiers (L1--L5) and selectivity horizons (V1--V3). Furthermore, Table~\ref{tab:gpu_cpu_fairness} decomposes CPU and GPU latencies across four stages into three fairness modes: Pure Kernel-to-Kernel (M1), Transfer-Aware In-Memory (M2), and Full End-to-End from Disk Parquet (M3), accompanied by cross-engine multiset equivalence verification (Table~\ref{tab:multiset_equivalence}) and hardware/software environment specifications (Table~\ref{tab:env_manifest}).
-
-__TABLE_HIERARCHICAL_STATS__
-__TABLE_TWO_WAY_INTERACTION__
-__TABLE_GPU_CPU_FAIRNESS__
-__TABLE_MULTISET_EQUIVALENCE__
-__TABLE_ENV_MANIFEST__
-
-\subsection{Multi-Scale Scalability, Memory Footprint, and Out-of-Core Disk Spilling ($\text{SF}=1, 10, 100$ GB)}
-To evaluate engine behavior at production big data scales beyond host RAM and GPU VRAM limits, we executed the 75-query factorial workload across three orders of magnitude: $\text{SF}=1\text{ GB}$ ($8.66 \times 10^6$ rows), $\text{SF}=10\text{ GB}$ ($8.66 \times 10^7$ rows), and $\text{SF}=100\text{ GB}$ ($8.66 \times 10^8$ rows; \texttt{lineitem} $= 6.00 \times 10^8$ rows) with NVMe out-of-core disk spilling enabled (Table~\ref{tab:multiscale_scalability}, Table~\ref{tab:multiscale_gpu_arrow}, and Fig.~\ref{fig:multiscale_router}(a)).
-
-__TABLE_MULTISCALE_SCALABILITY__
-__TABLE_MULTISCALE_GPU_ARROW__
-
-Three critical architectural scaling behaviors emerge: (1) while datasets at $\text{SF}=1\text{ GB}$ ($2.27\text{ GB}$ peak RAM) and $\text{SF}=10\text{ GB}$ ($11.18\text{ GB}$ peak RAM) execute entirely in memory with $0.00\text{ GB}$ disk spilling—where DuckDB native storage outperforms ZSTD Parquet by $1.24\times$ ($15.01\text{ s}$ vs.\ $18.68\text{ s}$) and $1.36\times$ ($678.13\text{ s}$ vs.\ $920.64\text{ s}$)—scaling to $\text{SF}=100\text{ GB}$ saturates physical memory ($50.62\text{ GB}$ peak RSS), widening the native columnar advantage to $2.12\times$ ($9,703.82\text{ s}$ vs.\ $20,585.14\text{ s}$ total time) by avoiding repeated ZSTD decompression during buffer pool eviction; (2) out-of-core disk spilling at $\text{SF}=100\text{ GB}$ is structurally concentrated in L2 multi-way joins ($43.80\text{ GB}$ peak disk spill, $388,822.10\text{ ms}$ mean latency) and L3 staged CTE pipelines ($6.71\text{ GB}$ disk spill), whereas L4 window functions require $0.00\text{ GB}$ disk spill ($18.98\text{ GB}$ peak RAM, $13,546.86\text{ ms}$ mean latency) due to independent partition-level evaluation; and (3) on the $4.0\text{ GB}$ VRAM RTX 2050 GPU, naive full-table loading triggers deterministic CUDA out-of-memory (OOM) failures at $\text{SF}=10\text{ GB}$ and $\text{SF}=100\text{ GB}$, whereas our batched row-group PCIe streaming engine bounds peak VRAM usage to $0.051\text{ GB}$ ($\text{SF}=10$) and $0.109\text{ GB}$ ($\text{SF}=100$), completing $600\text{M}$-row aggregations in $7,399.20\text{ ms}$.
-
-\begin{figure*}[htbp]
-\centering
-\includegraphics[width=0.98\textwidth]{figures/fig_multiscale_and_router_300dpi.pdf}
-\caption{Multi-scale big data evaluation and automated query routing synthesis: (a) Total 75-query workload execution time (logarithmic scale) across $\text{SF}=1\text{ GB}$, $\text{SF}=10\text{ GB}$, and $\text{SF}=100\text{ GB}$, highlighting the $2.12\times$ native columnar advantage under $43.80\text{ GB}$ NVMe out-of-core disk spilling at $\text{SF}=100\text{ GB}$; and (b) Out-of-sample 5-fold seed-cluster cross-validation of the proposed AST-Aware Query Routers relative to single-engine baselines and the theoretical Oracle bound.}
-\label{fig:multiscale_router}
-\end{figure*}
-
-\subsection{AST-Aware Automated Query Routing Framework}
-Finally, to demonstrate the practical system utility of static AST profiling, we designed and evaluated both a deterministic \textit{Rule-Based AST Router} and a \textit{Learned AST Cost Router} trained strictly on pre-execution structural features $[D(q), \log_2 N(q), J(q), S(q), W(q), U(q), C(q), \text{CSCI}_{v2}(q), \text{Selectivity}]$ using 5-fold group cross-validation partitioned by canonical seed cluster ($N_{\text{seeds}}=25$, Table~\ref{tab:router_evaluation} and Fig.~\ref{fig:multiscale_router}(b)).
-
-__TABLE_ROUTER_EVALUATION__
-
-Relative to single-engine baselines, the Learned AST Cost Router reduces mean workload latency to $45.09\text{ ms}$ ($3.38\text{ s}$ total time)—achieving a $4.07\times$ speedup over Always-DuckDB ($183.74\text{ ms}$), a $1.26\times$ speedup over Always-GPU Cold-Start ($56.96\text{ ms}$), a $74.7\%$ exact optimal engine match rate, an $81.3\%$ within-$5\text{ ms}$ optimal selection rate, and a mean routing regret of only $5.64\text{ ms}$ relative to the theoretical Oracle bound ($39.45\text{ ms}$).
-"""
-
+    # อัปเดตตาราง Inline ใน .tex
     mapping = {
         "__TABLE_CSCI_VALIDATION__": inline_tables["table_csci_validation.tex"],
         "__TABLE_OFFICIAL_TPCH__": inline_tables["table_official_tpch_validation.tex"],
@@ -761,46 +578,8 @@ Relative to single-engine baselines, the Learned AST Cost Router reduces mean wo
         "__TABLE_ROUTER_EVALUATION__": inline_tables["table_router_evaluation.tex"],
     }
     for k, v in mapping.items():
-        new_sections_latex = new_sections_latex.replace(k, v)
-
-    tex = tex.replace(
-        r"\section{Limitations and Threats to Validity}",
-        new_sections_latex + "\n\\section{Limitations and Threats to Validity}",
-    )
-
-    new_limitations = (
-        r"\section{Limitations and Threats to Validity}" + "\n"
-        r"While our benchmark rigorously evaluates structural SQL complexity (L1--L5), selectivity horizons (V1--V3), official TPC-H queries ($Q1$--$Q22$), and multi-scale out-of-core execution across $\text{SF} \in \{1, 10, 100\}\text{ GB}$, two scope constraints warrant consideration. First, cloud serverless experiments on Google BigQuery were conducted within the zero-billing Sandbox quota ($10\text{ GB}$ storage limit at $\text{SF}=1\text{ GB}$) in the US multi-region environment; while our local NVMe out-of-core spilling and batched GPU PCIe streaming experiments directly validate multi-scale behavior up to $\text{SF}=100\text{ GB}$ ($8.66\times 10^8$ rows), future funded cloud campaigns will extend serverless slot elasticity benchmarks to multi-terabyte cloud-resident datasets ($\text{SF} \ge 1,000\text{ GB}$). Second, our GPU evaluation targets a single discrete consumer/workstation accelerator (NVIDIA RTX 2050, $4.0\text{ GB}$ VRAM over PCIe Gen4); future work will evaluate multi-GPU NVLink topologies and distributed ClickHouse/Trino clusters." + "\n\n"
-    )
-    tex = re.sub(
-        r"\\section\{Limitations and Threats to Validity\}.*?(?=\\section\{Conclusion\})",
-        lambda _: new_limitations,
-        tex,
-        flags=re.DOTALL,
-    )
-
-    new_data_avail = (
-        r"\subsection*{Availability of data and materials}" + "\n"
-        r"All multi-scale TPC-H data provisioning scripts ($\text{SF}=1\text{ GB}$, $\text{SF}=10\text{ GB}$, and $\text{SF}=100\text{ GB}$), "
-        r"the 75-query factorial SQL workload suite ($25\text{ canonical seeds} \times 3\text{ selectivity variations}$), "
-        r"the 22 official TPC-H external validation queries, static AST structural metrics (\texttt{ast\_complexity\_summary.csv}), "
-        r"multi-scale execution telemetry (\texttt{multiscale\_telemetry\_sf1.csv}, SHA-256: \texttt{9be2a6c63a2b779871a1a42c...}; "
-        r"\texttt{multiscale\_telemetry\_sf10.csv}, SHA-256: \texttt{623ef56203c6cd3d33acc895...}; "
-        r"\texttt{multiscale\_telemetry\_sf100.csv}, SHA-256: \texttt{31518d87f5af08a75c5a6a9f...}), "
-        r"official TPC-H cross-engine logs (\texttt{official\_tpch\_q1\_q22\_external\_validation.csv}, SHA-256: \texttt{f7f4490389ae0db27608e673...}), "
-        r"CSCI sensitivity logs (\texttt{csci\_validation\_sensitivity\_sf1.csv}, SHA-256: \texttt{fa89ea8b7f8790be6fb3f9bc...}), "
-        r"three-mode GPU/CPU fairness logs (\texttt{gpu\_cpu\_3mode\_fairness\_comparison\_sf1.csv}, SHA-256: \texttt{13dbb975161f943d00960c8b...}), "
-        r"multiset equivalence audits (\texttt{multiset\_equivalence\_audit\_6engines.csv}), "
-        r"AST query router evaluations (\texttt{ast\_query\_router\_evaluation\_sf1.csv}, SHA-256: \texttt{56b52566ce859f99fb61e662...}), "
-        r"and the complete 19-file cryptographic audit certificate (\texttt{REPRODUCTION\_CERTIFICATE\_V2.md}) "
-        r"are publicly available at \url{https://github.com/preecha-msu/bigquery-olap-benchmark}."
-    )
-    tex = re.sub(
-        r"\\subsection\*\{Availability of data and materials\}.*?(?=\\subsection\*\{Competing interests\})",
-        lambda _: new_data_avail + "\n\n",
-        tex,
-        flags=re.DOTALL,
-    )
+        if k in tex:
+            tex = tex.replace(k, v)
 
     tex = tex.replace("±", r"\pm ")
 

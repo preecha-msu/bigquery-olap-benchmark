@@ -1,0 +1,7 @@
+Tier,DuckDB_CPU_ms,GPU_Tensor_Warm_ms,GPU_Tensor_Cold_ms,GPU_SQL_Engine_Cold_ms,GPU_Full_E2E_SQL_ms,Semantics_Equivalence
+L1: Scan & Filter,50.84,24.46,55.02,58.4,59.17,EX=1.000 (FP64 Exact)
+L2: Multi-Way Joins,264.53,49.05,104.88,110.25,109.03,EX=1.000 (FP64 Exact)
+L3: Nested CTEs,121.92,14.98,58.24,63.1,62.39,EX=1.000 (FP64 Exact)
+L4: Window Func.,78.16,9.94,19.37,24.15,23.52,EX=1.000 (FP64 Exact)
+L5: Array/UNNEST,403.27,12.84,47.31,52.6,51.46,EX=1.000 (FP64 Exact)
+Overall Mean (N=75),183.74,22.26,56.96,61.7,61.11,100.0% Match (75/75)

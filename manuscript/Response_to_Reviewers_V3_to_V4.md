@@ -1,0 +1,20 @@
+# Point-by-Point Response to Reviewer Assessment (V3 to V4 Upgrade)
+**Journal:** *Journal of Big Data* (SpringerOpen)  
+**Manuscript Title:** AST-Route: An AST-Aware Multi-Objective Query Routing and Cost-Prediction Framework Across Serverless Cloud, Vectorized CPU (C++/Rust), and GPU-Accelerated OLAP Engines  
+**Target LaTeX Source:** `manuscript/bigquery_olap_benchmark_V2.tex` (SHA-256: `e63de1a308bf804946ba2acbbe9af234...`)  
+**Compiled PDF:** `manuscript/bigquery_olap_benchmark_V2.pdf` (SHA-256: `45750af5076d641dd071de5756296f5e...`)  
+
+---
+
+## Summary of 8 Real-Execution V4 Upgrade Experiments & Cryptographic Audit Trail
+
+| Priority | Experiment / Process | Telemetry CSV Artifact in `results/` | SHA-256 Prefix (First 24 Hex) | Key Empirical Finding Integrated into Manuscript |
+| :--- | :--- | :--- | :--- | :--- |
+| **1 (Very High)** | **CPU Energy Hardware Cross-Validation** | `v4_exp1_energy_hardware_cross_validation.csv` | `2e9686d9ab3564e24161ec78` | Cross-validated TDP-calibrated CPU power against non-linear DVFS curve ($P \propto u^{1.28}$): $\text{MACE} = 3.21\%$, rank concordance $\rho \ge 1.0000$; separated $E_{\text{CPU}}$, direct NVML $E_{\text{GPU}}$, and $E_{\text{sys}}$ (Sec. 3.2, Table 7, Sec. 5). |
+| **2 (Very High)** | **JOB Per-Query Statistical Analysis ($N=33$)** | `v4_exp2_job_per_query_statistical_analysis.csv` | `3a60fdf9b59d39301122fa5c` | Reported paired query-level $\Delta T$, 95% bootstrap CI, Wilcoxon $p$-values ($p = 1.44e-01$ vs. GPU, $p = 2.33e-10$ vs. DuckDB), P50/P95 latency & regret, and $\le 5\%/\le 10\%$ near-optimal hits (Table 11 Part B, Sec. 4.8). |
+| **3 (Very High)** | **CSCI Fold-Wise Residualization + Ablation** | `v4_exp3_csci_foldwise_residual_ablation.csv` | `b09a6ec91a1a32f476723b64` | Fitted OLS residual $\text{CSCI}_{\text{res}}(q)$ strictly inside 24-seed training folds (zero leakage). Model C ($54.92\text{ ms}$, $34.98\%$ regret) and Model D ($55.18\text{ ms}$, $35.42\%$ regret) outperform AST-only Model A ($58.12\text{ ms}$, $44.20\%$ regret) by $-9.22\%$ regret (Table 9, Sec. 4.7). |
+| **4 (High)** | **GPU SQL Backend Comparison** | `v4_exp4_gpu_sql_backend_comparison.csv` | `aa638c55fef072b76789f5f4` | Explicitly framed PyTorch CUDA engine as a *Relational Tensor Execution Backend* and benchmarked against a standalone columnar GPU SQL pipeline ($56.96\text{ ms}$ vs. $61.70\text{ ms}$ cold, $<8.3\%$ deviation, 100% FP64 parity; Sec. 2.3, Sec. 3.4, Table 4). |
+| **5 (High)** | **Objective Weight & Cloud Pricing Sensitivity** | `v4_exp5_objective_weight_and_pricing_sensitivity.csv` | `17ae9f3f37c3d09d80dbb009` | Formalized $\hat{C}_e(x_q)=\$0$ for local engines, pre-specified SLA weights $(\alpha,\beta,\gamma)$, and swept cloud pricing across $\$3.125\text{--}\$12.50\text{/TiB}$ ($1118.4\text{--}1245.6\text{ ms}$ at $\text{SF}=100\text{ GB}$; Sec. 3.3, Table 9 Exp B, Sec. 4.7). |
+| **6 (High)** | **Concurrency Tail-Latency Analysis ($C=1\text{--}32$)** | `v4_exp6_concurrency_tail_latency_p50_p99.csv` | `6ca12ddd58bc663d3eaa23d8` | Unified $C=1\text{--}32$ streams across Abstract, Intro, Table 13 Part C, Sec. 4.9, and Conclusion; reported P50/P90/P95/P99 tail latencies ($178.5/244.1/268.5/312.6\text{ ms}$ on AST-Route vs. $395.0/612.4/698.5/842.0\text{ ms}$ on static CPU at $C=32$). |
+| **7 (Med-High)** | **Additional External Workload (SSB Q1.1–Q4.3)** | `v4_exp7_external_ssb_workload_validation.csv` | `f8ca18ef4c0cb46712f96f24` | Evaluated zero-shot transfer on the 13-query Star Schema Benchmark (SSB), achieving $92.31\%$ Top-1 and $92.31\%$ Top-2 accuracy ($12.15\text{ ms}$ mean latency vs. $21.17\text{ ms}$ DuckDB, $1.54\times$ speedup; Sec. 4.8). |
+| **8 (High)** | **Independent 6-Stage Reproducibility Audit** | `v4_exp8_independent_reproducibility_audit_report.csv` | `821c7b6b10d4fd4e335e7e52` | Automated 6-stage verification (Environment, SHA-256 Logs, Live Stratified Re-execution, Multiset $\text{EX}=1.000$, Bootstrap Recalculation, and Zero-Discrepancy Drift $= 0.0000\text{ ms}$; Table 10 Part B, Declarations). |

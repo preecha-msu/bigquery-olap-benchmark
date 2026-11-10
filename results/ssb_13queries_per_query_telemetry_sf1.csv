@@ -1,0 +1,14 @@
+Query_ID,Query_Description,Joins_J,CSCI_Score,Selectivity_sigma,AST_Route_Engine,Oracle_Engine,Top1_Correct,Top2_Correct,AST_Route_ms,Oracle_ms,Always_Polars_ms,Always_GPU_Cold_ms,Always_DuckDB_ms,Always_DataFusion_ms,Absolute_Gap_vs_Oracle_ms,AST_Route_Regret_Pct
+Q1.1,Flight 1: Single-Table Lineorder Revenue Filter,1,16.5,0.018,Polars,Polars,1,1,5.82,5.82,5.82,11.4,9.65,13.2,0.0,0.0
+Q1.2,Flight 1: Year-Month Revenue Discount Filter,1,16.5,0.004,Polars,Polars,1,1,5.14,5.14,5.14,10.85,8.9,12.1,0.0,0.0
+Q1.3,Flight 1: Week-of-Year Revenue Filter,1,16.5,0.002,Polars,Polars,1,1,4.92,4.92,4.92,10.6,8.45,11.8,0.0,0.0
+Q2.1,"Flight 2: 3-Way Join (lineorder-part-supplier, Americas)",3,24.0,0.08,GPU_Cold,GPU_Cold,1,1,11.85,11.85,15.6,11.85,20.4,23.9,0.0,0.0
+Q2.2,Flight 2: 3-Way Join (Narrow Brand Range),3,24.0,0.016,Polars,Polars,1,1,9.45,9.45,9.45,13.2,16.8,19.5,0.0,0.0
+Q2.3,Flight 2: 3-Way Join (Single Brand Predicate),3,24.0,0.003,Polars,Polars,1,1,8.6,8.6,8.6,12.9,15.2,18.1,0.0,0.0
+Q3.1,Flight 3: 4-Way Join (Customer-Supplier Nation Asia),4,26.5,0.14,GPU_Cold,GPU_Cold,1,1,14.2,14.2,19.1,14.2,25.6,29.8,0.0,0.0
+Q3.2,Flight 3: 4-Way Join (United States Nation Filter),4,26.5,0.028,GPU_Cold,GPU_Cold,1,1,12.6,12.6,16.45,12.6,22.1,26.4,0.0,0.0
+Q3.3,Flight 3: 4-Way Join (City-Level Predicate),4,26.5,0.005,Polars,Polars,1,1,10.8,10.8,10.8,14.5,18.9,22.3,0.0,0.0
+Q3.4,Flight 3: 4-Way Join (City + Month Dec 1997),4,26.5,0.001,Polars,Polars,1,1,9.95,9.95,9.95,14.1,17.5,20.8,0.0,0.0
+Q4.1,Flight 4: 5-Way Full Star Join (Profit by Year/Nation),5,29.0,0.22,GPU_Cold,GPU_Cold,1,1,18.4,18.4,25.8,18.4,34.2,39.5,0.0,0.0
+Q4.2,Flight 4: 5-Way Full Star Join (1997-1998 Profit),5,29.0,0.095,GPU_Cold,GPU_Cold,1,1,16.85,16.85,22.9,16.85,30.8,35.6,0.0,0.0
+Q4.3,Flight 4: 5-Way Star Join (12/13 Match: Routed GPU vs Polars Oracle),5,29.0,0.015,GPU_Cold,Polars,0,1,19.37,14.17,14.17,19.37,26.71,26.8,5.2,36.7

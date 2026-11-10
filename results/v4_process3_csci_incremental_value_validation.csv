@@ -1,0 +1,5 @@
+Model,Dim,Cost_QError_P50_P90,Top1_Top2_Acc,Mean_P95_Latency_ms,Mean_P95_Regret,Feature_Stability_Rho,Paired_Regret_CI95_vs_ModelA,Wilcoxon_p_and_Holm_p
+"Model A: AST Features Only (D,N,J,S,W,U,C + sigma, No CSCI)",8D,1.089 / 1.442,53.33% / 72.00%,58.12 / 134.20 ms,44.20% / 157.16%,0.9412 (VIF=1.63),Reference (0.00%),Reference
+"Model B: CSCI Only (CSCI + sigma, Table 9 Row A3)",2D,1.074 / 1.410,54.67% / 73.33%,56.30 / 128.74 ms,39.11% / 142.92%,0.9880 (VIF=1.02),"-5.09% [-6.62%, -3.67%]",p=0.0000 (Holm p=0.0000)
+"Model C: AST Features + Raw CSCI (Full Proposed AST-Route, Row A5)",9D,1.053 / 1.371,57.33% / 76.00%,54.92 / 129.37 ms,34.98% / 128.71%,0.9880 (Oblique Split),"-9.22% [-11.85%, -6.64%]",p=0.0000 (Holm p=0.0000)
+Model D: AST Features + Fold-Wise Residualized CSCI_res (Row A6),9D,1.055 / 1.378,57.33% / 76.00%,55.18 / 129.85 ms,35.42% / 130.10%,0.9845 (Orthogonal VIF=1.84),"-8.78% [-11.36%, -6.34%]",p=0.0000 (Holm p=0.0000)

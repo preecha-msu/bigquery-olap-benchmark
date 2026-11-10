@@ -1,0 +1,6 @@
+Engine_Scope,Mean_Linear_TDP_J,Mean_DVFS_RAPL_Ref_J,MACE_Calibration_Error_Pct,Spearman_Rank_Concordance,Sensor_Source
+DuckDB_CPU,6.373,6.195,2.91,1.0,TDP-Calibrated Ring-3 vs. Non-Linear DVFS/RAPL Curve
+Polars_CPU,7.008,6.975,0.7,1.0,TDP-Calibrated Ring-3 vs. Non-Linear DVFS/RAPL Curve
+DataFusion_CPU,6.598,6.467,2.05,1.0,TDP-Calibrated Ring-3 vs. Non-Linear DVFS/RAPL Curve
+SQLite3_CPU,3.179,2.965,7.17,1.0,TDP-Calibrated Ring-3 vs. Non-Linear DVFS/RAPL Curve
+RTX2050_GPU_Board_Cold,0.644,0.644,0.0,1.0,"Direct Hardware NVIDIA NVML (nvmlDeviceGetPowerUsage, 250 Hz)"

@@ -1,0 +1,5 @@
+Concurrency_Level_Streams,Single_Engine_Mean_Latency_ms,Single_Engine_P95_Latency_ms,Single_Engine_Throughput_QPS,AST_Route_Hybrid_Batch_ms,AST_Route_Throughput_QPS,Throughput_Gain_Ratio
+1,85.62,85.62,11.56,76.15,13.13,1.14x
+4,100.45,116.85,32.95,65.55,61.02,1.85x
+8,140.44,153.5,49.67,74.09,107.98,2.17x
+16,228.58,255.48,58.79,114.3,139.99,2.38x

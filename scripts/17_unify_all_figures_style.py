@@ -128,7 +128,7 @@ def generate_figure1_framework():
         "LAYER 1B: 9-Dimensional Feature Vector & CSCI",
         [
             "• Validated Composite Index: CSCI(q) = 1.5D + 2.5J + 3.0S + 3.5W + 4.0U + 1.5C",
-            "• Construct Validity: Spearman rho = 0.4935, Weight Stability = 0.8189",
+            "• Construct Validity: Spearman rho = 0.4935, 10,000-MC Stability rho = 0.9880 (±20%)",
             "• Zone-Map Predicate Selectivity Factor: sigma(q) in (0, 1] across V1-V3",
             "• 9D Routing Vector: x_q = [D, N, J, S, W, U, C, CSCI, sigma(q)]^T in R^9"
         ],
@@ -251,7 +251,7 @@ def generate_figure2_workflow():
         "PHASE 3: Static AST Feature Profiling, CSCI Construct Validation & Hardware Telemetry Instrumentation",
         [
             "• Parses all 75 SQL queries via SQLGlot into 9D vectors x_q = [D, N, J, S, W, U, C, CSCI, sigma(q)]^T (Mean CSCI = 29.66; Range: 15.3 in L1 to 37.1 in L4)",
-            "• CSCI Construct Validation: Spearman rho = 0.4935 (p = 6.84e-6) vs. GPU Speedup; 1,000-Trial Monte Carlo Weight Perturbation Stability rho = 0.8189",
+            "• CSCI Construct Validation: Spearman rho = 0.4935 (p = 6.84e-6) vs. GPU Speedup; 10,000-Trial Monte Carlo Weight Perturbation Stability rho = 0.9880 (±20%)",
             "• High-Frequency Sensor Polling (250 Hz psutil + NVIDIA NVML + cudaEvent): Captures Latency (ms), CPU/GPU (%), RAM/VRAM (GB), Energy (J), Perf/Watt"
         ],
         hdr_color="#B45309", bg_color="#FFFBEB", border_color="#92400E", hdr_ratio=0.24

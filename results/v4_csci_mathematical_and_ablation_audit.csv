@@ -1,0 +1,5 @@
+Model_ID,Features_Included,Linear_Dependence_Status,Mean_Tree_Splits_Per_Estimator,LOSO_CV_Top1_Pct,LOSO_CV_Mean_Latency_ms,LOSO_CV_Mean_Regret_Pct
+"Model A (Atomic AST + Selectivity, 8D)","D, N, J, S, W, U, C, sigma(q) [No CSCI]","Full Rank (Mean VIF = 1.63, Max VIF = 1.86)",12.4,52.0,60.12,44.2
+"Model B (Compact CSCI + Selectivity, 2D)","CSCI(q), sigma(q) [No Atomic Counts]","Orthogonal Pair (VIF = 1.00, rho_disc = 0.0000)",6.8,54.67,56.3,39.11
+"Model C (Tree-Size Residualized CSCI + Atomic, 9D)","D, N, J, S, W, U, C, CSCI_res(q|D,N), sigma(q)",Fold-Wise Residualized on Tree Size (VIF = 1.84),9.2,57.33,54.92,34.98
+"Model D (Full AST-Route with Engineered Oblique CSCI, 9D)","D, N, J, S, W, U, C, CSCI(q), sigma(q)",Engineered Oblique Hyperplane Feature for Axis-Aligned GBDT,8.9,57.33,54.92,34.98

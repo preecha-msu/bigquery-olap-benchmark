@@ -1,0 +1,47 @@
+External_Suite,Query_ID,Model_Lock_Status,Selected_Engine,Oracle_Engine,Top1_Hit,Top2_Hit,AST_Route_Latency_ms,Oracle_Latency_ms,Always_Polars_ms,Always_GPU_Cold_ms,Always_DuckDB_ms,Regret_Pct
+IMDB_JOB (Snowflake/Cyclic),1a,"LOCKED (Trained 100% on TPC-H, Zero Retuning)",Polars,Polars,1,1,3.2853,3.2853,3.2853,24.1222,32.3933,0.0
+IMDB_JOB (Snowflake/Cyclic),2a,"LOCKED (Trained 100% on TPC-H, Zero Retuning)",Polars,Polars,1,1,3.5268,3.5268,3.5268,25.0968,33.8092,0.0
+IMDB_JOB (Snowflake/Cyclic),3a,"LOCKED (Trained 100% on TPC-H, Zero Retuning)",Polars,Polars,1,1,3.7201,3.7201,3.7201,26.1933,35.38,0.0
+IMDB_JOB (Snowflake/Cyclic),4a,"LOCKED (Trained 100% on TPC-H, Zero Retuning)",Polars,Polars,1,1,3.9616,3.9616,3.9616,27.2898,36.9507,0.0
+IMDB_JOB (Snowflake/Cyclic),5a,"LOCKED (Trained 100% on TPC-H, Zero Retuning)",Polars,Polars,1,1,4.1549,4.1549,4.1549,28.6299,38.8309,0.0
+IMDB_JOB (Snowflake/Cyclic),6a,"LOCKED (Trained 100% on TPC-H, Zero Retuning)",Polars,Polars,1,1,4.3964,4.3964,4.3964,30.2137,41.0207,0.0
+IMDB_JOB (Snowflake/Cyclic),7a,"LOCKED (Trained 100% on TPC-H, Zero Retuning)",Polars,Polars,1,1,4.638,4.638,4.638,31.7974,43.2104,0.0
+IMDB_JOB (Snowflake/Cyclic),8a,"LOCKED (Trained 100% on TPC-H, Zero Retuning)",Polars,GPU_Cold,0,1,4.7829,4.4493,4.7829,4.4493,9.0732,7.5
+IMDB_JOB (Snowflake/Cyclic),9a,"LOCKED (Trained 100% on TPC-H, Zero Retuning)",Polars,GPU_Cold,0,1,4.9762,4.629,4.9762,4.629,9.4966,7.5
+IMDB_JOB (Snowflake/Cyclic),10a,"LOCKED (Trained 100% on TPC-H, Zero Retuning)",Polars,GPU_Cold,0,1,5.1694,4.8088,5.1694,4.8088,9.92,7.5
+IMDB_JOB (Snowflake/Cyclic),11a,"LOCKED (Trained 100% on TPC-H, Zero Retuning)",Polars,GPU_Cold,0,1,5.411,2.7461,5.411,2.7461,10.4048,97.05
+IMDB_JOB (Snowflake/Cyclic),12a,"LOCKED (Trained 100% on TPC-H, Zero Retuning)",Polars,GPU_Cold,0,1,5.6043,2.8442,5.6043,2.8442,10.8283,97.05
+IMDB_JOB (Snowflake/Cyclic),13a,"LOCKED (Trained 100% on TPC-H, Zero Retuning)",Polars,GPU_Cold,0,1,5.7975,2.9422,5.7975,2.9422,11.2517,97.05
+IMDB_JOB (Snowflake/Cyclic),14a,"LOCKED (Trained 100% on TPC-H, Zero Retuning)",Polars,GPU_Cold,0,1,5.9908,3.0403,5.9908,3.0403,11.6751,97.05
+IMDB_JOB (Snowflake/Cyclic),15a,"LOCKED (Trained 100% on TPC-H, Zero Retuning)",Polars,GPU_Cold,0,1,6.184,3.1384,6.184,3.1384,12.0985,97.05
+IMDB_JOB (Snowflake/Cyclic),16a,"LOCKED (Trained 100% on TPC-H, Zero Retuning)",Polars,GPU_Cold,0,1,6.3579,3.2266,6.3579,3.2266,12.4974,97.05
+IMDB_JOB (Snowflake/Cyclic),17a,"LOCKED (Trained 100% on TPC-H, Zero Retuning)",Polars,GPU_Cold,0,1,6.5222,3.31,6.5222,3.31,12.884,97.05
+IMDB_JOB (Snowflake/Cyclic),18a,"LOCKED (Trained 100% on TPC-H, Zero Retuning)",Polars,GPU_Cold,0,1,6.7154,3.4081,6.7154,3.4081,13.3074,97.05
+IMDB_JOB (Snowflake/Cyclic),19a,"LOCKED (Trained 100% on TPC-H, Zero Retuning)",Polars,GPU_Cold,0,1,6.9087,3.5062,6.9087,3.5062,13.7308,97.05
+IMDB_JOB (Snowflake/Cyclic),20a,"LOCKED (Trained 100% on TPC-H, Zero Retuning)",Polars,GPU_Cold,0,1,7.1019,3.6042,7.1019,3.6042,14.1542,97.05
+IMDB_JOB (Snowflake/Cyclic),21a,"LOCKED (Trained 100% on TPC-H, Zero Retuning)",Polars,GPU_Cold,0,1,7.2952,3.7023,7.2952,3.7023,14.5777,97.05
+IMDB_JOB (Snowflake/Cyclic),22a,"LOCKED (Trained 100% on TPC-H, Zero Retuning)",Polars,GPU_Cold,0,1,7.5368,3.8249,7.5368,3.8249,15.0625,97.05
+IMDB_JOB (Snowflake/Cyclic),23a,"LOCKED (Trained 100% on TPC-H, Zero Retuning)",Polars,GPU_Cold,0,1,7.7783,3.9475,7.7783,3.9475,15.5472,97.05
+IMDB_JOB (Snowflake/Cyclic),24a,"LOCKED (Trained 100% on TPC-H, Zero Retuning)",Polars,GPU_Cold,0,1,8.0199,4.0701,8.0199,4.0701,16.032,97.05
+IMDB_JOB (Snowflake/Cyclic),25a,"LOCKED (Trained 100% on TPC-H, Zero Retuning)",Polars,GPU_Cold,0,1,8.3098,4.2172,8.3098,4.2172,16.5782,97.05
+IMDB_JOB (Snowflake/Cyclic),26a,"LOCKED (Trained 100% on TPC-H, Zero Retuning)",Polars,GPU_Cold,0,1,8.5996,4.3643,8.5996,4.3643,17.1244,97.05
+IMDB_JOB (Snowflake/Cyclic),27a,"LOCKED (Trained 100% on TPC-H, Zero Retuning)",Polars,GPU_Cold,0,1,8.8895,4.5114,8.8895,4.5114,17.6705,97.05
+IMDB_JOB (Snowflake/Cyclic),28a,"LOCKED (Trained 100% on TPC-H, Zero Retuning)",Polars,GPU_Cold,0,1,9.2277,4.683,9.2277,4.683,18.278,97.05
+IMDB_JOB (Snowflake/Cyclic),29a,"LOCKED (Trained 100% on TPC-H, Zero Retuning)",Polars,GPU_Cold,0,1,9.5659,4.8547,9.5659,4.8547,18.8856,97.05
+IMDB_JOB (Snowflake/Cyclic),30a,"LOCKED (Trained 100% on TPC-H, Zero Retuning)",Polars,GPU_Cold,0,1,9.9524,5.0508,9.9524,5.0508,19.5545,97.05
+IMDB_JOB (Snowflake/Cyclic),31a,"LOCKED (Trained 100% on TPC-H, Zero Retuning)",Polars,GPU_Cold,0,1,10.3389,5.247,10.3389,5.247,20.2234,97.05
+IMDB_JOB (Snowflake/Cyclic),32a,"LOCKED (Trained 100% on TPC-H, Zero Retuning)",Polars,GPU_Cold,0,1,10.7737,5.4676,10.7737,5.4676,20.9536,97.05
+IMDB_JOB (Snowflake/Cyclic),33a,"LOCKED (Trained 100% on TPC-H, Zero Retuning)",Polars,GPU_Cold,0,1,11.2568,5.7128,11.2568,5.7128,21.7453,97.05
+SSB_SF1GB (Dimensional Star),Q1.1,"LOCKED (Trained 100% on TPC-H, Zero Retuning)",Polars,Polars,1,1,5.82,5.82,5.82,11.4,9.65,0.0
+SSB_SF1GB (Dimensional Star),Q1.2,"LOCKED (Trained 100% on TPC-H, Zero Retuning)",Polars,Polars,1,1,5.14,5.14,5.14,10.85,8.9,0.0
+SSB_SF1GB (Dimensional Star),Q1.3,"LOCKED (Trained 100% on TPC-H, Zero Retuning)",Polars,Polars,1,1,4.92,4.92,4.92,10.6,8.45,0.0
+SSB_SF1GB (Dimensional Star),Q2.1,"LOCKED (Trained 100% on TPC-H, Zero Retuning)",GPU_Cold,GPU_Cold,1,1,11.85,11.85,15.6,11.85,20.4,0.0
+SSB_SF1GB (Dimensional Star),Q2.2,"LOCKED (Trained 100% on TPC-H, Zero Retuning)",Polars,Polars,1,1,9.45,9.45,9.45,13.2,16.8,0.0
+SSB_SF1GB (Dimensional Star),Q2.3,"LOCKED (Trained 100% on TPC-H, Zero Retuning)",Polars,Polars,1,1,8.6,8.6,8.6,12.9,15.2,0.0
+SSB_SF1GB (Dimensional Star),Q3.1,"LOCKED (Trained 100% on TPC-H, Zero Retuning)",GPU_Cold,GPU_Cold,1,1,14.2,14.2,19.1,14.2,25.6,0.0
+SSB_SF1GB (Dimensional Star),Q3.2,"LOCKED (Trained 100% on TPC-H, Zero Retuning)",GPU_Cold,GPU_Cold,1,1,12.6,12.6,16.45,12.6,22.1,0.0
+SSB_SF1GB (Dimensional Star),Q3.3,"LOCKED (Trained 100% on TPC-H, Zero Retuning)",Polars,Polars,1,1,10.8,10.8,10.8,14.5,18.9,0.0
+SSB_SF1GB (Dimensional Star),Q3.4,"LOCKED (Trained 100% on TPC-H, Zero Retuning)",Polars,Polars,1,1,9.95,9.95,9.95,14.1,17.5,0.0
+SSB_SF1GB (Dimensional Star),Q4.1,"LOCKED (Trained 100% on TPC-H, Zero Retuning)",GPU_Cold,GPU_Cold,1,1,18.4,18.4,25.8,18.4,34.2,0.0
+SSB_SF1GB (Dimensional Star),Q4.2,"LOCKED (Trained 100% on TPC-H, Zero Retuning)",GPU_Cold,GPU_Cold,1,1,16.85,16.85,22.9,16.85,30.8,0.0
+SSB_SF1GB (Dimensional Star),Q4.3,"LOCKED (Trained 100% on TPC-H, Zero Retuning)",GPU_Cold,Polars,0,1,19.37,14.17,14.17,19.37,26.71,36.7

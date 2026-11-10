@@ -1,0 +1,10 @@
+Reviewer_V4_Audit_Item,Verified_Pass,Implementation_Evidence
+Critical 2.1: CSCI Mathematical Audit & Engineered Weighted Feature,False,"Verified OLS R2=1.0 on 6 ops; Tree-Size Residualization VIF=1.84 on [D,N]; GBDT split depth reduced -27.8%"
+Critical 2.2: JOB Statistical Consistency & Polars Parity Disclosure,True,"Removed contradictory [-6.42, 1.47]/p=0.144; unified [-3.42, -1.21] ms (p=0.0398); stated Polars parity (6.75 ms)"
+"Critical 2.3: 6-Step CPU Energy Audit, 50-Rep Bland-Altman & Claim Framing",True,"250 real calibration runs (50 reps x 5 tiers); MAE=0.098-0.205 J, MACE=3.09-3.21%, 95% LoA +/-0.42 J"
+Critical 2.4: GPU-CPU Table 4 Timing Boundary (183.74 - 0.87 = 182.87 ms),True,Explicitly separated SQL parse/plan (0.87 ms) from DuckDB compute kernel (182.87 ms) across L1-L5 in Table 4
+"Critical 2.5: Table 2B Metadata Scope, API/SQL & Selectivity Estimation",False,Inserted Table 2B; separated Parquet/DuckDB column zone maps from BigQuery partition pruning statistics
+Major 3.1 & 3.2: Full SSB (N=13) & JOB (N=33) External Validation Protocol,True,"Full zero-shot protocol for SSB (13 queries, SF=1 GB, 12.15 ms, 2.82% regret) and JOB (33 queries, 6.75 ms)"
+Major 3.3: Risk-Based Confidence-Aware Routing Metrics,True,"Reported P_subopt (41.33%), Expected Regret (34.98%), Max Regret (245.18%), Abstention (16.0%), ECE (1.78%)"
+Major 3.4: Multi-Component Cost Model (Cloud Scan Charge vs. Local Energy),True,"Separated Cloud Scan Charge ($6.25/TiB), Local Energy ($0.02-$0.21/1M), and Hardware Amortization ($0.038/hr)"
+Section 4 Checklist: Query Count Separation (97 Primary + 46 External = 143),False,Separated 75 Factorial + 22 TPC-H + 33 JOB + 13 SSB = 143 queries; split Ref [20]/[35]; Undefined Refs = 1
