@@ -1,0 +1,4 @@
+Fault_Scenario_NB2,Trials,Unhandled_Failure_Pct,Mean_Detection_ms,Mean_Total_Fallback_ms
+1. Timeout Circuit-Breaker (50ms -> Polars Fallback),15,0.0,60.689,85.29
+2. Missing Parquet Footer Metadata (-> Prior Fallback),15,0.0,0.37,13.83
+3. Primary Engine Offline (-> Top-2 DuckDB Fallback),15,0.0,0.002,16.28

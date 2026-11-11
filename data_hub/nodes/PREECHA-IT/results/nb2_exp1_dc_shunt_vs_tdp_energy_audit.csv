@@ -1,0 +1,4 @@
+Phase,Duration_s,Queries_Executed,Mean_Query_ms,Mean_CPU_Util_Pct,EC_Refresh_Period_s,Hardware_DC_Steady_W,Hardware_DC_Peak_W,Battery_Counter_Drop_J,TDP_Linear_Model_W,DVFS_NonLinear_Model_W,Hardware_DC_J_per_Query,TDP_Model_J_per_Query,DVFS_Model_J_per_Query,Model_vs_DC_Diff_Pct
+IDLE_Baseline,25.05,0,0.0,2.04,20.94,20.97,20.97,612.0,21.46,21.13,0.0,0.0,0.0,0.0
+DuckDB_Sustained_22T,45.0,2817,15.98,37.63,20.94,46.4,46.59,2232.0,30.01,27.84,0.7413,0.4794,0.4448,35.32
+Polars_Sustained_22T,45.1,1131,39.87,55.78,20.94,6.8,6.8,0.0,34.37,32.35,0.2711,1.3705,1.2899,405.54
