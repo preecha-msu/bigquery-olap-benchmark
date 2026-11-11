@@ -1,0 +1,10 @@
+Artifact_Role,Filename,Exists,Size_Bytes,SHA256_Prefix20
+Secondary_Machine_Audit,external_machine_reexecution_audit.csv,NO,0,PENDING_RUN
+Secondary_Env_Manifest,hardware_software_environment_manifest.csv,NO,0,PENDING_RUN
+Six_Engines_SF1,six_software_comparison_sf1.csv,NO,0,PENDING_RUN
+CSCI_Ablation_Models_AD,v4_exp3_csci_foldwise_residual_ablation.csv,NO,0,PENDING_RUN
+JOB_33_Queries,v4_exp2_job_per_query_statistical_analysis.csv,NO,0,PENDING_RUN
+SSB_13_Queries,v4_exp7_external_ssb_workload_validation.csv,NO,0,PENDING_RUN
+Concurrency_C1_to_C32,v4_exp6_concurrency_tail_latency_p50_p99.csv,NO,0,PENDING_RUN
+AST_Complexity_Summary,ast_complexity_summary.csv,NO,0,PENDING_RUN
+Merged_75Queries_SF1,merged_75queries_all_engines_sf1.csv,NO,0,PENDING_RUN

@@ -1,4 +1,18 @@
 Node_ID,OS_Platform,Artifact_CSV,Rows,Size_KB,SHA256,Synced_UTC
+PREECHA-IT,Windows 10,_temp_ec_sensor_trace.csv,92,2.68,450a544c338074768a061204dd1978da5301d9dad43711184fc956832a076261,2026-11-11 20:33:03 UTC
+PREECHA-IT,Windows 10,external_machine_per_query_telemetry.csv,15,3.02,955dc2f464734c5775b5f776be5926bef9ebc26b5223db8125fb4153ab60f5ae,2026-11-11 20:33:03 UTC
+PREECHA-IT,Windows 10,external_machine_reexecution_audit.csv,5,1.23,15f4b3a237442d6571cf8bf4862c2de735bc76e1360c3e47a1b65bd2510f89aa,2026-11-11 20:33:03 UTC
+PREECHA-IT,Windows 10,nb2_exp1_dc_shunt_vs_tdp_energy_audit.csv,3,0.56,47abef9810cfa2dd59d619eb1d8cb4d6fda55d2e01bd2504226027a5efcb2bc5,2026-11-11 20:33:03 UTC
+PREECHA-IT,Windows 10,nb2_exp2_30queries_cross_hardware_per_query.csv,30,3.78,14079fbf56d00d1918412328b78b21b46b4ccaa639936b0d2dfbd2bcacf1d1da,2026-11-11 20:33:03 UTC
+PREECHA-IT,Windows 10,nb2_exp2_cross_hardware_routing_summary.csv,5,0.67,24a5cdea4a396424bc38c21df7af16db871c75be3aa7e2b9b2d02a78997537b5,2026-11-11 20:33:03 UTC
+PREECHA-IT,Windows 10,nb2_exp3_multicore_concurrency_tail_latency.csv,15,1.19,13015d1b1d61e330cfc35e5864596936c642d4afac270fbd36103b0ce09b7067,2026-11-11 20:33:03 UTC
+PREECHA-IT,Windows 10,nb2_remaining_part1_energy_all_engines.csv,4,0.62,87a0697bb2540ef058226517b47131edeb0ddd004ae068b29bad9ee7a5c29b00,2026-11-11 20:33:03 UTC
+PREECHA-IT,Windows 10,nb2_remaining_part2_75q_per_query_22t.csv,75,5.09,f219c93e9d7af303840210a757f2e36866c5db11019c4d89d497e799904fe2af,2026-11-11 20:33:03 UTC
+PREECHA-IT,Windows 10,nb2_remaining_part2_transfer_calibration_summary.csv,6,0.76,874077fdfd23ed6c62152cb5a62618d42071680e31b9aff066dd89c327c8f121,2026-11-11 20:33:03 UTC
+PREECHA-IT,Windows 10,nb2_remaining_part3_bursty_sla_22t.csv,3,0.3,f1d05d4c9931f2d841ce31cd9ca0c0b1183a38ed5a582c01f50a6ce7197a0336,2026-11-11 20:33:03 UTC
+PREECHA-IT,Windows 10,nb2_remaining_part3_fault_recovery_22t.csv,3,0.3,d84bebee1b692353543a0e3ffdb705bb1eac9ea5a6e7fe85f90095fdaf4eeaf5,2026-11-11 20:33:03 UTC
+PREECHA-IT,Windows 10,nb2_remaining_sha256_manifest.csv,5,0.62,436839a9f2d4f5f7c93372383a419de49961f458ba64cc0327fb9135602371e7,2026-11-11 20:33:03 UTC
+PREECHA-IT,Windows 10,v4_cross_machine_reproducibility_manifest.csv,9,0.74,04341fbcf8415e74519ec4378c3d7444002f709f5698c8de3848efdedd55ec69,2026-11-11 20:33:03 UTC
 PREECHA-IT-MSU,Windows 11,ast_complexity_summary.csv,75,11.93,4cb5f7477fd24dc77a6fd2b58063d9868cf7126ea89e6d902a695ccebd58d9d9,2026-11-11 20:05:31 UTC
 PREECHA-IT-MSU,Windows 11,ast_query_router_evaluation_sf1.csv,8,0.85,56b52566ce859f99fb61e66280663ffa0dbc2b424915d9e2ade6969676cc845d,2026-11-11 20:05:31 UTC
 PREECHA-IT-MSU,Windows 11,ast_query_router_per_query_sf1.csv,75,15.19,e899ac9a886c24d8055f72a08d4573bf3702723e292ad065356e7169345e7501,2026-11-11 20:05:31 UTC
@@ -15,7 +29,7 @@ PREECHA-IT-MSU,Windows 11,energy_validation_audit_3_2_sf1.csv,8,0.52,c412bb89fb7
 PREECHA-IT-MSU,Windows 11,expA_interconnect_crossover_shift.csv,6,0.88,0d112a671294432ae6f569b5c1deda73150bb83c3ba12e2d8ef24f1cb394ec87,2026-11-11 20:05:31 UTC
 PREECHA-IT-MSU,Windows 11,expB_bursty_contention_sla_replay.csv,4,0.4,1fa07c012e0ac3963dd44222953a7c2c547790617d2b039c626d272a8f5d56d6,2026-11-11 20:05:31 UTC
 PREECHA-IT-MSU,Windows 11,expE_fault_injection_recovery.csv,5,0.69,bfd0db2510772ce05d77916737ebad34b11cb2db8f4c7a661c69cfe829a441b4,2026-11-11 20:05:31 UTC
-PREECHA-IT-MSU,Windows 11,external_machine_reexecution_audit.csv,5,1.2,6d4cb51a12687be85ae9a2b9df4c2be9d256f20aacd0694d69b27f6ddbf39ebc,2026-11-11 20:05:31 UTC
+PREECHA-IT-MSU,Windows 11,external_machine_reexecution_audit.csv,5,1.21,1283cea5f7304c13ef16f619af9ae44e55e03609b3425b4c18dd689f9af45393,2026-11-11 20:05:31 UTC
 PREECHA-IT-MSU,Windows 11,FINAL_SUBMISSION_GATEKEEPER_CERTIFICATE.csv,10,1.2,e167ac088bf10af83d2805f2429d493866e7345d156c61e39ac8ca1964325b37,2026-11-11 20:05:31 UTC
 PREECHA-IT-MSU,Windows 11,gpu_cpu_3level_decomposition_table4_sf1.csv,6,0.9,500cb66f2a7dad04fc552da062ad72651f20d71f81dc90b70669d0d0f944df56,2026-11-11 20:05:31 UTC
 PREECHA-IT-MSU,Windows 11,gpu_cpu_3level_fairness_audit_3_3_sf1.csv,5,0.78,13dbb975161f943d00960c8b7085e91de8fbffa13ed1d48bdec23e8831791ba1,2026-11-11 20:05:31 UTC

@@ -1,0 +1,102 @@
+{
+  "node_id": "PREECHA-IT",
+  "role": "Secondary 16-Core Workstation (notebook2)",
+  "hostname": "PREECHA-IT",
+  "os_platform": "Windows 10",
+  "cpu_logical_threads": 22,
+  "python_version": "3.11.9",
+  "last_synced_utc": "2026-11-11 20:33:03 UTC",
+  "artifact_count": 15,
+  "artifacts": [
+    {
+      "filename": "_temp_ec_sensor_trace.csv",
+      "rows": 92,
+      "size_bytes": 2748,
+      "sha256": "450a544c338074768a061204dd1978da5301d9dad43711184fc956832a076261"
+    },
+    {
+      "filename": "external_machine_environment_manifest.json",
+      "rows": 1,
+      "size_bytes": 2098,
+      "sha256": "b93d09a00c74984f039b5cc3de12a7188226795b4e9e11147295da3a15342b65"
+    },
+    {
+      "filename": "external_machine_per_query_telemetry.csv",
+      "rows": 15,
+      "size_bytes": 3090,
+      "sha256": "955dc2f464734c5775b5f776be5926bef9ebc26b5223db8125fb4153ab60f5ae"
+    },
+    {
+      "filename": "external_machine_reexecution_audit.csv",
+      "rows": 5,
+      "size_bytes": 1255,
+      "sha256": "15f4b3a237442d6571cf8bf4862c2de735bc76e1360c3e47a1b65bd2510f89aa"
+    },
+    {
+      "filename": "nb2_exp1_dc_shunt_vs_tdp_energy_audit.csv",
+      "rows": 3,
+      "size_bytes": 575,
+      "sha256": "47abef9810cfa2dd59d619eb1d8cb4d6fda55d2e01bd2504226027a5efcb2bc5"
+    },
+    {
+      "filename": "nb2_exp2_30queries_cross_hardware_per_query.csv",
+      "rows": 30,
+      "size_bytes": 3870,
+      "sha256": "14079fbf56d00d1918412328b78b21b46b4ccaa639936b0d2dfbd2bcacf1d1da"
+    },
+    {
+      "filename": "nb2_exp2_cross_hardware_routing_summary.csv",
+      "rows": 5,
+      "size_bytes": 686,
+      "sha256": "24a5cdea4a396424bc38c21df7af16db871c75be3aa7e2b9b2d02a78997537b5"
+    },
+    {
+      "filename": "nb2_exp3_multicore_concurrency_tail_latency.csv",
+      "rows": 15,
+      "size_bytes": 1220,
+      "sha256": "13015d1b1d61e330cfc35e5864596936c642d4afac270fbd36103b0ce09b7067"
+    },
+    {
+      "filename": "nb2_remaining_part1_energy_all_engines.csv",
+      "rows": 4,
+      "size_bytes": 638,
+      "sha256": "87a0697bb2540ef058226517b47131edeb0ddd004ae068b29bad9ee7a5c29b00"
+    },
+    {
+      "filename": "nb2_remaining_part2_75q_per_query_22t.csv",
+      "rows": 75,
+      "size_bytes": 5210,
+      "sha256": "f219c93e9d7af303840210a757f2e36866c5db11019c4d89d497e799904fe2af"
+    },
+    {
+      "filename": "nb2_remaining_part2_transfer_calibration_summary.csv",
+      "rows": 6,
+      "size_bytes": 777,
+      "sha256": "874077fdfd23ed6c62152cb5a62618d42071680e31b9aff066dd89c327c8f121"
+    },
+    {
+      "filename": "nb2_remaining_part3_bursty_sla_22t.csv",
+      "rows": 3,
+      "size_bytes": 312,
+      "sha256": "f1d05d4c9931f2d841ce31cd9ca0c0b1183a38ed5a582c01f50a6ce7197a0336"
+    },
+    {
+      "filename": "nb2_remaining_part3_fault_recovery_22t.csv",
+      "rows": 3,
+      "size_bytes": 311,
+      "sha256": "d84bebee1b692353543a0e3ffdb705bb1eac9ea5a6e7fe85f90095fdaf4eeaf5"
+    },
+    {
+      "filename": "nb2_remaining_sha256_manifest.csv",
+      "rows": 5,
+      "size_bytes": 639,
+      "sha256": "436839a9f2d4f5f7c93372383a419de49961f458ba64cc0327fb9135602371e7"
+    },
+    {
+      "filename": "v4_cross_machine_reproducibility_manifest.csv",
+      "rows": 9,
+      "size_bytes": 762,
+      "sha256": "04341fbcf8415e74519ec4378c3d7444002f709f5698c8de3848efdedd55ec69"
+    }
+  ]
+}

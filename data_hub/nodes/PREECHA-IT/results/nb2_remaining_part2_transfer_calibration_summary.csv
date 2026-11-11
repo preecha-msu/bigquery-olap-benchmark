@@ -1,0 +1,7 @@
+Policy_on_Notebook2_22T,NB1_Source_Model_Used,Top1_Pct,Top2_Pct,Mean_Latency_ms,P95_Latency_ms,Mean_Regret_Pct,P95_Regret_Pct,Wilcoxon_p_vs_DuckDB,Wilcoxon_p_vs_Polars
+1. Always DuckDB v2.0 (22T Static),False,14.67,64.0,60.39,154.3,73.5,217.19,1.0,0.000784
+2. Always Polars v2.1 (22T Static),False,65.33,82.67,47.54,150.32,22.88,111.24,0.000784,1.0
+3. Always DataFusion v55.0 (22T Static),False,20.0,53.33,57.19,82.02,128.73,491.13,0.383595,0.000111
+"4. AST-Route Zero-Shot Transfer (NB1 -> NB2, M_gpu=0)",False,40.0,56.0,54.81,150.32,100.46,491.13,0.363743,0.000703
+5. AST-Route 5-Seed Hardware-Calibrated Transfer,False,48.0,82.67,48.37,150.32,34.68,135.68,0.00225,0.01198
+6. AST-Route Native 25-Seed LOSO-CV (NB2 22T),False,97.33,100.0,35.11,70.67,0.18,0.0,0.0,3e-05

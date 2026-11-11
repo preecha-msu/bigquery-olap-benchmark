@@ -1,0 +1,6 @@
+Routing_Policy_on_Notebook2,Top1_Acc_Pct,Top2_Acc_Pct,Mean_Latency_ms,Median_Latency_ms,P95_Latency_ms,Mean_Regret_Pct,Median_Regret_Pct,P95_Regret_Pct,AST_vs_Policy_Diff_95CI_ms,Wilcoxon_p
+Always DataFusion v55.0,0.0,6.67,127.35,93.8,257.6,199.0,165.62,458.12,"[-94.93, -45.00]",1.8626e-09
+Always Polars v2.1,23.33,96.67,71.43,56.82,133.75,96.74,61.0,308.29,"[-20.73, 5.93]",1.0675e-03
+Always DuckDB v2.0,76.67,96.67,71.19,38.57,246.09,15.96,0.0,84.55,"[-21.44, 0.08]",3.4093e-01
+AST-Route (CPU-Only Feasible Set),86.67,100.0,62.05,35.65,246.09,8.83,0.0,44.07,"[0.00, 0.00]",1.0000
+Oracle Lower Bound (Ideal),100.0,100.0,53.24,35.65,133.75,0.0,0.0,0.0,"[0.03, 22.03]",2.0225e-01
