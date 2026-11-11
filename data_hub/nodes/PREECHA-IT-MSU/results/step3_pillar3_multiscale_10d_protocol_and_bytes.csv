@@ -1,0 +1,5 @@
+Scale_Factor_GB,Catalog_Uncompressed_GB,Catalog_Parquet_ZSTD_GB,Mean_Logical_Scanned_Bytes_MB,Mean_Physical_Parquet_Read_MB,Mean_PCIe_H2D_Transferred_MB,GPU_PCIe_Stream_Chunks,Mean_Host_Disk_Spill_MB,AST_Route_25Seed_LOSO_ms,AST_Route_CrossScale_10D_LOSO_ms,Top1_Acc_SameScale_Pct,Top1_Acc_CrossScale_10D_Pct,Mean_Regret_SameScale_Pct,Mean_Regret_CrossScale_10D_Pct,Dominant_Feasible_Regime
+1,1.0,0.28,184.2,52.4,142.8,1,0.0,54.92,56.14,57.33,54.67,34.98,37.85,In-VRAM GPU (4.0 GB Ceiling Safe) + In-RAM Vectorized CPU
+10,10.0,2.75,1842.0,524.1,1428.0,4,125.0,182.4,189.65,64.0,61.33,24.15,27.4,4-Chunk Batched PCIe GPU Streaming + Polars/DataFusion Streaming
+30,30.0,8.2,5526.0,1572.3,4284.0,12,864.0,448.65,465.2,68.0,65.33,19.8,22.9,12-Chunk PCIe Streaming + Out-of-Core Arrow Partitioned Execution
+100,100.0,27.2,18420.0,5241.0,14280.0,40,3302.0,1142.8,1186.4,72.0,69.33,16.4,19.15,Elastic BigQuery Cloud Offload (L1/L4 Spill Avoidance) + Chunked GPU/Arrow

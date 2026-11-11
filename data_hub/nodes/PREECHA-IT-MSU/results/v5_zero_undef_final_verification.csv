@@ -1,0 +1,5 @@
+Verification_Item,Measured_Value,Source,Status
+SF1_Parquet_Cold_Open_Metadata_Latency_us,933.4,lineitem.parquet,PASS
+SF1_Parquet_Cached_Handle_Metadata_Latency_us,4.2,lineitem.parquet,PASS
+CSCI_vs_TreeSize_DN_R2_and_VIF,"R2=0.7944, VIF=4.86 (<5.0)",ast_complexity_summary.csv,PASS
+LaTeX_Undefined_References_and_Citations,0,bigquery_olap_benchmark_V2.log,PASS

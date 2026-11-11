@@ -1,0 +1,11 @@
+Hardware_Environment,Policy,Top1_CPU_Acc_Pct,Top2_CPU_Acc_Pct,Mean_Latency_ms,Seed_95CI_ms,Mean_Regret_vs_CPU_Oracle_Pct,P95_Regret_Pct,P99_Regret_Pct,Holm_p_vs_CPU_AST_Route
+"Primary Workstation (8T, N=75, SF=1 GB, CPU-Only)",Always DuckDB Native,24.0,52.0,183.74,"[110.71, 274.89]",148.2,462.1,718.5,0.000112
+"Primary Workstation (8T, N=75, SF=1 GB, CPU-Only)",Always DataFusion (Rust Arrow),28.0,69.33,96.3,"[78.31, 114.92]",49.85,164.2,248.9,0.0018
+"Primary Workstation (8T, N=75, SF=1 GB, CPU-Only)",Always Polars (Rust Lazy Arrow),48.0,78.67,82.47,"[67.93, 98.65]",28.42,118.5,189.4,0.0084
+"Primary Workstation (8T, N=75, SF=1 GB, CPU-Only)",CPU-Only Ridge Router (9D),69.33,92.0,71.84,"[58.90, 86.12]",13.9,68.4,112.5,0.284
+"Primary Workstation (8T, N=75, SF=1 GB, CPU-Only)",Proposed CPU-Only AST-Route (Conformal GBR-9D),74.67,96.0,69.12,"[56.85, 82.74]",9.64,42.8,76.2,1.0
+"Primary Workstation (8T, N=75, SF=1 GB, CPU-Only)",CPU-Only Oracle Lower Bound,100.0,100.0,63.48,"[52.10, 76.05]",0.0,0.0,0.0,0.012
+"Secondary 16C/22T Workstation (N=30, SF=1 GB, CPU-Only)",Always DataFusion v55.0,0.0,6.67,127.35,"[98.40, 161.20]",199.0,458.12,512.4,1.86e-09
+"Secondary 16C/22T Workstation (N=30, SF=1 GB, CPU-Only)",Always Polars v2.1,23.33,96.67,71.43,"[54.12, 91.80]",96.74,308.29,384.1,0.0011
+"Secondary 16C/22T Workstation (N=30, SF=1 GB, CPU-Only)",Always DuckDB v2.0,76.67,96.67,71.19,"[48.20, 99.45]",15.96,84.55,162.8,0.3409
+"Secondary 16C/22T Workstation (N=30, SF=1 GB, CPU-Only)",Proposed CPU-Only AST-Route (Conformal GBR-9D),86.67,100.0,62.05,"[43.80, 84.10]",8.83,44.07,71.5,1.0

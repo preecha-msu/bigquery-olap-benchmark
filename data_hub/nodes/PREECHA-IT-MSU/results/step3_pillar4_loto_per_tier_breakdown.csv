@@ -1,0 +1,7 @@
+Held_Out_Tier,Unseen_Operator_Class,LOTO_Top1_Acc_Pct,LOTO_Top2_Acc_Pct,LOTO_Mean_Latency_ms,Polars_Baseline_ms,LOTO_Mean_Regret_Pct,Failure_Mechanism_Analysis
+"Holdout L1 (Scan/Filter/CASE, n=15)","Pure Scan + Multi-Branch CASE (J=0, W=0, U=0)",60.0,80.0,48.2,52.1,38.4,Mild degradation: interpolated from low-join L2/L3 queries
+"Holdout L2 (Multi-Way Joins, n=15)",4-Way to 8-Way Relational Joins (J >= 4),46.67,66.67,112.4,108.5,64.2,Moderate degradation: underestimates multi-table hash-join build cost
+"Holdout L3 (Multi-Stage CTEs, n=15)",Deep Nested CTEs & Anti-Joins (S >= 3),53.33,73.33,74.8,78.9,45.1,Partially transferable from L2 join + L1 filter topologies
+"Holdout L4 (Window Framing, n=15)",Partitioned Window Ranking & Sliding Frames (W >= 2),33.33,60.0,98.6,84.2,89.5,Severe out-of-distribution shift: W(q) weight is uncalibrated when W=0 in training
+"Holdout L5 (Array UNNEST, n=15)",ARRAY_AGG + Lateral CROSS JOIN UNNEST (U >= 1),26.67,53.33,93.1,88.65,104.8,Severe out-of-distribution shift: U(q) cardinality explosion unseen in L1--L4
+Aggregate 5-Tier LOTO-CV Mean (N=75),All 5 Operator Families Held Out Sequentially,44.0,66.67,85.42,82.47,68.4,Confirms operator-family coverage requirement (44.00% LOTO vs. 57.33% LOSO-CV)

@@ -1,0 +1,7 @@
+Statistical_Test_SeedLevel_N25,Statistic,Raw_p,Holm_Adjusted_p,Effect_Size
+Omnibus_Friedman_6Engines_SeedMean_N25,93.43,1.2748207754413116e-18,1.2748207754413116e-18,Kendall_W = 0.7475
+AST_Route_vs_Always_DuckDB_Latency_SeedMean_N25,-128.82,0.00013634079670182602,0.0005453631868073041,MeanDiff = -128.82 ms
+AST_Route_vs_Always_Polars_Latency_SeedMean_N25,-27.55,0.008574434611105325,0.01714886922221065,MeanDiff = -27.55 ms
+AST_Route_vs_Always_DataFusion_Latency_SeedMean_N25,-41.37,0.0013742758758316942,0.004122827627495083,MeanDiff = -41.37 ms
+AST_Route_vs_Always_GPU_Cold_Latency_SeedMean_N25,-2.04,0.18408369354964227,0.18408369354964227,MeanDiff = -2.04 ms
+AST_Route_vs_Always_GPU_Regret_SeedMean_N25,-25.77,0.08538899791882958,0.08538899791882958,RegretDiff = -25.77%

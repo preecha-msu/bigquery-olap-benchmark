@@ -1,0 +1,6 @@
+Tier,Mean_Output_Rows,DuckDB_fetchall_PythonTuple_ms,DuckDB_ZeroCopy_Arrow_ms,Python_Materialization_Overhead_ms
+L1,20.4,63.64,66.34,-2.7
+L2,58.3,295.64,284.95,10.69
+L3,46.7,136.45,139.66,-3.21
+L4,39.4,79.96,85.43,-5.47
+L5,35.1,349.56,417.96,-68.41

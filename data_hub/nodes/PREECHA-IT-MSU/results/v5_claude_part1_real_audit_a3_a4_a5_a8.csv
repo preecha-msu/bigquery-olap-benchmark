@@ -1,0 +1,5 @@
+Claude_Issue,Verified_Real_Value,SHA256_Prefix
+CLD-A3 (FinOps 1000x Unit Fix),"V1: 347.73->105.87 MiB = $1,441.61/1M (SF1) to $144,160.82/1M (SF100); Clustered Bill=$1,267.66/1M",7aee23711627a085062c7cf8
+CLD-A4 (BigQuery Server-vs-Server),"Unopt=2190.57 ms (1622.93, 2787.37) vs Opt=745.39 ms (519.22, 1030.05) (2.94x, delta=+0.471, p_seed25=1.79e-07)",7aee23711627a085062c7cf8
+CLD-A5 (GPU vs Best-of-CPU),Cold GPU (56.96) vs Polars (82.47) = 1.45x (Warm=3.71x); raw_multi_csv Polars=82.47 ms,b180bbc2ef1884d3316cec3d
+CLD-A8 (Consistent QPS Formula),C=16: 70.00->139.98 QPS (2.00x); C=32: 72.27->154.44 QPS (2.14x),dc465502d0ee20769216b74a

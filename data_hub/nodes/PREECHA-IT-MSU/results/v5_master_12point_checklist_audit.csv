@@ -1,0 +1,13 @@
+ID,Item,Status
+CHK-01,CSCI Exact Linear Combination (R^2=1.0) vs. Engineered Oblique Hyperplane Fix,PASS
+CHK-02,JOB Statistical Consistency & Honest Always-Polars Parity (Abstract/Sec 4.8/Conclusion),PASS
+CHK-03,Energy Claim Framing (Estimated CPU Package Energy & Energy-Aware Routing),PASS
+CHK-04,Table 4 CPU/GPU 3-Level Timing Verified (183.74 - 0.87 = 182.87 ms) & Page Overflow Fixed,PASS
+CHK-05,Missing Table 2B Inserted with Real Parquet/DuckDB/BigQuery Metadata APIs & Latencies,PASS
+CHK-06,"Unified External Validation (JOB N=33 & SSB N=13 Top-2=100.00%, Regret, P95, 95% Paired CI)",PASS
+CHK-07,"Risk-Based Confidence-Aware Metrics (P_subopt, Expected/Worst Regret, Abstention, Stability, ECE)",PASS
+CHK-08,Cost Model Framed Explicitly as Marginal Cloud Query Scan Charge Separated from Local Energy/Amortization,PASS
+CHK-09,Explicit Query Count Separation: 97 Core TPC-H + 46 External (33 JOB + 13 SSB) = 143 Total,PASS
+CHK-10,Reference [20] Split Cleanly into Separate Bibliography Entries (BigDAWG [20] & Gupta et al. [35]),PASS
+CHK-11,"Script Range Updated to 73_... & Wide Tables (2A, 4, 12) Wrapped Against Overfull Margins",PASS
+CHK-12,Independent CSV Audit + pdflatex 2-Pass Compilation (Undefined Refs = 0),PASS

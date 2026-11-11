@@ -6,8 +6,8 @@ Centralized empirical telemetry repository and seamless **Overleaf** synchroniza
 
 | Node / Machine ID | OS Platform | Threads | CSV Logs | Last Synced (UTC) | Telemetry Folder |
 | :--- | :--- | :---: | :---: | :--- | :--- |
-| `PREECHA-IT-MSU` | Windows 11 | 12 | **74** | `2026-11-10 14:22:42 UTC` | [`data_hub/nodes/PREECHA-IT-MSU`](data_hub/nodes/PREECHA-IT-MSU/results) |
+| `PREECHA-IT-MSU` | Windows 11 | 12 | **123** | `2026-11-11 20:02:20 UTC` | [`data_hub/nodes/PREECHA-IT-MSU`](data_hub/nodes/PREECHA-IT-MSU/results) |
 
-- **Global Multi-Node SHA-256 Registry:** [`data_hub/global_sha256_registry.csv`](data_hub/global_sha256_registry.csv) (`SHA-256: 7e226160c63f81c603b0e51e...`)
+- **Global Multi-Node SHA-256 Registry:** [`data_hub/global_sha256_registry.csv`](data_hub/global_sha256_registry.csv) (`SHA-256: cb6d4215c2da5f00bb60d1fa...`)
 - **Overleaf Root Entrypoint (25-Page Manuscript):** [`main.tex`](main.tex) + [`figures/`](figures/)
 - **Journal Submission Bundle:** [`manuscript/overleaf_V2_submission_bundle.zip`](manuscript/overleaf_V2_submission_bundle.zip)

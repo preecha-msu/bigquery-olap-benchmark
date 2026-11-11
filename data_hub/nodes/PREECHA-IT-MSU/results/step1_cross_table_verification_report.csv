@@ -1,0 +1,11 @@
+Category,Metric_or_Ratio,Formula_From_Source,Computed_Value,Status,Verification_Note
+Table 1 & Sec 4.1,DuckDB Parquet / Native Overall Speedup,254.42 / 183.74,1.38x,PASS,Matches Table 1 Overall row
+Table 2 & Table 10,BigQuery Unopt vs Clustered (Server-to-Server),1412.60 / 745.39,1.90x,PASS,Server-to-server unified (client 2190.57 ms separated)
+Table 3 & Eq. (5),V3 FinOps Savings at SF=100 GB & n=25,100 * 10^6 * ((347.7 - 345.6)/1024^2) * $6.25,"$1,251.70",PASS,"Fixed truncated $1.00 -> $1,251.70 and Queries 75 -> 25"
+Table 3 & Eq. (5),"V1/V2 Billed ($1,441.61/$761.15) vs Unfloored ($1,624.82/$841.62)","sum_t max(B_scan(q,t), 10 MiB) per-table floor","Billed: $1,441.61 / $761.15 | Unfloored: $1,624.82 / $841.62",PASS,Reconciles Table 3 billed savings with Eq. (5)
+Table 4 & Sec 4.3,Tier L2 GPU Cold Speedup vs DuckDB Native,264.53 / 104.88,2.52x,PASS,Fixed 2.14x -> 2.52x in both Table 4 and Sec 4.3
+"Table 4, 5 & Sec 4.3",GPU Warm/Cold Speedup vs Polars & vs DuckDB,"Polars: 82.47/22.25=3.71x, 82.47/56.96=1.45x | DuckDB: 8.22x/3.23x",vs Polars: 3.71x/1.45x | vs DuckDB: 8.26x/3.23x,PASS,Dual baseline reported (fastest CPU Polars + DuckDB)
+Table 8 & Sec 4.6,AST-Route (54.92 ms) vs DuckDB & Polars + Simple Baselines,DuckDB: 183.74/54.92=3.35x | Polars: 82.47/54.92=1.50x,"3.35x / 1.50x (Ridge 49.12 ms, DT 51.35 ms in Table 8)",PASS,Simple baselines included directly in Table 8
+Table 12 Part B & Sec 4.9(2),Platform B (4C) vs Platform A (2C) Speedup & Thread-Capped DF,234.50 / 162.44,1.44x (DF capped: 244.12 ms / 168.45 ms),PASS,Fixed 1.52x -> 1.44x and enforced DataFusion thread cap
+Table 12 Part C & Sec 4.9(3),Official TPC-H Q1-Q22: AST-Route vs Always Polars,42.79 / 16.98,2.52x,PASS,Fixed 2.14x -> 2.52x on Q1-Q22
+Table 13 Part C,Steady-State QPS = C / (T_ms / 1000) & Throughput Gain (C=1..32),"Little's Law: QPS_SE = C/T_SE, QPS_AST = C/T_AST, Gain = QPS_AST/QPS_SE",C=32: 72.27 -> 154.44 QPS (2.14x); C=16: 70.00 -> 139.99 QPS (2.00x),FAIL,All 5 concurrency tiers satisfy QPS = C/T and Gain = QPS_AST/QPS_SE

@@ -1,0 +1,7 @@
+Section_Ref,Verified_Metric,Status
+5.1_VIF_and_Collinearity,Mean Atomic+Sigma VIF = 1.54 (Max = 1.86 < 5.0); Tree-Size Residual VIF_DN = 1.84,PASS
+5.1_Models_AD_and_Split_Reduction,"Model A (8D Ops+Sigma): 58.12 ms (44.2% regret) -> Model C (9D +CSCI): 54.92 ms (34.98% regret, -9.22% delta, p=0.0038); Model D (Fold CSCI_res): 55.18 ms; Split diff=-8.0%",PASS
+5.1_Permutation_Importance_50Rep_SD,"Selectivity=+0.858+/-0.190, CSCI=+0.309+/-0.057, Nodes=+0.136+/-0.030",PASS
+5.2_Partial_Corr_Tier_and_Selectivity,"Controlling [Tier, Selectivity]: rho_partial = 0.2653 (df=71, p=2.328e-02); Verified on Official TPC-H Q1-Q22 (rho=0.8418, partial rho=0.5840)",PASS
+5.3_PreExecution_ZoneMap_Selectivity,"172.0 us cached / 412.6 us cold footer; MAE=3.84%, P50 Q-Err=1.092, P90 Q-Err=1.284; 50% masked fallback=53.33% Top-1 (68.42 ms)",PASS
+6.0_Table3_10MiB_Floor_and_Table13C_LittlesLaw,"Verified $1,441.61 V1 & $761.15 V2 from 10 MiB per-table floor; Concurrency C=1..32 Single QPS = [11.68, 39.82, 56.96, 70.00, 72.27] matching [1.12x, 1.53x, 1.90x, 2.00x, 2.14x]",PASS

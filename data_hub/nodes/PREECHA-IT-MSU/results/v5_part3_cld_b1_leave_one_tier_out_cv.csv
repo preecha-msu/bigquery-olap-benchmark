@@ -1,0 +1,6 @@
+Held_Out_Unseen_Tier,Test_Queries_n,LOTO_GBR9D_Mean_ms,Always_Polars_ms,Always_GPU_Cold_ms,Always_DuckDB_ms,Oracle_ms,LOTO_Mean_Regret_Pct
+L1,15,34.36,38.0,55.02,50.84,23.71,56.55
+L2,15,97.69,81.68,104.88,264.53,75.2,34.54
+L3,15,55.92,66.81,58.24,121.92,50.99,13.16
+L4,15,136.0,71.11,19.37,78.16,19.37,564.43
+L5,15,103.14,154.76,47.31,403.27,43.91,130.93

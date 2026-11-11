@@ -1,0 +1,14 @@
+Table,Rows,Compressed_MiB,Uncompressed_Parquet_MiB
+cast_info,600000,7.446,11.415
+company_name,40000,0.26,0.411
+info_type,114,0.002,0.001
+keyword,60000,0.403,0.631
+kind_type,9,0.001,0.0
+movie_companies,250000,2.813,4.205
+movie_info,400000,6.679,8.524
+movie_info_idx,250000,3.606,5.545
+movie_keyword,300000,3.243,4.902
+movie_link,40000,0.668,1.037
+name,150000,0.858,1.429
+role_type,14,0.001,0.0
+title,100000,0.707,1.086

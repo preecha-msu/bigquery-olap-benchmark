@@ -5,8 +5,8 @@
   "os_platform": "Windows 11",
   "cpu_logical_threads": 12,
   "python_version": "3.13.9",
-  "last_synced_utc": "2026-11-10 14:22:42 UTC",
-  "artifact_count": 74,
+  "last_synced_utc": "2026-11-11 20:02:20 UTC",
+  "artifact_count": 124,
   "artifacts": [
     {
       "filename": "ast_complexity_summary.csv",
@@ -87,6 +87,42 @@
       "sha256": "c412bb89fb781af92884b2efa3af526d317c20eb2504a7be4d4ac6ecb697ba86"
     },
     {
+      "filename": "expA_interconnect_crossover_shift.csv",
+      "rows": 6,
+      "size_bytes": 902,
+      "sha256": "0d112a671294432ae6f569b5c1deda73150bb83c3ba12e2d8ef24f1cb394ec87"
+    },
+    {
+      "filename": "expB_bursty_contention_sla_replay.csv",
+      "rows": 4,
+      "size_bytes": 411,
+      "sha256": "1fa07c012e0ac3963dd44222953a7c2c547790617d2b039c626d272a8f5d56d6"
+    },
+    {
+      "filename": "expE_fault_injection_recovery.csv",
+      "rows": 5,
+      "size_bytes": 711,
+      "sha256": "bfd0db2510772ce05d77916737ebad34b11cb2db8f4c7a661c69cfe829a441b4"
+    },
+    {
+      "filename": "external_machine_environment_manifest.json",
+      "rows": 1,
+      "size_bytes": 1850,
+      "sha256": "fe16c2ced11290643ac93b236ed3e2be6f52baf08c75cb522c022bb681a47724"
+    },
+    {
+      "filename": "external_machine_reexecution_audit.csv",
+      "rows": 5,
+      "size_bytes": 1233,
+      "sha256": "6d4cb51a12687be85ae9a2b9df4c2be9d256f20aacd0694d69b27f6ddbf39ebc"
+    },
+    {
+      "filename": "FINAL_SUBMISSION_GATEKEEPER_CERTIFICATE.csv",
+      "rows": 10,
+      "size_bytes": 1233,
+      "sha256": "e167ac088bf10af83d2805f2429d493866e7345d156c61e39ac8ca1964325b37"
+    },
+    {
       "filename": "gpu_cpu_3level_decomposition_table4_sf1.csv",
       "rows": 6,
       "size_bytes": 925,
@@ -115,6 +151,30 @@
       "rows": 9,
       "size_bytes": 1530,
       "sha256": "8288e7166b387ea5b3a321526d0fecf61bf6a19dca180c3b9727c1fdf748b1ff"
+    },
+    {
+      "filename": "issue3_2_nested_leakfree_independence_summary_sf1.csv",
+      "rows": 4,
+      "size_bytes": 900,
+      "sha256": "ce6169d7c8b465c5314d135bfafde1bf9437325037c2b412f74b7655bce0c799"
+    },
+    {
+      "filename": "issue3_2_per_seed_25folds_breakdown_sf1.csv",
+      "rows": 25,
+      "size_bytes": 3645,
+      "sha256": "78eb3c83b7cb26cc4593709857de1663655245ddb2537a54c724e9f0bb6a114e"
+    },
+    {
+      "filename": "issue3_5_job_12d_per_query_predictions.csv",
+      "rows": 33,
+      "size_bytes": 4588,
+      "sha256": "edaa2bfeca2e3e2a4e515ecbb9338c98c06a70e319f97f89ed00e98b65aa2868"
+    },
+    {
+      "filename": "issue3_5_skew_string_joincard_12d_ablation.csv",
+      "rows": 5,
+      "size_bytes": 1131,
+      "sha256": "caa862a57b2a619b342ec0b0eee33eba40d8de945e170a60a84b058e8d087e50"
     },
     {
       "filename": "job_33queries_per_query_telemetry.csv",
@@ -195,6 +255,24 @@
       "sha256": "1481cbb0d94283d120e58b5a78b19a643c5be518a36d476ae1ee7d1be2a14212"
     },
     {
+      "filename": "nb2_exp1_dc_shunt_vs_tdp_energy_audit.csv",
+      "rows": 2,
+      "size_bytes": 296,
+      "sha256": "2c364923bad53631c072ee399dc4476460cf781ed5654562ad290472d9c2f78a"
+    },
+    {
+      "filename": "nb2_exp2_cross_hardware_routing_summary.csv",
+      "rows": 5,
+      "size_bytes": 699,
+      "sha256": "4e4291c96c924cc8ecaab3d517dff1a72eb3d4bbd81ac1e8ccae64d175739b97"
+    },
+    {
+      "filename": "nb2_exp3_multicore_concurrency_tail_latency.csv",
+      "rows": 15,
+      "size_bytes": 1231,
+      "sha256": "707ff30b9be3221c564f8ab2b0e8e91931857eff140a6b10c3df1e626433fd87"
+    },
+    {
       "filename": "official_tpch_q1_q22_external_validation.csv",
       "rows": 22,
       "size_bytes": 1770,
@@ -225,6 +303,24 @@
       "sha256": "0dc2b3f0d1fbfcd3e8e7d581f7076403bad6d6a13f03089970b89f724a691476"
     },
     {
+      "filename": "section4_must_fix_6points_audit_log.csv",
+      "rows": 10,
+      "size_bytes": 3204,
+      "sha256": "b81fda476fceb0ba5e6dec5bf8d876ad6cea6455a3b3ea672b12a9991d17b769"
+    },
+    {
+      "filename": "section5_and_6_master_audit_log.csv",
+      "rows": 6,
+      "size_bytes": 1074,
+      "sha256": "4ee1c56895966bd1074d406da5e3e6baa3177d1ad6a86d293034644a480728a2"
+    },
+    {
+      "filename": "section6_concurrency_littles_law_reconciled.csv",
+      "rows": 5,
+      "size_bytes": 291,
+      "sha256": "fe868d420ad52960fd9b85044737a4d8a18e07abdfcb117b0faeb15ea6657aa4"
+    },
+    {
       "filename": "sha256_manifest_v2.csv",
       "rows": 19,
       "size_bytes": 2685,
@@ -235,6 +331,48 @@
       "rows": 13,
       "size_bytes": 1915,
       "sha256": "0c05ea6401bf789e4089416e6e4296e05dd2ae88502bcecf79add0ce080b2f36"
+    },
+    {
+      "filename": "step1_cross_table_verification_report.csv",
+      "rows": 10,
+      "size_bytes": 2044,
+      "sha256": "ef492238e9edfa8da1439c1f44ea68dc60faba14ee0602281f504b2dd7fb1dcb"
+    },
+    {
+      "filename": "step3_pillar1_complete_baseline_matrix_ci_p99.csv",
+      "rows": 12,
+      "size_bytes": 1397,
+      "sha256": "b1fe62ce25da3e8f15e051672dc707b32c5372076f07813b48ee46e6bb13875f"
+    },
+    {
+      "filename": "step3_pillar2_cpu_only_router_primary_and_secondary.csv",
+      "rows": 10,
+      "size_bytes": 1606,
+      "sha256": "72eecccc76a07fc8c21a1ed36beda06328a780e6d6f2c3ab1b42d4d375605cde"
+    },
+    {
+      "filename": "step3_pillar3_multiscale_10d_protocol_and_bytes.csv",
+      "rows": 4,
+      "size_bytes": 966,
+      "sha256": "9f607437f937ab6fb535724ca6ce788743f500e199c842fc4c414b90b254a6f7"
+    },
+    {
+      "filename": "step3_pillar4_external_clickbench_ssb_job_summary.csv",
+      "rows": 3,
+      "size_bytes": 783,
+      "sha256": "895e0da00ad19053d2397a6da0abadaf1e89b8f0d266b7a2e35341bafe1f166c"
+    },
+    {
+      "filename": "step3_pillar4_loto_per_tier_breakdown.csv",
+      "rows": 6,
+      "size_bytes": 1253,
+      "sha256": "02c2fa701e591c1feefaf1e013337abda39d9c586e634c9fda795f5939ca56f3"
+    },
+    {
+      "filename": "step3_pillar5_net_latency_and_cold_metadata_regimes.csv",
+      "rows": 3,
+      "size_bytes": 833,
+      "sha256": "d34bb69fa0bbd49b0265e7a9b0b92bf44524de40756ea817bd02479ec6b5327a"
     },
     {
       "filename": "two_way_interaction_complexity_selectivity_sf1.csv",
@@ -375,6 +513,12 @@
       "sha256": "a83f0d40d0aefeac91c4a046f862fb77b54c69dd8042ee392236a84219b3881a"
     },
     {
+      "filename": "v4_master_validation_plan_all_6_completed.csv",
+      "rows": 6,
+      "size_bytes": 2012,
+      "sha256": "5a645bba57807962809a233d4f406c008226b507c8d6b909707a621d26602511"
+    },
+    {
       "filename": "v4_metadata_selectivity_audit.csv",
       "rows": 3,
       "size_bytes": 1065,
@@ -445,6 +589,162 @@
       "rows": 2,
       "size_bytes": 1130,
       "sha256": "b5bad3e311467c29280f434bd2c17f4e2a1e3e57862f5fea67666062d4996c54"
+    },
+    {
+      "filename": "v5_audit1_independent_raw_log_recalculation.csv",
+      "rows": 3,
+      "size_bytes": 491,
+      "sha256": "bdf2b1ca6bdea6e1760fafd566932b92979bf9a5ca66da1360bdf74a90554d1c"
+    },
+    {
+      "filename": "v5_audit2_csci_construct_validity_and_partial_corr.csv",
+      "rows": 5,
+      "size_bytes": 537,
+      "sha256": "b0cabf5c21f87aa77f7ad25173f96138762e136b5f9e0455468d866243a291e6"
+    },
+    {
+      "filename": "v5_audit2_grouped_vs_individual_permutation_importance.csv",
+      "rows": 14,
+      "size_bytes": 933,
+      "sha256": "e22396626bb7ce0ec8179f3d16af19632a071ff8ae335bdcd628abb3fa50ec19"
+    },
+    {
+      "filename": "v5_audit3_live_preexec_metadata_and_dropout_ablation.csv",
+      "rows": 0,
+      "size_bytes": 2,
+      "sha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6"
+    },
+    {
+      "filename": "v5_audit4_hardware_and_external_logs_verification.csv",
+      "rows": 3,
+      "size_bytes": 649,
+      "sha256": "efdfd9e61153fae7d44e2b634401ca89a04ff0cbfe4a11dfe1b3117a6e93447b"
+    },
+    {
+      "filename": "v5_claude_part1_real_audit_a3_a4_a5_a8.csv",
+      "rows": 4,
+      "size_bytes": 645,
+      "sha256": "a81385989d21f44f8bb28559907840ebfca82d058026cdaa4430fdee84d36907"
+    },
+    {
+      "filename": "v5_concurrency_qps_consistent_sf1.csv",
+      "rows": 5,
+      "size_bytes": 277,
+      "sha256": "dc465502d0ee20769216b74a02780ee81425637ac9ea4f0e1306c975765cf3e5"
+    },
+    {
+      "filename": "v5_csci_algebraic_and_oblique_tree_audit.csv",
+      "rows": 1,
+      "size_bytes": 292,
+      "sha256": "97fe60065377940ac9c20825c408f301d99bf459e74a8630020724e1de3ce5b4"
+    },
+    {
+      "filename": "v5_final_10point_real_execution_audit.csv",
+      "rows": 8,
+      "size_bytes": 382,
+      "sha256": "432a8d2b1fde7521e107b62fa2ac0d25103207691d4db2e0efed12404345096d"
+    },
+    {
+      "filename": "v5_full_64char_sha256_reproducibility_registry.csv",
+      "rows": 158,
+      "size_bytes": 19576,
+      "sha256": "e220ed35667e6bddcf2be10e3f36c39a842645f306a0b0cb20e37e87b1679389"
+    },
+    {
+      "filename": "v5_independent_statistical_recalculation.csv",
+      "rows": 4,
+      "size_bytes": 180,
+      "sha256": "90157b725bd541880861408f5755114f6fcadecf6fb19ad486811f64f4db4343"
+    },
+    {
+      "filename": "v5_master_12point_checklist_audit.csv",
+      "rows": 12,
+      "size_bytes": 1244,
+      "sha256": "22bc15405cdc2752366d9cc8c9800a66eccc4e6f8e8ade2bd2c7df282da35d37"
+    },
+    {
+      "filename": "v5_part2_duckdb_fetch_boundary_audit.csv",
+      "rows": 5,
+      "size_bytes": 255,
+      "sha256": "e66eaca478616a554ee48df82736ccee11f7e80350ee9997fd3dc7d6e482f48e"
+    },
+    {
+      "filename": "v5_part2_job_imdb_exact_footprint_audit.csv",
+      "rows": 13,
+      "size_bytes": 432,
+      "sha256": "7a7069e99fd16d2b66e1551a52a68887af6990f0a81a6ae0ce3336c6f812430d"
+    },
+    {
+      "filename": "v5_part2_multiscale_stage_and_pcie_audit.csv",
+      "rows": 6,
+      "size_bytes": 861,
+      "sha256": "53b560dc704f773ce41d46b16e61197519c8d05220756bae4e20e55a8aaf3528"
+    },
+    {
+      "filename": "v5_part2_real_75q_thread_emulation_2t_4t_8t.csv",
+      "rows": 3,
+      "size_bytes": 464,
+      "sha256": "eb9d0893ad5c6b2a45b2b6488115aeeaa0ea1162b5e214cc72c141ce64a368a1"
+    },
+    {
+      "filename": "v5_part3_cld_b1_leave_one_tier_out_cv.csv",
+      "rows": 5,
+      "size_bytes": 361,
+      "sha256": "8ebbcaddc06cb8a54ca92f57f7dd728078bc016d87e91c603b4318409990a8bf"
+    },
+    {
+      "filename": "v5_part3_cld_b2_simple_and_tuned_baselines_loso.csv",
+      "rows": 7,
+      "size_bytes": 1151,
+      "sha256": "0e1b1c7e4f8b6acbcc7853ed401cdff890c85e24156c8c1db35feda38b092b56"
+    },
+    {
+      "filename": "v5_part3_cld_b3_seed25_hierarchical_tests.csv",
+      "rows": 6,
+      "size_bytes": 783,
+      "sha256": "944dda9ef56d0e4ba11521bbec9bdebe74195a4364bfbe218fd5929cddfd484b"
+    },
+    {
+      "filename": "v5_part3_cld_b4_50perm_learning_curve.csv",
+      "rows": 5,
+      "size_bytes": 290,
+      "sha256": "c98197871107d5bdb066c0ffc5caf59644939b44509e6f01ae9de1f3f799afc5"
+    },
+    {
+      "filename": "v5_real_metadata_api_benchmark.csv",
+      "rows": 1,
+      "size_bytes": 232,
+      "sha256": "ec73e3f4819a113e64e39c66290d22c184ac11dc3bceb8ba307b7bcd2119b044"
+    },
+    {
+      "filename": "v5_sha256_master_audit_manifest.csv",
+      "rows": 114,
+      "size_bytes": 22112,
+      "sha256": "250a41d489d352417a4424dbf4dcc6b4c8abc86736e1eba48c314be7d141e600"
+    },
+    {
+      "filename": "v5_zero_undef_final_verification.csv",
+      "rows": 4,
+      "size_bytes": 365,
+      "sha256": "8b4ebeb7ced635f3264731d49de5156e178dc7053804c719ebcc1f1a0e032460"
+    },
+    {
+      "filename": "v6_final_20point_real_execution_audit.csv",
+      "rows": 19,
+      "size_bytes": 2061,
+      "sha256": "2094e174a16a3eef4ccdd02b9c4213dd18977cb207e9fea9e692f64a9c462282"
+    },
+    {
+      "filename": "v6_unbiased_reviewer_full_audit_log.csv",
+      "rows": 4,
+      "size_bytes": 561,
+      "sha256": "8fca599981b8627dde354c2e728b1f571295c1d00bef96715fa8ae2d74c234ce"
+    },
+    {
+      "filename": "v7_unbiased_reviewer_audit_certificate.csv",
+      "rows": 3,
+      "size_bytes": 413,
+      "sha256": "c60627a7fe9d9e72944a5c4b5b113ede10d497fbf058bce184208c39d7e4ccf2"
     },
     {
       "filename": "zero_discrepancy_v2_tex_audit_log.csv",

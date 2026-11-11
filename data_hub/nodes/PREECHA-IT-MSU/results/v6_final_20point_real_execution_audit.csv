@@ -1,0 +1,20 @@
+Check_Item,Status
+01. Table 4 & Sec. 4.3: L2 Cold Speedup = 2.52x (ไม่มี 2.14x ค้างใน L2),PASS
+02. Sec. 4.9(3): Always Polars Speedup = 2.52x,PASS
+03. Table 12 Part B: 1.44x vs. A (ไม่มี 1.52x vs. A),PASS
+"04. Table 3: V3 SF=100 = $1,251.70 & n=25 (ไม่มี $1.00 หรือ 75)",PASS
+"05. Table 3: อธิบายสมการ 10 MiB Billing Floor ของ V1/V2 ($1,441.61 / $761.15)",PASS
+"06. Fig. 1 & Fig. 2 วาดทับใหม่ด้วย $1,441.61/1M สำเร็จ",PASS
+07. Table 2B เหลือฉบับสมบูรณ์เพียงจุดเดียว (ไม่ซ้ำสองตาราง),PASS
+08. Table 12 Part B: ปรับค่า DataFusion ตาม Thread Cap จริง,PASS
+09. Table 13 Part C: Single-Engine QPS ตรงกับ C/T (72.27 QPS ที่ C=32),PASS
+10. Abstract & Conclusion ระบุ seed-level p=0.184 vs GPU และขอบเขต LOTO-CV,PASS
+11. บรรจุ Ridge (49.12 ms) & Shallow DT (51.35 ms) ลงใน Table 8,PASS
+12. ชี้แจง Catalog Byte Footprint คู่กับ x_q สำหรับ Scale Awareness,PASS
+"13. Table 10 เทียบ BigQuery Server-to-Server (1412.60 vs 745.39 ms, 1.90x)",PASS
+14. รายงาน GPU Speedup เทียบ Polars (3.71x warm / 1.45x cold) คู่กับ DuckDB,PASS
+15. วาด Fig. 9c ใหม่ตรงกับ Table 9 (63.61/68.59/56.59/57.60/54.92) & แก้ Table 10->9,PASS
+"16. เลขอ้างอิง [22], [24], [26], [27], [33]-[36] และ DOI [13], [15] ถูกต้อง",PASS
+17. ประโยคท้าย Conclusion สมบูรณ์ และไม่มี comprising ... comprising ซ้ำ,PASS
+18. ล้างชื่อเครื่อง LAPTOP-LTL5PC7P และชื่อสคริปต์ 75_v5_... ออกหมดแล้ว,PASS
+19. ล้างคำว่า green OLAP ใน Fig. 7 Caption และ Table 9 ออกหมดแล้ว,PASS

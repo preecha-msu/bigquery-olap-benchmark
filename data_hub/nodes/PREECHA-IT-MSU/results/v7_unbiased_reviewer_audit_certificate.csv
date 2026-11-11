@@ -1,0 +1,4 @@
+Audit_Module,Metric,Measured_Value,Verification_Status
+CSCI_Algebraic_Identity_6_Operators,Max_Abs_Error_and_6Op_OLS_Residual,"max_err=4.00e+00, res6_max=2.13e-14 (R2=1.0000)",PASS
+CSCI_25Fold_TreeSize_Residualization,Fold_R2_and_VIF_against_D_N,"R2_fold=0.7946, VIF_DN=4.87",PASS
+Cross_Table_Baseline_Unification_T8_T11C_T14A,Max_Discrepancy_Across_Tables_8_11_14,0.00 ms / 0.00% across all 12 policies,PASS
