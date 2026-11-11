@@ -5,8 +5,7 @@ manuscript_backup_*/
 *.parquet
 *.db
 *.sqlite
-new_notebook_audit_pack.zip
-portable_external_machine_reexecution_kit.zip
+*.zip
 *service_account*.json
 *credentials*.json
 .env
