@@ -1,0 +1,2 @@
+parquet_file_used,parquet_cold_footer_median_us,cached_zonemap_lookup_median_us,duckdb_parquet_metadata_median_us,parquet_row_groups_inspected,duckdb_segments_inspected
+_temp_metadata_audit_lineitem.parquet,105.55,0.2,1092.45,5,5

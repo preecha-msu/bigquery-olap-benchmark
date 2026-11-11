@@ -1,0 +1,6 @@
+Construct_Metric,Control_Covariates,Correlation_Rho,P_Value,Degrees_of_Freedom
+Spearman_vs_AST_Node_Count_N(q),None (Unadjusted),0.876,7.987913406536905e-25,73
+Spearman_vs_Total_Operator_Count,None (Unadjusted),0.9587,1.3859809531633332e-41,73
+Partial_Spearman_vs_Operator_Count,AST_Nodes N(q) + Selectivity sigma(q),0.8088,4.961743248923833e-18,71
+Spearman_vs_Measured_DuckDB_Latency,None (Unadjusted),0.2318,0.04536527029845339,73
+Partial_Spearman_vs_DuckDB_Latency,Query_Tier + Selectivity sigma(q),0.171,0.14801347879504206,71

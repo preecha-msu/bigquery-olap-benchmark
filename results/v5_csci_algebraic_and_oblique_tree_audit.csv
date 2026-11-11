@@ -1,0 +1,2 @@
+n_queries,r2_against_6_constituents,max_residual_against_6_constituents,atomic_6ops_mean_vif,atomic_6ops_max_vif,r2_csci_against_tree_size_DN,vif_csci_against_tree_size_DN,gbdt_mean_internal_splits_without_csci,gbdt_mean_internal_splits_with_csci
+75,1.0,0.0,1.63,1.86,0.7944,4.86,6.47,6.53

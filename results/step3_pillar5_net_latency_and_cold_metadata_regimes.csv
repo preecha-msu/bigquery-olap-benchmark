@@ -1,0 +1,4 @@
+Metadata_Extraction_Regime,AST_Parse_ms,Metadata_Extract_ms,GBR_Inference_ms,Total_Router_Overhead_ms,Dispatched_Engine_Exec_Mean_ms,Net_EndToEnd_Latency_SF1_ms,Always_GPU_Cold_SF1_ms,Net_Speedup_vs_Always_GPU_SF1,Net_EndToEnd_Latency_SF10_ms,Net_EndToEnd_Latency_SF100_ms
+Regime 1: Warm In-Memory Catalog Cache (Production Default),3.476,0.172,0.497,4.145,50.775,54.92,56.96,"1.04x (-2.04 ms, P95 Regret 114.1% vs. 257.3%)",182.4,1142.8
+Regime 2: Cold NVMe Direct Parquet Footer Seek (seek(-8) Binary Read),3.476,0.413,0.497,4.386,50.775,55.161,56.96,"1.03x (-1.80 ms, Still Faster than Always GPU)",182.641,1143.041
+Regime 3: Uncached Cold OS Full-Dataset Schema & Row-Group Scan (Legacy Unoptimized),3.476,70.9,0.497,74.873,50.775,125.648,56.96,0.45x (+68.69 ms Penalty at SF=1; Profitable only at SF>=10 GB),253.128,1213.528

@@ -1,0 +1,5 @@
+Check_ID,Equation_or_Table,Computed_Value,Status
+EQ1_CSCI_EXACT_IDENTITY,Eq. (1) & Sec. 4.7(1),"max_err=4.00e+00, R2_all6=1.000000, VIF_DN=4.89, L5_CSCI=32.4",CHECK
+EQ3_GPU_PCIE_DECOMPOSITION,"Eq. (3), Table 4, Table 5, Table 10","Warm=22.26 ms, Cold=56.96 ms, PCIe=34.71 ms",PASS
+EQ6_ENERGY_EFFICIENCY_ORDER,"Eq. (6), Table 7, Fig. 1, Sec. 4.5",Rows=5; Polars (3.17 J -> higher MB/J) > DuckDB (6.40 J -> lower MB/J),PASS
+EQ8_ROUTING_SEED_LEVEL_HOLM,"Eq. (8), Abstract, Table 8, Table 10, Table 14",Verified from raw_query_routing_predictions_sf1.csv,PASS

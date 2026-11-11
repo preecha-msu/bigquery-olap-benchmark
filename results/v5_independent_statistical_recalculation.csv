@@ -1,0 +1,5 @@
+Engine_Metric,N_Queries,Recalculated_Mean
+DuckDB_Native_SF1_ms,75,183.74
+DuckDB_Parquet_SF1_ms,75,254.42
+Six_Software_Summary_Rows,5,5.0
+SSB_External_Queries_Verified,13,13.0

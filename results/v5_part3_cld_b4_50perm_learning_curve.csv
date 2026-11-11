@@ -1,0 +1,6 @@
+Train_Seeds_k,Train_Queries,Permutations_R,Test_Latency_Mean_ms,Test_Latency_SD_ms,Test_Regret_Mean_Pct,Test_Regret_SD_Pct
+5,15,50,68.43,20.09,71.29,35.64
+10,30,50,68.36,27.06,63.28,50.52
+15,45,50,56.53,10.36,42.04,22.54
+20,60,50,57.91,14.9,40.48,28.37
+24,72,25,54.92,34.0,34.98,70.0

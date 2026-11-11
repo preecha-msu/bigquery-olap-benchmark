@@ -1,0 +1,15 @@
+Feature_or_Group,Importance_Type,Mean_Delta_R2,SD_Delta_R2
+"Group_Syntax_Size_[D,N]",Joint_Group_Permutation_Delta_R2,0.144,0.0247
+"Group_Atomic_Operators_[J,S,W,U,C]",Joint_Group_Permutation_Delta_R2,0.3254,0.0634
+Group_Engineered_CSCI_[CSCI],Joint_Group_Permutation_Delta_R2,0.1823,0.0271
+Group_All_Structural_[D..C+CSCI],Joint_Group_Permutation_Delta_R2,0.8191,0.1204
+Group_ZoneMap_Selectivity_[sigma],Joint_Group_Permutation_Delta_R2,0.8094,0.1383
+D(q),Individual_Permutation_Delta_R2,0.0361,0.0056
+N(q),Individual_Permutation_Delta_R2,0.1088,0.0188
+J(q),Individual_Permutation_Delta_R2,0.2542,0.0506
+S(q),Individual_Permutation_Delta_R2,0.0007,0.0008
+W(q),Individual_Permutation_Delta_R2,0.0304,0.0123
+U(q),Individual_Permutation_Delta_R2,0.0104,0.0058
+C(q),Individual_Permutation_Delta_R2,0.0038,0.0019
+CSCI(q),Individual_Permutation_Delta_R2,0.1895,0.0325
+sigma(q),Individual_Permutation_Delta_R2,0.7914,0.1411

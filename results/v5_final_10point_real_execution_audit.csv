@@ -1,0 +1,9 @@
+Check_ID,Status,Verified_Metric
+V5-01_Single_Clean_Table2B,PASS,4.86
+V5-02_Readable_Table2A_and_Table12,PASS,4.86
+V5-03_CSCI_Algebraic_Honesty,CHECK,4.86
+V5-04_SSB_Table11_Synchronized,PASS,4.86
+V5-05_Table5_GPU_Warm_Cold_Aligned,PASS,4.86
+V5-06_Table1_and_Table2_Exact,PASS,4.86
+V5-07_Author_DOI_and_Equations_Clean,PASS,4.86
+V5-10_QueryCount_and_ScriptManifest,PASS,4.86

@@ -1,0 +1,6 @@
+Fault_Scenario,Trials,OOM_or_Fault_Triggered,Unhandled_Failure_Pct,Mean_Detection_Recovery_ms,Mean_Fallback_Total_ms,P95_Fallback_Total_ms,Fallback_Target
+1a. GPU VRAM Exhaustion (Proactive mem_get_info Guard),15,15/15,0.0,0.155,12.64,13.93,Polars_Arrow_CPU
+1b. Mid-Flight CUDA OutOfMemoryError (Reactive Catch+Fallback),15,15/15,0.0,1.049,12.5,14.63,Polars_Arrow_CPU
+2. Cloud Endpoint Timeout (50 ms Circuit-Breaker -> Local CPU),15,15/15,0.0,61.75,77.86,84.37,Polars_Arrow_CPU
+3. Missing Catalog Metadata (Footer Absent -> Prior Fallback),15,15/15,0.0,0.574,11.51,13.03,Prior_8D_Polars_CPU
+4. Primary Engine Offline (Health-Check Prune -> Top-2 DuckDB),15,15/15,0.0,0.0011,11.66,12.18,DuckDB_Native_CPU

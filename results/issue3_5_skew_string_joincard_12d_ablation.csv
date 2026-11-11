@@ -1,0 +1,6 @@
+Configuration,Dim,Top1_Pct,Top2_Pct,Mean_Latency_ms,Median_Latency_ms,P95_Latency_ms,Mean_Regret_Pct,Median_Regret_Pct,P95_Regret_Pct,Delta_Lat_ms,Delta_Lat_95CI,Delta_Regret_Pct,Delta_Regret_95CI,Wilcoxon_p_vs_9D,Dispatch_Split
+0. Baseline 9D Zero-Shot (Min/Max Zone Map Only),9D-ZS,21.21,100.0,6.75,7.11,11.41,84.49,43.84,259.71,0.0,"[+0.00, +0.00]",0.0,"[+0.00%, +0.00%]",1.0,33 Polars / 0 GPU
+1. Zero-Shot 12D (Train TPC-H Only + Catalog String/Skew/Fanout Gate),12D-ZS,69.7,100.0,4.54,3.32,9.27,16.5,0.0,78.4,-2.22,"[-3.21, -1.31]",-67.99,"[-98.26%, -40.30%]",0.000211,17 Polars / 16 GPU
+2a. Stepwise +String Selectivity (MCV + 3-Gram Sketch),10D-CV,93.94,100.0,4.16,3.15,8.28,4.05,0.0,6.57,-2.6,"[-3.61, -1.66]",-80.45,"[-110.74%, -52.15%]",4e-06,9 Polars / 24 GPU
+2b. Stepwise +String Selectivity + Join-Key Zipf Skew,11D-CV,96.97,100.0,4.14,3.13,8.28,3.55,0.0,0.0,-2.61,"[-3.62, -1.68]",-80.95,"[-111.17%, -52.78%]",3e-06,8 Polars / 25 GPU
+2c. Full 12D Skew- & Join-Cardinality-Aware AST-Route,12D-CV,96.97,100.0,4.14,3.13,8.28,3.55,0.0,0.0,-2.61,"[-3.62, -1.68]",-80.95,"[-111.17%, -52.78%]",3e-06,8 Polars / 25 GPU

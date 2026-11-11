@@ -1,0 +1,6 @@
+External_Hostname,External_OS,External_CPU_Threads,External_RAM_GB,External_GPU,Dataset_SHA256_Prefix16,Query_ID,Complexity_Tier,PreExec_Metadata_us,DuckDB_Mean_ms,Polars_Mean_ms,DataFusion_Mean_ms,SQLite3_Mean_ms,Verified_Row_Count,FP64_Aggregate_Checksum,Max_FP64_Rel_Error,Result_Equivalence
+LAPTOP-LTL5PC7P,Windows-11-10.0.26300-SP0,22,15.5,CPU-Only Environment,41ba056fcf213207,Tier_L1_Suite (n=3),L1,172.4,16.909,42.431,57.319,,7802026,297468192415.62,0.00e+00,PASS (EX=1.000)
+LAPTOP-LTL5PC7P,Windows-11-10.0.26300-SP0,22,15.5,CPU-Only Environment,41ba056fcf213207,Tier_L2_Suite (n=3),L2,174.1,74.172,100.067,140.405,,5489605,209384116520.48,2.87e-16,PASS (EX=1.000)
+LAPTOP-LTL5PC7P,Windows-11-10.0.26300-SP0,22,15.5,CPU-Only Environment,41ba056fcf213207,Tier_L3_Suite (n=3),L3,171.8,78.264,84.269,126.331,,294463,241895604112.15,0.00e+00,PASS (EX=1.000)
+LAPTOP-LTL5PC7P,Windows-11-10.0.26300-SP0,22,15.5,CPU-Only Environment,41ba056fcf213207,Tier_L4_Suite (n=3),L4,173.5,183.255,70.183,188.074,,44500,9845120345.80,0.00e+00,PASS (EX=1.000)
+LAPTOP-LTL5PC7P,Windows-11-10.0.26300-SP0,22,15.5,CPU-Only Environment,41ba056fcf213207,Tier_L5_Suite (n=3),L5,172.9,65.220,77.655,125.564,,239622,94518230144.36,2.00e-16,PASS (EX=1.000)

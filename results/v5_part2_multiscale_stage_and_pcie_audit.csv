@@ -1,0 +1,7 @@
+Scale_Factor_GB,Source,Engine,Trials_Logged,Distinct_Queries,Mean_ParsePlan_ms,Mean_IO_Load_ms,Mean_PCIe_H2D_ms,Mean_Kernel_ms,Mean_Total_ms,Peak_RAM_GB,Peak_VRAM_GB,Mean_Spill_MB
+10,multiscale_telemetry_sf10.csv,DuckDB_Native,75,75,2.16,33.84,0.0,9005.77,9041.76,11.18,0.31,0.0
+10,multiscale_telemetry_sf10.csv,DuckDB_Parquet,75,75,1.78,55.05,0.0,12218.37,12275.2,12.24,0.32,0.0
+100,multiscale_telemetry_sf100.csv,DuckDB_Native,75,75,14.44,37.34,0.0,129332.52,129384.3,50.62,0.37,735.2
+100,multiscale_telemetry_sf100.csv,DuckDB_Parquet,75,75,13.5,196.57,0.0,274258.46,274468.53,51.59,0.38,516.0
+1,"LIVE_CUDA_FP64 (lineitem.parquet, 6,001,215 rows)",PyTorch_CUDA_3Col_FP64,5,1,0.0,208.49,23.57,5.01,237.06,0.0,0.225,0.0
+30,"LIVE_SF30_CHUNK (part_000.parquet, 30 parts total)",PyTorch_CUDA_SingleChunk_Probe,1,1,0.0,226.58,29.94,7.43,263.94,0.0,0.225,0.0

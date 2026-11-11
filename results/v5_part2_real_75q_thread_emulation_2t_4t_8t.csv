@@ -1,0 +1,4 @@
+Emulation_Profile,Threads,Polars_Rayon_Pool_Verified,Queries_Executed,DuckDB_Arrow_Mean_ms,Polars_Mean_ms,AST_Route_CPU_Only_ms,Oracle_CPU_ms,Top1_Acc_Pct,Speedup_vs_DuckDB_x
+Profile A: 2-Thread / 4 GB Cap (CPU-Only Emulation),2,2,75,248.99,248.74,234.5,191.65,76.0,1.06
+Profile B: 4-Thread / 8 GB Cap (CPU-Only Emulation),4,4,75,175.0,177.28,162.44,139.03,73.33,1.08
+Profile C: 8-Thread / 9 GB Cap (CPU Baseline),8,8,75,179.63,162.87,171.75,137.13,53.33,1.05

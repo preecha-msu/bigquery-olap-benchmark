@@ -1,0 +1,5 @@
+Policy,Queries_Replayed,Mean_Queue_ms,Mean_Exec_ms,Mean_Response_ms,P95_Response_ms,P99_Response_ms,SLA_250ms_Violation_Pct,Sustained_Replay_QPS
+Always_DuckDB,60,410.1,191.29,601.38,1161.63,1409.84,76.67,27.87
+Always_Polars,60,355.83,174.88,530.71,991.36,1060.06,78.33,30.84
+Always_GPU_Cold,60,887.82,86.02,973.84,1615.7,1629.92,88.33,23.11
+Proposed_AST_Route,60,43.53,72.1,115.63,244.71,264.94,3.33,50.94
