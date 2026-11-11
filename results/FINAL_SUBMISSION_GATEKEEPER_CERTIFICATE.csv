@@ -8,4 +8,4 @@ G06,"5.0-6.0 Models A-D, Little's Law & DOI",PASS,"Complete DOI [13], clean line
 G07,Exp A Interconnect Crossover Shift,PASS,Max algebraic break-even error=0.0046; GPU crossover demonstrated=True
 G08,Exp B Bursty Contention SLA Replay,PASS,"AST-Route Response=115.63 ms, SLA Violation=3.33% (Queue+Exec err=0.010 ms)"
 G09,Exp E Fault Recovery (Zero WDDM Bug),PASS,"Scenarios=5, Min fallback total=11.51 ms (>5 ms, no WDDM bypass), Unhandled fail=0.00%"
-G10,LaTeX Compilation & Cross-References,PASS,"PDF exists=True (1,041,826 B), Undef Refs=0, Undef Cites=0"
+G10,LaTeX Compilation & Cross-References,PASS,"PDF exists=True (1,042,753 B), Undef Refs=0, Undef Cites=0"
