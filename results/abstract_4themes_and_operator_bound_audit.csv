@@ -1,0 +1,8 @@
+Check_Item,Status,Rendered_Words,Split_Tokens
+01_Theme1_AST_Aware_Feature_Representation,PASS,250,285
+02_Theme2_Multi_Objective_Cost_Prediction,PASS,250,285
+03_Theme3_Tail_Risk_Reduction,PASS,250,285
+04_Theme4_Multi_Scale_And_Cross_Workload,PASS,250,285
+05_Candor_Operator_Bounded_Generalization_LOTO,PASS,250,285
+06_SpringerOpen_Word_Limit_Compliant,PASS,250,285
+07_Zero_Undefined_LaTeX_References,PASS,250,285
