@@ -1,0 +1,5 @@
+Policy,Router_Overhead_ms,Top1_Pct,Net_Mean_ms,Mean_Regret_Pct,P95_Regret_Pct,CVaR95_Regret_Pct,Fail_Gt100_Pct
+DuckDB_EXPLAIN_Plan_Router (0.87ms Plan + GBR),1.41,68.0,54.15,32.18,114.11,375.42,6.67
+Direct_Cost_Sensitive_Classifier (GBDT-Clf 9D),3.96,50.67,62.01,43.57,207.1,401.92,12.0
+LOTO_CV_Standard (No OOD Operator Gate),4.15,28.0,106.95,200.14,1007.07,1290.59,32.0
+LOTO_CV_With_OOD_Operator_Gate (Fallback->Polars),4.15,20.0,86.86,129.67,359.09,438.97,44.0

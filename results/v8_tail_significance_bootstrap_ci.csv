@@ -1,0 +1,2 @@
+DuckDB_EXPLAIN_Measured_ms,Delta_P95_Regret_CI_Low,Delta_P95_Regret_CI_High,Delta_CVaR95_CI_Low,Delta_CVaR95_CI_High,Tail_Bootstrap_p_value
+0.907,-401.03,182.51,-349.07,402.8,0.309
