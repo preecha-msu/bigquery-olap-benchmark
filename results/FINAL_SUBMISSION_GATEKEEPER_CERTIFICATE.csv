@@ -1,11 +1,11 @@
-Gate_ID,Reviewer_Category,Status,Verified_Detail
-G01,3.1 GPU-CPU Fairness & CPU-Only,PASS,3-Level timing (22.25/56.96/61.11 ms) + CPU-Only (69.12 ms & 62.05 ms 16-core) unified
-G02,3.2 Test-Set Independence (25 Seeds),PASS,25-seed breakdown CSV present=True (78eb3c83b7cb26cc...)
-G03,3.4 Energy Measurement Scope,PASS,Estimated CPU Package Energy enforced; R=50 Bland-Altman CSV=True
-G04,3.5 Production 12D Skew/String Ablation,PASS,9D=84.49% (6.75 ms) -> 12D-ZS=16.50% (4.54 ms) -> 12D-CV=4.14 ms
-G05,4.0 Pre-Submission 6 Must-Fix Audits,PASS,"Always GPU=49.33%, CI=[42.78,68.50] ms, p=0.142 (N=75) vs 0.184 (K=25)"
-G06,"5.0-6.0 Models A-D, Little's Law & DOI",PASS,"Complete DOI [13], clean line breaks, VIF & Models A-D verified"
-G07,Exp A Interconnect Crossover Shift,PASS,Max algebraic break-even error=0.0046; GPU crossover demonstrated=True
-G08,Exp B Bursty Contention SLA Replay,PASS,"AST-Route Response=115.63 ms, SLA Violation=3.33% (Queue+Exec err=0.010 ms)"
-G09,Exp E Fault Recovery (Zero WDDM Bug),PASS,"Scenarios=5, Min fallback total=11.51 ms (>5 ms, no WDDM bypass), Unhandled fail=0.00%"
-G10,LaTeX Compilation & Cross-References,PASS,"PDF exists=True (1,044,754 B), Undef Refs=0, Undef Cites=0"
+Gate_ID,Status,Verified_Detail,Timestamp
+G01_Author_Superscript_Clean,PASS,"Preecha Noiumkar^{1,*} verified",2026-11-12 12:58:07
+G02_Abstract_Word_Limit_Le350,PASS,248 academic words (limit <= 350),2026-11-12 12:58:07
+G03_Zero_Undefined_Refs_And_Cites,FAIL,"undef_refs=1, undef_cites=0",2026-11-12 12:58:07
+G04_All_13_Figures_Present_300DPI,PASS,"figures_linked=13, missing=0",2026-11-12 12:58:07
+G05_Equations_1_to_9_And_Algo1,PASS,Eqs (1)-(9) + Algorithm 1 verified,2026-11-12 12:58:07
+G06_PCIe_3Level_Additive_Identity,PASS,33.89 H2D + 0.82 D2H + 22.25 Warm = 56.96 ms Cold (drift < 1e-9),2026-11-12 12:58:07
+G07_Table2_And_Table4_Fixed,PASS,Table 2 Overall (183.7|254.4) & Table 4 L4 (7.78x) verified,2026-11-12 12:58:07
+G08_New_Tables_15_And_16_Present,PASS,Tables 15 (3-Node) & 16 (12D JOB) embedded,2026-11-12 12:58:07
+G09_Three_Node_Global_SHA256_Sync,PASS,3 physical nodes + SHA-256 synced,2026-11-12 12:58:07
+G10_Zero_Backup_Policy_Enforced,PASS,0 backup folders on disk,2026-11-12 12:58:07
