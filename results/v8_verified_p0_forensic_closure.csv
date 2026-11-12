@@ -1,0 +1,5 @@
+Variant,Ovh_ms,Top1_Pct,Net_ms,Mean_Reg_Pct,P95_Reg_Pct
+DuckDB_EXPLAIN_Untranspiled,1.37,44.0,78.77,81.74,362.15
+DuckDB_EXPLAIN_Transpiled,4.85,58.67,60.76,34.92,119.89
+Direct_Cost_Sensitive_Clf,3.96,50.67,62.01,43.57,207.1
+LOTO_CV_OOD_Arrow_Gate,4.15,21.33,76.18,104.4,299.67
