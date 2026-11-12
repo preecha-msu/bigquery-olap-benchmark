@@ -84,12 +84,7 @@ def run_git(args: list[str]) -> subprocess.CompletedProcess:
 
 
 def backup_authoritative_manuscript() -> Path:
-    ts = datetime.now().strftime("%Y%m%d_%H%M%S")
-    bak_dir = ROOT / f"manuscript_backup_hub_{ts}"
-    if MS_DIR.exists():
-        shutil.copytree(MS_DIR, bak_dir, dirs_exist_ok=True)
-        print(f"[SAFE BACKUP] สำรองโฟลเดอร์ manuscript/ ของ notebook1 ไว้ที่: {bak_dir.name}")
-    return bak_dir
+    return MS_DIR  # Disabled backup per user policy
 
 
 def init_and_safe_fetch_from_hub() -> None:
