@@ -1,9 +1,9 @@
 Policy_ID,Noise_Band_Pct,Noise_Label,Decision_Stability_Pct,Engine_Flip_Rate_Pct,Benign_NearTie_Share_Pct,Net_Mean_Latency_ms,P95_Regret_Pct,Fail_Gt100_Pct
-Naive_ArgMin,0,0% (Clean),100.0,0.0,100.0,60.94,118.16,8.0
-Naive_ArgMin,5,+-5%,96.56,3.44,49.73,60.12,116.13,7.48
-Naive_ArgMin,10,+-10%,92.59,7.41,58.2,59.95,115.22,7.44
-Naive_ArgMin,20,+-20%,85.94,14.06,62.81,60.42,121.08,7.76
-Conformal_ASTR,0,0% (Clean),100.0,0.0,100.0,61.23,118.16,8.0
-Conformal_ASTR,5,+-5%,96.44,3.56,62.45,60.91,119.18,8.22
-Conformal_ASTR,10,+-10%,92.83,7.17,68.75,60.95,119.7,8.31
-Conformal_ASTR,20,+-20%,85.57,14.43,65.73,62.08,138.6,8.53
+Naive_ArgMin,0,0% (Clean),100.0,0.0,100.0,60.73,124.39,9.33
+Naive_ArgMin,5,+-5%,97.01,2.99,68.43,60.33,120.31,8.48
+Naive_ArgMin,10,+-10%,92.65,7.35,64.76,60.16,118.65,8.01
+Naive_ArgMin,20,+-20%,85.95,14.05,63.56,60.44,121.18,7.9
+Conformal_ASTR,0,0% (Clean),100.0,0.0,100.0,60.9,124.39,9.33
+Conformal_ASTR,5,+-5%,96.98,3.02,55.53,60.8,124.39,9.33
+Conformal_ASTR,10,+-10%,94.22,5.78,60.51,60.85,123.37,9.12
+Conformal_ASTR,20,+-20%,88.0,12.0,61.18,61.14,136.66,8.86
