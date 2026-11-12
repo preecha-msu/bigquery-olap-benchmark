@@ -1,0 +1,9 @@
+Policy_ID,Noise_Band_Pct,Noise_Label,Decision_Stability_Pct,Engine_Flip_Rate_Pct,Benign_NearTie_Share_Pct,Net_Mean_Latency_ms,P95_Regret_Pct,Fail_Gt100_Pct
+Naive_ArgMin,0,0% (Clean),100.0,0.0,100.0,60.94,118.16,8.0
+Naive_ArgMin,5,+-5%,96.56,3.44,49.73,60.12,116.13,7.48
+Naive_ArgMin,10,+-10%,92.59,7.41,58.2,59.95,115.22,7.44
+Naive_ArgMin,20,+-20%,85.94,14.06,62.81,60.42,121.08,7.76
+Conformal_ASTR,0,0% (Clean),100.0,0.0,100.0,61.23,118.16,8.0
+Conformal_ASTR,5,+-5%,96.44,3.56,62.45,60.91,119.18,8.22
+Conformal_ASTR,10,+-10%,92.83,7.17,68.75,60.95,119.7,8.31
+Conformal_ASTR,20,+-20%,85.57,14.43,65.73,62.08,138.6,8.53

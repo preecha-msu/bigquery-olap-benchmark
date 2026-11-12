@@ -1,0 +1,8 @@
+Scenario_Code,PI90_Cov_Pct,GPU_QErr_P90,AST_Net_ms,Polars_ms,Mean_Regret_Pct,Action
+D0_Stationary,89.0,1.37,61.23,82.47,37.84,None (Healthy ~91% OOF PI)
+D1_MixShift80,88.7,1.39,62.82,92.89,26.44,None (Mix-invariant AST)
+D2a_SelStale,88.3,1.78,69.2,87.23,47.7,Refresh Parquet Footer (0.41ms)
+D2b_SelRefr,88.7,1.4,64.28,87.23,37.85,Restored (0 model retraining)
+D3_ModSkew08,85.0,1.66,67.46,87.74,37.28,Monitor (PI >= 80% SLA guard)
+D4a_SevSkew14,74.7,2.23,75.3,92.13,38.81,TRIGGER RECALIBRATION (PI<80%)
+D4b_CanaryCal,88.3,1.28,105.73,92.13,95.02,Restored via 5-tier canary (~0.4s)

@@ -1,0 +1,6 @@
+Repeat_ID,Nested_CV,Template_Overlap,Test_Labels_Leaked,Top1_Acc_Pct,Mean_Latency_ms,Mean_Regret_Pct
+Seed_1 (Canonical),5x4_Disjoint,0,0,96.97,4.14,3.55
+Seed_2 (Permuted),5x4_Disjoint,0,0,93.94,4.185,4.12
+Seed_3 (Permuted),5x4_Disjoint,0,0,96.97,4.14,3.55
+Seed_4 (Permuted),5x4_Disjoint,0,0,93.94,4.208,4.38
+Seed_5 (Permuted),5x4_Disjoint,0,0,96.97,4.14,3.55
