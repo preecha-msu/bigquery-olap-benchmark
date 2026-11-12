@@ -226,7 +226,7 @@ def evaluate_learned_plan_neural_cost_baseline():
     for s_id in np.unique(seeds):
         tr, te = (seeds != s_id), (seeds == s_id)
         nn_enc = MultiOutputRegressor(
-            make_pipeline(StandardScaler(), MLPRegressor(hidden_layer_sizes=(64, 32), max_iter=600, alpha=0.05, random_state=42))
+            make_pipeline(StandardScaler(), MLPRegressor(hidden_layer_sizes=(64, 32), max_iter=2500, tol=1e-3, alpha=0.10, random_state=42))
         )
         nn_enc.fit(X_plan_nn[tr], np.log1p(T_true[tr]))
         sel_nn[te] = np.argmin(np.expm1(nn_enc.predict(X_plan_nn[te])), axis=1)
