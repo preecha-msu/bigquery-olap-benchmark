@@ -1,0 +1,6 @@
+External_Hostname,External_OS,External_CPU_Threads,External_RAM_GB,External_GPU,Dataset_SHA256_Prefix16,Query_ID,Complexity_Tier,PreExec_Metadata_us,DuckDB_Mean_ms,Polars_Mean_ms,DataFusion_Mean_ms,Max_FP64_Rel_Error,Result_Equivalence
+Pannapats-MacBook-Air.local,macOS-15.6.1-arm64-arm-64bit,8,8.0,Apple M1 Integrated Apple Metal GPU (MPS),7cedfe4bd07945f1,Tier_L1_Suite (n=3),L1,636.36,5.899,59.791,38.007,3.56e-16,PASS (EX=1.000)
+Pannapats-MacBook-Air.local,macOS-15.6.1-arm64-arm-64bit,8,8.0,Apple M1 Integrated Apple Metal GPU (MPS),7cedfe4bd07945f1,Tier_L2_Suite (n=3),L2,742.87,22.104,96.562,101.798,5.74e-16,PASS (EX=1.000)
+Pannapats-MacBook-Air.local,macOS-15.6.1-arm64-arm-64bit,8,8.0,Apple M1 Integrated Apple Metal GPU (MPS),7cedfe4bd07945f1,Tier_L3_Suite (n=3),L3,789.61,24.191,65.576,77.969,2.16e-16,PASS (EX=1.000)
+Pannapats-MacBook-Air.local,macOS-15.6.1-arm64-arm-64bit,8,8.0,Apple M1 Integrated Apple Metal GPU (MPS),7cedfe4bd07945f1,Tier_L4_Suite (n=3),L4,627.61,70.754,66.409,91.859,0.00e+00,PASS (EX=1.000)
+Pannapats-MacBook-Air.local,macOS-15.6.1-arm64-arm-64bit,8,8.0,Apple M1 Integrated Apple Metal GPU (MPS),7cedfe4bd07945f1,Tier_L5_Suite (n=3),L5,551.37,24.148,50.738,57.017,2.00e-16,PASS (EX=1.000)

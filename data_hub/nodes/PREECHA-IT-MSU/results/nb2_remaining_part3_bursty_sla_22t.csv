@@ -1,0 +1,4 @@
+Policy_22T,Queries,Mean_Queue_ms,Mean_Exec_ms,Mean_Response_ms,P95_Response_ms,SLA_250ms_Violation_Pct,Sustained_QPS
+Always_DuckDB_22T,60,819.98,316.71,1136.69,2483.16,88.33,17.47
+Always_Polars_22T,60,601.63,233.11,834.74,1575.16,85.0,23.82
+AST_Route_CPU_Hybrid_22T,60,555.66,311.37,867.03,1878.7,70.0,21.62

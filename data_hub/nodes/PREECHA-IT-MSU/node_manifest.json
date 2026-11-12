@@ -5,9 +5,15 @@
   "os_platform": "Windows 11",
   "cpu_logical_threads": 12,
   "python_version": "3.13.9",
-  "last_synced_utc": "2026-11-11 20:05:31 UTC",
-  "artifact_count": 124,
+  "last_synced_utc": "2026-11-12 01:55:49 UTC",
+  "artifact_count": 137,
   "artifacts": [
+    {
+      "filename": "abstract_4themes_and_operator_bound_audit.csv",
+      "rows": 7,
+      "size_bytes": 420,
+      "sha256": "ca06e002b9a29da897515a3fe88fb0a22267048c29a2f82a9f9d1cbc94e39572"
+    },
     {
       "filename": "ast_complexity_summary.csv",
       "rows": 75,
@@ -119,8 +125,8 @@
     {
       "filename": "FINAL_SUBMISSION_GATEKEEPER_CERTIFICATE.csv",
       "rows": 10,
-      "size_bytes": 1233,
-      "sha256": "e167ac088bf10af83d2805f2429d493866e7345d156c61e39ac8ca1964325b37"
+      "size_bytes": 1223,
+      "sha256": "bb45d196066acd75b024e768cff1d3dd45c510b1b478694a63f69cbae8880c84"
     },
     {
       "filename": "gpu_cpu_3level_decomposition_table4_sf1.csv",
@@ -165,6 +171,18 @@
       "sha256": "78eb3c83b7cb26cc4593709857de1663655245ddb2537a54c724e9f0bb6a114e"
     },
     {
+      "filename": "issue3_4_bland_altman_and_scope_boundary_audit.csv",
+      "rows": 4,
+      "size_bytes": 528,
+      "sha256": "bb0b286e3d528545e0c7531447a15d3ba5500e49da14f6e519d7a0e9d620a2d7"
+    },
+    {
+      "filename": "issue3_4_real_50rep_per_tier_energy_runs.csv",
+      "rows": 750,
+      "size_bytes": 73923,
+      "sha256": "549ce8f85b573051f549856021536980a9dbcd1f023bfe505dbdcffa60a28326"
+    },
+    {
       "filename": "issue3_5_job_12d_per_query_predictions.csv",
       "rows": 33,
       "size_bytes": 4588,
@@ -175,6 +193,12 @@
       "rows": 5,
       "size_bytes": 1131,
       "sha256": "caa862a57b2a619b342ec0b0eee33eba40d8de945e170a60a84b058e8d087e50"
+    },
+    {
+      "filename": "jbd_3pillars_positioning_audit_log.csv",
+      "rows": 5,
+      "size_bytes": 221,
+      "sha256": "bcf18c93111498efd1f0ea892c97a0919a4087efa61d98d48cd6bed3f7361647"
     },
     {
       "filename": "job_33queries_per_query_telemetry.csv",
@@ -193,6 +217,30 @@
       "rows": 33,
       "size_bytes": 2025,
       "sha256": "30b2894e844a6b0834dc573433a58b0d2b9266e168b1a3e356b0467d5a18803d"
+    },
+    {
+      "filename": "macbook_exp2_routing_summary.csv",
+      "rows": 5,
+      "size_bytes": 327,
+      "sha256": "463fc8580c0b128cc295fde057cd38adab59bb683f25db3e6127c6fc9e31a6a7"
+    },
+    {
+      "filename": "macbook_exp3_concurrency_summary.csv",
+      "rows": 15,
+      "size_bytes": 840,
+      "sha256": "5268cb53aa7778ac712aa83f3129fefccbc562591fed627283f185ac4966bee4"
+    },
+    {
+      "filename": "macbook_per_query_telemetry.csv",
+      "rows": 15,
+      "size_bytes": 1483,
+      "sha256": "142f4c6e1df01a4e8c73381044be3ce33953d3d8e037647a571d672d7ec62c12"
+    },
+    {
+      "filename": "macbook_reexecution_audit.csv",
+      "rows": 5,
+      "size_bytes": 1232,
+      "sha256": "1bceaf70fcc6251ff47ed4cb95e00a605e3f3da0b64c4d1283c81e10d075fd7a"
     },
     {
       "filename": "merged_75queries_all_engines_sf1.csv",
@@ -271,6 +319,36 @@
       "rows": 15,
       "size_bytes": 1231,
       "sha256": "707ff30b9be3221c564f8ab2b0e8e91931857eff140a6b10c3df1e626433fd87"
+    },
+    {
+      "filename": "nb2_remaining_part1_energy_all_engines.csv",
+      "rows": 4,
+      "size_bytes": 638,
+      "sha256": "87a0697bb2540ef058226517b47131edeb0ddd004ae068b29bad9ee7a5c29b00"
+    },
+    {
+      "filename": "nb2_remaining_part2_75q_per_query_22t.csv",
+      "rows": 75,
+      "size_bytes": 5210,
+      "sha256": "f219c93e9d7af303840210a757f2e36866c5db11019c4d89d497e799904fe2af"
+    },
+    {
+      "filename": "nb2_remaining_part2_transfer_calibration_summary.csv",
+      "rows": 6,
+      "size_bytes": 777,
+      "sha256": "874077fdfd23ed6c62152cb5a62618d42071680e31b9aff066dd89c327c8f121"
+    },
+    {
+      "filename": "nb2_remaining_part3_bursty_sla_22t.csv",
+      "rows": 3,
+      "size_bytes": 312,
+      "sha256": "f1d05d4c9931f2d841ce31cd9ca0c0b1183a38ed5a582c01f50a6ce7197a0336"
+    },
+    {
+      "filename": "nb2_remaining_part3_fault_recovery_22t.csv",
+      "rows": 3,
+      "size_bytes": 311,
+      "sha256": "d84bebee1b692353543a0e3ffdb705bb1eac9ea5a6e7fe85f90095fdaf4eeaf5"
     },
     {
       "filename": "official_tpch_q1_q22_external_validation.csv",

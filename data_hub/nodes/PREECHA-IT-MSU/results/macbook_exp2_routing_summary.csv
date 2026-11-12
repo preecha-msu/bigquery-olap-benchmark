@@ -1,0 +1,6 @@
+Policy,Top1_Acc_Pct,Mean_Latency_ms,Median_Latency_ms,P95_Latency_ms,Mean_Regret_Pct
+Always DataFusion,0.0,81.06,60.23,148.69,361.51
+Always Polars,3.33,87.05,60.93,191.12,408.87
+Always DuckDB,96.67,29.44,17.27,98.62,1.29
+AST-Route (Hybrid CPU),80.0,43.94,19.67,158.52,37.94
+Oracle Lower Bound,100.0,28.42,17.27,82.26,0.0

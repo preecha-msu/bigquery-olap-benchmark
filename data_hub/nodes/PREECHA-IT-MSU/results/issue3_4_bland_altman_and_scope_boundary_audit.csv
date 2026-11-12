@@ -1,0 +1,5 @@
+Comparison_Pair,Total_Runs_N,Reps_Per_Tier_R,MAE_J,RMSE_J,MACE_Pct,BA_Mean_Bias_J,BA_95LoA_Low_J,BA_95LoA_High_J,Spearman_Rho
+DuckDB: Linear TDP Est. vs. Non-Linear DVFS,250,50,0.01,0.0177,1.24,0.01,-0.0186,0.0387,0.9996
+Polars: Linear TDP Est. vs. Non-Linear DVFS,250,50,0.0102,0.0173,1.4,0.0102,-0.0172,0.0375,0.9986
+RTX 2050: 250Hz NVML Trapezoidal vs. Endpoint,250,50,0.0003,0.0009,0.06,0.0,-0.0017,0.0017,0.9998
+RTX 2050: GPU Board (E_GPU) vs. Host+GPU (E_sys),250,50,0.6288,0.6628,57.52,-0.6288,-1.0406,-0.217,0.8376

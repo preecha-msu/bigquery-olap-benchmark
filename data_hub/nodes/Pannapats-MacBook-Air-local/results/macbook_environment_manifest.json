@@ -1,0 +1,49 @@
+{
+  "node_id": "Pannapats-MacBook-Air-local",
+  "role": "Tertiary Cross-ISA Apple Silicon Node (macOS 15.6.1 ARM64)",
+  "hostname": "Pannapats-MacBook-Air.local",
+  "os_platform": "macOS-15.6.1-arm64-arm-64bit",
+  "cpu_architecture": "arm64",
+  "cpu_processor": "Apple M1 (8C/8T)",
+  "cpu_logical_threads": 8,
+  "ram_total_gb": 8.0,
+  "gpu_device": "Apple M1 Integrated Apple Metal GPU (MPS)",
+  "duckdb_version": "1.4.5",
+  "polars_version": "1.36.1",
+  "datafusion_version": "50.1.0",
+  "dataset_lineitem_sha256": "7cedfe4bd07945f1da4136bcb400a803c522ef13e8b62c9f46579e81ddaf93e2",
+  "native_mac_commit": "b7a3783",
+  "native_mac_audit_sha256": "92b7772319ed09ca80bbf7b6a1da79b928ed27987ae0ec651bc4434b94038e0c",
+  "native_mac_per_query_sha256": "9f49d6264e746be551dc4fe9743f2995fd58f6657ac33bf97e5f7235ee5aeb60",
+  "native_mac_exp2_sha256": "68b5cfdfc55951d4e61ac52116e5a3f1c76f1fce1cbc3b08b519ff00ee651",
+  "native_mac_exp3_sha256": "8f87f22044dda65dbc6bea0138877e446c3abc3812301e39be43eecb35cb1780",
+  "native_mac_manifest_sha256": "e02187b5e6e515d639652780f423bf8048970caeb1e1a3303b7ff8fec1ff7090",
+  "last_synced_utc": "2026-11-12 01:55:14 UTC",
+  "artifact_count": 4,
+  "artifacts": [
+    {
+      "filename": "macbook_reexecution_audit.csv",
+      "rows": 5,
+      "size_bytes": 1232,
+      "sha256": "1bceaf70fcc6251ff47ed4cb95e00a605e3f3da0b64c4d1283c81e10d075fd7a"
+    },
+    {
+      "filename": "macbook_per_query_telemetry.csv",
+      "rows": 15,
+      "size_bytes": 1483,
+      "sha256": "142f4c6e1df01a4e8c73381044be3ce33953d3d8e037647a571d672d7ec62c12"
+    },
+    {
+      "filename": "macbook_exp2_routing_summary.csv",
+      "rows": 5,
+      "size_bytes": 327,
+      "sha256": "463fc8580c0b128cc295fde057cd38adab59bb683f25db3e6127c6fc9e31a6a7"
+    },
+    {
+      "filename": "macbook_exp3_concurrency_summary.csv",
+      "rows": 15,
+      "size_bytes": 840,
+      "sha256": "5268cb53aa7778ac712aa83f3129fefccbc562591fed627283f185ac4966bee4"
+    }
+  ]
+}
