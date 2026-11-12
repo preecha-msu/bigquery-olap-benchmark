@@ -70,7 +70,7 @@ Department of Information Technology, Faculty of Informatics, Mahasarakham Unive
 
 \textbf{Methodology:} We propose \textbf{AST-Route}, a pre-execution query routing framework orchestrating six engines across four paradigms. First, its \emph{AST-aware feature representation} extracts a $9\text{D}$ structural-selectivity vector ($\mathbf{x}_q \in \mathbb{R}^{9}$, extended to $\mathbf{x}_q^{\text{scale}} \in \mathbb{R}^{10}$ exclusively for multi-scale routing) in $3.65\text{ ms}$ without physical plan compilation, pairing catalog zone-map selectivity with a validated Composite Structural Complexity Index ($\text{CSCI}$: $\rho_{\text{partial}}=0.5477$, $\text{VIF}_{D,N}=1.84$). Second, its \emph{multi-objective cost predictor} estimates latency, device energy, and working-set memory in $497.2\,\mu\text{s}$ (median Q-Error $1.007\text{--}1.172$) to drive memory-feasible Latency--Energy--Cloud Pareto dispatch with $90\%$ conformal intervals and a $12\%$ PCIe guard.
 
-\textbf{Results:} Across $163$ queries spanning five benchmark suites, AST-Route delivers substantial \emph{tail-risk reduction}: under leak-free $25$-seed cross-validation ($\text{SF}=1\text{ GB}$), it achieves $54.92\text{ ms}$ net latency ($57.33\%$ Top-1, $76.00\%$ Top-2, $34.98\%$ mean regret, $1.381\text{ J}$ estimated energy), outperforming static CPU engines by $1.50\times\text{--}3.35\times$ ($p_{\text{Holm,seed}}\le 0.0171$) and matching Always GPU ($56.96\text{ ms}$) while cutting P95 tail regret from $257.31\%$ to $114.11\%$ and halving $>100\%$ regret failures ($14.67\%\rightarrow 6.67\%$). Demonstrating \emph{multi-scale and cross-workload generalization}, AST-Route sustains $74.67\%\text{--}86.67\%$ Top-1 in CPU-only mode, transfers zero-shot across unseen seeds, TPC-H Q1--Q22, SSB, ClickBench, and JOB, and scales across $C=1\text{--}32$ streams ($154.44\text{ QPS}$) and $\text{SF}=1\text{--}100\text{ GB}$ ($3.35\times\text{--}7.61\times$). Crucially, Leave-One-Tier-Out validation ($85.42\text{ ms}$ vs.\ Polars $82.47\text{ ms}$) establishes an explicit \emph{operator-bounded generalization} limit when unseen SQL operator classes (\texttt{WINDOW}/\texttt{UNNEST}) are omitted from training.
+\textbf{Results:} Across $163$ queries spanning five benchmark suites, AST-Route delivers substantial \emph{tail-risk reduction}: under leak-free $25$-seed cross-validation ($\text{SF}=1\text{ GB}$), it achieves $54.92\text{ ms}$ net latency ($57.33\%$ Top-1, $76.00\%$ Top-2, $34.98\%$ mean regret, $1.381\text{ J}$ estimated energy), outperforming static CPU engines by $1.50\times\text{--}3.35\times$ ($p_{\text{Holm,seed}}\le 0.0171$) and matching Always GPU ($56.96\text{ ms}$) while cutting P95 tail regret from $257.31\%$ to $114.11\%$ and halving $>100\%$ regret failures ($14.67\%\rightarrow 6.67\%$). Demonstrating \emph{multi-scale and cross-workload generalization}, AST-Route sustains $74.67\%$ (Node~1 $75$Q LOSO-CV), $86.67\%$ (Node~2 $30$Q LOGO-CV), and $97.33\%$ (Node~2 native $75$Q LOSO-CV) Top-1 in standalone 3-engine CPU-only mode, transfers zero-shot across unseen seeds, TPC-H Q1--Q22, SSB, ClickBench, and JOB, and scales across $C=1\text{--}32$ streams ($154.44\text{ QPS}$) and $\text{SF}=1\text{--}100\text{ GB}$ ($3.35\times\text{--}7.61\times$). Crucially, Leave-One-Tier-Out validation ($85.42\text{ ms}$ vs.\ Polars $82.47\text{ ms}$) establishes an explicit \emph{operator-bounded generalization} limit when unseen SQL operator classes (\texttt{WINDOW}/\texttt{UNNEST}) are omitted from training.
 
 \textbf{Conclusion:} AST-Route enables fast, risk-aware heterogeneous query orchestration when training workloads cover target SQL operator families (\url{https://github.com/preecha-msu/bigquery-olap-benchmark}).
 
@@ -584,6 +584,30 @@ Oracle Ideal Router (Lower Bound) & $100.00\%$ & $100.00\%$ & $100.00\%$ & $42.6
 }
 \end{table}
 
+\begin{table}[!htbp]
+\centering
+\caption{Incremental predictive value and tree-complexity ablation of $\text{CSCI}(q)$ as an \emph{engineered oblique structural representation} under leak-free 25-seed LOSO-CV ($N=75$, $\text{SF}=1\text{ GB}$), comparing Raw AST operators ($\mathbf{a}_q = [D,N,J,S,W,U,C]^{\top}$) with and without $\text{CSCI}(q)$ and selectivity $\hat{\sigma}(q)$.}\label{tab:csci_incremental_ablation}
+\setlength{\tabcolsep}{3.0pt}
+\scriptsize
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}llcccccccl@{}}
+\toprule
+\textbf{Model} & \textbf{Feature Representation} & \textbf{Dim.} & \textbf{Top-1} & \textbf{Mean (ms)} & \textbf{Mean Reg.} & \textbf{P95 Reg.} & \textbf{Splits/Tree} & \textbf{Paired 95\% CI ($\Delta\mathcal{R}$)} & \textbf{Wilcoxon $p$} \\
+\midrule
+\textbf{Model A} & Raw AST Features Only ($\mathbf{a}_q$) & 7D & 46.67\% & 61.06 & 50.87\% & 146.20\% & 6.72 & Reference (Syntax-only) & --- \\
+\textbf{Model B} & Raw AST + $\text{CSCI}(q)$ (No $\hat{\sigma}$) & 8D & 50.67\% & 58.94 & 46.15\% & 139.80\% & 4.86 ($-27.7\%$) & $[-9.85\%, -0.64\%]$ vs.\ A & $p = 0.0214$ \\
+\midrule
+\textbf{Model C} & Raw AST + Selectivity $\hat{\sigma}(q)$ (No CSCI) & 8D & 52.00\% & 58.12 & 44.20\% & 138.45\% & 6.84 & Reference (With $\hat{\sigma}$) & --- \\
+\textbf{Model D} & \textbf{Raw AST + $\text{CSCI}(q)$ + $\hat{\sigma}(q)$ (Proposed)} & \textbf{9D} & \textbf{57.33\%} & \textbf{54.92} & \textbf{34.98\%} & \textbf{114.11\%} & \textbf{4.91 ($\mathbf{-28.2\%}$)} & $\mathbf{[-15.60\%, -3.45\%]}$ \textbf{vs.\ C} & $\mathbf{p = 0.0038}$ \\
+\textbf{Model E} & Raw AST + Fold-wise $\text{CSCI}_{\text{res}\perp(D,N)}^{(k)}$ + $\hat{\sigma}(q)$ & 9D & 57.33\% & 55.18 & 35.42\% & 115.20\% & 5.04 ($-26.3\%$) & $[-14.95\%, -3.10\%]$ vs.\ C & $p = 0.0046$ \\
+\bottomrule
+\end{tabular}%
+}
+\vspace{2pt}
+\parbox{\textwidth}{\scriptsize \textbf{Construct Validity Note:} Because $\text{CSCI}(q)$ is an exact linear combination of the six operator counts ($R^2 = 1.000$ on the 6-operator subspace; zero new linear degrees of freedom), it acts strictly as an \emph{engineered oblique structural representation}. In shallow axis-aligned GBDTs, this pre-computed projection cuts active internal splits per tree by $28.2\%$ ($6.84 \rightarrow 4.91$) and reduces out-of-fold regret by $-9.22\text{ pp}$ vs.\ Model~C ($p=0.0038$). In Model~E, OLS residuals against $[1, D, N]$ are fitted strictly inside each 24-seed training fold ($\overline{\text{VIF}}_{D,N}=1.84$, zero leakage).}
+\end{table}
+
+
 \begin{table*}[!t]
 \centering
 \caption{Out-of-Sample Generalization and Risk-Aware Routing Validation: (Part A) Out-of-fold Cost and Resource Prediction accuracy ($\log\text{-}R^2$, MAPE, multiplicative Q-Error at P50/P90, and 90\% Conformal Prediction Interval coverage); (Part B) Generalization to 5 locked unseen holdout seeds ($N=15$) and strict zero-shot external validation on IMDB JOB ($N=33$) and Star Schema Benchmark SSB ($N=13$); and (Part C) Risk-Based Confidence-Aware Routing vs. Point-Estimate ArgMin and Rule-Based Routing.}
@@ -922,7 +946,7 @@ Always Polars (Rust Arrow) & Static Baseline ($0$ labels) & --- & 21.21\% & 100.
 \midrule
 Regime IIIa: Nested 5-Fold $+\hat{\sigma}_{\text{str}}$ & Supervised ($26\text{--}27$ train/fold, Inner 4F) & 10D & 93.94\% & 100.0\% & 4.21 & 4.05\% & 0.00\% & Template-disjoint (\texttt{1a}--\texttt{33a}), $0$ test-fold peeking \\
 Regime IIIb: Nested 5-Fold $+\hat{\sigma}_{\text{str}},\hat{\zeta}_{\text{skew}}$ & Supervised ($26\text{--}27$ train/fold, Inner 4F) & 11D & 96.97\% & 100.0\% & 4.14 & 3.55\% & 0.00\% & Adds static table FK MCV concentration \\
-\textbf{Regime IIIc: Nested 5-Fold Full 12D} & \textbf{Supervised ($26\text{--}27$ train/fold, Non-ZS)} & \textbf{12D} & \textbf{96.97\%} & \textbf{100.0\%} & \textbf{4.14} & \textbf{3.55\%} & \textbf{0.00\%} & \textbf{8 Polars / 25 GPU (Inner 4-fold tuned, $p=3.0\times 10^{-6}$)} \\
+\textbf{Regime IIIc: Calibrated 12D (Non-Zero-Shot)} & \textbf{Supervised Nested 5-Fold ($26\text{--}27$ train)} & \textbf{12D} & \textbf{96.97\%} & \textbf{100.0\%} & \textbf{4.14} & \textbf{3.55\%} & \textbf{0.00\%} & \textbf{8 Polars / 25 GPU (Inner 4-fold tuned, $p=3.0\times 10^{-6}$)} \\
 Oracle Ideal Router (Lower Bound) & Ground-Truth Post-Hoc Bound & --- & 100.0\% & 100.0\% & 4.03 & 0.00\% & 0.00\% & 7 Polars / 26 GPU ($+0.11\text{ ms}$ gap to Regime IIIc) \\
 \bottomrule
 \end{tabular}%
@@ -966,7 +990,7 @@ Tables~\ref{tab:bigdata_multiscale_tpch} and 13 and Fig.~\ref{fig:bigdata_multis
 \toprule
 \textbf{Hardware \& Engine Stack Configuration} & \textbf{Dataset / Query Scope} & \textbf{Training Scope} & \textbf{Test Scope} & \textbf{Model Calibration} & \textbf{Evaluation Protocol \& Empirical Outcome ($\text{EX}=1.000$)} \\
 \midrule
-\textbf{Node 1A (Primary Het.):} Win11 \texttt{x86\_64} 8T, 16G RAM + RTX 2050 4G; Duck 2.0, Polars 2.1, DF 55.0, BQ, CUDA & $N=75$ Factorial (25 seeds $\times$ V1--V3) + $22$ TPC-H ($97$Q) & 24 seeds ($72$Q) per outer fold (5-engine Het.) & 1 held-out seed ($3$Q) $\times$ 25 folds & Inner 6-fold nested guard + 90\% conformal & \textbf{25-Seed LOSO-CV (5-Engine Het.):} $57.33\%$ Top-1, $76.00\%$ Top-2, $\mathbf{54.92\text{ ms}}$, $34.98\%$ reg.; $C=32$: $\mathbf{154.44\text{ QPS}}$ (\texttt{89b1ec64...}) \\
+\textbf{Node 1A (Primary Het.):} Win11 \texttt{x86\_64} 8T, 16G RAM + RTX 2050 4G; Duck 2.0, Polars 2.1, DF 55.0, BQ, CUDA & Eval.: $N=75$ Factorial (Avail.: $97$Q; $22$ TPC-H in Tab.~\ref{tab:bigdata_multiscale_tpch}) & 24 seeds ($72$Q) per outer fold (5-engine Het.) & 1 held-out seed ($3$Q) $\times$ 25 folds & Inner 6-fold nested guard + 90\% conformal & \textbf{25-Seed LOSO-CV (5-Engine Het.):} $57.33\%$ Top-1, $76.00\%$ Top-2, $\mathbf{54.92\text{ ms}}$, $34.98\%$ reg.; $C=32$: $\mathbf{154.44\text{ QPS}}$ (\texttt{89b1ec64...}) \\
 \textbf{Node 1B (Primary CPU-Only):} Win11 \texttt{x86\_64} 8T ($M_{\text{gpu\_max}}=0$); Duck 2.0, Polars 2.1, DF 55.0 & $N=75$ Factorial TPC-H ($\text{SF}=1\text{ GB}$) & 24 seeds ($72$Q) per fold (3 CPU engines) & 1 held-out seed ($3$Q) $\times$ 25 folds & In-domain 3-CPU GBR-9D (zero GPU) & \textbf{25-Seed LOSO-CV (3-Engine CPU):} $\mathbf{74.67\%}$ Top-1, $96.00\%$ Top-2, $\mathbf{69.12\text{ ms}}$ vs.\ $82.47\text{ ms}$ Polars ($p_{\text{Holm}}=0.0084$) \\
 \textbf{Node 1C (Version-Pinned Parity):} Win11 \texttt{x86\_64} 8T; \textbf{Pinned:} Duck 1.4.5, Polars 1.36.1, DF 50.1.0 & $N=15$ Stratified L1--L5 (\texttt{89a7dc6c...} PQ) & Direct execution audit (no router training) & All $15$ L1--L5 queries $\times$ 5 trials & Version-locked to match Node~3 exactly & \textbf{Controlled $2\times 2$ Version Isolation:} Duck $9.14\text{--}111.30\text{ ms}$, Polars L4 $118.85\text{ ms}$ (vs.\ $61.57\text{ ms}$ on v2.1.0); \texttt{L4\_V3} Polars wins $149.1$ vs.\ $170.1\text{ ms}$ (\texttt{af1cc3d1...}) \\
 \midrule
