@@ -71,21 +71,22 @@
     \usebox{\asttblboxB}%
   \fi
 }
-\sloppy
-\emergencystretch=3em
-% --- SPRINGER / BMC STANDARDIZED HEADING & FLOAT VERTICAL SPACING ---
+
+\emergencystretch=1.4em
+\tolerance=800
+% --- SPRINGER / BMC CLEAN HEADING, LIST & FLOAT SPACING ---
 \makeatletter
 \renewcommand\section{\@startsection{section}{1}{\z@}%
   {-18pt \@plus -4pt \@minus -2pt}%
   {8pt \@plus 2pt}%
   {\normalfont\large\bfseries}}
 \renewcommand\subsection{\@startsection{subsection}{2}{\z@}%
-  {-13pt \@plus -3pt \@minus -1.5pt}%
-  {5.5pt \@plus 1.5pt}%
+  {-14pt \@plus -3pt \@minus -1.5pt}%
+  {6pt \@plus 1.5pt}%
   {\normalfont\normalsize\bfseries}}
 \renewcommand\subsubsection{\@startsection{subsubsection}{3}{\z@}%
-  {-10pt \@plus -2.5pt \@minus -1pt}%
-  {4pt \@plus 1pt}%
+  {-11pt \@plus -2.5pt \@minus -1pt}%
+  {4.5pt \@plus 1pt}%
   {\normalfont\normalsize\bfseries}}
 \makeatother
 \setlength{\parskip}{4.5pt plus 1pt minus 0.5pt}
@@ -1063,7 +1064,8 @@ Tables~\ref{tab:bigdata_multiscale_tpch} and 13 and Fig.~\ref{fig:bigdata_multis
 % =============================================================================
 % 5. LIMITATIONS & 6. CONCLUSION
 % =============================================================================
-\par\vspace{7pt plus 2pt minus 1pt}\noindent\textbf{Controlled Engine-Version Isolation vs.\ Cross-Platform Portability (\texttt{x86\_\allowbreak{}64} vs.\ \texttt{ARM64}) and Explicit Protocol Separation.} Because production deployments across independent workstations naturally span different software releases (e.g., DuckDB v2.0.0 / Polars v2.1.0 / DataFusion v55.0.0 on Nodes~1--2 vs.\ DuckDB v1.4.5 / Polars v1.36.1 / DataFusion v50.1.0 on Node~3), attributing raw latency differences solely to instruction-set architecture (\texttt{x86\_\allowbreak{}64} vs.\ \texttt{ARM64}) would confound hardware platform effects with engine-version optimizations. To decouple these factors via 100\% real execution (\texttt{issue3\_\allowbreak{}1\_\allowbreak{}version\_\allowbreak{}vs\_\allowbreak{}platform\_\allowbreak{}isolation\_\allowbreak{}summary.csv}, SHA-256: \texttt{f12ae28467f9802a...}), we provisioned an isolated version-pinned environment on Node~1 matching Node~3's exact engine versions (\texttt{duckdb==1.4.5}, \texttt{polars==1.36.1}, \texttt{datafusion==50.1.0}), 8-thread execution cap, warm-up/repetition protocol ($2$ warm-up + $5$ timed runs), and canonical $\text{SF}=1\text{ GB}$ Parquet dataset across the 15-query L1--L5 suite ($\text{EX}=1.000$ across all runs). This $2\times 2$ isolation reveals two distinct effects: (i) \emph{Pure Software-Version Effect on identical \texttt{x86\_\allowbreak{}64} hardware}: upgrading Polars ($1.36.1 \rightarrow 2.1.0$) and DataFusion ($50.1.0 \rightarrow 55.0.0$) accelerates Polars by $1.32\times\text{--}1.93\times$ (compressing Tier~L4 window mean latency from $118.85\text{ ms}$ to $61.57\text{ ms}$) while DuckDB ($1.4.5 \rightarrow 2.0.0$) remains stable in L1--L4 ($9.14\text{--}111.30\text{ ms}$ vs.\ $10.46\text{--}116.49\text{ ms}$); and (ii) \emph{Version-Pinned Cross-Platform Portability} (holding engine versions fixed at \texttt{1.4.5/\allowbreak{}1.36.1/\allowbreak{}50.1.0} and threads at $8\text{T}$): Apple M1's unified LPDDR4X memory + ARM64 platform executes all three engines $1.26\times\text{--}1.88\times$ faster than DDR4 \texttt{x86\_\allowbreak{}64} (e.g., DuckDB L1--L3: $5.90\text{--}24.19\text{ ms}$ on M1 vs.\ $9.14\text{--}45.47\text{ ms}$ on pinned \texttt{x86\_\allowbreak{}64}), while both platforms exhibit the exact same full-horizon window crossover on \texttt{L4\_\allowbreak{}V3\_\allowbreak{}FullWin} where Polars~1.36.1 overtakes DuckDB~1.4.5 ($149.10$ vs.\ $170.07\text{ ms}$ on \texttt{x86\_\allowbreak{}64}; $80.67$ vs.\ $108.40\text{ ms}$ on M1). Table~\ref{tab:three_node_cross_isa} and Fig.~\ref{fig:three_node_cross_isa} synthesize all cross-node experiments using six explicit protocol columns (Hardware/Engine Config, Dataset/Query Scope, Training Scope, Test Scope, Model Calibration, and Evaluation Protocol) so results from distinct candidate sets and validation regimes are never conflated.
+\subsubsection{Controlled Engine-Version Isolation vs.\ Cross-Platform Portability (\texttt{x86\_64} vs.\ \texttt{ARM64})}
+Because production deployments across independent workstations naturally span different software releases (e.g., DuckDB v2.0.0 / Polars v2.1.0 / DataFusion v55.0.0 on Nodes~1--2 vs.\ DuckDB v1.4.5 / Polars v1.36.1 / DataFusion v50.1.0 on Node~3), attributing raw latency differences solely to instruction-set architecture (\texttt{x86\_\allowbreak{}64} vs.\ \texttt{ARM64}) would confound hardware platform effects with engine-version optimizations. To decouple these factors via 100\% real execution (\texttt{issue3\_\allowbreak{}1\_\allowbreak{}version\_\allowbreak{}vs\_\allowbreak{}platform\_\allowbreak{}isolation\_\allowbreak{}summary.csv}, SHA-256: \texttt{f12ae28467f9802a...}), we provisioned an isolated version-pinned environment on Node~1 matching Node~3's exact engine versions (\texttt{duckdb==1.4.5}, \texttt{polars==1.36.1}, \texttt{datafusion==50.1.0}), 8-thread execution cap, warm-up/repetition protocol ($2$ warm-up + $5$ timed runs), and canonical $\text{SF}=1\text{ GB}$ Parquet dataset across the 15-query L1--L5 suite ($\text{EX}=1.000$ across all runs). This $2\times 2$ isolation reveals two distinct effects: (i) \emph{Pure Software-Version Effect on identical \texttt{x86\_\allowbreak{}64} hardware}: upgrading Polars ($1.36.1 \rightarrow 2.1.0$) and DataFusion ($50.1.0 \rightarrow 55.0.0$) accelerates Polars by $1.32\times\text{--}1.93\times$ (compressing Tier~L4 window mean latency from $118.85\text{ ms}$ to $61.57\text{ ms}$) while DuckDB ($1.4.5 \rightarrow 2.0.0$) remains stable in L1--L4 ($9.14\text{--}111.30\text{ ms}$ vs.\ $10.46\text{--}116.49\text{ ms}$); and (ii) \emph{Version-Pinned Cross-Platform Portability} (holding engine versions fixed at \texttt{1.4.5/\allowbreak{}1.36.1/\allowbreak{}50.1.0} and threads at $8\text{T}$): Apple M1's unified LPDDR4X memory + ARM64 platform executes all three engines $1.26\times\text{--}1.88\times$ faster than DDR4 \texttt{x86\_\allowbreak{}64} (e.g., DuckDB L1--L3: $5.90\text{--}24.19\text{ ms}$ on M1 vs.\ $9.14\text{--}45.47\text{ ms}$ on pinned \texttt{x86\_\allowbreak{}64}), while both platforms exhibit the exact same full-horizon window crossover on \texttt{L4\_\allowbreak{}V3\_\allowbreak{}FullWin} where Polars~1.36.1 overtakes DuckDB~1.4.5 ($149.10$ vs.\ $170.07\text{ ms}$ on \texttt{x86\_\allowbreak{}64}; $80.67$ vs.\ $108.40\text{ ms}$ on M1). Table~\ref{tab:three_node_cross_isa} and Fig.~\ref{fig:three_node_cross_isa} synthesize all cross-node experiments using six explicit protocol columns (Hardware/Engine Config, Dataset/Query Scope, Training Scope, Test Scope, Model Calibration, and Evaluation Protocol) so results from distinct candidate sets and validation regimes are never conflated.
 
 \begin{table*}[!htbp]
 \centering
@@ -1072,7 +1074,7 @@ Tables~\ref{tab:bigdata_multiscale_tpch} and 13 and Fig.~\ref{fig:bigdata_multis
 \renewcommand{\arraystretch}{1.12}
 \scriptsize
 \begin{fitasttable}
-\begin{tabular}{@{}p{2.9cm}p{2.5cm}p{2.2cm}p{2.1cm}p{2.3cm}p{4.6cm}@{}}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{2.9cm}>{\raggedright\arraybackslash}p{2.5cm}>{\raggedright\arraybackslash}p{2.2cm}>{\raggedright\arraybackslash}p{2.1cm}>{\raggedright\arraybackslash}p{2.3cm}>{\raggedright\arraybackslash}p{4.6cm}@{}}
 \toprule
 \textbf{Hardware \& Engine Stack Configuration} & \textbf{Dataset / Query Scope} & \textbf{Training Scope} & \textbf{Test Scope} & \textbf{Model Calibration} & \textbf{Evaluation Protocol \& Empirical Outcome ($\text{EX}=1.000$)} \\
 \midrule
@@ -1100,7 +1102,8 @@ Tables~\ref{tab:bigdata_multiscale_tpch} and 13 and Fig.~\ref{fig:bigdata_multis
 \end{figure}
 
 
-\par\vspace{7pt plus 2pt minus 1pt}\noindent\textbf{Router Decision Stability Under Prediction Noise ($\pm 5\%\text{--}\pm 20\%$) and Post-Training Workload/Skew Drift Recalibration.}
+\subsubsection{Router Decision Stability Under Prediction Noise and Workload Drift Recalibration}
+
 To quantify decision sensitivity when cost predictions experience estimation error without introducing redundant synthetic benchmarks, Table~\ref{tab:v7_stability_drift} and Fig.~\ref{fig:v7_stability_drift} evaluate router stability across $\pm 5\%$, $\pm 10\%$, and $\pm 20\%$ multiplicative noise ($1{,}000$ Monte Carlo trials per level) alongside dynamic post-training drift:
 (1) \emph{Decision Stability \& $12\%$ PCIe Guard Protection}: Under $\pm 5\%$, $\pm 10\%$, and $\pm 20\%$ prediction noise, Conformal AST-Route maintains $96.98\%$, $94.22\%$, and $88.00\%$ decision stability (restricting engine flip rates to $3.02\%$, $\mathbf{5.78\%}$, and $\mathbf{12.00\%}$), reducing routing flip churn by $\mathbf{-21.4\%}$ at $\pm 10\%$ noise (vs.\ $7.35\%$ unguarded ArgMin) and $\mathbf{-14.6\%}$ at $\pm 20\%$ noise (vs.\ $14.05\%$ unguarded). Across flipped decisions at $\pm 20\%$ noise, $61.2\%$ occur between near-tied CPU columnar engines ($\le 15\text{ ms}$ runtime difference), bounding net latency inflation to $+0.24\text{ ms}$ ($60.90 \rightarrow 61.14\text{ ms}$) and holding severe $>100\%$ regret violations at $8.86\%\text{--}9.33\%$ (vs.\ $10.67\%\text{--}11.05\%$ when the $12\%$ PCIe guard is disabled, matching Fig.~\ref{fig:v7_stability_drift}a); and
 (2) \emph{Dynamic Drift \& Automated Canary Recalibration}: Under an $80\%$ complex-query mix shift (\texttt{D1}), per-query AST conditioning requires zero retraining ($62.34\text{ ms}$ vs.\ $92.89\text{ ms}$ Polars); under temporal selectivity expansion (\texttt{D2a}$\rightarrow$\texttt{D2b}), a $0.41\text{ ms}$ Parquet footer \texttt{seek(-8)} refresh lowers latency from $68.85\text{ ms}$ to $64.49\text{ ms}$ with zero retraining; and under severe Zipfian join skew ($s=1.4$, \texttt{D4a}), out-of-fold $90\%$ conformal coverage drops from $89.0\%$ to $75.0\% < 80\%$ ($\text{Q-Error P90} = 2.87 > 2.0$), triggering a $\sim 0.4\text{ s}$ 5-canary ratio update (\texttt{D4b}) that restores $89.0\%$ PI coverage ($\text{Q-Error P90} = 1.45$) and lowers net latency to $76.13\text{ ms}$ (beating static Polars at $91.26\text{ ms}$).
@@ -1141,7 +1144,8 @@ To quantify decision sensitivity when cost predictions experience estimation err
 \end{figure}
 
 \clearpage
-\par\vspace{7pt plus 2pt minus 1pt}\noindent\textbf{Comparison Against Physical-Planner (\texttt{EXPLAIN}), Cost-Sensitive Classification, OOD Operator Gating, and Data-Placement Economics.}
+\subsubsection{Comparison Against Physical-Planner (\texttt{EXPLAIN}), Neural Cost Models, OOD Gating, and Data Placement}
+
 To address core systems questions regarding physical-plan features, direct classification, unseen-operator safety, tail-risk statistical inference, and multi-engine storage placement, Table~\ref{tab:v8_p0_systems_defense} consolidates five targeted evaluations:
 (1) \emph{Why Dialect-Agnostic AST + Zone Maps Instead of Single-Engine \texttt{EXPLAIN}?} While in-process DuckDB compiles a single local plan in $0.87\text{ ms}$ \emph{after} tables are bound in memory (vs.\ $70.90\text{ ms}$ cold schema open), relying on a single engine's physical planner for cross-paradigm routing incurs two fundamental limitations: (i) \emph{dialect coupling}---feeding BigQuery array/unnest SQL (Tier~L5) directly into untranspiled DuckDB \texttt{EXPLAIN} fails syntax/binder validation on $15/75$ queries, degrading fallback routing to $78.77\text{ ms}$ net latency ($81.74\%$ regret, $362.15\%$ P95 regret); and (ii) even when pre-transpiled via SQLGlot ($3.48 + 0.87 + 0.50 = 4.85\text{ ms}$ overhead), unguarded \texttt{EXPLAIN} cardinality features yield $60.76\text{ ms}$ net latency and $119.89\%$ P95 regret, trailing Conformal AST-Route ($54.92\text{ ms}$ net, $114.11\%$ P95 regret);
 (2) \emph{Learned Plan Cost Encoder \& Direct Classification vs.\ Multi-Output Cost Regression}: A physical-plan neural cost encoder (MLP-$64\times 32$, $5.47\text{ ms}$ overhead) yields $58.90\text{ ms}$ net latency ($114.11\%$ P95 regret), while a regret-weighted GBDT classifier predicting $\hat{e}(q)$ directly achieves $50.67\%$ Top-1 and $62.01\text{ ms}$ net latency ($207.10\%$ P95 regret), trailing Conformal AST-Route while lacking continuous $\hat{T}_e,\hat{E}_e,\hat{M}_e$ predictions required to enforce dynamic VRAM ceilings ($M_{\text{gpu\_max}}$) and Pareto trade-offs;
@@ -1213,6 +1217,7 @@ The author thanks the Department of Information Technology, Faculty of Informati
 % =============================================================================
 % REFERENCES (SPRINGER NATURE / BMC VANCOUVER STYLE - 30 REFERENCES)
 % =============================================================================
+{\sloppy
 \begin{thebibliography}{30}
 \small
 
@@ -1322,6 +1327,7 @@ Lamb A, Shen Y, Dani D, Qi Y, Chaudhary V, et al. Apache Arrow DataFusion: a fas
 \bibitem{roq2024risk} Kamali A, et al. Roq: robust query optimization based on a risk-aware learned cost model. In: Proceedings of the International Conference on Management of Data / VLDB Workshops. 2024. p. 1--14.
 
 \end{thebibliography}
+}
 
 % === BEGIN V5 SHA256 REGISTRY ===
 % V5 Real-Execution Audit CSV SHA-256 Prefixes: v5_audit1=bdf2b1ca6bdea6e1760fafd5... | v5_audit2_construct=b0cabf5c21f87aa77f7ad251... | v5_audit2_perm=e22396626bb7ce0ec8179f3d... | v5_audit3_metadata=7eb70257593da06f682a3ddd... | v5_audit4_hardware=efdfd9e61153fae7d44e2b63...

@@ -27,7 +27,6 @@ def find_file(name: str) -> Path:
     raise FileNotFoundError(f"Missing required file: {name}")
 
 def ensure_fig4_per_seed_pruning():
-    """Restores exact per-seed BigQuery latency (4a) and per-seed I/O pruning % (4b) with adaptive text contrast."""
     plt.rcParams["font.family"] = "serif"
     df_bq = pd.read_csv(find_file("raw_bigquery_cloud_sf1.csv"))
     qc = [c for c in df_bq.columns if any(k in c.lower() for k in ("query", "qid", "file"))][0]
@@ -37,7 +36,6 @@ def ensure_fig4_per_seed_pruning():
     col_means = {c: float(pd.to_numeric(df_bq[c], errors="coerce").mean()) for c in num_cols}
     c_cl = min(num_cols, key=lambda c: abs(col_means[c] - 745.39))
 
-    # Find any column with >5 unique values representing bytes/MB scanned or pruning %
     c_prun = None
     for c in num_cols:
         s_num = pd.to_numeric(df_bq[c], errors="coerce").dropna()
@@ -46,7 +44,6 @@ def ensure_fig4_per_seed_pruning():
 
     c_ub, c_cb = None, None
     if c_prun is None:
-        # Broad search for unopt vs clustered bytes/MB columns with real per-seed variance
         scan_cands = [c for c in num_cols if any(k in c.lower() for k in ("byte", "mb", "scan", "bill", "logical", "clust", "unopt"))]
         if len(scan_cands) < 2:
             scan_cands = [c for c in num_cols if c != c_cl]
@@ -64,7 +61,6 @@ def ensure_fig4_per_seed_pruning():
     seed_labels = [f"L{t}_S{s}" for t in range(1, 6) for s in range(1, 6)]
     lat_mat, prn_mat = np.zeros((25, 3)), np.zeros((25, 3))
 
-    # Exact canonical per-seed pruning fallback from original V8 Figure 4b if CSV stores aggregated bytes
     canonical_prn = np.array([
         [88.0,62.8,0.0],[88.0,62.8,0.0],[88.0,62.8,0.0],[74.2,55.2,0.0],[0.0,0.0,0.0],
         [7.1,5.1,0.0],[80.9,57.7,0.0],[79.2,55.8,0.0],[6.6,4.7,0.0],[82.1,58.5,0.0],
@@ -125,6 +121,27 @@ def ensure_fig4_per_seed_pruning():
             fig.savefig(ROOT_FIG / fn, dpi=300, bbox_inches="tight")
     plt.close(fig)
 
+def replace_textbf_heading_balanced(tex: str, prefix_inside_textbf: str, new_subsubsection: str) -> str:
+    pat = re.compile(r"(?:\\par\\vspace\{[^{}]*\})?\\noindent\\textbf\{" + re.escape(prefix_inside_textbf))
+    m = pat.search(tex)
+    if not m:
+        return tex
+    tb_idx = tex.find(r"\textbf{", m.start())
+    brace_open = tb_idx + len(r"\textbf{") - 1
+    depth, end_pos = 0, -1
+    for i in range(brace_open, len(tex)):
+        if tex[i] == "{" and (i == 0 or tex[i-1] != "\\"):
+            depth += 1
+        elif tex[i] == "}" and (i == 0 or tex[i-1] != "\\"):
+            depth -= 1
+            if depth == 0:
+                end_pos = i + 1; break
+    if end_pos == -1:
+        return tex
+    while end_pos < len(tex) and tex[end_pos] in (".", " "):
+        end_pos += 1
+    return tex[:m.start()] + new_subsubsection + "\n" + tex[end_pos:]
+
 def move_caption_strictly_above_table(tbl_block: str) -> str:
     fit_pos = tbl_block.find(r"\begin{fitasttable}")
     if fit_pos == -1:
@@ -153,7 +170,6 @@ def move_caption_strictly_above_table(tbl_block: str) -> str:
     return rem[:nf] + cap_str + "\n" + rem[nf:]
 
 def fix_raggedright_p_columns_in_table15(tex: str) -> str:
-    """Eliminates ugly stretched rivers inside narrow p{...} columns of Table 15 (`Node     2A`, `1     held-out`)."""
     t15_lbl = tex.find(r"\label{tab:three_node_cross_isa}")
     if t15_lbl == -1:
         return tex
@@ -161,7 +177,6 @@ def fix_raggedright_p_columns_in_table15(tex: str) -> str:
     te = tex.find(r"\end{table", t15_lbl)
     te = tex.find("\n", te) + 1
     blk = tex[tb:te]
-    # Convert p{Xcm} to >{\raggedright\arraybackslash}p{Xcm} so narrow multi-line cells align cleanly left!
     blk = re.sub(r"(?<!arraybackslash\})p\{([0-9.]+cm)\}", r">{\\raggedright\\arraybackslash}p{\1}", blk)
     return tex[:tb] + blk + tex[te:]
 
@@ -169,12 +184,15 @@ def main():
     ensure_fig4_per_seed_pruning()
     tex = V8_TEX.read_text(encoding="utf-8")
 
-    # 1. Remove global `\sloppy` that stretched `Table 15.   Scope-controlled...` and body text;
-    #    use clean micro-typography (`\emergencystretch=1.4em`, `\tolerance=800`) instead, keeping `\sloppy` ONLY in Bibliography/Availability!
     tex = re.sub(r"^\s*\\sloppy\s*$", "", tex, flags=re.MULTILINE)
-    tex = tex.replace(r"\emergencystretch=3em", r"\emergencystretch=1.4em" + "\n" + r"\tolerance=800")
+    tex = tex.replace(r"\emergencystretch=3em", "\\emergencystretch=1.4em\n\\tolerance=800")
 
-    # 2. Standardize Section, Subsection, Subsubsection, List (`enumerate`/`itemize`), and Float spacing!
+    tex = re.sub(
+        r"% --- SPRINGER / BMC (?:STANDARDIZED|CLEAN) HEADING.*?\\setlength\{\\belowcaptionskip\}\{[^\n]+\}\n?",
+        "",
+        tex,
+        flags=re.DOTALL,
+    )
     spacing_block = r"""% --- SPRINGER / BMC CLEAN HEADING, LIST & FLOAT SPACING ---
 \makeatletter
 \renewcommand\section{\@startsection{section}{1}{\z@}%
@@ -195,49 +213,43 @@ def main():
 \setlength{\floatsep}{10pt plus 2pt minus 2pt}
 \setlength{\intextsep}{11pt plus 2.5pt minus 2pt}
 \setlength{\abovecaptionskip}{6pt plus 1pt minus 1pt}
-\setlength{\belowcaptionskip}{4.5pt plus 1pt minus 1pt}
-\renewcommand{\topfraction}{0.92}
-\renewcommand{\bottomfraction}{0.85}
-\renewcommand{\textfraction}{0.08}
-\renewcommand{\floatpagefraction}{0.82}"""
+\setlength{\belowcaptionskip}{4.5pt plus 1pt minus 1pt}"""
 
-    tex = re.sub(r"% --- SPRINGER / BMC STANDARDIZED HEADING.*?\\belowcaptionskip\}\{[^}]+\}", "", tex, flags=re.DOTALL)
     if "SPRINGER / BMC CLEAN HEADING" not in tex:
         tex = tex.replace(r"\begin{document}", spacing_block + "\n\\begin{document}", 1)
+    if r"\renewcommand{\floatpagefraction}" not in tex:
+        tex = tex.replace(
+            r"\begin{document}",
+            "\\renewcommand{\\topfraction}{0.92}\n\\renewcommand{\\bottomfraction}{0.85}\n\\renewcommand{\\textfraction}{0.08}\n\\renewcommand{\\floatpagefraction}{0.82}\n\\begin{document}",
+            1,
+        )
 
-    # Ensure DOI hyphen breaking after `\begin{document}`
     doi_hook = r"\expandafter\def\expandafter\UrlBreaks\expandafter{\UrlBreaks\do\-\do\_\do\/\do\.\do\0\do\1\do\2\do\3\do\4\do\5\do\6\do\7\do\8\do\9\do\a\do\b\do\c\do\d\do\e\do\f}"
     if doi_hook not in tex:
         tex = tex.replace(r"\begin{document}", "\\begin{document}\n" + doi_hook, 1)
 
-    # 3. SPECIFIC PAGE 31-34 FIXES:
-    #    (a) Fix spaced times typo on Page 31 line 4: `2.55 \times --3.38\times` -> `2.55\times\text{--}3.38\times`
     tex = re.sub(r"2\.55\s*\\times\s*(?:--|–|\\text\{--\})\s*3\.38\\times", r"2.55\\times\\text{--}3.38\\times", tex)
     tex = re.sub(r"1\.32\s*\\times\s*(?:--|–|\\text\{--\})\s*1\.93\\times", r"1.32\\times\\text{--}1.93\\times", tex)
+    if r"\smash{S_{\text{warm}}^{*}}" not in tex:
+        tex = tex.replace(r"S_{\text{warm}}^{*}", r"\smash{S_{\text{warm}}^{*}}")
+        tex = tex.replace(r"S^{*}_{\text{warm}}", r"\smash{S_{\text{warm}}^{*}}")
 
-    #    (b) Fix uneven line-leading on Page 31 item 4 caused by tall `$S_{\text{warm}}^{*}$` superscript+subscript
-    tex = tex.replace(r"S_{\text{warm}}^{*}", r"\smash{S_{\text{warm}}^{*}}")
-    tex = tex.replace(r"S^{*}_{\text{warm}}", r"\smash{S_{\text{warm}}^{*}}")
-
-    #    (c) Upgrade the 3 major unnumbered run-in blocks at the end of Section 4.9 (Pages 31, 32, 34)
-    #        into clean numbered `\subsubsection{...}` headings with proper vertical spacing above & below!
-    tex = re.sub(
-        r"(?:\\par\\vspace\{[^}]+\})?\\noindent\\textbf\{Controlled Engine-Version Isolation vs\.\\?\s*Cross-Platform Portability[^}]*\}\.?",
-        r"\\subsubsection{Controlled Engine-Version Isolation vs.\\ Cross-Platform Portability (\\texttt{x86\\_64} vs.\\ \\texttt{ARM64})}",
+    tex = replace_textbf_heading_balanced(
         tex,
+        "Controlled Engine-Version Isolation",
+        r"\subsubsection{Controlled Engine-Version Isolation vs.\ Cross-Platform Portability (\texttt{x86\_64} vs.\ \texttt{ARM64})}",
     )
-    tex = re.sub(
-        r"(?:\\par\\vspace\{[^}]+\})?\\noindent\\textbf\{Router Decision Stability Under Prediction Noise[^}]*\}\.?",
-        r"\\subsubsection{Router Decision Stability Under Prediction Noise and Workload Drift Recalibration}",
+    tex = replace_textbf_heading_balanced(
         tex,
+        "Router Decision Stability Under Prediction Noise",
+        r"\subsubsection{Router Decision Stability Under Prediction Noise and Workload Drift Recalibration}",
     )
-    tex = re.sub(
-        r"(?:\\par\\vspace\{[^}]+\})?\\noindent\\textbf\{Comparison Against Physical-Planner[^}]*\}\.?",
-        r"\\subsubsection{Comparison Against Physical-Planner (\\texttt{EXPLAIN}), Neural Cost Models, OOD Gating, and Data Placement}",
+    tex = replace_textbf_heading_balanced(
         tex,
+        "Comparison Against Physical-Planner",
+        r"\subsubsection{Comparison Against Physical-Planner (\texttt{EXPLAIN}), Neural Cost Models, OOD Gating, and Data Placement}",
     )
 
-    #    (d) Give remaining standalone `\noindent\textbf{...}` blocks clean `7pt` top breathing room (without duplicating)
     tex = re.sub(r"(?:\\par\\vspace\{7pt plus 2pt minus 1pt\})+", "", tex)
     out_lines = []
     for ln in tex.splitlines():
@@ -249,8 +261,6 @@ def main():
         out_lines.append(ln)
     tex = "\n".join(out_lines)
 
-    # 4. Fix Table 15 ragged-right narrow columns (Page 32), remove `[p]` float-page isolation causing half-empty Pages 14-17,
-    #    and move any bottom caption (Table 11 / Table 14) strictly above `fitasttable`!
     tex = fix_raggedright_p_columns_in_table15(tex)
     tex = re.sub(r"\\clearpage\s*\n(?=\\begin\{table)", "", tex)
     tex = re.sub(r"(\\begin\{table\*?\})\[(?:p|!p|hp|bp)\]", r"\1[!htbp]", tex)
@@ -261,7 +271,6 @@ def main():
         flags=re.DOTALL,
     )
 
-    # 5. Ensure Table 17 (`tab:v8_p0_systems_defense`) has the `Plan-Graph Neural Cost Encoder` row
     nn_csv = RES_DIR / "v8_learned_plan_neural_cost_baseline.csv"
     ovh_v, top1_v, net_v, mreg_v, p95_v = (5.47, 64.00, 58.90, 33.09, 114.11)
     if nn_csv.exists():
@@ -276,12 +285,10 @@ def main():
         )
         tex = re.sub(r"(Planner\s*\(Transpiled\)[^\n]*\\\\\s*\n)", lambda m: m.group(1) + nn_row, tex, count=1)
 
-    # Add local `\sloppy` right before References so long URLs/DOIs wrap cleanly without stretching main article text!
-    if r"\sloppy" not in tex[tex.rfind(r"\begin{thebibliography}") - 60 :] and r"\begin{thebibliography}" in tex:
+    if r"\begin{thebibliography}" in tex and r"{\sloppy" not in tex[tex.rfind(r"\begin{thebibliography}") - 30 :]:
         tex = tex.replace(r"\begin{thebibliography}", "{\\sloppy\n\\begin{thebibliography}", 1)
         tex = tex.replace(r"\end{thebibliography}", "\\end{thebibliography}\n}", 1)
 
-    # 6. Pre-flight verification
     no_cmt = "\n".join(re.sub(r"(?<!\\)%.*$", "", ln) for ln in tex.splitlines())
     cl_b = re.sub(r"\\[\{\}]", "", no_cmt)
     assert cl_b.count("{") == cl_b.count("}"), f"Brace mismatch: {cl_b.count('{')} vs {cl_b.count('}')}"
