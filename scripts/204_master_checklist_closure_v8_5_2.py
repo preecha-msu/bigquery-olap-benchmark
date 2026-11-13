@@ -54,11 +54,6 @@ def sha256_file(path: Path) -> str:
 
 
 def recompute_exact_tier_rule_and_guarded_baselines():
-    """
-    Fixes the numeric Complexity_Tier (1..5 -> L1..L5) mapping in Script 200
-    so that the Tier-to-Engine Rule (L1,L2 -> Polars; L3-L5 -> GPU Cold)
-    is computed on the exact 30 L1-L2 queries and 45 L3-L5 queries.
-    """
     csv_path = ROOT / "results" / "merged_75queries_all_engines_sf1.csv"
     if not csv_path.exists():
         matches = list(ROOT.rglob("merged_75queries_all_engines_sf1.csv"))
@@ -66,7 +61,6 @@ def recompute_exact_tier_rule_and_guarded_baselines():
             csv_path = matches[0]
     df = pd.read_csv(csv_path)
 
-    # Map numeric Complexity_Tier (1..5) or string ('L1'..'L5') cleanly to 'L1'..'L5'
     def norm_tier(val, qf):
         s = str(val).strip()
         if s in ("1", "2", "3", "4", "5"):
@@ -92,7 +86,6 @@ def recompute_exact_tier_rule_and_guarded_baselines():
     reg_tier_rule = (t_tier_rule - oracle_lat) / np.maximum(oracle_lat, 1e-9) * 100.0
     top1_tier_rule = np.mean(np.isclose(t_tier_rule, oracle_lat, rtol=1e-5, atol=1e-5)) * 100.0
 
-    # Update table_groupA_fair_baselines_and_u1_u4_ablation.csv if present
     out_csv1 = REBUTTAL_DIR / "table_groupA_fair_baselines_and_u1_u4_ablation.csv"
     if out_csv1.exists():
         df_b = pd.read_csv(out_csv1)
@@ -125,11 +118,6 @@ def recompute_exact_tier_rule_and_guarded_baselines():
 
 
 def build_concise_three_claims_contributions() -> str:
-    """
-    Addresses Reviewer Writing Point 1:
-    Replaces the dense multi-page numerical list in Section 1 with 3 concise,
-    claim-driven scientific contributions.
-    """
     return r"""\begin{enumerate}[leftmargin=1.5em,itemsep=4pt]
     \item \textbf{Claim 1 --- Cross-Paradigm Crossover Characterization via Pre-Execution AST and Zone-Map Profiling:} We establish empirically across 163 queries from five benchmark suites (75 factorial TPC-H queries across 25 canonical seeds $\times$ 3 selectivity horizons in tiers L1--L5, 22 official TPC-H queries Q1--Q22, 33 IMDB JOB, 13 SSB, and 20 ClickBench queries) and four scale factors ($\text{SF}\in\{1,10,30,100\}\text{ GB}$) that no single static execution engine dominates across operator families or memory regimes. While DuckDB leads on official TPC-H Q1--Q22 ($22.82\text{ ms}$ vs.\ $42.79\text{ ms}$ on Polars) due to mature subquery unnesting, Rust Apache Arrow engines (Polars, DataFusion) and discrete CUDA GPUs dominate multi-way joins, window framing, and array unnesting whenever scanned data volume $\hat{\sigma}(q)\cdot\mathcal{B}_{\text{catalog}}$ amortizes PCIe Host-to-Device transfer overhead ($\Phi_{\text{PCIe}}$).
     \item \textbf{Claim 2 --- Margin-Guarded Cost Regression for Tail-Regret Compression Over Simple Baselines:} We show that while coarse tier-mapping rules ($\text{L1,L2}\rightarrow\text{Polars};\ \text{L3--L5}\rightarrow\text{GPU}$: $48.92\text{ ms}$ execution, $52.40\text{ ms}$ net) and unguarded point-estimate regressors (Ridge: $49.12\text{ ms}$; shallow trees: $51.35\text{ ms}$) achieve slightly lower raw mean latency at $\text{SF}=1\text{ GB}$, they suffer severe 95th-percentile tail regret ($148.20\%\text{--}196.78\%$) by routing narrow-selectivity queries onto PCIe-bound GPU transfers. Pairing our 9D multi-output regressor ($\mathcal{R}_{\text{GBR-9D}}$, $4.15\text{ ms}$ warm dispatch overhead) with a $12\%$ PCIe crossover margin guard (Rule U1) and memory/cloud feasibility gates (Rules U2--U4) matches the fastest single engine per scale in mean latency ($1.04\times\text{--}1.07\times$ across $\text{SF}=1\text{--}100\text{ GB}$ and $1.34\times$ on official TPC-H Q1--Q22; $1.50\times\text{--}3.35\times$ over static CPU baselines at $\text{SF}=1\text{ GB}$, seed-cluster $p_{\text{Holm,seed}}\le 0.0171$) while compressing P95 tail regret by $2.25\times$ ($114.11\%$ vs.\ $257.31\%$ on Always GPU, $p_{\text{seed}}=0.0042$) and halving $>100\%$ regret failures ($14.67\%\rightarrow 6.67\%$).
@@ -186,11 +174,6 @@ $\mathcal{R}_{\text{GBR-9D}}$ Ablation 3: $+\text{U1}+\text{U2}$ ($+$ Conformal 
 
 
 def patch_figures_terminology():
-    """
-    Updates figure generation scripts if present so Figure 1, Figure 2, and Figure 12b
-    use 'Empirical Operator-Tier Alignment' instead of 'Construct Validity' and
-    '12D Sketch (Post-Hoc)' instead of '12D Zero-Shot'.
-    """
     for py_file in (ROOT / "scripts").glob("*.py"):
         if py_file.name.startswith("20"):
             continue
@@ -222,14 +205,13 @@ def main():
 
     content = TARGET_TEX.read_text(encoding="utf-8")
 
-    # 1. Remove the conflicting draft paragraphs on Pages 22-23 (Speedup Relative to Best Single Engine... & Prospective Frozen-Tag Holdout... & empty 4.7.3)
+    # 1. Remove conflicting draft paragraphs on Pages 22-23 & duplicate 4.7.3 heading
     content = re.sub(
         r"\\paragraph\{Speedup Relative to Best Single Engine per Scale.*?\\subsubsection\{Comprehensive Baseline Matrix, Standalone CPU-Only Routing, Multi-Scale Byte Accounting, and Metadata Cache Audit\}\s*\\subsubsection\{Comprehensive Baseline Matrix, Standalone CPU-Only Routing, Multi-Scale Byte Accounting, and Metadata Cache Audit\}",
         lambda _: r"\subsubsection{Comprehensive Baseline Matrix, Standalone CPU-Only Routing, Multi-Scale Byte Accounting, and Metadata Cache Audit}",
         content,
         flags=re.DOTALL,
     )
-    # Also catch if formatted with \textbf or without double subsubsection
     content = re.sub(
         r"Speedup Relative to Best Single Engine per Scale, Seed-Cluster.*?(?=\\subsubsection\{Comprehensive Baseline Matrix)",
         lambda _: "",
@@ -242,7 +224,7 @@ def main():
         content,
     )
 
-    # 2. Replace the dense 3-pillar contribution list in Section 1 with concise 3 Core Scientific Claims
+    # 2. Replace dense 3-pillar contribution list in Section 1 with concise 3 Core Scientific Claims
     content = re.sub(
         r"\\begin\{enumerate\}\[leftmargin=1\.5em,itemsep=3pt\]\s*\\item \\textbf\{Big Data Systems Innovation.*?\\end\{enumerate\}",
         lambda _: build_concise_three_claims_contributions(),
@@ -251,10 +233,8 @@ def main():
     )
 
     # 3. Fix all 3 undefined citations [?]
-    # (a) Remove deleted Roq citation from Table 2 and Section 2.2 (Page 4)
     content = re.sub(r",\s*Roq\s*~?\\cite\{[^}]+\}", "", content)
     content = re.sub(r"\s*and\s+Roq\s*~?\\cite\{[^}]+\}", "", content)
-    # (b) Map vink2023polars to the existing polars2024 bibitem key (or add alias)
     if r"\bibitem{polars2024}" in content:
         content = content.replace(r"\cite{vink2023polars}", r"\cite{polars2024}")
     elif r"\bibitem{vink2023polars}" not in content and r"\end{thebibliography}" in content:
@@ -264,7 +244,7 @@ def main():
             1,
         )
 
-    # 4. Fix all 6 corrupted DOIs in References (caused by earlier substring replacement)
+    # 4. Fix all 6 corrupted DOIs in References
     doi_repairs = [
         ("10.1186/s40537-024-00939-0025-01141-6", "10.1186/s40537-025-01141-6"),
         ("10.1016/j.is.2013.05.004.05.004", "10.1016/j.is.2013.05.004"),
@@ -283,9 +263,8 @@ def main():
     for bad_doi, good_doi in doi_repairs:
         content = content.replace(bad_doi, good_doi)
 
-    # 5. Update Abstract, Table 1, Table 17, Table 22, and Conclusion for 100% alignment with Reviewer Points 1, 6, 7, 8, 9, 11
+    # 5. Update Abstract, Table 1, Table 17, Table 22, and Conclusion
     text_alignments = [
-        # Abstract & Conclusion: clarify 1.04x-1.07x vs Best Single Engine alongside 3.35x-7.61x vs DuckDB
         (
             r"while multi-scale routing sustains $3.35\times\text{--}7.61\times$ speedups across $SF=1\text{--}100\text{ GB}$.",
             r"while multi-scale routing achieves $1.04\times\text{--}1.07\times$ speedups over the best single engine per scale ($3.35\times\text{--}7.61\times$ over DuckDB) across $SF=1\text{--}100\text{ GB}$.",
@@ -294,7 +273,6 @@ def main():
             r"paired Wilcoxon $p=0.0021$",
             r"seed-cluster $p_{\text{seed}}=0.0042$, query-level $p=0.0021$",
         ),
-        # Tone down remaining 'Construct validation' & 'Strict Zero-Shot' for 12D JOB & 'Dialect-agnostic' in Table 22
         ("Construct validation confirms", "Empirical structural profiling confirms"),
         ("Construct validation across all 75 queries confirms", "Empirical operator-tier alignment across all 75 queries confirms"),
         ("CSCI construct validation,", "CSCI structural projection analysis,"),
@@ -310,7 +288,6 @@ def main():
             r"Dialect-agnostic; $\Delta\mathcal{R}=-25.8\text{ pp}$ vs.\ GPU ($p=0.0021$)",
             r"Cross-dialect SQLGlot AST; $\Delta\mathcal{R}=-25.8\text{ pp}$ vs.\ GPU ($p_{\text{seed}}=0.0042$)",
         ),
-        # Table 22: Include Always GPU (1199.60 ms) in Unseen Scale row and p_seed in LOTO OOD row
         (
             r"Beats Polars ($82.47\text{ ms}$) via shared-memory Arrow fallback",
             r"Beats Polars ($82.47\text{ ms}$, $p_{\text{seed}}=0.0312$) via Arrow fallback",
@@ -323,7 +300,7 @@ def main():
     for old_s, new_s in text_alignments:
         content = content.replace(old_s, new_s)
 
-    # 6. Replace Section 5.1 with the unified, contradiction-free V8.5.2 section
+    # 6. Replace Section 5.1 with unified, contradiction-free V8.5.2 section
     unified_sec = build_unified_v852_section(tm)
     if "BEGIN V8_5_2 UNBIASED REVIEWER AUDIT" in content:
         content = re.sub(
@@ -333,7 +310,6 @@ def main():
             flags=re.DOTALL,
         )
 
-    # Remove any duplicate phantom labels if previously injected
     content = re.sub(r"(\\phantomsection\\label\{[^}]+\}\n?)+", "", content)
     if r"\label{tab:router_ablation}" not in content:
         content = content.replace(
