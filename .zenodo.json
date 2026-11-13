@@ -1,0 +1,21 @@
+{
+  "title": "AST-OSQP: Pre-Execution AST and Zone-Map Routing Benchmark Across Vectorized CPU, GPU, and Cloud OLAP Engines",
+  "upload_type": "dataset",
+  "creators": [
+    {
+      "name": "Noiumkar, Preecha",
+      "affiliation": "Mahasarakham University"
+    }
+  ],
+  "description": "Complete empirical execution logs, Dockerized benchmark suite, frozen prospective holdout tags, and SHA-256 verification manifests.",
+  "license": "MIT",
+  "keywords": [
+    "OLAP",
+    "Query Routing",
+    "DuckDB",
+    "Polars",
+    "DataFusion",
+    "Conformal Prediction",
+    "Benchmarking"
+  ]
+}

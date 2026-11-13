@@ -1,0 +1,5 @@
+Scale,DuckDB_ms,Polars_ms,DataFusion_ms,Always_GPU_ms,BigQuery_ms,Best_Single_Engine,GBR_9D_ms,Speedup_vs_Best_Single,Speedup_vs_Best_CPU,P95_Regret_Best_Single_pct,P95_Regret_GBR_9D_pct,Seed_Cluster_p_vs_Best
+SF=1 GB (N=75),183.74,82.47,96.3,56.96,745.39,Always GPU (56.96 ms),54.92,1.037,1.502,257.31,114.11,0.184
+SF=10 GB (N=75),628.4,412.15,489.6,184.2,1120.5,Always GPU (184.20 ms),171.35,1.075,2.405,198.4,89.5,0.0412
+SF=30 GB (N=75),2145.8,1580.3,1790.1,492.8,1685.2,Always GPU Chunked (492.80 ms),468.9,1.051,3.37,176.2,82.1,0.0385
+SF=100 GB Zero-Shot (N=75),8700.0,6551.0,7420.0,1199.6,2572.0,Always GPU Chunked (1199.60 ms),1214.5,0.988,5.394,348.0,299.67,0.412

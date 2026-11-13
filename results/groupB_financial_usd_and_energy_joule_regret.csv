@@ -1,0 +1,8 @@
+Policy,Mean_Latency_ms,Energy_per_Query_J,Energy_Regret_per_Query_J,Compute_Cost_per_10k_Queries_USD,Monetary_Regret_per_10k_Queries_USD,SF100_Cost_per_10k_Queries_USD
+Always DuckDB,183.74,6.4,5.18,0.347,0.219,16.43
+Always Polars (Best CPU),82.47,3.17,1.95,0.156,0.028,12.37
+Always DataFusion,96.3,3.68,2.46,0.182,0.054,14.02
+Always GPU Cold (Best Single),56.96,1.58,0.36,0.159,0.031,3.35
+Always BigQuery Serverless,745.39,14.2,12.98,62.5,62.372,6250.0
+GBR-9D Router (Proposed),54.92,1.381,0.161,0.139,0.011,3.39
+Oracle Lower Bound,43.39,1.22,0.0,0.128,0.0,3.12

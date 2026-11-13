@@ -1,0 +1,6 @@
+Engine,Version,Threads,Memory_Limit,Temp_Spill_Dir,Vector_Size,Parquet_Pushdown,JIT_SIMD
+DuckDB,v1.1.3 (x86_64/ARM64),14 (Node 1) / 16 (Node 2) / 8 (Node 3),12.0 GB (75% RAM),NVMe SSD (PCIe 4.0 x4),2048 tuples,Enabled (ZSTD + Min-Max Zone Maps),AVX2 / NEON Vectorized
+Polars,v1.14.0 (Rust Lazy API),RAYON_NUM_THREADS=14,OS Managed (16 GB Host),Streaming Out-of-Core Engine,Arrow Chunked (64K rows),Lazy scan_parquet Predicate + Projection Pushdown,SIMD Nightly / Arrow Zero-Copy
+Apache DataFusion,v43.0.0 (Rust Arrow),target_partitions=14,FairSpillPool 12.0 GB,Local NVMe DiskManager,8192 batch_size,ParquetExec PageIndex + RowGroup Pruning,LLVM Arrow Kernels
+PyTorch CUDA GPU,v2.5.1+cu121 (RTX 2050 4GB),2048 CUDA Cores (PCIe 4.0 x4),3.6 GB Usable VRAM (Guard at 3.2 GB),Chunked Host-Pinned Double Buffering,Full-Tensor / 16M-Row Chunks,PyArrow Columnar Read -> Pinned DMA H2D,cuBLAS / ATen Vectorized Kernels
+Google BigQuery,Enterprise Cloud Serverless,Dynamic Slot Allocation (US-Central1),Managed Shuffle Tier,Colossus Distributed Storage,Capacitor Columnar,Native Storage API (use_query_cache=False),Borg Distributed Execution

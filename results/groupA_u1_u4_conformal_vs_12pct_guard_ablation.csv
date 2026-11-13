@@ -1,0 +1,11 @@
+Policy_ID,Description,Top1_pct,Top2_pct,Mean_Latency_ms,Mean_Regret_pct,P95_Regret_pct,P99_Regret_pct,Seed_p_raw_vs_Full,Seed_p_Holm_vs_Full
+B0_Always_GPU,"Always GPU (Cold PCIe, Best Single Engine Mean at SF=1)",52.0,66.67,56.96,58.65,257.31,412.5,0.184,0.368
+B1_Always_Polars,Always Polars (Best Single CPU Engine at SF=1),28.0,58.67,82.47,94.12,318.4,485.2,0.0057,0.0171
+B2_Tier_to_Engine_Rule,"Deterministic Tier->Engine Rule (L1,L4,L5->Polars; L2,L3->GPU)",48.0,70.67,58.34,49.8,184.5,276.4,0.0284,0.0412
+B3_Ridge_Linear_9D,Ridge Linear Cost Regression (9D) + 12% PCIe Guard,50.67,72.0,49.12,41.85,196.78,289.1,0.215,0.368
+B4_Shallow_Tree_9D,Depth-2 Decision Tree (9D) + 12% PCIe Guard,52.0,73.33,51.35,39.4,150.87,234.6,0.312,0.368
+B5_Always_GPU_Plus_12pct_Guard,Always-GPU + 12% PCIe Transfer Guard (Abstain to Polars if Pred Gain < 12%),54.67,74.67,55.64,38.92,148.2,228.4,0.094,0.282
+U0_GBR_9D_Unguarded_ArgMin,GBR-9D Point ArgMin Only (No U1-U4 Safety Rules),53.33,74.67,56.85,43.1,168.4,264.1,0.0142,0.0426
+U1_U2_GBR_9D_Conformal_Only,GBR-9D + Split-Conformal 90% Upper Bound Only (No 12% Margin Guard),56.0,76.0,55.48,36.84,124.6,189.3,0.082,0.246
+U3_GBR_9D_12pct_Guard_Only,GBR-9D + 12% PCIe Abstention Margin Only (No Conformal Quantile Penalty),56.0,74.67,55.21,36.15,132.4,204.5,0.064,0.246
+U1_U4_GBR_9D_Full_Proposed,GBR-9D Full Proposed (Split-Conformal U1/U2 + 12% Guard U3 + VRAM/OOD Gate U4),57.33,76.0,54.92,34.98,114.11,172.85,1.0,1.0

@@ -1,0 +1,7 @@
+Train_Suite,Test_Suite,Top1_pct,Top2_pct,Best_Single_Engine_ms,GBR_9D_Routed_ms,Mean_Regret_pct,P95_Regret_pct
+TPC-H (N=75),"Prospective Holdout S6 (N=15, Frozen Tag)",73.33,86.67,48.92,45.84,18.45,64.2
+TPC-H (N=75),"Official TPC-H Q1-Q22 (N=22, Unseen Templates)",68.18,90.91,18.45,16.98,21.3,78.4
+TPC-H (N=75),"SSB Star-Schema (N=13, Leave-One-Suite-Out)",69.23,92.31,14.8,12.95,19.8,68.5
+TPC-H (N=75),"ClickBench Web Analytics (N=20, Leave-One-Suite-Out)",65.0,85.0,34.2,31.4,24.6,88.2
+TPC-H (N=75),"JCC-H Skewed (Zipf z=1.5, N=25, 12D Catalog)",64.0,84.0,74.5,63.8,29.4,96.4
+TPC-H (N=75),"IMDB JOB Skewed Joins (N=33, 9D -> 12D Catalog)",54.55,81.82,6.42,5.89,38.2,112.5
