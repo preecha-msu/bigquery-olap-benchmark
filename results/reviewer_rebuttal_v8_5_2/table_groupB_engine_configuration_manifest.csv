@@ -1,0 +1,3 @@
+Engine,Version,Threads,Memory_Limit,Preserve_Insertion_Order,Storage_Mode,Key_Flags
+DuckDB,2.0.0,8,9GB,False,In-Memory Columnar Table & ZSTD Parquet,PRAGMA threads=8; SET memory_limit='9GB'; SET preserve_insertion_order=false;
+Polars,2.1.0,12,Host RAM (16GB),True,In-Memory Apache Arrow DataFrame + Lazy SQLContext,POLARS_MAX_THREADS=8; pl.SQLContext(frames=...).execute(q).collect()
