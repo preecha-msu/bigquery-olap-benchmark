@@ -1,0 +1,6 @@
+Complexity_Tier,Engine_Versions_Pinned,x86_64_Node1C_DuckDB_ms,x86_64_Node1C_Polars_ms,x86_64_Node1C_DataFusion_ms,ARM64_Node3A_DuckDB_ms,ARM64_Node3A_Polars_ms,ARM64_Node3A_DataFusion_ms,Result_Equivalence_EX,Max_FP64_Error,Winning_Engine_Regime_Match
+L1: Scan & Filter (n=3),"DuckDB 1.4.5 | Polars 1.36.1 | DataFusion 50.1.0 (8T, 2W+5R)",9.14,14.2,18.45,5.9,11.25,14.1,1.0,1.11e-16,100% Match (DuckDB < Polars < DF on selective scans)
+L2: Multi-Way Joins (n=3),"DuckDB 1.4.5 | Polars 1.36.1 | DataFusion 50.1.0 (8T, 2W+5R)",45.47,62.3,74.8,24.19,38.4,49.2,1.0,3.44e-16,100% Match (DuckDB parallel radix join leads)
+L3: Nested CTE Pipelines (n=3),"DuckDB 1.4.5 | Polars 1.36.1 | DataFusion 50.1.0 (8T, 2W+5R)",38.9,48.15,55.6,23.85,31.4,39.5,1.0,2.88e-16,100% Match (DuckDB staged CTE materialization leads)
+"L4: Window Functions (n=3, Full-Horizon Crossover)","DuckDB 1.4.5 | Polars 1.36.1 | DataFusion 50.1.0 (8T, 2W+5R)",111.3,118.85,164.2,70.75,66.41,112.5,1.0,5.74e-16,100% L4_V3 Crossover Match (Polars beats DuckDB: 149.10 vs 170.07 ms x86; 80.67 vs 108.40 ms ARM64)
+L5: Array Construction & UNNEST (n=3),"DuckDB 1.4.5 | Polars 1.36.1 | DataFusion 50.1.0 (8T, 2W+5R)",94.2,76.4,68.5,58.9,50.8,46.2,1.0,1.95e-16,100% Match (Arrow ListArray zero-copy offset slicing leads)

@@ -1,0 +1,4 @@
+Pairwise_Comparison,Base_Model_Top1_Pct,CSCI_Model_Top1_Pct,Top1_Gain_pp,Base_Mean_Regret_Pct,CSCI_Mean_Regret_Pct,Delta_Mean_Regret_pp,Base_P95_Regret_Pct,CSCI_P95_Regret_Pct,Base_Splits_Per_Tree,CSCI_Splits_Per_Tree,Split_Reduction_Pct,Paired_Bootstrap_95CI,Wilcoxon_p
+Pair 1 (Syntax-Only): Model A (Raw AST 7D) -> Model B (Raw AST + CSCI 8D),46.67,50.67,4.0,50.87,46.15,-4.72,146.2,139.8,6.72,4.86,-27.68,"[-9.85%, -0.64%]",0.0214
+Pair 2 (With Selectivity): Model C (Raw AST + sigma 8D) -> Model D (Raw AST + CSCI + sigma 9D),52.0,57.33,5.33,44.2,34.98,-9.22,138.45,114.11,6.84,4.91,-28.22,"[-15.60%, -3.45%]",0.0038
+"Pair 3 (Tree-Size Orthogonalized): Model C (8D) -> Model E (Raw AST + In-Fold CSCI_res_perp_(D,N) + sigma 9D)",52.0,57.33,5.33,44.2,35.42,-8.78,138.45,115.2,6.84,5.04,-26.32,"[-14.95%, -3.10%]",0.0046
