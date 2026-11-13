@@ -1,0 +1,32 @@
+{
+  "timestamp_utc": "2026-11-13T06:35:55.612719+00:00",
+  "os_platform": "Windows-11-10.0.26200-SP0",
+  "cpu_isa": "AMD64",
+  "python_version": "3.13.9",
+  "verified_csv_artifacts_count": 162,
+  "global_registry_sha256": "b3f8ec992a2addd67ceffff0d95e4407183c9d5fae384eacfa43224f49b53649",
+  "live_engine_equivalence_audit": {
+    "rows_processed": 200000,
+    "reference_fp64_checksum": 74392726.149837,
+    "max_fp64_rel_error": 6.009120231930191e-16,
+    "exact_multiset_equivalence_EX": 1.0,
+    "engines": {
+      "DuckDB": {
+        "version": "2.0.0",
+        "latency_ms": 3.865,
+        "fp64_rel_err": 6.009120231930191e-16,
+        "EX": 1
+      },
+      "Polars": {
+        "version": "2.1.0",
+        "latency_ms": 1.592,
+        "fp64_rel_err": 2.0030400773100637e-16,
+        "EX": 1
+      },
+      "DataFusion": {
+        "status": "skipped (Expected Struct type from __arrow_c_array__, found Int64.)"
+      }
+    }
+  },
+  "overall_status": "PASS_ZERO_DISCREPANCY"
+}
