@@ -1,0 +1,9 @@
+Check_ID,Status,Verification_Detail
+2.1_Node1A_Scope_Separation,PASS,Node 1A separates 97Q available vs 75Q evaluated (57.33% = 43/75)
+2.2_CSCI_Models_A_to_E_Table14,PASS,"Table 14 reports Models A-E with Splits/Tree, Regret, 95% CI, and p=0.0038"
+2.3_JOB_3Level_ZeroShot_vs_Supervised,PASS,"Table 17 separates Zero-Shot 9D (21.21%), Zero-Shot 12D (69.70%), and Supervised 5-Fold (96.97%)"
+2.4_Energy_Scope_and_RAPL_Protocol,PASS,Consistent Estimated CPU Package Energy terminology + Linux RAPL Bland-Altman protocol
+2.5_Abstract_CPU_Only_Protocols_74_86_97,PASS,"Abstract, Intro, Table 1, and Conclusion qualify 74.67%, 86.67%, and 97.33% by exact protocol"
+2.6a_SF1_Latency_Parity_Tables_5_8_11_18,PASS,"All SF=1 75Q tables report identical mean latencies (54.92 ms AST-Route, 34.98% regret)"
+2.6b_Top1_Fraction_Integrity,PASS,"Exact integer ratios: 43/75=57.33%, 11/15=73.33%, 15/22=68.18%, 12/13=92.31%, 16/20=80.00%, 23/33=69.70%"
+2.6c_Brace_Balance_Exact,PASS,Exact LaTeX brace balance: 5496 == 5496
