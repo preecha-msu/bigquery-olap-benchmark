@@ -1,0 +1,7 @@
+operator_symbol,operator_name,algorithmic_time_complexity,physical_memory_pass_mechanism,canonical_weight_w,learned_25fold_mean_w,learned_25fold_sd_w,abs_diff_vs_canonical,rel_diff_pct
+D(q),AST Tree Depth,O(n) pipelined expression evaluation,Vertical operator pipeline traversal with register/L1 cache staging (~1.5x pass multiplier),1.5,1.46,0.0,0.04,2.68
+J(q),Relational Hash Joins,O(|R_build| + |R_probe|) two-phase hash table build & probe,Hash-bucket directory construction + random LLC/DRAM probe cache misses (~2.5x pass multiplier),2.5,2.58,0.01,0.08,3.2
+S(q),Nested CTEs / Subqueries,O(n_stage) pipeline-breaking intermediate materialization,"Full intermediate tuple/vector buffer write, grain isolation, and re-scan (~3.0x pass multiplier)",3.0,2.94,0.01,0.06,2.0
+W(q),Window Partition & Frame Specs,O(n log n) partition sort + O(n) sliding-frame prefix scan,Multi-pass radix/merge partition sort + segment-tree/cumsum framing (~3.5x pass multiplier),3.5,3.56,0.01,0.06,1.71
+U(q),Lateral Array UNNEST,O(n * k_bar) super-linear cardinality expansion,Variable-length list offset allocation + repeat_interleave row explosion (~4.0x pass multiplier),4.0,4.02,0.03,0.02,0.51
+C(q),Conditional CASE Branches,O(n * b) predicated branch / SIMD mask evaluation,Multi-branch boolean mask generation and vectorized blend/mux (~1.5x pass multiplier),1.5,1.44,0.02,0.06,4.03

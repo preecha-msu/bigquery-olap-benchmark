@@ -1,0 +1,6 @@
+check_id,dimension,formula_verified,observed_value,status
+MATH_01_CSCI_LINEAR_SUBSPACE_IDENTITY,"Exact Linear Combination on 6-Operator Basis [D, J, S, W, U, C]",CSCI(q) = 1.5*D + 2.5*J + 3.0*S + 3.5*W + 4.0*U + 1.5*C (sum(w_j) = 16.0),"max |CSCI - O*w| = 2.49e-14, R^2 = 1.000000",PASS
+MATH_02_25FOLD_NNLS_WEIGHT_CONVERGENCE,25-Fold Leak-Free Learned Weights vs. Canonical Domain-Theory Weights,"cos(w_canon, w_hat_NNLS) >= 0.999 and Spearman rho(CSCI_canon, CSCI_learned) >= 0.995","cos_sim = 0.999806, OOF Spearman rho = 0.998075 (w_hat = [1.4598, 2.58, 2.94, 3.56, 4.0205, 1.4396])",PASS
+EDGECASE_03_MONOTONE_OPERATOR_HIERARCHY,Strict Monotone Ordering of Learned Operator Weights,"max(w_D, w_C) < w_J < w_S < w_W < w_U","max(1.46, 1.44) < 2.58 < 2.94 < 3.56 < 4.02",PASS
+MATH_04_M1_M2_M3_M4_DOMINANCE_AND_CALIBRATION,Strict Dominance of M3 & M4 Over Unweighted M1 & M2 Across All 4 Reviewer Metrics,Top-1: M3/M4 (57.33%) > M2 (52.00%) > M1 (46.67%); P95 Regret: M3 (114.11%) < M2 (138.45%) < M1 (146.20%); ECE: M3 (4.18%) < M2 (8.42%) < M1 (11.24%),"Delta Regret(M3-M2) = -9.22 pp (p=0.0038), Delta ECE = -4.24 pp",PASS
+MATH_05_OBLIQUE_HYPERPLANE_SPLIT_REDUCTION,Axis-Aligned GBDT Staircase Split Compression via CSCI Oblique Projection,(Splits_M3 - Splits_M2) / Splits_M2 = (4.91 - 6.84) / 6.84 = -28.22%,"Splits/tree: M2 = 6.84 -> M3 = 4.91 (-28.22%), M4 = 4.94",PASS
