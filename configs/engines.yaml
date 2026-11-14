@@ -1,0 +1,32 @@
+# AST-Route V9 Execution Backends & Architectural Boundaries
+engines:
+  DuckDB:
+    role: "C++ Vectorized Analytical SQL DBMS"
+    versions_tested: ["2.0.0 (Node 1A/1B, Node 2)", "1.4.5 (Node 1C Pinned Parity, Node 3 M1, Sec 3.5 External)"]
+    sql_support: "100% Native SQL (213/213 benchmark queries)"
+    configuration: "PRAGMA threads=8 (or 22 on Node 2); SET memory_limit='9GB'; SET preserve_insertion_order=false"
+  Polars:
+    role: "Rust Lazy Arrow DataFrame / SQL Engine"
+    versions_tested: ["2.1.0", "1.36.1"]
+    sql_support: "194/213 direct SQLContext + 19/213 SQLGlot normalized lazy Arrow plans"
+    configuration: "POLARS_MAX_THREADS=8; streaming=True at SF>=10GB"
+  DataFusion:
+    role: "Rust Apache Arrow Vectorized SQL Query Engine"
+    versions_tested: ["55.0.0", "50.1.0"]
+    sql_support: "100% Native SQL (213/213 benchmark queries)"
+    configuration: "target_partitions=8; FairSpillPool 9.0 GB memory cap"
+  BigQuery:
+    role: "Serverless Multi-Tenant Cloud Data Warehouse"
+    versions_tested: ["Enterprise Serverless Edition (US multi-region)"]
+    sql_support: "100% Native Standard SQL"
+    configuration: "use_query_cache=False; partitioned by l_shipdate, clustered by l_returnflag, l_linestatus"
+  SQLite3:
+    role: "C Row-Oriented B-Tree Embedded Relational DBMS Baseline"
+    versions_tested: ["3.51.0"]
+    sql_support: "198/213 direct SQL + 15/213 Tier L5 staged via normalized child table"
+    configuration: "PRAGMA cache_size=-2000000; PRAGMA temp_store=MEMORY"
+  PyTorch_CUDA_Prototype:
+    role: "Author-Developed Compiled Relational Tensor Prototype (Non-DBMS)"
+    versions_tested: ["PyTorch 2.6.0+cu124 on NVIDIA GeForce RTX 2050 4.0 GB VRAM"]
+    sql_support: "0% Direct SQL Parser; 100% lowered from SQLGlot AST (+4.15 ms Level-3 fairness charge)"
+    configuration: "3.20 GB usable VRAM ceiling (Rule U4); FP64 accumulation parity (EX=1.000)"

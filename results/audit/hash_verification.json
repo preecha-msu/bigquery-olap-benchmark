@@ -1,0 +1,16 @@
+{
+  "protocol_id": "V86-00",
+  "verified_at": "2026-11-14T07:05:00+07:00",
+  "total_key_artifacts_verified": 8,
+  "all_hashes_valid": true,
+  "artifacts": {
+    "merged_75queries_all_engines_sf1.csv": "5eb9a13b43a164f5f11bbee91a774372446182487cab251cc1048f540574d0e3",
+    "official_tpch_q1_q22_external_validation.csv": "f7f4490389ae0db27608e673368cbb816a85869af95c2c4400c26de4a55d4f69",
+    "v9_sec3_1_pillar1_2_dataset_and_multiset_equivalence_163q.csv": "759d0c18e17fd63a48691c2ae4e0da8cd4f7575e3be3a685721b61cc876a699d",
+    "v9_sec3_2_sf100_tier_and_scale_reconciliation.csv": "d101579d77a199eee562a2c676303ea02b117bcf37b3a6764cb963db1168865b",
+    "v9_sec3_3_cpu_only_and_multinode_reconciliation.csv": "029a4fc0e87c2bda15601f41af7d265b774f5b0afdf61fb46c62b0197b1e9d98",
+    "v9_sec3_4_models_M1_M2_M3_M4_ablation_and_calibration.csv": "b988023a7e59fbc02310029961d93c88b416954767e3d766ca0993fd0e5abb4d",
+    "v9_sec3_5_tpcds_30queries_per_query_telemetry.csv": "2f540802d5da18e5f5a3987d28debd2682aaef95d5871cd97b10993d444a77d8",
+    "v9_sec3_5_bird_20queries_per_query_telemetry.csv": "1d06c673e1af218dd59eeb8ab6c487c81d464d9fa7c5457d1dd2d14e6b75f107"
+  }
+}

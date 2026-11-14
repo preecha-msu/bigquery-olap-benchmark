@@ -1,0 +1,7 @@
+Node_Pair_or_Scope,Transfer_Mode,Calibration_Samples,Calibration_Time_s,Top1_Acc_Pct,Top2_Acc_Pct,Net_Latency_ms,Mean_Regret_Pct,Scope_Boundary_Note
+"Node 1B (8T x86_64, N=75)",Native In-Domain 25-Seed LOSO-CV (3-CPU Pool),72Q/fold in-domain,0.0,74.67,96.0,69.12,9.64,Baseline 8-thread CPU-only workstation
+"Node 1 (8T) -> Node 2B (22T x86_64, N=75)",Strict Zero-Shot Cross-Node Transfer (Uncalibrated),0 queries on Node 2,0.0,40.0,74.67,54.81,28.4,Bounded limitation: 8T->22T thread scaling shifts DuckDB vs Polars crossover
+"Node 1 (8T) -> Node 2B (22T x86_64, N=75)",5-Seed Calibrated Transfer (Scale Multiplier gamma_e),5 seeds (15Q) on Node 2,2.74,48.0,78.67,48.37,16.2,One-time 2.74s calibration recovers 6.44 ms (-11.7%) latency
+"Node 2C (22T x86_64, N=75)",Native In-Domain 25-Seed LOSO-CV (3-CPU Pool),72Q/fold on Node 2,0.0,97.33,100.0,35.11,0.18,Native Node 2 retraining (73/75 hits); never conflated with zero-shot
+"Node 2A (22T x86_64, N=30 Mixed)",Native In-Domain 30-Fold LOGO-CV (3-CPU Pool),29 groups/fold on Node 2,0.0,86.67,100.0,62.05,8.83,Matches Node 3B 30-query mixed evaluation protocol
+"Node 3B (Apple M1 ARM64, N=30 Mixed)","Native In-Domain 30-Fold LOGO-CV (3-CPU Pool, Unified RAM)",29 groups/fold on Node 3,0.0,96.67,100.0,29.44,3.59,29/30 hits on Apple M1 ARM64 (no discrete PCIe bus model used)

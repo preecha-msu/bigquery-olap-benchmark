@@ -1,0 +1,23 @@
+# AST-Route V9 Standardized Metric Dictionary & Boundary Lexicon (Roadmap Section 6)
+standard_record_fields:
+  - "run_id"
+  - "protocol_id"
+  - "query_id"
+  - "template_id"
+  - "dataset_hash"
+  - "engine_version"
+  - "hardware_id"
+  - "phase"
+  - "latency_components_ms"
+  - "energy_j_and_method"
+  - "cost_value_and_basis"
+  - "status_and_error_code"
+  - "artifact_hashes"
+timing_boundaries:
+  T_exec_ms: "Pure backend execution latency (including PCIe H2D+kernel+D2H for GPU_Cold)"
+  T_router_warm_ms: "4.145 ms (3.476 ms SQLGlot parse + 0.172 ms cached zone-map + 0.497 ms GBDT inference)"
+  T_router_cold_ms: "4.386 ms (3.476 ms SQLGlot parse + 0.413 ms NVMe footer seek + 0.497 ms GBDT inference)"
+  T_net_ms: "T_exec_ms + T_router_ms (54.92 ms warm / 55.16 ms cold on Core 75Q)"
+  T_L3_charged_ms: "Conservative fairness bound charging an extra +4.15 ms SQL-to-tensor transpilation to GPU picks (59.07 ms)"
+  T_BQ_server_job_ms: "BigQuery server-side job duration = tau_queue + tau_server_exec (745.39 ms at SF=1, 2571.60 ms at SF=100)"
+  T_BQ_client_wan_ms: "BigQuery end-to-end client wall-clock including HTTPS/REST + TLS + Arrow read (1124.79 ms at SF=1, 3356.20 ms at SF=100)"

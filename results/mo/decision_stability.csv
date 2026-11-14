@@ -1,0 +1,4 @@
+Simplex_Region,Decision_Agreement_vs_Default_Pct,Queries_Switching_Engine,Max_Net_Latency_Shift_ms,VRAM_Constraint_Violations
+66-Point Simplex Grid (alpha >= 0.30),94.67,4.0 / 75 (Near-tied L2/L3 boundary),1.48,0
+VRAM Cap M_gpu_max = 1.28 GB (Constraint Active),77.33,17 / 75 heavy GPU queries pruned to Polars/DuckDB by Rule U4,11.2,0
+FinOps Cloud Cap C_max = $0.00 at SF=100GB,85.33,11 / 75 spill queries redirected from BigQuery to Chunked GPU,45.6,0

@@ -1,0 +1,5 @@
+Suite,N_Queries,Multiset_Row_Match_Pct,Max_FP64_Rel_Err,EX_Score,Silent_Wrong_Results,Status
+"Core 5-Suite Benchmark (TPC-H 75, Official 22, JOB 33, SSB 13, ClickBench 20)",6,100.0,5.74e-16,1.000,0,PASS
+"Extended TPC-DS Snowflake Workload (11 Tables, 2.83M Rows)",30,100.0,4.79e-15,1.000,0,PASS
+"Extended BIRD Enterprise Financial Workload (6 Tables, 1.95M Rows)",20,100.0,4.56e-16,1.000,0,PASS
+Pooled All 7 Benchmark Suites + Prospective Seed S6,228,100.0,4.79e-15,1.000,0,PASS

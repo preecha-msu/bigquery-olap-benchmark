@@ -1,0 +1,13 @@
+{
+  "protocol_id": "V86-08",
+  "trials_per_scenario": 30,
+  "total_trials": 180,
+  "scenarios": [
+    "F1_GPU_VRAM_OOM_Guard",
+    "F2_CPU_Memory_Pressure_Spill",
+    "F3_Cloud_API_Timeout_Offline",
+    "F4_Catalog_Metadata_Missing",
+    "F5_Primary_Engine_Offline",
+    "F6_Concurrent_Dual_Backend_Failure"
+  ]
+}

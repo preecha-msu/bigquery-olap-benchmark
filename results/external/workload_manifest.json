@@ -1,0 +1,37 @@
+{
+  "protocol_id": "V86-06",
+  "total_external_suites": 5,
+  "total_external_queries": 116,
+  "suites": [
+    {
+      "suite": "IMDB JOB",
+      "n_queries": 33,
+      "tables": 21,
+      "operators": "Cyclic/Snowflake Joins + LIKE String Filters"
+    },
+    {
+      "suite": "SSB",
+      "n_queries": 13,
+      "tables": 5,
+      "operators": "Dimensional Star Joins Q1.1-Q4.3"
+    },
+    {
+      "suite": "ClickBench",
+      "n_queries": 20,
+      "tables": 1,
+      "operators": "Wide-Table Web Analytics Aggregations/Filters"
+    },
+    {
+      "suite": "TPC-DS",
+      "n_queries": 30,
+      "tables": 11,
+      "operators": "Multi-Channel Snowflake Joins, 2-Stage CTEs, Window, CASE"
+    },
+    {
+      "suite": "BIRD Enterprise",
+      "n_queries": 20,
+      "tables": 6,
+      "operators": "Financial Delinquency Ratios, Multi-CTE, Window Cohorts"
+    }
+  ]
+}

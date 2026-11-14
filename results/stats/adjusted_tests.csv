@@ -1,0 +1,12 @@
+Test_Family,Comparison,Unit_of_Analysis,Analysis_Class,Mean_AST_Route,Mean_Baseline,Paired_Diff_Baseline_minus_AST,Cluster_Bootstrap_95CI,Cliffs_Delta,Wilcoxon_Raw_p,Holm_Bonferroni_Adjusted_p
+F1_Core75_SeedCluster_K25,AST-Route Net vs Always DuckDB,K=25 Seed Clusters,Confirmatory,49.24,183.74,134.51,"[59.86, 231.08]",0.5296,2.5079e-03,0.0100
+F1_Core75_SeedCluster_K25,AST-Route Net vs Always DataFusion,K=25 Seed Clusters,Confirmatory,49.24,88.2,38.96,"[12.44, 66.61]",0.2992,2.1908e-02,0.0657
+F1_Core75_SeedCluster_K25,AST-Route Net vs Always Polars,K=25 Seed Clusters,Confirmatory,49.24,66.53,17.29,"[0.11, 33.64]",0.3952,4.8262e-02,0.0965
+F1_Core75_SeedCluster_K25,AST-Route Net vs Always BigQuery,K=25 Seed Clusters,Confirmatory,49.24,745.39,696.15,"[462.89, 975.57]",1.0,5.9605e-08,2.9802e-07
+F1_Core75_SeedCluster_K25,AST-Route Net vs Always GPU Cold (Mean Latency),K=25 Seed Clusters,"Confirmatory (Non-sig mean, tail regret win)",49.24,56.96,7.73,"[-8.60, 23.56]",0.072,2.8723e-01,0.2872
+F2_TPCDS_30Q,TPC-DS (N=30): AST-Route M3 Zero-Shot vs Always DuckDB,N=30 Distinct External Queries,Confirmatory Zero-Shot,20.05,59.49,39.44,"[28.68, 49.89]",0.49,9.5367e-07,9.5367e-07
+F2_TPCDS_30Q,TPC-DS (N=30): AST-Route M3 Zero-Shot vs Always Polars,N=30 Distinct External Queries,Confirmatory Zero-Shot,20.05,72.33,52.27,"[38.50, 65.63]",0.5333,1.8626e-08,5.5879e-08
+F2_TPCDS_30Q,TPC-DS (N=30): AST-Route M3 Zero-Shot vs Always DataFusion,N=30 Distinct External Queries,Confirmatory Zero-Shot,20.05,52.62,32.56,"[21.21, 44.37]",0.4744,1.6019e-07,3.2037e-07
+F3_BIRD_20Q,BIRD (N=20): AST-Route M3 Zero-Shot vs Always DuckDB,N=20 Distinct External Queries,Confirmatory Zero-Shot,20.24,63.14,42.89,"[28.15, 57.35]",0.4225,2.4414e-04,2.4414e-04
+F3_BIRD_20Q,BIRD (N=20): AST-Route M3 Zero-Shot vs Always Polars,N=20 Distinct External Queries,Confirmatory Zero-Shot,20.24,59.27,39.02,"[27.16, 50.72]",0.505,3.6240e-05,7.2479e-05
+F3_BIRD_20Q,BIRD (N=20): AST-Route M3 Zero-Shot vs Always DataFusion,N=20 Distinct External Queries,Confirmatory Zero-Shot,20.24,69.68,49.44,"[15.93, 87.41]",0.455,1.9073e-06,5.7220e-06

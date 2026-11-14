@@ -1,0 +1,19 @@
+{
+  "protocol_id": "V86-04",
+  "total_epochs": 5,
+  "total_stream_queries": 375,
+  "detection_window_per_epoch": 15,
+  "evaluation_window_per_epoch": 60,
+  "detectors": {
+    "feature_psi_threshold": 0.25,
+    "conformal_pi_coverage_floor_pct": 80.0,
+    "q_error_p90_ceiling": 2.0
+  },
+  "epochs": [
+    "E1_Stationary_Baseline",
+    "E2_Heavy_Compute_Mix_Shift",
+    "E3_Selectivity_Horizon_Drift",
+    "E4_Moderate_Zipf_Skew_s08",
+    "E5_Severe_Zipf_Skew_s14"
+  ]
+}

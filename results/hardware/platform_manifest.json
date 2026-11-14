@@ -1,0 +1,29 @@
+{
+  "protocol_id": "V86-07",
+  "nodes": [
+    {
+      "node_id": "Node_1",
+      "isa": "x86_64",
+      "os": "Windows 11",
+      "threads": 8,
+      "ram_gb": 16.0,
+      "gpu": "NVIDIA RTX 2050 4GB (Discrete PCIe Gen4)"
+    },
+    {
+      "node_id": "Node_2",
+      "isa": "x86_64",
+      "os": "Windows 11",
+      "threads": 22,
+      "ram_gb": 15.5,
+      "gpu": "None (CPU-Only M_gpu=0)"
+    },
+    {
+      "node_id": "Node_3",
+      "isa": "ARM64",
+      "os": "macOS 15.6.1",
+      "threads": 8,
+      "ram_gb": 8.0,
+      "gpu": "Apple M1 Unified LPDDR4X Memory (CPU-Only 3-Engine Pool)"
+    }
+  ]
+}

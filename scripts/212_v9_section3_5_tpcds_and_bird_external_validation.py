@@ -1265,7 +1265,7 @@ def paired_bootstrap_ci_and_wilcoxon(
         p_val = 1.0
     else:
         try:
-            _, p_val_raw = stats.wilcoxon(non_zero, alternative="two-sided", mode="approx")
+            _, p_val_raw = wilcoxon(non_zero, alternative="two-sided")
             p_val = float(p_val_raw)
         except Exception:
             p_val = 1.0
@@ -2152,7 +2152,7 @@ Rule-Based / \textbf{{M1: Raw AST 7D}} & Heuristic ($J,W$) / Unweighted AST 7D &
 
     # 5. Update the Conclusion external validation sentence to match the exact 116-query / 5-suite numbers
     old_conc_ext_pattern = re.compile(
-        r"safe zero-shot cross-schema transfer across (?:66|130|116) external queries \([^)]*(?:\([^)]*\)[^)]*)*\)"
+        r"safe zero-shot cross-schema transfer across (?:66|130|116) external queries .*?(?=,\s*1\.14\\times\\text\{--\}2\.14\\times)"
     )
     new_conc_ext_str = (
         rf"safe zero-shot cross-schema transfer across 116 external queries from five cross-schema benchmarks "
@@ -2161,11 +2161,19 @@ Rule-Based / \textbf{{M1: Raw AST 7D}} & Heuristic ($J,W$) / Unweighted AST 7D &
         rf"matching Always Polars at $6.75\text{{ ms}}$ zero-shot and reaching $4.54\text{{ ms}}$ [$69.70\%$ Top-1] in 12D on 33 IMDB JOB queries; "
         rf"achieving $92.31\%$ Top-1 / $100.00\%$ Top-2 at $8.00\text{{ ms}}$ exec [$12.15\text{{ ms}}$ net] on 13 SSB queries; "
         rf"$80.00\%$ Top-1 / $95.00\%$ Top-2 at $20.03\text{{ ms}}$ exec [$24.18\text{{ ms}}$ net] on 20 ClickBench queries; "
-        rf"${t_m3['top1_acc_pct']:.2f}\%$ Top-1 [${t_12d['top1_acc_pct']:.2f}\%$ in 12D] at ${t_m3['exec_mean_ms']:.2f}\text{{ ms}}$ exec [$2.48\times$ vs.\ DuckDB, ${t_m3['mean_regret_pct']:.2f}\%$ mean regret] on 30 TPC-DS snowflake queries; "
-        rf"and ${b_m3['top1_acc_pct']:.2f}\%$ Top-1 [${b_12d['top1_acc_pct']:.2f}\%$ in 12D] at ${b_m3['exec_mean_ms']:.2f}\text{{ ms}}$ exec [$3.37\times$ vs.\ DuckDB, ${b_m3['mean_regret_pct']:.2f}\%$ mean regret] on 20 BIRD enterprise financial queries)"
+        rf"${t_m3['top1_acc_pct']:.2f}\%$ Top-1 [${t_12d['top1_acc_pct']:.2f}\%$ in 12D] at ${t_m3['exec_mean_ms']:.2f}\text{{ ms}}$ exec [${t_duck['exec_mean_ms']/t_m3['exec_mean_ms']:.2f}\times$ vs.\ DuckDB, ${t_m3['mean_regret_pct']:.2f}\%$ mean regret] on 30 TPC-DS snowflake queries; "
+        rf"and ${b_m3['top1_acc_pct']:.2f}\%$ Top-1 [${b_12d['top1_acc_pct']:.2f}\%$ in 12D] at ${b_m3['exec_mean_ms']:.2f}\text{{ ms}}$ exec [${b_duck['exec_mean_ms']/b_m3['exec_mean_ms']:.2f}\times$ vs.\ DuckDB, ${b_m3['mean_regret_pct']:.2f}\%$ mean regret] on 20 BIRD enterprise financial queries)"
     )
     if old_conc_ext_pattern.search(tex):
         tex = old_conc_ext_pattern.sub(lambda _: new_conc_ext_str, tex, count=1)
+
+    # Also deduplicate repeated footnote sentence in Table 22 if present
+    dup_fn_unit = (
+        r"$^{\ddagger}$\textbf{Exec Mean ($T_{\text{exec}}$) vs.\ Net Incl.\ Parse ($T_{\text{net}} = T_{\text{exec}} + 4.145\text{ ms}$) vs.\ Level-3 SQL-to-Tensor Charged ($T_{\text{L3}}$):} "
+        r"For $\mathcal{R}_{\text{GBR-9D}}$ Full, pure engine execution time is $T_{\text{exec}} = 50.775\text{ ms}$ ($50.78\text{ ms}$), canonical net end-to-end latency including warm router dispatch ($+4.145\text{ ms}$) is $T_{\text{net}} = \mathbf{54.92\text{ ms}}$ ($55.16\text{ ms}$ under cold NVMe footer seek), and parenthesized $59.07\text{ ms}^{\ddagger}$ denotes the conservative Level-3 fairness bound charging an extra $+4.15\text{ ms}$ SQL-to-tensor transpilation penalty to GPU-dispatched queries (matching Table~\ref{tab:v9_benchmark_fairness_protocol} Row~2A)."
+    )
+    while dup_fn_unit + " " + dup_fn_unit in tex:
+        tex = tex.replace(dup_fn_unit + " " + dup_fn_unit, dup_fn_unit)
 
     # 6. Replace duplicate \bibitem{leis2015good} with \bibitem{nambiar2006tpcds} in BMC Vancouver format
     old_bib_leis_dup = (

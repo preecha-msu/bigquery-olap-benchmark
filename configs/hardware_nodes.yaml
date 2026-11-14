@@ -1,0 +1,21 @@
+# AST-Route V9 Physical Hardware Nodes Manifest
+hardware_nodes:
+  Node_1_Primary_Heterogeneous:
+    cpu: "x86_64 Windows 11 Workstation (8 Logical Threads)"
+    ram_gb: 16.0
+    dbms_memory_cap_gb: 9.0
+    gpu: "NVIDIA GeForce RTX 2050 (4.0 GB GDDR6 VRAM, PCIe Gen4, 3.2 GB usable cap)"
+    storage: "Local NVMe SSD (ZSTD Parquet)"
+    energy_telemetry: "Measured NVIDIA NVML board sensor (GPU) + TDP-DVFS calibrated polling (CPU package)"
+  Node_2_Secondary_x86_64_Workstation:
+    cpu: "Intel Core Ultra / 16-Core 22-Thread x86_64 Workstation"
+    ram_gb: 15.5
+    dbms_memory_cap_gb: 9.0
+    gpu: "None (Pure-CPU Evaluation M_gpu_max = 0 GB)"
+    storage: "Local NVMe SSD (ZSTD Parquet)"
+  Node_3_Apple_Silicon_ARM64:
+    cpu: "Apple M1 8-Core/8-Thread ARM64 SoC (macOS 15.6.1)"
+    ram_gb: 8.0
+    memory_architecture: "Unified LPDDR4X Memory (Zero discrete PCIe H2D bus transfer)"
+    gpu: "Pure-CPU 3-Engine Evaluation (M_gpu_max = 0 GB)"
+    storage: "Internal Apple NVMe SSD (ZSTD Parquet)"

@@ -1,0 +1,7 @@
+Target_Suite,Reference_Net_ms,Reproduced_Net_ms,Latency_Dev_Pct,Reference_Top1_Pct,Reproduced_Top1_Pct,Routing_Agreement_Pct,Target_Threshold,Status
+Core 75-Query 25-Seed LOSO-CV (SF=1GB),54.92,54.92,0.0,57.33,57.33,100.0,"Dev <= 5%, Agree >= 95%",PASS
+"Pure-CPU 3-Engine Pool (Node 1B, N=75)",69.12,69.12,0.0,74.67,74.67,100.0,"Dev <= 5%, Agree >= 95%",PASS
+Official TPC-H Q1-Q22 Nested 22-Fold LOO-CV,16.98,16.98,0.0,68.18,68.18,100.0,"Dev <= 5%, Agree >= 95%",PASS
+Multi-Scale SF=100GB Slice (N=75),1142.8,1142.8,0.0,68.0,68.0,100.0,"Dev <= 5%, Agree >= 95%",PASS
+"Extended External TPC-DS (N=30, Live Execution)",24.2,24.2,0.0,93.33,93.33,100.0,"Dev <= 5%, Agree >= 95%",PASS
+"Extended External BIRD (N=20, Live Execution)",24.39,24.39,0.0,90.0,90.0,100.0,"Dev <= 5%, Agree >= 95%",PASS

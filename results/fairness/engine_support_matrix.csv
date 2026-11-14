@@ -1,0 +1,7 @@
+Engine,Core_75Q,TPCH_22Q,JOB_33Q,SSB_13Q,ClickBench_20Q,TPCDS_30Q,BIRD_20Q,Total_Supported,Transpiled_Count,Unsupported_Count,Boundary_Class
+DuckDB (v2.0 / v1.4.5),75/75,22/22,33/33,13/13,20/20,30/30,20/20,213/213 (100.0%),0,0,Native SQL DBMS
+Apache DataFusion (v55.0 / v50.1),75/75,22/22,33/33,13/13,20/20,30/30,20/20,213/213 (100.0%),0,0,Native Arrow SQL Engine
+Polars SQLContext (v2.1 / v1.36.1),75/75,22/22,33/33,13/13,20/20,30/30,20/20,213/213 (100.0%),19,0,194 Direct SQL + 19 SQLGlot Lazy Arrow
+Google BigQuery Serverless,75/75,22/22,33/33,13/13,20/20,N/A (Local Suite),N/A (Local Suite),163/163 Cloud Scope (100.0%),0,0,Serverless Cloud SQL Warehouse
+SQLite 3 v3.51,75/75,22/22,33/33,13/13,20/20,N/A (Local Col Suite),N/A (Local Col Suite),163/163 Row-Store Baseline,15,0,148 Direct SQL + 15 Normalized Child Join
+PyTorch CUDA Relational Prototype,75/75,22/22,33/33,13/13,20/20,30/30,20/20,213/213 Tensor Lowered (0% Direct SQL),213,0,Author Tensor Prototype (+4.15 ms L3 Charge)

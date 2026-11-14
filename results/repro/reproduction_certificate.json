@@ -1,0 +1,21 @@
+{
+  "protocol_id": "V86-02",
+  "certificate_status": "VERIFIED_CLEANROOM_REPRODUCIBLE",
+  "targets_completed": "6/6 (100.0%)",
+  "multiset_equivalence_pct": 100.0,
+  "max_deterministic_deviation_pct": 0.0,
+  "routing_decision_agreement_pct": 100.0,
+  "environment": {
+    "protocol_id": "V86-02",
+    "os": "Windows-11-10.0.26200-SP0",
+    "python_version": "3.13.9",
+    "duckdb_version": "1.4.5",
+    "polars_version": "1.36.1",
+    "datafusion_version": "50.1.0",
+    "pyarrow_version": "21.0.0",
+    "sqlglot_version": "30.24.0",
+    "torch_version": "2.6.0+cu124",
+    "cuda_available": true,
+    "gpu_device": "NVIDIA GeForce RTX 2050"
+  }
+}

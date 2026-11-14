@@ -1,0 +1,6 @@
+Scenario_ID,Weights_alpha_beta_gamma,Net_Latency_ms,Active_Energy_J,Energy_Boundary,Cloud_Cost_USD_1M,Top1_Acc_Pct,P95_Regret_Pct,Engine_Mix_75Q,Pareto_Optimal
+W1_Latency_First,"(1.00, 0.00, 0.00)",54.92,1.381,0.49J Measured NVML + 0.89J Est. CPU,0.0,57.33,114.11,51 GPU / 21 Polars / 3 DuckDB / 0 BQ,Yes (Pareto Vertex)
+W2_Balanced_Default,"(0.50, 0.30, 0.20)",55.34,1.184,0.52J Measured NVML + 0.66J Est. CPU,0.0,56.0,115.8,54 GPU / 19 Polars / 2 DuckDB / 0 BQ,Yes (Knee Point)
+W3_Energy_First,"(0.10, 0.80, 0.10)",56.4,0.782,0.60J Measured NVML + 0.18J Est. CPU,0.0,52.0,142.6,66 GPU / 9 Polars / 0 DuckDB / 0 BQ,Yes (Min-Energy Vertex)
+W4_Cost_First_SF100_Spill,"(0.20, 0.10, 0.70) at SF=100GB",1188.4,25.1,Chunked NVML GPU + Local NVMe CPU,0.0,65.33,68.4,58 GPU Chunked / 17 Polars / 0 BQ ($0 Cloud),Yes (Zero-Cloud Cap)
+W5_Balanced_SF100_Cloud_Burst,"(0.50, 0.25, 0.25) at SF=100GB",1142.8,24.4,Chunked NVML GPU + 11 BQ Offloads,18592.35,68.0,58.6,55 GPU / 9 Polars / 11 BigQuery (Spill Guard),Yes (Min-Latency SF=100)

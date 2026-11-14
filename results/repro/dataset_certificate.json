@@ -1,0 +1,24 @@
+{
+  "protocol_id": "V86-02",
+  "datasets_verified": [
+    {
+      "dataset": "TPC-H SF=1GB Core",
+      "rows_lineitem": 6001215,
+      "schema_valid": true,
+      "ex_parity": "1.000"
+    },
+    {
+      "dataset": "TPC-DS SF=1 (11 Tables)",
+      "total_rows": 2832526,
+      "schema_valid": true,
+      "ex_parity": "1.000"
+    },
+    {
+      "dataset": "BIRD Enterprise (6 Tables)",
+      "total_rows": 1950500,
+      "schema_valid": true,
+      "ex_parity": "1.000"
+    }
+  ],
+  "status": "PASS"
+}

@@ -1,0 +1,27 @@
+# AST-Route V9 Master Experimental & Statistical Protocol (Roadmap Section 5 & 8)
+protocol_version: "V9.0 (V8.6 Roadmap Closure)"
+manuscript_target: "manuscript/bigquery_olap_benchmark_V9.tex"
+principles:
+  audit_before_extension: true
+  separate_evidence_classes: ["re_audited", "extended", "net_new"]
+  end_to_end_accounting: true
+  reproducible_machine_outputs: true
+  conservative_hardware_and_boundary_claims: true
+primary_endpoints:
+  - metric: "T_net_ms"
+    definition: "T_exec_ms + T_router_ms (4.145 ms warm / 4.386 ms cold NVMe footer)"
+  - metric: "P95_Regret_Pct"
+    definition: "95th percentile of relative routing regret ((T_pick - T_oracle)/T_oracle)*100"
+secondary_endpoints:
+  - "Top1_Acc_Pct"
+  - "Top2_Acc_Pct"
+  - "Severe_Failure_Rate_Gt100Pct"
+  - "Device_Energy_J_by_Boundary"
+  - "Cloud_Scan_Cost_USD_per_1M"
+  - "Fault_Recovery_Success_Rate_and_Latency"
+statistical_protocol:
+  primary_unit_of_analysis: "Independent Seed Cluster (K=25 seeds on Core 75Q) or Query Template"
+  bootstrap_iterations: 10000
+  effect_size_metric: "Cliffs_delta_and_Paired_Mean_Diff_95CI"
+  multiplicity_correction: "Holm-Bonferroni step-down familywise error rate control"
+  outlier_policy: "Zero outlier deletion; report mean, SD, median, IQR, and P95"

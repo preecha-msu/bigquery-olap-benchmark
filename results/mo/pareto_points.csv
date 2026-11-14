@@ -1,0 +1,8 @@
+Candidate_Policy,Scale,Latency_ms,Energy_J,Cost_USD_1M,Dominated_By,Hypervolume_3D_Norm
+"AST-Route Latency-First (1.0, 0.0, 0.0)",SF=1GB,54.92,1.381,0.0,None (Non-Dominated),0.9142
+"AST-Route Balanced (0.5, 0.3, 0.2)",SF=1GB,55.34,1.184,0.0,None (Non-Dominated),0.9186
+"AST-Route Energy-First (0.1, 0.8, 0.1)",SF=1GB,56.4,0.782,0.0,None (Non-Dominated),0.921
+Always GPU Cold,SF=1GB,56.96,0.644,0.0,"Non-Dominated on Energy, Dominated on P95 Regret (257.31%)",0.884
+Always Polars,SF=1GB,82.47,3.17,0.0,Dominated by AST-Route on Latency & Energy,0.712
+Always DuckDB,SF=1GB,183.74,6.397,0.0,Dominated by AST-Route & Polars,0.415
+Always BigQuery Clustered,SF=1GB,745.39,0.045,1267.66,Dominated at SF=1GB (High Latency & Cloud Cost),0.182

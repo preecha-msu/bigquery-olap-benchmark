@@ -1,0 +1,6 @@
+Term,Canonical_Unit,Boundary_Scope,Warnings_Found,Status
+T_exec (ms),ms,Pure backend execution time,0,PASS
+T_net (ms),ms,T_exec + 4.145 ms warm router (4.386 ms cold footer),0,PASS
+T_L3 (ms),ms,Level-3 SQL-to-tensor charged (+4.15 ms on GPU picks),0,PASS
+E_GPU vs E_CPU (J),Joules (J),Measured NVML board sensor (GPU) vs Estimated TDP-DVFS polling (CPU package),0,PASS
+BigQuery Server vs Client WAN,ms,Server job (tau_queue + tau_exec) vs Client HTTPS+Arrow wall-clock,0,PASS

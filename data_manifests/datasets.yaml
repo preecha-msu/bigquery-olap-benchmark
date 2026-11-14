@@ -1,0 +1,13 @@
+# AST-Route V9 Dataset & Scale Manifest
+datasets:
+  tpch_core_multiscale:
+    scales_gb: [1, 10, 30, 100]
+    lineitem_rows: [6001215, 59986052, 179998372, 600037902]
+    compression: "ZSTD Parquet (sorted by l_shipdate)"
+    primary_1gb_parquet_sha256_prefix: "89a7dc6c"
+  external_cross_schema_suites:
+    imdb_job: {queries: 33, tables: 21, domain: "Movie Join Order Benchmark (Cyclic/Snowflake + LIKE skew)"}
+    ssb_star: {queries: 13, tables: 5, domain: "Star Schema Benchmark Q1.1-Q4.3"}
+    clickbench: {queries: 20, tables: 1, domain: "ClickBench Web Analytics Wide Flat Table"}
+    tpcds_sf1: {queries: 30, tables: 11, rows: 2832526, domain: "TPC-DS Multi-Channel Decision Support Snowflake"}
+    bird_enterprise: {queries: 20, tables: 6, rows: 1950500, domain: "BIRD Real-World Financial Enterprise SQL"}

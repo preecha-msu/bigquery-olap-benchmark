@@ -1,0 +1,12 @@
+# AST-Route V9 Query Workload Inventory (N_eval = 213 Main + 15 Prospective S6 = 228 Total)
+workloads:
+  core_factorial_tpch: {count: 75, seeds: 25, tiers: ["L1", "L2", "L3", "L4", "L5"], selectivities: ["V1", "V2", "V3"]}
+  official_tpch_chokepoint: {count: 22, queries: "Q1-Q22", protocol: "Nested 22-Fold LOO-CV"}
+  prospective_holdout_seed_s6: {count: 15, seeds: 1, protocol: "Frozen-Model Prospective Holdout"}
+  external_imdb_job: {count: 33, protocol: "Strict Zero-Shot 9D -> 12D Catalog Sketch -> 5-Fold CV"}
+  external_ssb: {count: 13, protocol: "Strict Zero-Shot 9D"}
+  external_clickbench: {count: 20, protocol: "Strict Zero-Shot 9D"}
+  external_tpcds: {count: 30, protocol: "Strict Zero-Shot M1-M4 -> Level 2 12D Sketch -> Level 3 5-Fold CV"}
+  external_bird: {count: 20, protocol: "Strict Zero-Shot M1-M4 -> Level 2 12D Sketch -> Level 3 5-Fold CV"}
+  total_main_queries: 213
+  total_including_prospective_s6: 228
