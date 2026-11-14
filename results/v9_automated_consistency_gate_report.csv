@@ -1,5 +1,5 @@
 gate_id,measured_value,passed,status
-G1_Abstract_Word_Count_Under_350,345 words,True,PASS
+G1_Abstract_Word_Count_Under_350,341 words,True,PASS
 G2_Main_Text_Page_Count_25_to_32,32 pages (Supp: 15 pages),True,PASS
 G3_Zero_Undefined_Refs_Main_and_Supp,"Main=0, Supp=0, Cites=0",True,PASS
 G4_Zero_Leaked_Reviewer_Response_Phrases,"0 occurrences of 'Reviewer Section', 'Credibility Audit', 'V86-'",True,PASS
