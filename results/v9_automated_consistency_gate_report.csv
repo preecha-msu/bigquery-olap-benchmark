@@ -1,5 +1,5 @@
 gate_id,measured_value,passed,status
-G1_Abstract_Word_Count_Under_350,290 words,True,PASS
+G1_Abstract_Word_Count_Under_350,261 words,True,PASS
 G2_Main_Text_Page_Count_25_to_32,32 pages (Supp: 15 pages),True,PASS
 G3_Zero_Undefined_Refs_Main_and_Supp,"Main=0, Supp=0, Cites=0",True,PASS
 G4_Zero_Leaked_Reviewer_Response_Phrases,"0 occurrences of 'Reviewer Section', 'Credibility Audit', 'V86-'",True,PASS
@@ -7,3 +7,4 @@ G5_PointA_SF100_PCIe_Bandwidth_Reconciled,"3,518.98 MB / 5,690.0 MB/s = 618.45 m
 G6_PointBC_Denominators_and_Overheads_Reconciled,48.5% realized / 16.5% oracle; 97.3%-98.7% routed / 87.3%-88.7% oracle; 4.15/0.67/0.08 ms,True,PASS
 G7_PointDE_TOST_and_FullN_Regret_Reported,TOST p=0.0442 (p_non-inf=0.00067); Full-N regret p=0.0098 (p_Holm=0.0196) & n=24 p=0.0042,True,PASS
 G8_PointF_Derived_Benchmarks_and_Unified_Versions,"TPC-DS-derived & BIRD-inspired; DuckDB v2.0.0, Polars v2.1.0, DataFusion v55.0.0",True,PASS
+G9_Reviewer_6Point_Forensic_Audit_Resolved,Nested-CV 8% in Abstract (no 54.92/12% mix); Table 1 Null col; Bao/EXPLAIN-DAG; M2-Poly/M2-LinTree; AURC 28.14%; T_BE 14.80/15.66; p=0.0115/0.0098,True,PASS

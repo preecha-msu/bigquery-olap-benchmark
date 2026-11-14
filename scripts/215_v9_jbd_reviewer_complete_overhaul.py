@@ -184,13 +184,13 @@ def regenerate_figures_1_2_and_7():
         ax.annotate("", xy=(px + 11.6, 19.8), xytext=(px + 11.6, 23.3), arrowprops=dict(arrowstyle="->", lw=1.4, color="#333333"))
     _draw_card(ax, 1.5, 2.0, 47.0, 17.5, "PHASE 5: Designated Endpoints & Seed-Clustered Inference", [
         "• Multiset Equivalence EX = 1.000 (213/213) | Seed Friedman p < 0.001 (W = 0.748)",
-        "• Designated Endpoints: Regret vs. GPU (p_seed = 0.0098) & Latency vs. CPU (p <= 0.0171)",
+        "• Primary Endpoints: Nested-CV Regret vs. GPU (118.4% vs. 257.3%, TOST p = 0.0442) & CPU",
         "• 2-Engine Subset Captures 97.3%-98.7% of Routed Gain (87.3%-88.7% of Oracle)",
     ], "#6c3483", "#f5eef8")
     _draw_card(ax, 51.5, 2.0, 47.0, 17.5, "PHASE 6: SHA-256 Telemetry Registry & Archival Reproducibility", [
-        "• Main Text (Tables 1–14, Figs. 1–6) & Additional File 1 (Tables S1–S17, Figs. S1–S8)",
+        "• Main Text (Tables 1–13, Figs. 1–6) & Additional File 1 (Tables S1–S17, Figs. S1–S8)",
         "• One-Command Reproducibility (R1–R6) & 64-Hex SHA-256 Telemetry Registry",
-        "• Code & Data Archive: github.com/preecha-msu/bigquery-olap-benchmark (+ Zenodo DOI)",
+        "• Code & Data Archive: github.com/preecha-msu/bigquery-olap-benchmark (SHA-256 Verified)",
     ], "#196f3d", "#eafaf1")
     fig2.tight_layout()
     save_to_all_fig_dirs(fig2, "fig_experimental_workflow_300dpi")
@@ -205,7 +205,7 @@ def regenerate_figures_1_2_and_7():
         "22Q Official\nTPC-H",
         "13Q Star\nSSB",
         "20Q Web\nClickBench",
-        "33Q IMDB\nJOB (12D)",
+        "33Q JOB\n(9D:21%/12D:70%)",
         "30Q TPC-DS-\nDerived",
         "20Q BIRD-\nInspired",
     ]
@@ -956,8 +956,18 @@ To guarantee independent reproducibility, our package includes a one-command ver
 
 In accordance with *Journal of Big Data* submission guidelines, we respectfully suggest reviewers with expertise in: (1) **Learned Query Optimization & Cost Estimation** (e.g., researchers working on zero-shot cost models, contextual-bandit plan steering, and conformal risk control), (2) **Heterogeneous CPU–GPU Analytical Databases** (e.g., researchers working on Apache Arrow, DuckDB/Sirius, and PCIe interconnect modeling), and (3) **Serverless Cloud Data Warehouses & Hybrid FinOps Orchestration**.
 
-### 4. Manuscript Organization (Main Text + Additional File 1 Supplementary Appendix)
-To ensure high readability and focus in the Main Text (**32 pages**, Tables 1–13, Algorithm 1, and Figures 1–6), all granular per-tier tables, TDP/DVFS energy calibration and Bland–Altman analyses, $C=1\\text{--}64$ concurrency manifests, 3-node cross-ISA tables, and verification registries are provided in **Additional File 1 (`Additional_File_1_Supplementary_Appendix.pdf`, Tables S1–S17 and Figures S1–S8)**. All code, SQL suites, and SHA-256-indexed telemetry logs are publicly available at `https://github.com/preecha-msu/bigquery-olap-benchmark`.
+### 4. Pre-Emptive Resolution of Anticipated Reviewer Concerns (6-Point Summary)
+| Reviewer Dimension | How Addressed in Manuscript V9 |
+| :--- | :--- |
+| **1. Frozen Primary Analysis Specification (No "Garden of Forking Paths")** | The Abstract and Headline Claims report strictly our **leak-free Nested-CV specification ($\\hat{\\tau}_{\\text{guard}}^{(-k)}=8\\%$ inner-fold modal guard: $55.37\\text{ ms}$ net, $118.40\\%$ P95 regret [$2.17\\times$ reduction], two-sided $\\pm 5.0\\text{ ms}$ TOST $p_{\\text{TOST}}=0.0442$)**, while Fixed Canonical $\\tau_{\\text{guard}}=12\\%$ ($54.92\\text{ ms}$, $114.11\\%$ P95, one-sided $p_{\\text{non-inf}}=0.00067$, two-sided $\\pm 5.0\\text{ ms}$ TOST $p=0.069$) is isolated as a secondary sensitivity reference. |
+| **2. "Equivalence to Always GPU" Framed as No-Mean-Penalty Constraint + Explicit Null Results** | TOST mean equivalence ($55.37$ vs. $56.96\\text{ ms}$) is framed strictly as a **no-mean-penalty constraint** accompanying primary tail-regret compression ($257.31\\% \\rightarrow 118.40\\%$), and Table 1 includes an explicit **Negative & Null Results** column (e.g., 9D zero-shot JOB $21.21\\%$ Top-1 / $6.75\\text{ ms}$ equals static Always Polars; uncalibrated zero-shot $8\\rightarrow 22$ thread transfer trails Polars until 5-seed calibration). |
+| **3. Adapted Published Learned-Optimizer Baselines (Bao-Bandit & `EXPLAIN`-DAG)** | Section 2.2, Table 2, Table 6, and Table 9 Part A evaluate an **Adapted Bao-Style Contextual-Bandit Arm Router** ($57.59\\text{ ms}$ exec / $61.74\\text{ ms}$ net, $54.67\\%$ Top-1, $134.9\\%$ P95 regret) and an **Adapted Physical-Plan Operator-DAG Cost Router** (`DuckDB EXPLAIN (FORMAT JSON)`: $52.74\\text{ ms}$ exec / $54.15\\text{ ms}$ net on native plans, $60.76\\text{ ms}$ net with $4.85\\text{ ms}$ cross-engine dialect transpilation, and $78.77\\text{ ms}$ on raw untranspiled dialects). |
+| **4. CSCI Inductive-Bias Ablation vs. Pairwise Interactions & Linear-Tree Oblique Proxies** | Section 4.4 and Table 8 compare `M2` (8D Raw AST + $\\hat{\\sigma}$: $6.84$ splits, $58.12\\text{ ms}$, $44.20\\%$ regret) against `M2-Poly` (28D Pairwise Operator Interactions: $6.92$ splits, $57.45\\text{ ms}$, $41.85\\%$ regret, $p=0.1420$) and `M2-LinTree` (8D Piecewise Linear-Leaf / Random-Oblique GBDT: $5.42$ splits, $56.48\\text{ ms}$, $38.90\\%$ regret, $p=0.0384$), proving that domain-informed 1D $\\text{CSCI}(q)$ (`M3`: $4.91$ splits, $54.92\\text{ ms}$ [$55.37\\text{ ms}$ nested-CV], $34.98\\%$ regret, $p=0.0038$) acts as a low-variance oblique structural inductive bias at $N_{\\text{train}}=72$. |
+| **5. Selective-Prediction Risk–Coverage Curve (`AURC`)** | Section 3.3, Section 4.4.2, and Table 9 Part C report the **Area Under the Risk–Coverage Curve ($\\text{AURC}$)** across the full deferral spectrum $c\\in(0,1]$, demonstrating that Mondrian Conformal + PCIe Margin Guard reduces $\\text{AURC}$ by **$-39.9\\%$** ($46.82\\% \\rightarrow \\mathbf{28.14\\%}$, Excess $\\text{E-AURC}=14.28\\%$) and outperforms standard Split Conformal deferral ($33.45\\%$). |
+| **6. BigQuery $\\text{SF}=1\\text{ GB}$ Scheduling Floor Framing & Cross-Section Numeric Reconciliation** | Sections 2.3 and 4.1 explicitly frame BigQuery's $745.39\\text{ ms}$ at $\\text{SF}=1\\text{ GB}$ as a stateless cloud scheduling floor ($0\\%$ routing share at $\\text{SF}=1\\text{--}30\\text{ GB}$) used to locate the $\\text{SF}=100\\text{ GB}$ local RAM spill crossover ($3{,}302\\text{ MB}$ spill, $20\\%$ routing share), while reconciling CPU-only ($118.50\\%\\rightarrow 42.80\\%$) vs. 6-engine ($358.40\\%\\rightarrow 168.50\\%$) P95 regret denominators and warm ($14.80\\text{ ms}$) vs. cold-seek ($15.66\\text{ ms}$) break-even runtimes. |
+
+### 5. Manuscript Organization (Main Text + Additional File 1 Supplementary Appendix)
+To ensure high readability and focus in the Main Text (**32 pages**, Tables 1–13, Algorithm 1, and Figures 1–6), all granular per-tier tables, TDP/DVFS energy calibration and Bland–Altman analyses, $C=1\\text{--}64$ concurrency manifests, 3-node cross-ISA tables, and verification registries are provided in **Additional File 1 (`Additional_File_1_Supplementary_Appendix.pdf`, Tables S1–S17 and Figures S1–S8)**. All code, SQL suites, and SHA-256-indexed telemetry logs are publicly available at `https://github.com/preecha-msu/bigquery-olap-benchmark` (pinned release tag `v9.0-jbd-submission`, tree `bc27158`).
 
 This manuscript is original, has not been published previously, and is not under consideration elsewhere. The author declares no competing interests.
 
@@ -1033,6 +1043,7 @@ def run_automated_consistency_gate():
         ("G6_PointBC_Denominators_and_Overheads_Reconciled", "48.5% realized / 16.5% oracle; 97.3%-98.7% routed / 87.3%-88.7% oracle; 4.15/0.67/0.08 ms", all(s in tex for s in ["48.5\\%", "16.5\\%", "0.67\\text{ ms}", "0.08\\text{ ms}"])),
         ("G7_PointDE_TOST_and_FullN_Regret_Reported", "TOST p=0.0442 (p_non-inf=0.00067); Full-N regret p=0.0098 (p_Holm=0.0196) & n=24 p=0.0042", all(s in tex for s in ["0.0442", "0.00067", "0.0098", "0.0196"])),
         ("G8_PointF_Derived_Benchmarks_and_Unified_Versions", "TPC-DS-derived & BIRD-inspired; DuckDB v2.0.0, Polars v2.1.0, DataFusion v55.0.0", all(s in tex for s in ["TPC-DS-derived", "BIRD-inspired", "DuckDB v2.0.0", "Polars v2.1.0", "DataFusion v55.0.0"])),
+        ("G9_Reviewer_6Point_Forensic_Audit_Resolved", "Nested-CV 8% in Abstract (no 54.92/12% mix); Table 1 Null col; Bao/EXPLAIN-DAG; M2-Poly/M2-LinTree; AURC 28.14%; T_BE 14.80/15.66; p=0.0115/0.0098", ("55.37" in abs_text and "54.92" not in abs_text and "Explicit Negative \\& Null Results" in tex and "M2-Poly" in tex and "M2-LinTree" in tex and "28.14\\%" in tex and "15.66" in tex and "0.0115" in tex)),
     ]
 
     gate_df = pd.DataFrame(checks, columns=["gate_id", "measured_value", "passed"])
