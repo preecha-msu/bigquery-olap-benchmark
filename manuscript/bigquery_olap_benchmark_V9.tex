@@ -752,7 +752,7 @@ Table~\ref{tab:priority3_validation} and Fig.~\ref{fig:priority3_unseen_cost} pr
 {\begin{table}[!htbp]
 \centering
 \caption{Three-level evaluation on the real-world IMDB Join Order Benchmark (JOB, $N=33$ disjoint canonical templates \texttt{1a--33a}), explicitly separating \textbf{Level 1: Zero-Shot 9D} (0 JOB runtime labels), \textbf{Level 2: Catalog-Augmented 12D Catalog Sketch} (0 JOB runtime labels), and \textbf{Level 3: Nested 5-Fold Supervised Calibration} (in-fold JOB training labels only, inner 4-fold tuned, zero template leakage).}\label{tab:jbd_job_regimes_t11b}
-\resizebox{\textwidth}{!}{%
+\setlength{\tabcolsep}{2.2pt}\renewcommand{\arraystretch}{1.08}\resizebox{\textwidth}{!}{%
 \begin{tabular}{llrrrrrrl}
 \hline
 \textbf{Evaluation Regime / Policy} & \textbf{Supervision \& Runtime Labels Used} & \textbf{Dim.} & \textbf{Top-1} & \textbf{Top-2} & \textbf{Mean (ms)} & \textbf{Mean Reg.} & \textbf{Med. Reg.} & \textbf{Dispatch Split \& Zero-Leakage Verification} \\

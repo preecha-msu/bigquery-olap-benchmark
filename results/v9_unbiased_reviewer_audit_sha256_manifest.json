@@ -1,0 +1,39 @@
+{
+  "timestamp": "2026-11-15T01:02:20.249564",
+  "mathematical_audit": {
+    "eq3_l1_cold_ms": 55.02,
+    "eq3_l1_phi_pcie_pct": 55.54,
+    "eq3_l1_breakeven_speedup": 2.25,
+    "eq11_delta_sql_ms": 13.35,
+    "eq11_12pct_total_ms": 27.55,
+    "eq11_12pct_gpu_ms": 14.2,
+    "eq11_12pct_sql_share_pct": 48.5,
+    "eq11_8pct_total_ms": 27.1,
+    "eq11_8pct_gpu_ms": 13.75,
+    "eq11_8pct_sql_share_pct": 49.3,
+    "sf100_capacity_ceiling_mb": 14280.0,
+    "sf100_pcie_ms": 618.45,
+    "sf100_gpu_total_ms": 1199.6,
+    "sf100_bq_5tier_mean_ms": 2571.6,
+    "sf100_bq_cold_ingest_breakeven_queries": 138,
+    "nadeau_bengio_variance_factor": 0.081667
+  },
+  "tex_modifications": {
+    "fig6_tex_paths_found": [
+      "figures/fig_cross_suite_213q_and_job_12d_ablation_300dpi.pdf"
+    ],
+    "fixed_sec3_2_gpu_idle_watt": false,
+    "fixed_table13_357_0_slice_typo": false,
+    "fixed_sec4_6_1_bq_divisor": false,
+    "fixed_eq8_overflow": false,
+    "fixed_eq9_upper_bound_guard": false,
+    "added_table4_unrounded_precision_note": false,
+    "enhanced_table9_10_font_legibility": true
+  },
+  "artifacts_sha256": {
+    "bigquery_olap_benchmark_V9.tex": "d4bf6df578172f8bdf1e462c845de8e5ae3522ccd2783860fc43595d6df2f187",
+    "bigquery_olap_benchmark_V9.pdf": "f3fc127c46709accf2e3c734c74efb0a8fc53213a0778c084ceea30b7d3360dc",
+    "Journal_of_Big_Data_Snapp_Submission_Flat9.zip": "9e0b24c5d2f63825af5368c9aeed08613cf689c8e0d425aee488ad860022b5d8",
+    "fig_cross_suite_213q_and_job_12d_ablation_300dpi.pdf": "9e1cbab8194fd2b79a96a6b7ac177aedd2083f4232e67829ea1f22ae80970026"
+  }
+}
