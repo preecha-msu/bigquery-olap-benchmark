@@ -1,0 +1,13 @@
+suite_id,workload_name,n_queries,n_templates,zero_shot_9d_top1_pct,pure_sql_top1_pct,sketch_12d_top1_pct,lowso_cv_top1_pct,best_static_cpu_ms,always_gpu_ms,ast_route_exec_ms,ast_route_net_o1_ms,ast_route_net_o2_ms,mean_rel_regret_pct,p95_rel_regret_pct,mean_abs_regret_ms,ex_parity
+S1_Core_TPCH_75,Core TPC-H Factorial (25 Seeds x 3 Horizons),75,25,57.33,74.67,58.67,56.0,82.47,56.96,50.78,54.92,51.45,34.98,114.11,8.14,1.0
+S2_Official_TPCH_22,Official Standard TPC-H Q1-Q22,22,22,63.64,81.82,72.73,68.18,22.82,29.52,16.98,21.13,17.65,12.6,42.1,1.85,1.0
+Ext1_IMDB_JOB_33,IMDB Join Order Benchmark (JOB 1a-33a),33,33,21.21,72.73,69.7,69.7,6.75,19.84,4.54,8.69,5.21,16.5,64.2,0.51,1.0
+Ext2_SSB_13,Star Schema Benchmark (SSB All 13 Flights),13,13,92.31,92.31,92.31,92.31,9.05,9.12,8.0,12.15,8.67,2.82,18.25,0.4,1.0
+Ext3_ClickBench_20,ClickBench Web Analytics Suite,20,20,80.0,85.0,85.0,85.0,26.85,24.5,20.03,24.18,20.7,9.45,34.8,1.63,1.0
+Ext4_TPCDS_Derived_30,TPC-DS-Derived Multi-Channel Snowflake (11 Tables),30,30,93.33,90.0,96.67,93.33,52.62,21.03,20.05,24.2,20.72,1.61,8.76,0.17,1.0
+Ext5_BIRD_Inspired_20,BIRD-Inspired Financial Relational SQL (6 Tables),20,20,90.0,85.0,95.0,90.0,59.27,20.73,20.24,24.39,20.91,9.03,80.69,0.45,1.0
+Ext6_TPCDS_Complex_25,TPC-DS-Complex-25 (New Independent Holdout Templates),25,25,72.0,88.0,76.0,76.0,45.4,27.08,28.46,32.6,29.13,27.33,96.24,6.13,1.0
+Ext7_Enterprise_Redset_BI_25,Enterprise-Redset-BI-25 (New Independent Holdout Templates),25,25,88.0,84.0,92.0,92.0,46.09,26.83,24.35,28.5,25.03,10.26,43.7,2.28,1.0
+Pooled_Ext5_116Q,"Pooled Original 5 External Suites (N_ext = 116 Queries, 116 Templates)",116,116,69.83,83.62,86.21,84.48,31.39,19.9,14.32,18.47,14.99,8.61,42.49,0.59,1.0
+Pooled_Ext7_166Q,"Pooled Expanded 7 External Suites (N_ext = 166 Queries, 166 Distinct Templates)",166,166,72.89,84.34,85.54,84.34,35.71,22.03,17.96,22.11,18.63,11.68,50.76,1.68,1.0
+Pooled_All9_263Q,Full 9-Suite Benchmark (263 Queries Across 213 Distinct Templates; 278 Incl. S6),263,213,67.68,81.37,76.81,74.9,47.97,32.62,27.24,31.38,27.91,18.4,68.1,3.54,1.0

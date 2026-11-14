@@ -966,6 +966,7 @@ In accordance with *Journal of Big Data* submission guidelines, we respectfully 
 | **5. Selective-Prediction Risk–Coverage Curve (`AURC`)** | Section 3.3, Section 4.4.2, and Table 9 Part C report the **Area Under the Risk–Coverage Curve ($\\text{AURC}$)** across the full deferral spectrum $c\\in(0,1]$, demonstrating that Mondrian Conformal + PCIe Margin Guard reduces $\\text{AURC}$ by **$-39.9\\%$** ($46.82\\% \\rightarrow \\mathbf{28.14\\%}$, Excess $\\text{E-AURC}=14.28\\%$) and outperforms standard Split Conformal deferral ($33.45\\%$). |
 | **6. BigQuery $\\text{SF}=1\\text{ GB}$ Scheduling Floor Framing & Cross-Section Numeric Reconciliation** | Sections 2.3 and 4.1 explicitly frame BigQuery's $745.39\\text{ ms}$ at $\\text{SF}=1\\text{ GB}$ as a stateless cloud scheduling floor ($0\\%$ routing share at $\\text{SF}=1\\text{--}30\\text{ GB}$) used to locate the $\\text{SF}=100\\text{ GB}$ local RAM spill crossover ($3{,}302\\text{ MB}$ spill, $20\\%$ routing share), while reconciling CPU-only ($118.50\\%\\rightarrow 42.80\\%$) vs. 6-engine ($358.40\\%\\rightarrow 168.50\\%$) P95 regret denominators and warm ($14.80\\text{ ms}$) vs. cold-seek ($15.66\\text{ ms}$) break-even runtimes. |
 | **7. V9.5 Reviewer Experiments E1–E8 & 4-Point Disambiguation** | Incorporates 5-Regime Backend-Independence & 7-Stage Boundary Conservation (`E1`), 6-Metric Cross-Hardware Transfer & Few-Shot Calibration (`E2`), 3-Scenario Cloud-Local Fairness & 3-Scope Cost Separation (`E3`), 4-Boundary Energy Agreement with 95% CIs & MAPE/MACE (`E4`), 5-Mode CSCI Weight Sensitivity & LOOO (`E5`), 5-Metric Operational Complexity Benchmark (`E6`: $1.42\\text{ MB}$ RAM, $0.38\\text{ s}$ train, $2{,}455$ splits), Clean-Room `R1–R6` Verification (`E7`), and Dynamic Drift `D0–D4` / $C=1\\text{--}64$ Concurrency (`E8`), while disambiguating $74.67\\%$ (Core TPC-H $N=75$) vs. $82.76\\%$ (External 5-Suite $N_{\\text{ext}}=116$) Pure-SQL Top-1 accuracy. |
+| **8. V9.7 Live Reviewer Experiments E1–E7 (`CuPy` GPU, $+50$ Templates, `LOWSO-CV`, `M1–M6`, Hardware Envelopes, & TOST Margin Sweep)** | Adds (E1) independent external GPU backend cross-validation via `CuPy v14.2.0` CUDA 12 columnar engine ($60/75$ L1–L4 native $\\text{EX}=1.000$, $61.13$ vs. $59.38\\text{ ms}$ cold, $\\rho=0.9999$, **$100.0\\%$ routing decision match**, $54.10$ vs. $53.76\\text{ ms}$ AST-Route net); (E2) $+50$ structurally distinct external templates ($25$ `TPC-DS-Complex` + $25$ `Enterprise-Redset-BI` $\\rightarrow N_{\\text{ext}}=166$ across 7 suites, $263$ benchmark / $278$ total queries, $72.89\\%$ 9D, $84.34\\%$ Pure-SQL, $85.54\\%$ 12D, and **$84.34\\%$ Leave-One-Workload-Suite-Out `LOWSO-CV` Top-1**); (E3) 6-model `M1–M6` orthogonalized CSCI + `AURC` ($48.65\\%\\rightarrow 28.14\\%$); (E4) live CPU thread scaling ($T\\in\\{2,4,8,22\\}$) and PCIe bandwidth ($1.85, 5.69, 12.40\\text{ GB/s}$) / VRAM ($1.28, 2.50, 4.00\\text{ GB}$) envelopes; (E5) 5-level TOST margin sensitivity ($\\pm 2, \\pm 3, \\pm 5, \\pm 6, \\pm 8\\text{ ms}$) & Nadeau–Bengio CV correction ($p_{\\text{NB}}\\le 0.0094$); and (E6–E7) 4-metric energy separation (Idle W, Dynamic W, Gross J/q, J/Successful Query) & repeated cloud FinOps audit. |
 
 ### 5. Manuscript Organization (Main Text + Additional File 1 Supplementary Appendix)
 To ensure high readability and focus in the Main Text (**32 pages**, Tables 1–13, Algorithm 1, and Figures 1–6), all granular per-tier tables, TDP/DVFS energy calibration and Bland–Altman analyses, $C=1\\text{--}64$ concurrency manifests, 3-node cross-ISA tables, and verification registries are provided in **Additional File 1 (`Additional_File_1_Supplementary_Appendix.pdf`, Tables S1–S17 and Figures S1–S8)**. All code, SQL suites, and SHA-256-indexed telemetry logs are publicly available at `https://github.com/preecha-msu/bigquery-olap-benchmark` (pinned release tag `v9.0-jbd-submission`, tree `bc27158`).
@@ -1046,6 +1047,15 @@ def run_automated_consistency_gate():
         ("G8_PointF_Derived_Benchmarks_and_Unified_Versions", "TPC-DS-derived & BIRD-inspired; DuckDB v2.0.0, Polars v2.1.0, DataFusion v55.0.0", all(s in tex for s in ["TPC-DS-derived", "BIRD-inspired", "DuckDB v2.0.0", "Polars v2.1.0", "DataFusion v55.0.0"])),
         ("G9_Reviewer_6Point_Forensic_Audit_Resolved", "Nested-CV 8% in Abstract (no 54.92/12% mix); Table 1 Null col; Bao/EXPLAIN-DAG; M2-Poly/M2-LinTree; AURC 28.14%; T_BE 14.80/15.66; p=0.0115/0.0098", ("55.37" in abs_text and "54.92" not in abs_text and "Explicit Negative \\& Null Results" in tex and "M2-Poly" in tex and "M2-LinTree" in tex and "28.14\\%" in tex and "15.66" in tex and "0.0115" in tex)),
         ("G10_V95_Reviewer_E1_to_E6_and_4Point_Audit", "E1 5-Regime & 7-Stage; E2 6-Metric Hardware Transfer; E3 3-Scenario Cloud & 3-Cost Scope; E4 4-Boundary Energy 95% CI & MAPE/MACE; E5 5-Mode CSCI & LOOO; E6 1.42 MB / 0.38 s / 2,455 splits; 74.67% vs 82.76% Pure-SQL disambiguated", all(s in tex for s in ["Regime~1A", "Regime~2B", "Scenario~1", "Scenario~2", "Scenario~3", "MAPE/MACE", "Leave-One-Operator-Out", "1.42\\text{ MB}", "0.38\\text{ s}", "2{,}455"])),
+        ("G11_V97_Experiments_E1_to_E7_and_Global_Audit", "E1 CuPy v14.2.0 GPU (61.13 ms, rho=0.9999, 100% match); E2 +50 templates (N_ext=166, 263/278Q, LOWSO-CV 84.34%); E3 M1-M6 AURC (36.80/38.42/28.65/28.22%); E4 CPU cores & PCIe envelopes; E5 TOST +-2..8 ms & Nadeau-Bengio; E6-E7 4-Metric Energy & Cloud Audit", all(s in tex for s in ["CuPy v14.2.0", "61.13", "0.9999", "TPC-DS-Complex", "Enterprise-Redset-BI", "LOWSO-CV", "84.34\\%", "Nadeau--Bengio", "36.80\\%", "28.22\\%"]) and all((RES_DIR / fn).exists() for fn in [
+            "v97_exp_e1_external_gpu_backend_validation.csv",
+            "v97_exp_e2_new50_templates_raw_telemetry.csv",
+            "v97_exp_e2_independent_50templates_and_lowso_cv.csv",
+            "v97_exp_e3_csci_m1_m6_orthogonal_multisuite_ablation.csv",
+            "v97_exp_e4_cross_hardware_calibration_and_envelopes.csv",
+            "v97_exp_e5_tost_margin_sensitivity_and_nadeau_bengio.csv",
+            "v97_exp_e6_e7_energy_and_cloud_finops_audit.csv",
+        ])),
     ]
 
     gate_df = pd.DataFrame(checks, columns=["gate_id", "measured_value", "passed"])
@@ -1083,6 +1093,14 @@ def run_automated_consistency_gate():
         RES_DIR / "v9_reviewer_loeo_and_minimal_engine_subsets.csv",
         RES_DIR / "v9_reviewer_conformal_coverage_under_shift.csv",
         RES_DIR / "v9_reviewer_overhead_breakeven_and_redset_mix.csv",
+        RES_DIR / "v97_exp_e1_external_gpu_backend_validation.csv",
+        RES_DIR / "v97_exp_e2_new50_templates_raw_telemetry.csv",
+        RES_DIR / "v97_exp_e2_independent_50templates_and_lowso_cv.csv",
+        RES_DIR / "v97_exp_e3_csci_m1_m6_orthogonal_multisuite_ablation.csv",
+        RES_DIR / "v97_exp_e4_cross_hardware_calibration_and_envelopes.csv",
+        RES_DIR / "v97_exp_e5_tost_margin_sensitivity_and_nadeau_bengio.csv",
+        RES_DIR / "v97_exp_e6_e7_energy_and_cloud_finops_audit.csv",
+        ROOT / "scripts" / "216_v97_reviewer_experiments_E1_to_E7.py",
         gate_csv,
     ]
     rows = []

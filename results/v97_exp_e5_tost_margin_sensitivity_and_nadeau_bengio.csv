@@ -1,0 +1,15 @@
+specification,equivalence_margin,margin_ms,paired_mean_diff_ms,tost_90pct_ci_ms,one_sided_p_non_inferiority,two_sided_p_tost_seed,nadeau_bengio_p_non_inf,nadeau_bengio_p_tost,passes_non_inferiority_005,passes_two_sided_tost_005
+"Primary Nested-CV Guard (tau_hat = 8.0%, Net = 55.37 ms)",±2.0 ms (Ultra-Strict Sub-Parse Margin),2.0,-1.59,"[-4.79, +1.61] ms",0.03329,0.4141,0.04953,0.4231,PASS,NOT PASSED
+"Primary Nested-CV Guard (tau_hat = 8.0%, Net = 55.37 ms)",±3.0 ms (Strict SQLGlot Parse Margin),3.0,-1.59,"[-4.79, +1.61] ms",0.01081,0.2289,0.01908,0.2534,PASS,NOT PASSED
+"Primary Nested-CV Guard (tau_hat = 8.0%, Net = 55.37 ms)",±5.0 ms (Pre-Specified Primary Endpoint: Cold Router Budget 4.15-4.39 ms),5.0,-1.59,"[-4.79, +1.61] ms",0.00086,0.0402,0.00217,0.0581,PASS,PASS
+"Primary Nested-CV Guard (tau_hat = 8.0%, Net = 55.37 ms)",±6.0 ms (Sensitivity Margin 1: ~10% of GPU Mean),6.0,-1.59,"[-4.79, +1.61] ms",0.00022,0.0133,0.00067,0.0228,PASS,PASS
+"Primary Nested-CV Guard (tau_hat = 8.0%, Net = 55.37 ms)",±8.0 ms (Sensitivity Margin 2: ~14% of GPU Mean),8.0,-1.59,"[-4.79, +1.61] ms",1e-05,0.0011,6e-05,0.0027,PASS,PASS
+"Canonical Sensitivity Guard (tau = 12.0%, Net = 54.92 ms)",±2.0 ms (Ultra-Strict Sub-Parse Margin),2.0,-2.04,"[-5.23, +1.15] ms",0.02008,0.5085,0.03229,0.5076,PASS,NOT PASSED
+"Canonical Sensitivity Guard (tau = 12.0%, Net = 54.92 ms)",±3.0 ms (Strict SQLGlot Parse Margin),3.0,-2.04,"[-5.23, +1.15] ms",0.00616,0.3054,0.01181,0.3247,PASS,NOT PASSED
+"Canonical Sensitivity Guard (tau = 12.0%, Net = 54.92 ms)",±5.0 ms (Pre-Specified Primary Endpoint: Cold Router Budget 4.15-4.39 ms),5.0,-2.04,"[-5.23, +1.15] ms",0.00046,0.0625,0.00125,0.0843,PASS,BORDERLINE (p<0.10)
+"Canonical Sensitivity Guard (tau = 12.0%, Net = 54.92 ms)",±6.0 ms (Sensitivity Margin 1: ~10% of GPU Mean),6.0,-2.04,"[-5.23, +1.15] ms",0.00012,0.022,0.00038,0.0348,PASS,PASS
+"Canonical Sensitivity Guard (tau = 12.0%, Net = 54.92 ms)",±8.0 ms (Sensitivity Margin 2: ~14% of GPU Mean),8.0,-2.04,"[-5.23, +1.15] ms",1e-05,0.0019,3e-05,0.0043,PASS,PASS
+Primary Endpoint E1b: P95 Tail-Regret Compression vs. Always GPU (Nested-CV 8%: 118.40% vs 257.31%),Wilcoxon + Nadeau-Bengio CV-Overlap Correction (K=25 Seeds),0.0,-138.91,"[-214.2, -61.8] pp",0.0115,0.0115,0.0184,0.0184,PASS,PASS (2.17x P95 Reduction)
+Primary Endpoint E1b: P95 Tail-Regret Compression vs. Always GPU (Canonical 12%: 114.11% vs 257.31%),Wilcoxon + Nadeau-Bengio CV-Overlap Correction (K=25 Seeds),0.0,-143.2,"[-218.5, -64.1] pp",0.0098,0.0098,0.0162,0.0162,PASS,PASS (2.25x P95 Reduction)
+Primary Endpoint E2a: Net Latency vs. Best CPU Always Polars (54.92 vs 82.47 ms),Wilcoxon + Nadeau-Bengio CV-Overlap Correction (K=25 Seeds),0.0,-27.55,"[-39.59, -16.85] ms",0.0085,0.0171,0.0142,0.0248,PASS,PASS (1.50x Speedup)
+Primary Endpoint E2b: Pure Native-SQL Routing vs. Always Polars (69.12 vs 82.47 ms),Wilcoxon + Nadeau-Bengio CV-Overlap Correction (K=25 Seeds),0.0,-13.35,"[-22.18, -5.42] ms",0.0042,0.0084,0.0096,0.0182,PASS,"PASS (1.19x Speedup, 0% GPU)"
