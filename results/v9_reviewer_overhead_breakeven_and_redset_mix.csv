@@ -1,0 +1,6 @@
+Workload_Scenario,Overhead_Mode,Router_Overhead_ms,Routed_Exec_ms,Total_Wall_Clock_ms,Best_Single_Engine_ms,Net_Time_Saved_Per_1000_Queries_sec,Overhead_Share_of_Runtime_Pct,Break_Even_Query_Latency_ms
+"IMDB JOB Short In-Memory Queries (N=33, Mean Exec 6.75 ms)",Uncached Cold 12D Sketch + 21-Table Footer Probe (4.15 ms),4.15,6.75,10.9,19.55,8.65,38.1,14.8
+"IMDB JOB Short In-Memory Queries (N=33, Mean Exec 6.75 ms)",AST Template Fingerprint Cache + Warm Footer Catalog (0.08 ms eff.),0.08,6.75,6.83,19.55,12.72,1.2,0.29
+"Redset-Weighted Production Mix at SF=1 GB (55% L1, 32% L2-L3, 13% L4-L5)",Cold 9D AST + Zonemap Probe (0.42 ms),0.42,27.09,27.51,38.66,11.16,1.5,1.85
+Redset-Weighted Production Mix at SF=1 GB ( vs. Best CPU Polars 56.34 ms),"AST Template Fingerprint Cache (88% Hit Rate, 0.08 ms eff.)",0.08,27.09,27.17,38.66,11.5,0.29,0.35
+"Multi-Scale Production Mix at SF=100 GB (vs. Best Pure-SQL BigQuery 2,571.60 ms)",Cold 9D AST + Zonemap Probe (0.88 ms at SF=100 GB),0.88,1141.92,1142.8,2571.6,1428.8,0.08,3.9

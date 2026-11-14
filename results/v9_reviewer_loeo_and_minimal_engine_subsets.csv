@@ -1,0 +1,10 @@
+Engine_Pool_Configuration,Num_Engines,Subset_Oracle_Mean_ms,Routed_Mean_ms,Top1_vs_SubOracle_Pct,Mean_Rel_Regret_Pct,P95_Rel_Regret_Pct,P95_Abs_Regret_ms,Oracle_Gain_Captured_vs_BestCPU_Pct
+"Full Candidate Pool (DuckDB, Polars, DataFusion, GPU, BigQuery)",5,42.64,54.92,57.33,34.98,114.11,34.51,100.0
+LOEO: Drop BigQuery (4 Local Engines Only at SF=1 GB),4,42.64,54.92,57.33,34.98,114.11,34.51,100.0
+"LOEO: Drop DataFusion (3 Local Engines: DuckDB, Polars, GPU)",3,43.08,54.23,58.67,34.96,114.11,34.51,98.9
+"LOEO: Drop Polars (DuckDB, DataFusion, GPU, BigQuery)",4,44.15,55.83,56.0,36.88,114.11,34.51,96.2
+"LOEO: Drop DuckDB (Polars, DataFusion, GPU, BigQuery)",4,46.7,48.99,64.0,28.6,136.3,29.06,89.8
+Minimal 2-Engine Hybrid Subset A (DuckDB + GPU),2,47.13,56.67,68.0,24.18,96.4,38.2,88.7
+Minimal 2-Engine Hybrid Subset B (Polars + GPU),2,47.71,48.65,72.0,18.45,84.2,26.72,87.3
+"LOEO: Drop GPU (3 Pure-CPU Engines: DuckDB, Polars, DataFusion)",3,62.0,69.12,74.67,9.64,42.8,24.15,51.4
+Minimal 2-Engine Pure-CPU Subset (DuckDB + Polars Only),2,63.12,70.18,78.67,8.92,39.4,22.8,48.6

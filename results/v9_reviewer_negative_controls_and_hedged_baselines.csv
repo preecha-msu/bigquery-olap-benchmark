@@ -1,0 +1,11 @@
+Policy,Top1_Pct,Top2_Pct,Mean_Latency_ms,Mean_Rel_Regret_Pct,P95_Rel_Regret_Pct,Mean_Abs_Regret_ms,P95_Abs_Regret_ms,Compute_Work_Multiplier
+Always DuckDB (Static C++ DBMS),28.0,49.33,183.74,271.1,1046.06,141.11,656.1,1.0
+Always Polars (Best Static CPU Engine),13.33,48.0,82.47,132.61,359.09,39.84,179.73,1.0
+Always GPU (Cold PCIe Static Offload),49.33,60.0,56.96,60.76,257.31,14.33,45.07,1.0
+Negative Control 1: Uniform Random Router (10k MC),24.89,49.86,104.98,169.98,777.7,62.35,228.41,1.0
+Negative Control 2: Shuffled-Label Permutation Router,35.48,54.3,95.97,136.27,620.63,53.33,179.21,1.0
+"Direct Cost-Sensitive Classifier (Random Forest, 9D)",54.67,68.0,61.74,47.37,134.9,19.1,46.74,1.0
+"Histogram GBDT Cost Router (LightGBM-style HistGBR, 9D)",45.33,69.33,61.66,62.52,270.26,19.02,45.42,1.0
+"Hedged Top-2 Racing (Single-Host Contended, +18.4% Bus)",78.67,98.67,54.08,36.39,112.11,11.45,29.61,1.66
+Hedged Top-2 Racing (Idealized Isolated 2-Node Cluster),78.67,98.67,45.68,15.19,79.14,3.04,22.54,1.66
+"Proposed AST-Route (GBR-9D + 12% Guard, Single-Engine)",57.33,76.0,54.92,34.98,114.11,12.28,34.51,1.0

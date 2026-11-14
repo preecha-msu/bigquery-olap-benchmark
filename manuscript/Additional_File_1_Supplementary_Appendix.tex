@@ -1,0 +1,855 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{mathptmx}
+\usepackage[scaled=0.90]{helvet}
+\usepackage{courier}
+\usepackage[a4paper,top=22mm,bottom=22mm,left=20mm,right=20mm]{geometry}
+\usepackage{amsmath,amsfonts,amssymb}
+\DeclareMathAlphabet{\mathcal}{OMS}{cmsy}{m}{n}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{enumitem}
+\usepackage[labelfont={bf,sf,small},textfont={sf,small},labelsep=period]{caption}
+\usepackage[colorlinks=true,linkcolor=blue!70!black,citecolor=blue!70!black,urlcolor=blue!70!black]{hyperref}
+
+\definecolor{springerblue}{RGB}{0, 102, 153}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\footnotesize\sffamily Noiumkar \quad \textit{Journal of Big Data} --- Additional File 1 (Supplementary Appendix)}
+\fancyhead[R]{\footnotesize\sffamily Page \thepage\ of \pageref*{LastPage}}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\renewcommand{\thesection}{S\arabic{section}}
+\renewcommand{\thetable}{S\arabic{table}}
+\renewcommand{\thefigure}{S\arabic{figure}}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\emergencystretch=2em
+
+\newsavebox{\asttblbox}
+\newsavebox{\asttblboxB}
+\newenvironment{fitasttable}{%
+  \begin{lrbox}{\asttblbox}%
+}{%
+  \end{lrbox}%
+  \sbox{\asttblboxB}{%
+    \ifdim\wd\asttblbox>0.96\textwidth
+      \resizebox{0.96\textwidth}{!}{\usebox{\asttblbox}}%
+    \else
+      \usebox{\asttblbox}%
+    \fi
+  }%
+  \ifdim\ht\asttblboxB>0.78\textheight
+    \resizebox{!}{0.78\textheight}{\usebox{\asttblboxB}}%
+  \else
+    \usebox{\asttblboxB}%
+  \fi
+}
+
+\begin{document}
+{\footnotesize\sffamily\color{springerblue}\textbf{ADDITIONAL FILE 1: SUPPLEMENTARY APPENDIX} \hfill \textbf{Journal of Big Data (SpringerOpen)}}\\[0.6em]
+{\raggedright\Large\sffamily\bfseries Supplementary Telemetry, Device Energy Calibration, Cross-ISA Portability, and Verification Matrices for ``AST-Route: An AST-Aware Multi-Objective Query Routing and Cost-Prediction Framework Across Serverless Cloud, Vectorized CPU (C++/Rust), and GPU-Accelerated OLAP Engines''}\\[0.5em]
+{\normalsize\textbf{Preecha Noiumkar\textsuperscript{1,*}}} (\href{mailto:preecha.n@msu.ac.th}{preecha.n@msu.ac.th})\\
+\textsuperscript{1}Department of Information Technology, Faculty of Informatics, Mahasarakham University, Maha Sarakham 44150, Thailand.\\[0.4em]
+\noindent\rule{\textwidth}{0.8pt}
+
+\section{Granular Storage Layout, Cloud FinOps Pruning, and Six-Engine Throughput Telemetry}
+This supplementary section provides the granular per-tier tables and figures referenced in Sections~4.1--4.3 of the Main Text, including External ZSTD Parquet versus Native Columnar execution in DuckDB (Table~\ref{tab:empirical_complexity_results}), Google BigQuery Serverless versus DuckDB vectorized latency and slot allocation across tiers L1--L5 (Table~\ref{tab:cross_engine_main} and Fig.~\ref{fig:cross_engine_results}), selectivity-stratified V1--V3 Cloud FinOps pruning across $\text{SF}=1\text{--}100\text{ GB}$ (Table~\ref{tab:selectivity_sensitivity} and Fig.~\ref{fig:seed25_heatmap}), and effective analytical scan throughput $\Theta_{\text{eff}}$ across all six software engines (Table~\ref{tab:throughput_and_cost} and Fig.~\ref{fig:six_software_chart}).
+
+\begin{table*}[!htbp]
+\centering
+\caption{In-process vectorized CPU OLAP (DuckDB) empirical execution latency (ms), 95th percentile tail latency, Valid Efficiency Score (VES), and paired Wilcoxon signed-rank test across five SQL complexity tiers ($N=75$ queries, 25 canonical seeds $\times$ 3 variations, $\text{SF}=1\text{ GB}$).}\label{tab:jbd_duckdb_t1}
+\label{tab:empirical_complexity_results}
+\scriptsize
+\setlength{\tabcolsep}{3.2pt}
+\renewcommand{\arraystretch}{1.12}
+\begin{fitasttable}
+\begin{tabular}{@{}lcccccccccc@{}}
+\toprule
+\multirow{2}{*}{\textbf{Complexity Category}} & \multicolumn{2}{c}{\textbf{AST Metrics}} & \multicolumn{2}{c}{\textbf{External Parquet (ms)}} & \multicolumn{2}{c}{\textbf{Native Columnar (ms)}} & \multirow{2}{*}{\textbf{Speedup}} & \multicolumn{2}{c}{\textbf{Efficiency (VES)}} & \multirow{2}{*}{\textbf{Wilcoxon $p$}} \\
+\cmidrule(lr){2-3} \cmidrule(lr){4-5} \cmidrule(lr){6-7} \cmidrule(lr){9-10}
+ & \textbf{Depth} & \textbf{Joins} & \textbf{Mean $\pm$ SD} & \textbf{P95} & \textbf{Mean $\pm$ SD} & \textbf{P95} & & \textbf{Ext.} & \textbf{Native} & \\
+\midrule
+L1: Scan \& Filter & $9.0$ & $0.0$ & $81.60 \pm 42.15$ & $148.30$ & $\mathbf{50.84 \pm 28.40}$ & $\mathbf{96.12}$ & $1.60\times$ & $99.6$ & $\mathbf{137.3}$ & $<0.001^{*}$ \\
+L2: Multi-Way Joins & $9.2$ & $4.8$ & $403.94 \pm 185.60$ & $712.45$ & $\mathbf{264.53 \pm 118.20}$ & $\mathbf{468.90}$ & $1.53\times$ & $84.8$ & $\mathbf{112.9}$ & $<0.001^{*}$ \\
+L3: Nested CTEs & $10.8$ & $2.6$ & $232.34 \pm 96.40$ & $398.10$ & $\mathbf{121.92 \pm 54.80}$ & $\mathbf{215.40}$ & $1.91\times$ & $99.6$ & $\mathbf{141.8}$ & $<0.001^{*}$ \\
+L4: Window Func. & $10.8$ & $1.6$ & $111.52 \pm 48.90$ & $194.20$ & $\mathbf{78.16 \pm 35.10}$ & $\mathbf{138.60}$ & $1.43\times$ & $99.4$ & $\mathbf{129.0}$ & $<0.001^{*}$ \\
+L5: Array/UNNEST & $10.6$ & $2.2$ & $442.70 \pm 210.30$ & $824.50$ & $\mathbf{403.27 \pm 192.40}$ & $\mathbf{756.80}$ & $1.10\times$ & $75.7$ & $\mathbf{87.2}$ & $<0.001^{*}$ \\
+\midrule
+\textbf{Overall ($N=75$ Queries)} & $\mathbf{10.1}$ & $\mathbf{2.2}$ & $\mathbf{254.42 \pm 196.80}$ & $\mathbf{645.20}$ & $\mathbf{183.74 \pm 164.50}$ & $\mathbf{512.30}$ & $\mathbf{1.38\times}$ & $\mathbf{91.8}$ & $\mathbf{121.6}$ & $\mathbf{<0.001^{*}}$ \\
+\bottomrule
+\multicolumn{11}{@{}p{0.99\textwidth}@{}}{\scriptsize $^{*}$Statistically significant difference between External Parquet (seed-clustered 95\% CI: $[163.65, 362.54]\text{ ms}$) and Native Columnar storage modes (95\% CI: $[110.71, 274.89]\text{ ms}$) at $\alpha = 0.05$ after Holm--Bonferroni correction ($p < 0.001$ query-level; Cliff's delta $\delta = +0.296$ [Small]).}\\
+\end{tabular}
+\end{fitasttable}%
+\end{table*}
+
+\begin{table*}[!htbp]
+\centering
+\caption{Cross-engine empirical performance comparison between serverless cloud OLAP (Google BigQuery) and in-process vectorized OLAP (DuckDB) across five SQL complexity tiers ($N=75$ queries, 25 canonical seeds $\times$ 3 variations, TPC-H $\text{SF}=1\text{ GB}$).}\label{tab:jbd_bq_duck_t2}
+\label{tab:cross_engine_main}
+\scriptsize
+\setlength{\tabcolsep}{3.2pt}
+\renewcommand{\arraystretch}{1.12}
+\begin{fitasttable}
+\begin{tabular}{@{}lcccccccccc@{}}
+\toprule
+\multirow{2}{*}{\textbf{Complexity Tier}} & \multicolumn{3}{c}{\textbf{AST Profile ($n=15$/Tier)}} & \multicolumn{4}{c}{\textbf{Google BigQuery Serverless (Cloud)}} & \multicolumn{2}{c}{\textbf{DuckDB Vectorized (Local)}} & \textbf{Ratio} \\
+\cmidrule(lr){2-4} \cmidrule(lr){5-8} \cmidrule(lr){9-10} \cmidrule(lr){11-11}
+ & \textbf{Depth} & \textbf{Joins} & \textbf{CSCI} & \textbf{Unopt (ms)} & \textbf{Clustered (ms)} & \textbf{Slot (ms)} & \textbf{Scanned (MB)} & \textbf{Native (ms)} & \textbf{Parquet (ms)} & \textbf{(BQ/Duck)} \\
+\midrule
+L1: Scan \& Filter & $9.0$ & $0.0$ & $15.3$ & $684 \pm 312$ & $432.9 \pm 142$ & $1980.8$ & $332.5 \rightarrow 166.3$ & $\mathbf{50.8 \pm 28.4}$ & $81.6 \pm 42.2$& $8.5\times$ \\
+L2: Multi-Way Joins & $9.2$ & $4.8$ & $26.8$ & $1842 \pm 745$ & $667.3 \pm 265$ & $5193.6$ & $474.0 \rightarrow 308.4$ & $\mathbf{264.5 \pm 118.2}$ & $403.9 \pm 185.6$& $2.5\times$ \\
+L3: Nested CTEs & $10.8$ & $2.6$ & $36.7$ & $1265 \pm 518$ & $493.0 \pm 195$ & $4637.3$ & $417.3 \rightarrow 246.2$ & $\mathbf{121.9 \pm 54.8}$ & $232.3 \pm 96.4$& $4.0\times$ \\
+L4: Window Func. & $10.8$ & $1.6$ & $37.1$ & $1380 \pm 690$ & $372.8 \pm 168$ & $1907.5$ & $241.5 \rightarrow 132.6$ & $\mathbf{78.2 \pm 35.1}$ & $111.5 \pm 48.9$& $4.8\times$ \\
+L5: Array/UNNEST & $10.6$ & $2.2$ & $32.4$ & $1892 \pm 810$ & $1761.0 \pm 580$ & $8737.2$ & $273.4 \rightarrow 184.4$ & $\mathbf{403.3 \pm 192.4}$ & $442.7 \pm 210.3$& $4.4\times$ \\
+\midrule
+\textbf{Overall Mean} & $\mathbf{10.1}$ & $\mathbf{2.2}$ & $\mathbf{29.66}$ & $\mathbf{1412.60}$ & $\mathbf{745.39}$ & $\mathbf{4491.3}$ & $\mathbf{347.7 \rightarrow 207.7}$ & $\mathbf{183.74}$ & $\mathbf{254.42}$ & $\mathbf{4.1\times}$ \\
+\bottomrule
+\multicolumn{11}{@{}p{0.99\textwidth}@{}}{\scriptsize \textbf{Note:} CSCI denotes the Composite Structural Complexity Index. BigQuery Clustered server execution 95\% CI: $[515.64, 1026.49]\text{ ms}$ ($p < 0.001$, Cliff's $\delta = +0.471$ [Medium] vs. Unoptimized server job wall-clock $1412.60\text{ ms}$ [$1830.80\text{ ms}$ client WAN wall-clock]; Clustered server job wall-clock is $745.39\text{ ms}$ [$48.20\text{ ms}$ slot queue $+ 697.19\text{ ms}$ slot exec] and $1124.79\text{ ms}$ client WAN wall-clock). All measurements were executed with query caching disabled (\texttt{use\_\allowbreak{}query\_\allowbreak{}cache = False}).}\\
+\end{tabular}
+\end{fitasttable}%
+\end{table*}
+
+\begin{table}[!htbp]
+\centering
+\caption{Selectivity perturbation and multi-scale Cloud FinOps sensitivity analysis across V1 (High Selectivity), V2 (Moderate Selectivity), and V3 (Adversarial Full-Horizon Stress) workloads ($n=25$ queries per variation, total $N=75$) spanning $\text{SF}=1, 10, 30, \text{and } 100\text{ GB}$.}\label{tab:jbd_finops_t3}
+\label{tab:selectivity_sensitivity}
+\renewcommand{\arraystretch}{1.20}
+\begin{fitasttable}
+\begin{tabular}{@{}lccccccccccc@{}}
+\toprule
+\multirow{2}{*}{\textbf{Selectivity Variation}} & \multirow{2}{*}{\textbf{Queries}} & \textbf{BQ Unopt} & \textbf{BQ Clust.} & \textbf{Unopt Scan} & \textbf{Clust. Scan} & \textbf{I/O Pruning} & \multicolumn{4}{c}{\textbf{Multi-Scale FinOps Savings $\Delta C_{\text{1M}}$ (USD / $10^6$ Queries)}} & \textbf{DuckDB Nat.} \\
+\cmidrule(lr){8-11}
+ & & \textbf{SF=1 (ms)} & \textbf{SF=1 (ms)} & \textbf{SF=1 (MB)} & \textbf{SF=1 (MB)} & \textbf{Ratio (\%)} & \textbf{SF=1 GB} & \textbf{SF=10 GB} & \textbf{SF=30 GB} & \textbf{SF=100 GB} & \textbf{SF=1 (ms)} \\
+\midrule
+\textbf{V1: High Selectivity (Narrow)} & $25$ & $1124.5$ & $\mathbf{468.2}$ & $347.7$ & $\mathbf{75.1}$ & $\mathbf{78.4\%}$ & $\mathbf{\$1,441.61}$ & $\mathbf{\$14,416.08}$ & $\mathbf{\$43,248.25}$ & $\mathbf{\$144,160.82}$ & $118.45$ \\
+\textbf{V2: Medium Selectivity (Moderate)} & $25$ & $1398.2$ & $\mathbf{712.6}$ & $347.7$ & $\mathbf{206.5}$ & $\mathbf{40.6\%}$ & $\mathbf{\$761.15}$ & $\mathbf{\$7,611.50}$ & $\mathbf{\$22,834.50}$ & $\mathbf{\$76,115.00}$ & $179.62$ \\
+\textbf{V3: Low Selectivity (Full-Horizon)} & $25$ & $1715.1$ & $\mathbf{1055.4}$ & $347.7$ & $\mathbf{345.6}$ & $\mathbf{0.6\%}$ & $\$12.52$ & $\$125.17$ & $\$375.51$ & $\$1,251.70$ & $253.15$ \\
+\bottomrule
+\end{tabular}
+\end{fitasttable}%
+\vspace{2pt}
+\parbox{0.96\textwidth}{\scriptsize \textit{Note:} V1 filters narrow temporal/segment horizons ($\sim$1--5\% selectivity); V2 spans moderate multi-year horizons ($\sim$15--30\%); V3 stresses full-table multi-year horizons ($\sim$65--95\%). FinOps $\Delta C_{\text{1M}}$ quantifies cloud cost savings per $10^6$ queries at $\$6.25\text{ USD/TiB}$ across $\text{SF}=1, 10, 30, \text{and } 100\text{ GB}$.}
+\end{table}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.98\textwidth]{figures/fig_cross_engine_bq_duckdb_sf1_300dpi.pdf}
+\caption{Empirical evaluation across five SQL complexity tiers (L1--L5, $N=75$ queries) at $\text{SF}=1\text{ GB}$: (a) Cross-engine execution latency comparing Google BigQuery (Unoptimized vs. Clustered) and DuckDB (External Parquet vs. Native Columnar) on a logarithmic scale; (b) BigQuery server wall-clock latency versus total distributed Slot compute time (ms); and (c) Storage I/O pruning achieved via Clustering Keys on BigQuery.}
+\label{fig:cross_engine_results}
+\end{figure}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.95\textwidth]{figures/fig_seed25_heatmap_sf1_300dpi.pdf}
+\caption{Granular 25-seed performance and storage pruning distribution across selectivity variations V1 (High Selectivity), V2 (Moderate Selectivity), and V3 (Low Selectivity / Full-Horizon): evaluating execution latency scaling and percentage reduction in scanned storage bytes achieved via clustering keys.}
+\label{fig:seed25_heatmap}
+\end{figure}
+
+\begin{table}[!htbp]
+\centering
+\caption{Effective analytical scan throughput ($\Theta_{\text{eff}}$, GB/s), Cloud Slot-to-Wall Concurrency Proxy ($\mathcal{M}_{\text{slot}}$), and GPU PCIe Overhead Fraction ($\Phi_{\text{PCIe}}$) across six OLAP engines ($N=75$ queries, 100\% full-scale TPC-H $\text{SF}=1\text{ GB}$).}\label{tab:jbd_throughput_t6}
+\label{tab:throughput_and_cost}
+\renewcommand{\arraystretch}{1.20}
+\begin{fitasttable}
+\begin{tabular}{@{}lccccccccc@{}}
+\toprule
+\multirow{2}{*}{\textbf{Complexity Tier}} & \textbf{Base Scan} & \textbf{Cloud Slot} & \textbf{GPU PCIe} & \multicolumn{6}{c}{\textbf{Effective Analytical Scan Throughput $\Theta_{\text{eff}}$ (GB/s, Higher is Better)}} \\
+\cmidrule(lr){5-10}
+ & \textbf{$\mathcal{B}_{\text{unopt}}$ (MB)} & \textbf{$\mathcal{M}_{\text{slot}}$ Ratio} & \textbf{$\Phi_{\text{PCIe}}$ (\%)} & \textbf{SQLite 3} & \textbf{BigQuery} & \textbf{DuckDB} & \textbf{Polars} & \textbf{DataFusion} & \textbf{GPU Warm} \\
+\midrule
+\textbf{L1: Scan \& Filter} & $332.5$ & $4.58\times$ & $55.5\%$ & $0.048$ & $0.750$ & $6.39$ & $8.55$ & $\mathbf{9.67}$ & $\mathbf{13.28}$ \\
+\textbf{L2: Multi-Way Joins} & $474.0$ & $7.78\times$ & $53.2\%$ & $0.024$ & $0.694$ & $1.75$ & $\mathbf{5.67}$ & $4.99$ & $\mathbf{9.44}$ \\
+\textbf{L3: Nested CTEs} & $417.3$ & $\mathbf{9.41\times}$ & $74.3\%$ & $0.080$ & $0.827$ & $3.34$ & $\mathbf{6.10}$ & $5.69$ & $\mathbf{27.20}$ \\
+\textbf{L4: Window Func.} & $241.5$ & $5.12\times$ & $\mathbf{48.7\%}$ & $0.039$ & $0.633$ & $3.02$ & $\mathbf{3.32}$ & $1.36$ & $\mathbf{23.73}$ \\
+\textbf{L5: Array / UNNEST} & $273.4$ & $4.96\times$ & $72.9\%$ & $0.056$ & $0.152$ & $0.66$ & $1.73$ & $\mathbf{2.42}$ & $\mathbf{20.79}$ \\
+\midrule
+\textbf{Overall Mean ($N=75$)} & $\mathbf{347.7}$ & $\mathbf{6.37\times}$ & $\mathbf{60.9\%}$ & $\mathbf{0.049}$ & $\mathbf{0.611}$ & $\mathbf{3.03}$ & $\mathbf{5.07}$ & $\mathbf{4.83}$ & $\mathbf{18.89}$ \\
+\bottomrule
+\end{tabular}
+\end{fitasttable}%
+\vspace{2pt}
+\parbox{0.96\textwidth}{\scriptsize \textit{Note:} $\Theta_{\text{eff}} = \mathcal{B}_{\text{unopt}} / (1.024 \cdot T_{\text{engine}})$ normalizes effective processing throughput against the unpruned columnar projection size ($\text{GB/s}$). Omnibus Friedman test across all six engines confirms highly significant performance stratification ($\chi^2_F(5) = 321.50, p < 0.001$, Kendall's concordance $W = 0.8573$).}
+\end{table}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.98\textwidth]{figures/fig_six_software_comparison_sf1_300dpi.pdf}
+\caption{Six-software cross-paradigm OLAP evaluation across five AST complexity tiers (L1--L5, $N=75$ queries at 100\% full-scale $\text{SF}=1\text{ GB}$): (a) Mean execution latency (ms, logarithmic scale) and (b) Effective analytical scan throughput ($\Theta_{\text{eff}}$ in $\text{GB/s}$, logarithmic scale) contrasting SQLite 3, Google BigQuery Clustered, DuckDB Native, Polars, Apache DataFusion, and NVIDIA RTX 2050 GPU.}
+\label{fig:six_software_chart}
+\end{figure}
+
+\clearpage
+\section{Device Energy Estimation Protocol, Power-Rail Boundaries, and Statistical Audit Matrix}
+This section details the three-scope energy measurement and estimation boundaries summarized in Sections~3.2 and~5.1 of the Main Text: (i) physical NVIDIA NVML on-board GPU power sensors ($E_{\text{GPU}}$), (ii) ring-3 TDP-calibrated CPU package utilization estimation ($E_{\text{CPU}}$) cross-checked against a CMOS DVFS reference curve ($P \propto u^{1.28}$) and 45-second motherboard ACPI DC battery-shunt discharge telemetry (Table~\ref{tab:hardware_energy_telemetry} and Figs.~\ref{fig:hardware_energy_chart}--\ref{fig:sensor_boundaries}), and (iii) the 10,000-iteration seed-clustered bootstrap 95\% confidence interval and Cliff's delta statistical audit matrix (Table~\ref{tab:reviewer_audit_matrix}).
+
+\begin{table}[!htbp]
+\centering
+\caption{Hardware resource telemetry (CPU Utilization \%, Host RAM GB, GPU Utilization \%, VRAM GB), per-query Active Device Energy Consumption (Joules), and Energy-Aware Scan Efficiency ($\eta_{\text{watt}}$, MB/Joule $\equiv$ MB/s/W) across local CPU and CUDA GPU engines ($N=75$ queries, 100\% full-scale TPC-H $\text{SF}=1\text{ GB}$).}\label{tab:jbd_energy_t7}
+\label{tab:hardware_energy_telemetry}
+\renewcommand{\arraystretch}{1.20}
+\begin{fitasttable}
+\begin{tabular}{@{}lccccccccccccccc@{}}
+\toprule
+\multirow{2}{*}{\textbf{Complexity Tier}} & \multicolumn{4}{c}{\textbf{CPU Utilization (\%)}} & \multicolumn{2}{c}{\textbf{Host RAM (GB)}} & \multicolumn{2}{c}{\textbf{RTX 2050 GPU}} & \multicolumn{4}{c}{\textbf{Est.\ CPU Pkg / Meas.\ GPU Energy (J, Lower is Better)}} & \multicolumn{3}{c}{\textbf{Perf per Watt $\eta_{\text{watt}}$ (MB/J, Higher is Better)}} \\
+\cmidrule(lr){2-5} \cmidrule(lr){6-7} \cmidrule(lr){8-9} \cmidrule(lr){10-13} \cmidrule(lr){14-16}
+ & \textbf{SQLite} & \textbf{DuckDB} & \textbf{Polars} & \textbf{DF} & \textbf{SQLite} & \textbf{Columnar} & \textbf{Util (\%)} & \textbf{VRAM (GB)} & \textbf{SQLite} & \textbf{DuckDB} & \textbf{Polars} & \textbf{GPU Warm (Cold)} & \textbf{SQLite} & \textbf{DuckDB / Polars} & \textbf{GPU Warm (Cold)} \\
+\midrule
+\textbf{L1: Scan \& Filter} & $8.7\%$ & $74.4\%$ & $70.2\%$ & $73.2\%$ & $2.14$ & $4.46\text{--}4.48$ & $27.1\%$ & $1.24$ & $101.0$ & $1.79$ & $1.36$ & $\mathbf{0.27}\ (0.60)$ & $4.06$ & $515.2\ /\ 285.9$ & $\mathbf{1398.5}\ (569.6)$ \\
+\textbf{L2: Multi-Way Joins} & $9.5\%$ & $66.4\%$ & $\mathbf{89.1\%}$ & $66.4\%$ & $2.30$ & $4.65\text{--}4.78$ & $32.1\%$ & $1.33$ & $293.4$ & $8.99$ & $3.39$ & $\mathbf{0.60}\ (1.29)$ & $2.28$ & $177.7\ /\ 163.0$ & $\mathbf{910.3}\ (383.0)$ \\
+\textbf{L3: Nested CTEs} & $8.7\%$ & $57.7\%$ & $77.5\%$ & $74.1\%$ & $2.27$ & $4.71\text{--}4.72$ & $30.5\%$ & $1.33$ & $76.0$ & $4.00$ & $2.56$ & $\mathbf{0.17}\ (0.68)$ & $6.21$ & $215.4\ /\ 186.9$ & $\mathbf{2558.0}\ (619.6)$ \\
+\textbf{L4: Window Func.} & $8.7\%$ & $58.6\%$ & $74.3\%$ & $65.6\%$ & $2.28$ & $4.73\text{--}4.74$ & $32.4\%$ & $1.33$ & $89.6$ & $2.54$ & $2.65$ & $\mathbf{0.11}\ (0.21)$ & $3.38$ & $202.7\ /\ 103.2$ & $\mathbf{2502.1}\ (1178.3)$ \\
+\textbf{L5: Array / UNNEST} & $8.7\%$ & $73.4\%$ & $76.1\%$ & $71.3\%$ & $2.33$ & $4.69\text{--}4.85$ & $\mathbf{33.1\%}$ & $1.29$ & $71.3$ & $14.67$ & $5.89$ & $\mathbf{0.12}\ (0.45)$ & $4.30$ & $104.0\ /\ 59.6$ & $\mathbf{2345.0}\ (611.2)$ \\
+\midrule
+\textbf{Overall Mean ($N=75$)} & $\mathbf{8.86\%}$ & $\mathbf{66.10\%}$ & $\mathbf{77.44\%}$ & $\mathbf{70.12\%}$ & $\mathbf{2.26}$ & $\mathbf{4.65\text{--}4.71}$ & $\mathbf{31.04\%}$ & $\mathbf{1.30}$ & $\mathbf{126.26}$ & $\mathbf{6.40}$ & $\mathbf{3.17}$ & $\mathbf{0.25}\ (\mathbf{0.65})$ & $\mathbf{4.05}$ & $\mathbf{243.0\ /\ 159.7}$ & $\mathbf{1942.8}\ (\mathbf{672.3})$ \\
+\bottomrule
+\end{tabular}
+\end{fitasttable}%
+\vspace{2pt}
+\parbox{0.96\textwidth}{\scriptsize \textit{Note:} Device energy telemetry sampled at $250\text{ Hz}$ across $R=5$ timed repetitions per query ($75\times 5 = 375$ trials) via \texttt{psutil}, NVIDIA \texttt{NVML} (\texttt{nvmlDeviceGetPowerUsage}), and \texttt{torch.cuda} counters. Seed-clustered 10,000-bootstrap 95\% CIs (measurement CV $\le 3.52\%$): DuckDB $[3.86, 9.57]\text{ J}$, Polars $[2.61, 3.78]\text{ J}$, Apache DataFusion (DF) $3.39\text{ J}$ ($[2.78, 4.06]\text{ J}$, $157.1\text{ MB/J}$), GPU Cold $[0.53, 0.78]\text{ J}$, and GPU Warm $[0.19, 0.32]\text{ J}$. Subtracting idle baseline power ($14.5\text{ W}$ CPU, $10.5\text{ W}$ GPU) yields net dynamic energy $E_{\text{dyn}}$ of $3.73\text{ J}$ (DuckDB), $1.97\text{ J}$ (Polars), $2.00\text{ J}$ (DF), $0.14\text{ J}$ (GPU Cold), and $0.05\text{ J}$ (GPU Warm). Note that $\eta_{\text{watt}}$ reports the per-query mean $\frac{1}{N}\sum_q \mathcal{B}_{\text{unopt}}(q)/E(q)$ (elevated on DuckDB by sub-$0.3\text{ J}$ V1 zone-map pruned queries under Jensen's convexity, whereas workload-aggregate $\sum_q \mathcal{B}_{\text{unopt}}(q)/\sum_q E(q)$ is $109.7\text{ MB/J}$ on Polars vs.\ $54.3\text{ MB/J}$ on DuckDB). Accounting for concurrent host CPU power during GPU offload yields composite Host+GPU system energy $E_{\text{sys}}$ of $1.58\text{ J}$ (Cold) and $0.61\text{ J}$ (Warm).}
+\end{table}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.98\textwidth]{figures/fig_hardware_energy_efficiency_sf1_300dpi.pdf}
+\caption{Hardware resource and device-level energy efficiency evaluation across five AST complexity tiers (L1--L5, $N=75$ queries at 100\% full-scale $\text{SF}=1\text{ GB}$): (a) Per-query energy consumption in Joules (logarithmic scale, lower is better) across SQLite 3, DuckDB, Polars, and NVIDIA RTX 2050 GPU (Cold vs. Warm); and (b) Performance per Watt in MB scanned per Joule ($\text{MB/s/W}$, logarithmic scale, higher is better).}
+\label{fig:hardware_energy_chart}
+\end{figure}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.98\textwidth]{figures/fig_energy_sensor_boundaries_and_shunt_300dpi.pdf}
+\caption{Hardware power-rail topology and measurement boundary separation: (a) physical sensor placement distinguishing out-of-scope AC wall-plug draw (Boundary~B0), mainboard ACPI DC battery-rail shunt telemetry covering VRM, DRAM, NVMe, chipset, and cooling rails (Boundary~B1), ring-3 TDP/DVFS \emph{Estimated CPU Package Energy} (Boundary~B2), and physical on-board NVIDIA NVML GPU power sensors (Boundary~B3); and (b) controlled multi-thread DuckDB OLAP load scaling ($0\text{T--}8\text{T}$) alongside the $+16.39\text{ W}$ ($39.5\%$) non-CPU platform rail offset between B1 DC shunt power ($46.40\text{ W}$) and B2 estimated CPU package power ($30.01\text{ W}$).}\label{fig:sensor_boundaries}
+\end{figure}
+
+\begin{table}[!htbp]
+\centering
+\caption{Comprehensive statistical and methodological audit matrix: (Part A) 10,000-iteration seed-clustered bootstrap 95\% confidence intervals, non-parametric Cliff's delta ($\delta$) effect sizes, and unadjusted query-level paired Wilcoxon $p_{\text{raw,query}}$ ($N=75$, distinct from $K=25$ seed-level $p_{\text{Holm,seed}}$ in Section~4.7); and (Part B) 10,000-trial CSCI sensitivity, partial correlation, and mathematical identity verification ($N=75$ queries).}\label{tab:jbd_stat_audit_t10}
+\label{tab:reviewer_audit_matrix}
+\renewcommand{\arraystretch}{1.18}
+\begin{fitasttable}
+\begin{tabular}{@{}llcccc@{}}
+\toprule
+\textbf{Audit Category} & \textbf{Pairwise Comparison / Sensitivity Regime} & \textbf{Baseline Mean [95\% CI] / Metric} & \textbf{Target Mean [95\% CI] / Stability} & \textbf{Speedup / Min $\rho$} & \textbf{Cliff's $\delta$ (Mag.) / Query $p_{\text{raw}}$ ($N=75$)} \\
+\midrule
+\multirow{10}{*}{\textbf{Part A: 95\% CI \& Effect Sizes}}
+ & Polars (Rust Arrow) vs. SQLite 3 (Row-Store) & $8417.33\ [6412.19, 10819.70]\text{ ms}$ & $82.47\ [67.93, 98.65]\text{ ms}$ & $102.06\times$ & $+1.000\text{ (Large)},\ p < 0.001$ \\
+ & DataFusion (Rust Arrow) vs. SQLite 3 (Row-Store) & $8417.33\ [6412.19, 10819.70]\text{ ms}$ & $96.30\ [78.31, 114.92]\text{ ms}$ & $87.41\times$ & $+1.000\text{ (Large)},\ p < 0.001$ \\
+ & DuckDB (Native) vs. SQLite 3 (Row-Store) & $8417.33\ [6412.19, 10819.70]\text{ ms}$ & $183.74\ [110.71, 274.89]\text{ ms}$ & $45.81\times$ & $+1.000\text{ (Large)},\ p < 0.001$ \\
+ & DuckDB (Native) vs. DuckDB (External Parquet) & $254.42\ [163.65, 362.54]\text{ ms}$ & $183.74\ [110.71, 274.89]\text{ ms}$ & $1.38\times$ & $+0.296\text{ (Small)},\ p < 0.001$ \\
+ & BigQuery (Clustered) vs. BigQuery (Unoptimized) & $1412.60\ [982.40, 1914.50]\text{ ms}$ & $745.39\ [515.64, 1026.49]\text{ ms}$ & $1.90\times$ & $+0.471\text{ (Medium)},\ p < 0.001$ \\
+ & RTX 2050 GPU (Warm) vs. DuckDB (Native CPU) & $183.74\ [110.71, 274.89]\text{ ms}$ & $22.25\ [16.78, 28.68]\text{ ms}$ & $8.26\times$ & $+0.722\text{ (Large)},\ p < 0.001$ \\
+ & RTX 2050 GPU (Cold) vs. DuckDB (Native CPU) & $183.74\ [110.71, 274.89]\text{ ms}$ & $56.96\ [46.23, 68.44]\text{ ms}$ & $3.23\times$ & $+0.199\text{ (Small)},\ p < 0.001$ \\
+ & \textbf{Proposed AST-Route (9D) vs. Always DuckDB} & $183.74\ [110.71, 274.89]\text{ ms}$ & $\mathbf{54.92\ [42.78, 68.50]\text{ ms}}$ & $\mathbf{3.35\times}$ & $\mathbf{+0.285\text{ (Small)},\ p < 0.001}$ \\
+ & \textbf{Proposed AST-Route (9D) vs. Always Polars} & $82.47\ [67.93, 98.65]\text{ ms}$ & $\mathbf{54.92\ [42.78, 68.50]\text{ ms}}$ & $\mathbf{1.50\times}$ & $\mathbf{+0.420\text{ (Medium)},\ p < 0.001}$ \\
+ & \textbf{Proposed AST-Route (9D) vs. Rule-Based Routing} & $71.48\ [52.79, 91.74]\text{ ms}$ & $\mathbf{54.92\ [42.78, 68.50]\text{ ms}}$ & $\mathbf{1.30\times}$ & $\mathbf{+0.126\text{ (Negl.)},\ p=1.87\times 10^{-2}}$ \\
+\midrule
+\multirow{4}{*}{\textbf{Part B: CSCI \& Fairness Audit}}
+ & CSCI Weight Perturbation ($\pm 10\%$ / $\pm 20\%$ Uniform) & $\bar{\rho} = 0.9963 \pm 0.0032\ (\pm 10\%)$ & $\bar{\rho} = 0.9880 \pm 0.0102\ (\pm 20\%)$ & $\min \rho = 0.9418$ & Kendall's $\bar{\tau} = 0.9775\ /\ 0.9441$ \\
+ & CSCI Weight Perturbation ($\pm 30\%$ / $\pm 50\%$ Extreme) & $\bar{\rho} = 0.9775 \pm 0.0166\ (\pm 30\%)$ & $\bar{\rho} = 0.9555 \pm 0.0296\ (\pm 50\%)$ & $\min \rho = 0.8346$ & Kendall's $\bar{\tau} = 0.9133\ /\ 0.8643$ \\
+ & CSCI vs. Nodes $N(q)$, Equal-Wt, \& Partial Corr. & Nodes $\rho=0.8744\ (p < 0.001)$ & Equal-Wt $\rho = 0.9812$ & LOOO $\bar{\rho} = 0.9005$ & Partial $\rho_{\text{ctrl.\ }\sigma}=0.5477\ (p < 0.001)$ \\
+ & Result Equivalence \& Cross-Table Eq.~(1)--(8) Audit & \texttt{FP64} Rel. Error $< 1.0\times 10^{-9}$ & Exact Match $97/97$ ($100.0\%$) & $0.0000\text{ ms}$ Drift & PASS (100\% Zero-Discrepancy Verified) \\
+\bottomrule
+\end{tabular}
+\end{fitasttable}%
+\end{table}
+
+\clearpage
+\section{Extended Baseline Matrix, Prediction-Noise Stability, and Planner/OOD Sub-Audits}
+This section provides the supplementary internal ablation and robustness tables referenced in Section~4.4 of the Main Text: the feature ablation, Pareto trajectory, and cold-start learning curve plot (Fig.~\ref{fig:framework_ablation_pareto}), the five-part baseline and metadata-cache audit matrix (Table~\ref{tab:step3_comprehensive_audit}), router decision stability under $\pm 5\%\text{--}20\%$ multiplicative cost-prediction noise and post-training workload drift (Table~\ref{tab:v7_stability_drift} and Fig.~\ref{fig:v7_stability_drift}), and the physical-planner (\texttt{DuckDB EXPLAIN}), neural cost-encoder, and Out-of-Distribution (OOD) structural fallback gate audit (Table~\ref{tab:v8_p0_systems_defense}).
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.98\textwidth]{figures/fig_framework_ablation_pareto_sf1_300dpi.pdf}
+\caption{Internal mechanism validation of the \textbf{AST-Route} framework across 75 queries (25-seed LOSO-CV): (a) Feature group ablation comparing 2D Tree Size, 7D Operator Counts, 2D Compact Index ($\text{CSCI}+\sigma(q)$), 8D Syntax-Only AST, and 9D Full Proposed \textbf{AST-Route}; (b) Multi-objective latency--energy Pareto trajectory across weighting parameter $\alpha \in [0,1]$; and (c) Cold-start sample efficiency learning curve from 5 to 24 training canonical seeds.}
+\label{fig:framework_ablation_pareto}
+\end{figure}
+
+\begin{table*}[t!]
+\centering
+\caption{Comprehensive multi-baseline and operational robustness evaluation: (A) complete baseline matrix with 25-seed 95\% bootstrap CIs and P95/P99 tail regret; (B) standalone CPU-only routing ($M_{\text{gpu\_max}}=0$); (C) scale-augmented 10D routing and physical byte telemetry ($\text{SF}=1\text{--}100\text{ GB}$); (D) per-tier LOTO-CV breakdown and external ClickBench validation ($N=20$); and (E) net end-to-end latency across metadata cache states.}\label{tab:jbd_step3_t14}
+\label{tab:step3_comprehensive_audit}
+\scriptsize
+\setlength{\tabcolsep}{2.8pt}
+\renewcommand{\arraystretch}{1.06}
+\begin{fitasttable}
+\begin{tabular}{@{}llccccccl@{}}
+\hline
+\textbf{Audit Dimension / Policy or Regime} & \textbf{Scope / Category} & \textbf{Top-1 / Top-2} & \textbf{Mean (ms)} & \textbf{Seed-Cluster 95\% CI} & \textbf{Mean Reg.} & \textbf{P95 Reg.} & \textbf{P99 Reg.} & \textbf{Fail $>100\%$ / Note} \\
+\hline
+\multicolumn{9}{l}{\textit{\textbf{Part A: Complete Baseline Matrix on 75-Query TPC-H (25-Seed LOSO-CV, $\text{SF}=1\text{ GB}$, $\mathbf{x}_q\in\mathbb{R}^9$, Oracle $=42.64\text{ ms}$)}}} \\
+Always DuckDB / DataFusion / Polars & Static CPU Baselines & 9.3--28.0\% / 37.3--49.3\% & 82.47--183.74 & $[67.9, 274.9]$ & 132.6--271.1\% & 358.4--928.3\% & 478.2--1412.6\% & 46.7--78.7\% ($p_{\text{Holm}}\le 0.0171$) \\
+Always GPU (RTX 2050 Cold-Start) & Static SIMT GPU & 49.33\% / 60.00\% & 56.96 & $[46.23, 68.44]$ & 60.76\% & 257.31\% & 518.40\% & 21.33\% ($p=0.1840$) \\
+Static Rule-Based Router (Heuristic) & Fixed Threshold Rule & 49.33\% / 65.33\% & 71.48 & $[52.79, 91.74]$ & 65.63\% & 252.40\% & 384.50\% & 18.67\% ($p=0.0187$) \\
+In-Fold Tuned Heuristic Rule & 24-Seed Tuned Rule & 52.00\% / 68.00\% & 53.07 & $[43.18, 64.12]$ & 44.10\% & 162.40\% & 276.80\% & 13.33\% (Max: $295.0\%$) \\
+$k$-NN Cost Regressor ($k=5$) & Non-Parametric ML & 53.33\% / 72.00\% & 52.84 & $[42.95, 63.80]$ & 43.15\% & 168.50\% & 284.20\% & 12.00\% (Distance-weighted) \\
+Ridge Linear Cost-Reg ($\alpha=1.0$) & Speed-First Point Est. & 54.67\% / 73.33\% & \textbf{49.12} & $[39.84, 59.45]$ & 42.15\% & 196.78\% & 298.40\% & 13.33\% (Max: $312.4\%$) \\
+Shallow Decision Tree (Depth-2) & Speed-First Point Est. & 53.33\% / 72.00\% & 51.35 & $[41.62, 62.08]$ & 39.84\% & 150.87\% & 268.40\% & 10.67\% (Max: $284.5\%$) \\
+Point-Estimate $\mathcal{R}_{\text{GBR-9D}}$ (No Guard) & Ensemble Point Est. & 53.33\% / 72.00\% & 58.64 & $[47.50, 70.82]$ & 48.12\% & 164.80\% & 289.50\% & 14.67\% (Max: $312.4\%$) \\
+\textbf{Margin-Guarded AST-Route ($\mathcal{R}_{\text{GBR-9D}}+12\%$)} & \textbf{Tail-Safe SLA Router} & \textbf{57.33\% / 76.00\%} & \textbf{54.92} & $[42.78, 68.50]$ & \textbf{34.98\%} & \textbf{114.11\%} & \textbf{218.40\%} & \textbf{6.67\%} (Max: $245.2\%$) \\
+\hline
+\multicolumn{9}{l}{\textit{\textbf{Part B: Standalone CPU-Only Router ($\mathcal{E}_{\text{CPU}}=\{\text{DuckDB, Polars, DataFusion}\}, M_{\text{gpu\_max}}=0\text{ GB}$ --- No GPU Dependence)}}} \\
+Node 1B CPU-Only 25-Seed LOSO ($N=75$, $56/75$) & 8T x86\_64 ($\text{SF}=1$) & \textbf{74.67\% / 96.00\%} & \textbf{69.12} & $[56.85, 82.74]$ & \textbf{9.64\%} & \textbf{42.80\%} & \textbf{76.20\%} & Beats Polars $82.47\text{ ms}$ ($p_{\text{Holm}}=0.0084$) \\
+Node 2A CPU-Only 30Q LOGO-CV ($N=30$, $26/30$) & 16C/22T x86\_64 ($\text{SF}=1$) & \textbf{86.67\% / 100.0\%} & \textbf{62.05} & $[43.80, 84.10]$ & \textbf{8.83\%} & \textbf{44.07\%} & \textbf{71.50\%} & Beats Polars $71.43$ / DuckDB $71.19\text{ ms}$ \\
+Node 2C CPU-Only 25-Seed LOSO ($N=75$, $73/75$) & 16C/22T x86\_64 ($\text{SF}=1$) & \textbf{97.33\% / 100.0\%} & \textbf{35.11} & $[27.40, 43.85]$ & \textbf{0.18\%} & \textbf{1.45\%} & \textbf{4.20\%} & Native 75Q retrain vs.\ $47.54\text{ ms}$ Polars \\
+Node 3B CPU-Only 30Q LOGO-CV ($N=30$, $29/30$) & Apple M1 8T ARM64 ($\text{SF}=1$) & \textbf{96.67\% / 100.0\%} & \textbf{29.44} & $[21.80, 38.10]$ & \textbf{3.59\%} & \textbf{14.20\%} & \textbf{24.50\%} & Unified RAM ($29.44\text{ ms}$ vs.\ $28.42\text{ ms}$ Orac.) \\
+\hline
+\multicolumn{9}{l}{\textit{\textbf{Part C: Multi-Scale 10D Protocol ($\mathbf{x}_q^{\text{scale}}=[\mathbf{x}_q; \log_{10}(1+\hat{\mathcal{B}}_{\text{scan}})]$) and Physical Bytes Transferred ($\text{SF}=1\text{--}100\text{ GB}$)}}} \\
+$\text{SF}=1\text{ GB}$ (Same-Scale / Cross-Scale 10D) & Parquet $52.4\text{ MB}$ read & 57.33\% / 54.67\% & 54.92 / 56.14 & $[42.78, 68.50]$ & 34.98\% / 37.85\% & 114.1\% / 121.4\% & 218.4\% / 229.0\% & PCIe: $142.8\text{ MB}$ ($1\times$), Spill: $0\text{ MB}$ \\
+$\text{SF}=10\text{ GB}$ (Same-Scale / Cross-Scale 10D) & Parquet $524.1\text{ MB}$ read & 64.00\% / 61.33\% & 182.40 / 189.65 & $[148.2, 219.5]$ & 24.15\% / 27.40\% & 86.4\% / 94.2\% & 148.5\% / 162.0\% & PCIe: $1.43\text{ GB}$ ($4\times$), Spill: $125\text{ MB}$ \\
+$\text{SF}=30\text{ GB}$ (Same-Scale / Cross-Scale 10D) & Parquet $1.57\text{ GB}$ read & 68.00\% / 65.33\% & 448.65 / 465.20 & $[368.4, 534.0]$ & 19.80\% / 22.90\% & 72.5\% / 81.0\% & 124.2\% / 138.5\% & PCIe: $4.28\text{ GB}$ ($12\times$), Spill: $864\text{ MB}$ \\
+$\text{SF}=100\text{ GB}$ (Same-Scale / Cross-Scale 10D) & Parquet $5.24\text{ GB}$ read & 72.00\% / 69.33\% & 1142.8 / 1186.4 & $[942.0, 1358.2]$ & 16.40\% / 19.15\% & 64.2\% / 71.8\% & 108.4\% / 119.6\% & PCIe: $14.28\text{ GB}$ ($40\times$), Spill: $3.30\text{ GB}$ \\
+\hline
+\multicolumn{9}{l}{\textit{\textbf{Part D: Per-Tier Leave-One-Tier-Out (LOTO-CV) Breakdown and External ClickBench Web Analytics Suite ($N=20$)}}} \\
+LOTO-CV Holdout L1 / L2 / L3 ($n=15$ each) & Seen Primitive Overlap & 60.0 / 46.7 / 53.3\% & 48.2 / 112.4 / 74.8 & $[38.4, 134.2]$ & 38.4--64.2\% & 124.0--186.5\% & 198.0--274.0\% & Partial interpolation across tiers \\
+LOTO-CV Holdout L4 (Window) / L5 (UNNEST) & Unseen Operator Class & 33.33\% / 26.67\% & 98.60 / 93.10 & $[76.5, 118.4]$ & 89.5\% / 104.8\% & 242.0\% / 268.5\% & 364.0\% / 392.0\% & Out-of-distribution $W(q), U(q)$ shift \\
+LOTO-CV Aggregate across L1--L5 ($N=75$) & Entire Tier Held Out & 44.00\% / 66.67\% & 85.42 & $[69.80, 102.40]$ & 68.40\% & 212.50\% & 348.00\% & Trails Polars $82.47\text{ ms}$ (Scope bound) \\
+External ClickBench Web Analytics ($N=20$) & Wide-Table Zero-Shot & \textbf{80.00\% / 95.00\%} & \textbf{24.18} & $[18.40, 30.85]$ & \textbf{9.45\%} & \textbf{34.20\%} & \textbf{58.40\%} & Beats GPU $29.45$ / Polars $31.84\text{ ms}$ \\
+\hline
+\multicolumn{9}{l}{\textit{\textbf{Part E: Net End-to-End Latency ($T_{\text{net}} = T_{\text{exec}} + T_{\text{parse}} + T_{\text{meta}} + T_{\text{infer}}$) Across Metadata Cache Regimes ($\text{SF}=1\text{ GB}$)}}} \\
+Regime 1: Warm Catalog Metadata Cache & $T_{\text{meta}}=0.172\text{ ms}$ (Default) & 57.33\% / 76.00\% & \textbf{54.92} ($50.78+4.15$) & $[42.78, 68.50]$ & 34.98\% & 114.11\% & 218.40\% & Faster than Always GPU ($56.96\text{ ms}$) \\
+Regime 2: Cold NVMe Footer \texttt{seek(-8)} & $T_{\text{meta}}=0.413\text{ ms}$ ($4.39\text{ ms}$ tot) & 57.33\% / 76.00\% & \textbf{55.16} ($50.78+4.39$) & $[43.02, 68.74]$ & 35.42\% & 114.80\% & 219.10\% & Still beats Always GPU ($56.96\text{ ms}$) \\
+Regime 3: Uncached Cold OS Full-Scan & $T_{\text{meta}}=70.90\text{ ms}$ ($74.87\text{ ms}$ tot) & 57.33\% / 76.00\% & 125.65 ($50.78+74.87$) & $[113.5, 139.2]$ & 162.40\% & 318.50\% & 442.00\% & Penalty at $\text{SF}=1$; fast at $\text{SF}\ge 10\text{ GB}$ \\
+\hline
+\end{tabular}
+\end{fitasttable}%
+\end{table*}
+
+\begin{table}[!htbp]
+\centering
+\caption{Targeted systems robustness audit ($N=75$, $\text{SF}=1\text{ GB}$): (Part A) Router decision stability under $\pm 5\%$, $\pm 10\%$, and $\pm 20\%$ cost-prediction noise synchronized with Fig.~\ref{fig:v7_stability_drift}a; and (Part B) Post-training query-mix, selectivity, and Zipfian skew drift with conformal recalibration triggers.}\label{tab:v7_stability_drift}\label{tab:jbd_stability_t16}
+\setlength{\tabcolsep}{2.8pt}
+\scriptsize
+\begin{fitasttable}
+\begin{tabular}{@{}llcccccl@{}}
+\toprule
+\textbf{Audit Module} & \textbf{Policy / Noise or Drift Scenario} & \textbf{Stability / 90\% PI} & \textbf{Flip Rate / Q-Err} & \textbf{Benign Flip / Polars} & \textbf{Net (ms)} & \textbf{$>100\%$ Viol.\ / Reg.} & \textbf{Guard Mechanism / Maintenance Action} \\
+\midrule
+\multirow{6}{*}{\textbf{Part A: Noise}}
+ & Margin-Guarded AST-Route ($0\%$ Clean) & $100.00\%$ Stab. & $0.00\%$ Flip & $100.0\%$ Near-Tie & $60.90$ & $9.33\%$ ($\text{P95}: 124.4\%$) & Baseline 12\% PCIe + 8\% CPU deadband \\
+ & Margin-Guarded AST-Route ($\pm 5\%$ Noise) & $96.98\%$ Stab. & $3.02\%$ Flip & $55.5\%$ Near-Tie & $60.80$ & $9.33\%$ ($\text{P95}: 124.4\%$) & Absorbs minor jitter ($\Delta\text{Net} = -0.10\text{ ms}$) \\
+ & Margin-Guarded AST-Route ($\pm 10\%$ Noise) & $\mathbf{94.22\%}$ Stab. & $\mathbf{5.78\%}$ Flip & $60.5\%$ Near-Tie & $60.85$ & $9.12\%$ ($\text{P95}: 123.4\%$) & $\mathbf{-21.4\%}$ fewer flips vs.\ Unguarded ($7.35\%$) \\
+ & Margin-Guarded AST-Route ($\pm 20\%$ Noise) & $\mathbf{88.00\%}$ Stab. & $\mathbf{12.00\%}$ Flip & $61.2\%$ Near-Tie & $61.14$ & $\mathbf{8.86\%}$ ($\text{P95}: 136.7\%$) & $\mathbf{-14.6\%}$ fewer flips vs.\ Unguarded ($14.05\%$) \\
+ & \emph{Ablation:} Unguarded ArgMin ($\pm 10\%$ Noise) & $92.65\%$ Stab. & $7.35\%$ Flip & $64.8\%$ Near-Tie & $60.16$ & $8.01\%$ (No PCIe guard) & Higher CPU$\leftrightarrow$GPU boundary churn \\
+ & \emph{Ablation:} Without 12\% PCIe Guard ($\pm 20\%$) & $84.71\%$ Stab. & $15.29\%$ Flip & $61.4\%$ Near-Tie & $64.54$ & $11.05\%$ ($\text{P95}: 256.3\%$) & Unprotected L1/L2 PCIe H2D tail stalls \\
+\midrule
+\multirow{5}{*}{\textbf{Part B: Drift}}
+ & \texttt{D0$\rightarrow$D1}: Stationary $\rightarrow$ $80\%$ Heavy Mix & $89.0\% \rightarrow 88.7\%$ PI & $\text{Q-Err}: 1.39$ & Polars: $92.89\text{ ms}$ & $\mathbf{62.34}$ & $\text{Mean Reg.}: 25.57\%$ & Zero retraining (mix-invariant AST) \\
+ & \texttt{D2a$\rightarrow$D2b}: Selectivity Drift $\rightarrow$ Seek & $88.7\% \rightarrow 88.7\%$ PI & $1.78 \rightarrow 1.40$ & Polars: $87.60\text{ ms}$ & $\mathbf{64.49}$ & $47.22\% \rightarrow 38.35\%$ & $0.41\text{ ms}$ \texttt{seek(-8)} refresh ($0$ retrain) \\
+ & \texttt{D3}: Moderate Zipfian Skew ($s=0.8$) & $85.3\%$ PI Cov. & $\text{Q-Err}: 1.77$ & Polars: $86.86\text{ ms}$ & $67.01$ & $\text{Mean Reg.}: 36.47\%$ & Monitor only ($\text{PI} \ge 80\%$ SLA guard) \\
+ & \texttt{D4a}: Severe Zipfian Skew ($s=1.4$, Stale) & $\mathbf{75.0\% < 80\%}$ & $\mathbf{\text{Q-Err}: 2.87}$ & Polars: $91.26\text{ ms}$ & $78.47$ & $\text{Mean Reg.}: 41.58\%$ & \textbf{Trigger Recalibration} ($\text{PI}<80\%$) \\
+ & \texttt{D4b}: Severe Skew + 5-Canary Ratio & $\mathbf{89.0\%}$ PI Cov. & $\text{Q-Err}: 1.45$ & Polars: $91.26\text{ ms}$ & $\mathbf{76.13}$ & $12.0\%$ viol.\ (down $4\text{ pp}$) & Restored in $\sim 0.4\text{ s}$ (beats Polars) \\
+\bottomrule
+\end{tabular}
+\end{fitasttable}%
+\end{table}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.98\textwidth]{figures/fig_v8_stability_and_workload_drift_300dpi.pdf}
+\caption{Targeted systems robustness evaluation: (a) router decision stability and $12\%$ PCIe guard protection under $\pm 5\%$, $\pm 10\%$, and $\pm 20\%$ cost-prediction noise; and (b) post-training query-mix, selectivity, and Zipfian data-skew drift with automated conformal recalibration triggers.}\label{fig:v7_stability_drift}
+\end{figure}
+
+\begin{table}[!htbp]
+\centering
+\caption{Cross-paradigm planner, neural cost-encoder, and OOD safety-gate evaluation ($N=75$, $\text{SF}=1\text{ GB}$): comparing Margin-Guarded AST-Route against physical-planner (\texttt{DuckDB EXPLAIN}) routers, direct cost-sensitive classification, OOD-gated Leave-One-Tier-Out (LOTO-CV) unseen-operator fallback, and Leave-One-Scale-Out ($\text{Train SF}\in\{1,10,30\}\rightarrow\text{Test SF}=100\text{ GB}$) transfer.}\label{tab:v8_p0_systems_defense}\label{tab:jbd_ood_t17}
+\setlength{\tabcolsep}{2.8pt}
+\scriptsize
+\begin{fitasttable}
+\begin{tabular}{@{}llcccccl@{}}
+\toprule
+\textbf{Evaluation Axis} & \textbf{Router / Baseline Variant} & \textbf{Ovh.\ (ms)} & \textbf{Top-1} & \textbf{Net (ms)} & \textbf{Mean Reg.} & \textbf{P95 Reg.} & \textbf{Key Architectural Trade-off / Finding} \\
+\midrule
+Planner (Raw SQL) & DuckDB \texttt{EXPLAIN} Router (Untranspiled) & $1.37$ & $44.00\%$ & $78.77$ & $81.74\%$ & $362.15\%$ & Fails on $15/75$ BigQuery \texttt{UNNEST} dialect queries \\
+Planner (Transpiled) & SQLGlot + DuckDB \texttt{EXPLAIN} (No Guard) & $4.85$ & $58.67\%$ & $60.76$ & $34.92\%$ & $119.89\%$ & Higher ovh.\ ($+70.9\text{ ms}$ if cold catalog unbound) \\
+Learned Cost Model & Plan-Graph Neural Cost Encoder (MLP-64$\times$32) & $5.47$ & $64.00\%$ & $58.90$ & $33.09\%$ & $114.11\%$ & Slower net latency ($+3.98\text{ ms}$) \& schema-binding ovh. \\
+Classif.\ vs.\ Reg. & Direct Cost-Sensitive Classifier (GBDT-9D) & $3.96$ & $50.67\%$ & $62.01$ & $43.57\%$ & $207.10\%$ & Cannot enforce dynamic $M_{\text{max}}$ or $(\alpha,\beta,\gamma)$ Pareto \\
+Tail-Safe Proposed & \textbf{Margin-Guarded AST-Route (Proposed 9D)} & $\mathbf{4.15}$ & $\mathbf{57.33\%}$ & $\mathbf{54.92}$ & $\mathbf{34.98\%}$ & $\mathbf{114.11\%}$ & \textbf{Cross-dialect SQLGlot AST; $\Delta\mathcal{R} = -25.8\text{ pp}$ vs.\ GPU ($p_{\text{seed}}=0.0042$, query $p=0.0021$)} \\
+\midrule
+Unseen Op.\ (LOTO) & Standard LOTO-CV (No OOD Gate) & $4.15$ & $44.00\%$ & $85.42$ & $159.92\%$ & $348.00\%$ & Trails Polars ($82.47\text{ ms}$) on unseen \texttt{WINDOW}/\texttt{UNNEST} \\
+Unseen Op.\ (LOTO) & \textbf{LOTO-CV + OOD Arrow Fallback Gate} & $\mathbf{4.15}$ & $\mathbf{21.33\%}$ & $\mathbf{76.18}$ & $\mathbf{104.40\%}$ & $\mathbf{299.67\%}$ & \textbf{Beats Polars ($82.47\text{ ms}$, $p_{\text{seed}}=0.0312$) via Arrow fallback} \\
+Unseen Scale & Train $\text{SF}\in\{1,10,30\}\rightarrow$ Zero-Shot $\text{SF}=100\text{G}$ & $4.15$ & $66.67\%$ & $1214.50$ & $24.80\%$ & $138.40\%$ & Within $1.2\%$ of Always GPU ($1199.6\text{ ms}$); beats Polars ($6551\text{ ms}$) \\
+\bottomrule
+\end{tabular}
+\end{fitasttable}%
+\end{table}
+
+\clearpage
+\section{System Reproducibility Manifest, Three-Node Cross-ISA Portability, and Protocol Verification Registries}
+This section contains the full hardware/software environment and $C=1\text{--}32$ concurrency manifest (Table~\ref{tab:system_manifest}), the three-node cross-ISA portability and $2\times 2$ version-pinned isolation matrix across \texttt{Node-1-x86-GPU}, \texttt{Node-2-x86-22T}, and \texttt{Node-3-ARM64-M1} (Table~\ref{tab:three_node_cross_isa} and Fig.~\ref{fig:three_node_cross_isa}), the manuscript-wide denominator and metric lexicon verification registry updated across all $213$ benchmark queries ($228$ including Seed~\texttt{S6}, Table~\ref{tab:v9_sec3_3_consistency_audit}), the theoretical-versus-learned CSCI weight derivation and cross-workload sensitivity matrix (Table~\ref{tab:v9_sec3_4_csci_m1_m4_generalizability}), the four-policy workload drift and 180-trial fault-injection recovery matrix (Table~\ref{tab:v9_roadmap_v86_closure}), the multi-scale $\text{SF}=100\text{ GB}$ queue/Parquet/spill/tier reconciliation sub-audit (Table~\ref{tab:v9_sec3_2_multiscale_sf100_audit}), the fair guarded baselines and rule-by-rule ablation matrix (Table~\ref{tab:v852_fair_guarded_ablation}), and the 213-query seven-stage benchmark fairness protocol audit (Table~\ref{tab:v9_benchmark_fairness_protocol}).
+
+\begin{table*}[!htbp]
+\centering
+\caption{System reproducibility manifest: (Part A) Hardware and software environment specifications, (Part B) Six-operator CPU-to-GPU relational implementation mapping, and (Part C) Multi-tenant concurrent query stream benchmark ($C=1, 4, 8, 16, 32$ streams at $\text{SF}=1\text{ GB}$ separating active execution time from admission queuing delay).}\label{tab:jbd_manifest_t13}
+\label{tab:system_manifest}\label{tab:env_manifest}\label{tab:reproducibility_manifest}\label{tab:environment_manifest}
+\scriptsize
+\setlength{\tabcolsep}{3.2pt}
+\renewcommand{\arraystretch}{1.12}
+\setlength{\tabcolsep}{3.5pt}\footnotesize\begin{fitasttable}
+\begin{tabular}{@{}p{0.13\textwidth}p{0.22\textwidth}p{0.59\textwidth}@{}}
+\toprule
+\textbf{Module / Layer} & \textbf{Component / Operator / Stream} & \textbf{Exact Specification / Implementation Mapping / Empirical Telemetry} \\
+\midrule
+\multirow{6}{=}{\textbf{Part A: System Env.}}
+ & Host CPU \& Memory Hierarchy & x86\_64 Multi-Core ($8$ Logical Threads, AVX2 SIMD), $16.0\text{ GB}$ DDR4 RAM ($9.0\text{ GB}$ DBMS Cap + NVMe Spill) \\
+ & Discrete GPU Accelerator & NVIDIA GeForce RTX 2050 ($4.00\text{ GB}$ GDDR6 VRAM, PCIe Gen4, CUDA 12.1, NVML $250\text{ Hz}$ Power Sensor) \\
+ & OS, Python \& C++ DBMS & Windows 11 Build 26100 (64-Bit), Python 3.13, DuckDB v2.0.0 (Morsel-Driven Native Columnar \& ZSTD Parquet) \\
+ & Rust Arrow \& Row-Store Engines & Polars v2.1.0 Lazy Streaming (\texttt{collect(streaming=True)}), Apache DataFusion Arrow Planner, SQLite v3.51.0 B-Tree \\
+ & Cloud OLAP \& AST/ML Stack & Google BigQuery (\texttt{use\_\allowbreak{}query\_\allowbreak{}cache=False}, Clustered), \texttt{SQLGlot}, Scikit-Learn Multi-Output GBR ($n=55, d=3$) \\
+ & Three-Level GPU/CPU Timing & L1 Kernel-to-Kernel ($22.25\text{ ms}$) $|$ L2 Data-in to Result-out ($56.96\text{ ms}$) $|$ L3 Full SQL-to-Result ($61.11\text{ ms}$ Mem / $131.79\text{ ms}$ Disk) \\
+\midrule
+\multirow{6}{=}{\textbf{Part B: Op. Mapping}}
+ & \texttt{WHERE} Filter \& \texttt{CASE} & CPU: SIMD Branchless Predicate $|$ GPU: Boolean Mask (\texttt{torch.where}, Zero-Copy Arrow$\rightarrow$Pinned H2D) \\
+ & \texttt{JOIN} (Inner/Left/Anti) & CPU: Parallel Radix Hash-Join $|$ GPU: INT64 Hash-Probing \& Index Gather (\texttt{index\_\allowbreak{}select}, Pre-Allocated VRAM) \\
+ & \texttt{GROUP BY} Aggregation & CPU: Morsel Hash-Table Agg. $|$ GPU: Atomic Segmented Reduction (\texttt{scatter\_\allowbreak{}add\_\allowbreak{}} in FP64 + $0.82\text{ ms}$ D2H Pullback) \\
+ & \texttt{ORDER BY} Sorting & CPU: Parallel Merge/Radix Sort $|$ GPU: Bitonic/Radix Sort (\texttt{torch.sort} over Contiguous Device Buffers) \\
+ & \texttt{OVER (PARTITION BY)} Window & CPU: Segment-Tree Framing (DuckDB) $|$ GPU: Segmented Radix Sort + Inclusive Prefix Scan (\texttt{torch.cumsum}) \\
+ & \texttt{ARRAY\_\allowbreak{}AGG} \& \texttt{UNNEST} & CPU: Arrow \texttt{ListArray} Offset Slicing $|$ GPU: Parallel Radix Offset Expansion (\texttt{repeat\_\allowbreak{}interleave}) \\
+\midrule
+\multirow{5}{=}{\textbf{Part C: Concurrency}}
+ & $C=1$ Stream (Baseline) & Single-Engine: $85.62\text{ ms}$ ($11.68\text{ QPS}$) $|$ \textbf{AST-Route}: $76.15\text{ ms}$ ($74.95\text{ ms}$ Exec + $1.20\text{ ms}$ Queue, P95: $92.1\text{ ms}$, $\mathbf{13.13\text{ QPS}}$, $1.14\times$, GPU Util: $31.0\%$, Fail: $0.0\%$, Stability: $100\%$) \\
+ & $C=4$ Streams (Low) & Single-Engine: $100.45\text{ ms}$ ($39.82\text{ QPS}$) $|$ \textbf{AST-Route}: $65.55\text{ ms}$ ($57.15\text{ ms}$ Exec + $8.40\text{ ms}$ Queue, P95: $84.3\text{ ms}$, $\mathbf{61.02\text{ QPS}}$, $1.53\times$, GPU Util: $54.6\%$, Fail: $0.0\%$, Stability: $100\%$) \\
+ & $C=8$ Streams (Medium) & Single-Engine: $140.44\text{ ms}$ ($56.96\text{ QPS}$) $|$ \textbf{AST-Route}: $74.09\text{ ms}$ ($55.49\text{ ms}$ Exec + $18.60\text{ ms}$ Queue, P95: $98.4\text{ ms}$, $\mathbf{107.98\text{ QPS}}$, $1.90\times$, GPU Util: $72.4\%$, Fail: $0.0\%$, Stability: $98.7\%$) \\
+ & $C=16$ Streams (High) & Single-Engine: $228.58\text{ ms}$ ($70.00\text{ QPS}$) $|$ \textbf{AST-Route}: $114.30\text{ ms}$ ($68.10\text{ ms}$ Exec + $46.20\text{ ms}$ Queue, P95: $148.6\text{ ms}$, $\mathbf{139.99\text{ QPS}}$, $2.00\times$, GPU Util: $86.8\%$, Fail: $0.0\%$, Stability: $97.3\%$) \\
+ & $C=32$ Streams (Stress Test) & Single-Engine: $442.80\text{ ms}$ ($72.27\text{ QPS}$) $|$ \textbf{AST-Route}: $207.20\text{ ms}$ ($82.40\text{ ms}$ Exec + $124.80\text{ ms}$ Queue, P95: $268.5\text{ ms}$, P99: $312.6\text{ ms}$, $\mathbf{154.44\text{ QPS}}$, $\mathbf{2.14\times}$, GPU Util: $93.5\%$, Fail: $0.0\%$, Stability: $96.0\%$) \\
+\bottomrule
+\end{tabular}
+\end{fitasttable}
+\end{table*}
+
+\begin{table*}[!htbp]
+\centering
+\caption{Scope-controlled multi-node portability, engine-version isolation, and evaluation protocol matrix across Node~1 (\texttt{Node-1-x86-GPU}), Node~2 (\texttt{Node-2-x86-22T}), and Node~3 (\texttt{Node-3-ARM64-M1}) at $\text{SF}=1\text{ GB}$ ($6{,}001{,}215$ \texttt{lineitem} rows), explicitly separating Dataset/Query Scope, Training Scope, Test Scope, Model Calibration, and Evaluation Protocol.}\label{tab:three_node_cross_isa}\label{tab:jbd_multinode_t15}
+\setlength{\tabcolsep}{2.8pt}
+\renewcommand{\arraystretch}{1.12}
+\scriptsize
+\begin{fitasttable}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{2.9cm}>{\raggedright\arraybackslash}p{2.5cm}>{\raggedright\arraybackslash}p{2.2cm}>{\raggedright\arraybackslash}p{2.1cm}>{\raggedright\arraybackslash}p{2.3cm}>{\raggedright\arraybackslash}p{4.6cm}@{}}
+\toprule
+\textbf{Hardware \& Engine Stack Configuration} & \textbf{Dataset / Query Scope} & \textbf{Training Scope} & \textbf{Test Scope} & \textbf{Model Calibration} & \textbf{Evaluation Protocol \& Empirical Outcome ($\text{EX}=1.000$)} \\
+\midrule
+\textbf{Node 1A (Primary Het.):} Win11 \texttt{x86\_\allowbreak{}64} 8T, 16G RAM + RTX 2050 4G; Duck 2.0, Polars 2.1, DF 55.0, BQ, CUDA & Available Dataset: 97 Queries (75 Factorial + 22 Official TPC-H); \textbf{Evaluated under this protocol: 75 Factorial Queries} (22 Official TPC-H Q1--Q22 evaluated under separate Nested 22-Fold LOO-CV in Main Text Table~12 Part C) & 24 seeds ($72$Q) per outer fold (5-engine Het.) & 1 held-out seed ($3$Q) $\times$ 25 folds & Inner 6-fold nested guard + 90\% conformal & \textbf{25-Seed LOSO-CV (5-Engine Het.):} $57.33\%$ Top-1, $76.00\%$ Top-2, $\mathbf{54.92\text{ ms}}$, $34.98\%$ reg.; $C=32$: $\mathbf{154.44\text{ QPS}}$ (\texttt{89b1ec64...}) \\
+\textbf{Node 1B (Primary CPU-Only):} Win11 \texttt{x86\_\allowbreak{}64} 8T ($M_{\text{gpu\_max}}=0$); Duck 2.0, Polars 2.1, DF 55.0 & $N=75$ Factorial TPC-H ($\text{SF}=1\text{ GB}$) & 24 seeds ($72$Q) per fold (3 CPU engines) & 1 held-out seed ($3$Q) $\times$ 25 folds & In-domain 3-CPU GBR-9D (zero GPU) & \textbf{25-Seed LOSO-CV (3-Engine CPU):} $\mathbf{74.67\%}$ Top-1, $96.00\%$ Top-2, $\mathbf{69.12\text{ ms}}$ vs.\ $82.47\text{ ms}$ Polars ($p_{\text{Holm}}=0.0084$) \\
+\textbf{Node 1C (Version-Pinned Parity):} Win11 \texttt{x86\_\allowbreak{}64} 8T; \textbf{Pinned:} Duck 1.4.5, Polars 1.36.1, DF 50.1.0 & $N=15$ Stratified L1--L5 (\texttt{89a7dc6c...} PQ) & Direct execution audit (no router training) & All $15$ L1--L5 queries $\times$ 5 trials & Version-locked to match Node~3 exactly & \textbf{Controlled $2\times 2$ Version Isolation:} Duck $9.14\text{--}111.30\text{ ms}$, Polars L4 $118.85\text{ ms}$ (vs.\ $61.57\text{ ms}$ on v2.1.0); \texttt{L4\_\allowbreak{}V3} Polars wins $149.1$ vs.\ $170.1\text{ ms}$ (\texttt{af1cc3d1...}) \\
+\midrule
+\textbf{Node 2A (Secondary 30Q):} Win11 \texttt{x86\_\allowbreak{}64} Intel 16C/22T, 15.5G RAM ($M_{\text{gpu}}=0$); Duck 2.0, Polars 2.1, DF 55.0 & $N=30$ Mixed ($15$ L1--L5 + $15$ Official TPC-H) & 29 groups per fold (3 CPU engines) & 1 held-out query group $\times$ 30 folds & Native Node~2 leave-one-group-out & \textbf{30Q Leave-One-Group-Out (3-CPU):} $\mathbf{86.67\%}$ Top-1, $100\%$ Top-2, $\mathbf{62.05\text{ ms}}$ ($8.83\%$ reg.); $C=32$: $\mathbf{22.68\text{ QPS}}$ (\texttt{6d4cb51a...}) \\
+\textbf{Node 2B (Cross-HW Transfer):} Win11 \texttt{x86\_\allowbreak{}64} 16C/22T ($M_{\text{gpu}}=0$); Duck 2.0, Polars 2.1, DF 55.0 & $N=75$ Factorial TPC-H ($\text{SF}=1\text{ GB}$) & Locked Node~1 8T model ($75$Q) & Node~2 22T ($75$Q zero-shot / $60$Q cal.) & Zero-shot ($0$ seeds) vs.\ 5-seed scale $\hat{\gamma}_e$ & \textbf{Cross-Node Transfer Audit:} Zero-shot $40.00\%$ Top-1 ($54.81\text{ ms}$) $\rightarrow$ 5-seed calib.\ $48.00\%$ Top-1 ($\mathbf{48.37\text{ ms}}$, \texttt{874077fd...}) \\
+\textbf{Node 2C (Native 75Q LOSO):} Win11 \texttt{x86\_\allowbreak{}64} 16C/22T ($M_{\text{gpu}}=0$); Duck 2.0, Polars 2.1, DF 55.0 & $N=75$ Factorial TPC-H ($\text{SF}=1\text{ GB}$) & 24 seeds ($72$Q) on Node~2 22T & 1 held-out seed ($3$Q) $\times$ 25 folds & Native in-domain Node~2 25-seed GBR-9D & \textbf{Native 25-Seed LOSO-CV (3-CPU):} $\mathbf{97.33\%}$ Top-1, $\mathbf{35.11\text{ ms}}$ ($0.18\%$ reg.\ vs.\ $60.39\text{ ms}$ DuckDB / $47.54\text{ ms}$ Polars) \\
+\midrule
+\textbf{Node 3A (ARM64 Re-Exec):} \texttt{macOS-15.6.1-arm64} Apple M1 8C/8T, 8G Unified; Duck 1.4.5, Polars 1.36.1, DF 50.1.0 & $N=15$ Stratified L1--L5 ($\text{SF}=1\text{ GB}$) & Direct execution audit (no router training) & All $15$ L1--L5 queries $\times$ 5 trials & Version-matched with Node~1C (8T) & \textbf{Platform Portability Audit:} FP64 err $\le 5.74\times 10^{-16}$; Duck L1--L3 $5.90\text{--}24.19\text{ ms}$; L4 Polars $66.41$ vs.\ Duck $70.75\text{ ms}$ (\texttt{92b77723...}) \\
+\textbf{Node 3B (ARM64 Routing \& $C$):} \texttt{macOS-15.6.1-arm64} Apple M1 8C/8T; Duck 1.4.5, Polars 1.36.1, DF 50.1.0 & $N=30$ Suite + $C \in \{1..32\}$ Streams & 29 groups per fold on Node~3 (3-CPU) & 1 held-out group $\times$ 30 folds + 32 streams & Native M1 leave-one-group-out (3-CPU) & \textbf{30Q LOGO-CV \& Concurrency:} $\mathbf{96.67\%}$ Top-1 ($29.44\text{ ms}$ vs.\ $28.42\text{ ms}$ Oracle); $C=4$: $22.29\text{ QPS}$; $C=32$: $3.19\times$ P50 cut (\texttt{8f87f220...}) \\
+\bottomrule
+\end{tabular}
+\end{fitasttable}%
+\vspace{2pt}
+\parbox{0.96\textwidth}{\scriptsize \textbf{Methodological Scope Note:} Separating rows by \emph{Candidate-Set Cardinality} (5-engine CPU+GPU+Cloud in Node~1A vs.\ 3-engine CPU-only in Nodes~1B, 2A--2C, and 3B), \emph{Query Suite} ($N=75$ vs.\ $N=30$ vs.\ $N=15$), and \emph{Calibration Regime} (zero-shot cross-node transfer [$40.00\%$] vs.\ 5-seed calibration [$48.00\%$] vs.\ native in-domain LOSO/LOGO [$74.67\%\text{--}97.33\%$]) ensures strict apples-to-apples interpretation across hardware platforms and software versions. Crucially, Node~2B evaluates cross-node model transfer from Node~1 (8T) to Node~2 (22T), demonstrating that uncalibrated zero-shot transfer (40.00\% Top-1, 54.81~ms) is a bounded limitation requiring one-time hardware calibration ($T_{\text{cal}}=0.18\text{--}2.74\text{ s}$ for $m=1\text{--}15$ queries, separated from the $4.145\text{ ms}$ online query dispatch overhead), whereas Node~2C (97.33\% Top-1, 35.11~ms) evaluates native in-domain 25-seed LOSO-CV retraining on Node~2 ($72$ training queries/fold) and must never be conflated with zero-shot cross-node transfer.}
+\end{table*}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.98\textwidth]{figures/fig_three_node_cross_isa_concurrency_300dpi.pdf}
+\caption{Three-node cross-hardware and cross-ISA validation ($\text{SF}=1\text{ GB}$): (a) Tier L1--L5 execution latency comparing the 16-core/22-thread \texttt{x86\_\allowbreak{}64} workstation (Node~2) and the Apple M1 \texttt{ARM64} unified-memory node (Node~3), illustrating the invariant Tier~L4 Polars vs.\ DuckDB window-sorting crossover across instruction sets; and (b) multi-stream concurrent query throughput ($C \in \{1,4,8,16,32\}$) across all three physical nodes.}\label{fig:three_node_cross_isa}
+\end{figure}
+
+\begin{table*}[!htbp]
+\centering
+\caption{Automated Manuscript-Wide Consistency, Protocol Denominator, and Metric Lexicon Verification Matrix (\texttt{scripts/210\_\allowbreak{}v9\_\allowbreak{}section3\_\allowbreak{}3\_\allowbreak{}manuscript\_\allowbreak{}consistency\_\allowbreak{}audit.py}): reconciling (Part~A) CPU-only Top-1 accuracy across Nodes~1--3 ($74.67\%$, $86.67\%$, $97.33\%$, and Apple M1 $96.67\%$), (Part~B) BigQuery Server vs.\ Client WAN latencies across scales and tiers, (Part~C) experiment $(N, K, W, R)$ protocol counts, and (Part~D) Cold, Warm, Execution ($T_{\text{exec}}$), Net ($T_{\text{net}}$), and Level-3 ($T_{\text{L3}}$) timing definitions.}
+\label{tab:v9_sec3_3_consistency_audit}
+\scriptsize
+\setlength{\tabcolsep}{2.8pt}
+\renewcommand{\arraystretch}{1.08}
+\begin{fitasttable}
+\begin{tabular}{@{}llccccccl@{}}
+\toprule
+\textbf{Audit Category} & \textbf{Node / Experiment / Metric Identifier} & \textbf{Workload / Scope ($N, K$)} & \textbf{Protocol / $(W, R)$} & \textbf{Hits / Top-1} & \textbf{Top-2} & \textbf{Exec ($T_{\text{exec}}$)} & \textbf{Net ($T_{\text{net}}$)} & \textbf{Cross-Section Consistency Verification} \\
+\midrule
+\multicolumn{9}{@{}l@{}}{\textit{\textbf{Part A: CPU-Only ($M_{\text{gpu\_max}}=0\text{ GB}$) \& Heterogeneous Routing Accuracy Reconciliation Across Physical Hardware Nodes}}} \\
+Node 1A (5-Eng Het.) & Win11 \texttt{x86\_64} 8T + RTX 2050 4G & $N=75,\ K=25$ Seeds & 25-Seed LOSO ($2,5$) & $43/75\ (57.33\%)$ & $76.00\%$ & $50.78\text{ ms}$ & $\mathbf{54.92\text{ ms}}$ & Matches Abstract, Tables~1, 11, 13, 15, 22, 23, 24 \\
+Node 1B (3-CPU Only) & Win11 \texttt{x86\_64} 8T ($M_{\text{gpu}}=0$) & $N=75,\ K=25$ Seeds & 25-Seed LOSO ($2,5$) & $\mathbf{56/75\ (74.67\%)}$ & $96.00\%$ & $64.97\text{ ms}$ & $\mathbf{69.12\text{ ms}}$ & Matches Abstract, Claim~3, Tables~1, 15B, 21, 24 \\
+Node 2A (3-CPU Only) & Win11 \texttt{x86\_64} 16C/22T ($M_{\text{gpu}}=0$) & $N=30,\ K=30$ Groups & 30-Fold LOGO ($2,5$) & $\mathbf{26/30\ (86.67\%)}$ & $100.0\%$ & $57.90\text{ ms}$ & $\mathbf{62.05\text{ ms}}$ & 15 L1--L5 + 15 TPC-H; matches Tables~1, 15B, 21, 24 \\
+Node 2B (Cross-HW) & Node~1 8T Model $\rightarrow$ Node~2 22T & $N=75,\ K=25$ Seeds & 0-Shot $\rightarrow$ 5-Seed Cal. & $40.0\%\rightarrow 48.0\%$ & $78.67\%$ & $44.22\text{ ms}$ & $\mathbf{48.37\text{ ms}}$ & $T_{\text{cal}}=2.74\text{ s}$ one-time; separated from Node~2C \\
+Node 2C (3-CPU Only) & Win11 \texttt{x86\_64} 16C/22T ($M_{\text{gpu}}=0$) & $N=75,\ K=25$ Seeds & Native 25-Seed LOSO & $\mathbf{73/75\ (97.33\%)}$ & $100.0\%$ & $30.96\text{ ms}$ & $\mathbf{35.11\text{ ms}}$ & Native 75Q retrain ($0.18\%$ reg.); distinct from M1 \\
+Node 3B (3-CPU Only) & \textbf{Apple M1 \texttt{ARM64} 8C/8T ($M_{\text{gpu}}=0$)} & $\mathbf{N=30,\ K=30}$ \textbf{Groups} & \textbf{30-Fold LOGO ($2,5$)} & $\mathbf{29/30\ (96.67\%)}$ & $\mathbf{100.0\%}$ & $\mathbf{25.29\text{ ms}}$ & $\mathbf{29.44\text{ ms}}$ & \textbf{Explains $96.67\%$ ($29/30$ M1) vs.\ $97.33\%$ ($73/75$ 2C)} \\
+\midrule
+\multicolumn{9}{@{}l@{}}{\textit{\textbf{Part B: BigQuery Serverless Cloud Latency \& Boundary Reconciliation Across Main Text, Tables~5--19, and Footnotes}}} \\
+BQ $\text{SF}=1\text{ GB}$ Clust. & Partitioned + Clustered (\texttt{cache=False}) & $N=75,\ K=25$ Seeds & $W=2,\ R=5$ ($375$ runs) & Queue: $48.20\text{ ms}$ & Exec: $697.19$ & Server: $\mathbf{745.39}$ & Client: $1124.79$ & L1 $432.89$, L2 $667.29$, L3 $492.99$, L4 $372.79$, L5 $1760.99$ \\
+BQ $\text{SF}=1\text{ GB}$ Unopt. & Unpartitioned Full Scan (\texttt{cache=False}) & $N=75,\ K=25$ Seeds & $W=2,\ R=5$ ($375$ runs) & Queue: $52.40\text{ ms}$ & Exec: $1360.20$ & Server: $\mathbf{1412.60}$ & Client: $1830.80$ & CI $[982.40, 1914.50]\text{ ms}$; $347.7\text{ MB} \rightarrow 207.7\text{ MB}$ Clust. \\
+BQ $\text{SF}=100\text{ GB}$ Clust. & Partitioned + Clustered (\texttt{cache=False}) & $N=75,\ K=25$ Seeds & $W=1,\ R=3$ ($225$ runs) & Queue: $112.40\text{ ms}$ & Exec: $2459.20$ & Server: $\mathbf{2571.60}$ & Client: $3356.20$ & L1 $1493.51$, L2 $2302.18$, L3 $1700.85$, L4 $1286.16$, L5 $6075.30$ \\
+\midrule
+\multicolumn{9}{@{}l@{}}{\textit{\textbf{Part C: Standardized Experiment Protocol Registry ($N$ Queries, $K$ Seeds/Templates, $W$ Warm-Up Runs, $R$ Timed Repetitions)}}} \\
+Core \& Unseen TPC-H & Factorial ($N=75$) + Official ($N=22$) & $N_{\text{core}}=97$ (+15 \texttt{S6}) & $K=25$ / $K_{\text{dev}}=20+5$ & $W=2,\ R=5$ & $375$ / $110$ runs & $\mathbf{x}_q \in \mathbb{R}^9$ & $\text{EX}=1.000$ & Unseen \texttt{S5} ($N=15$): $47.01\text{ ms}$ Exec / $51.16\text{ ms}$ Net ($73.33\%$) \\
+External 3-Suite & JOB ($33$) + SSB ($13$) + ClickBench ($20$) & $N_{\text{ext}}=66$ ($N_{\text{tot}}=163$) & $K=33 / 13 / 20$ & $W=1,\ R=3$ & $99$ runs/suite & $\mathbb{R}^9$ ($\mathbb{R}^{12}$ JOB) & $\text{EX}=1.000$ & Zero-shot: JOB $6.75\text{ ms}$, SSB $12.15\text{ ms}$ ($92.3\%$), CB $24.18\text{ ms}$ \\
+Extended External (Sec.~3.5) & TPC-DS ($30$, 11 tbls) + BIRD ($20$, 6 tbls) & $N_{\text{new}}=50$ ($N_{\text{ext}}=116$) & $K=30 / 20$ ($5/4$ fam.) & $W=1,\ R=3$ & $150$ runs/eng & $\mathbb{R}^9\rightarrow\mathbb{R}^{12}$ & $\text{EX}=1.000$ & 0-shot M3: TPC-DS $\mathbf{93.33\%}$ ($20.05\text{ ms}$), BIRD $\mathbf{90.00\%}$ ($20.24\text{ ms}$) \\
+Multi-Scale \& Stress & $\text{SF}\in\{1,10,30,100\}\text{ GB}$ + DVFS/MC/Fault & $N=75\times 4$ Scales & $K=25$ Seeds $\times 4$ & $W=1,\ R=3$ & $R_{\text{cal/MC}}=50$ & $\mathbf{x}_q^{\text{scale}}\in\mathbb{R}^{10}$ & $0$ OOM / $0\%$ Fail & $R_{\text{cal}}=50$/tier ($250$ runs); $R_{\text{MC}}=50$; $R_{\text{fault}}=15$/scenario \\
+\midrule
+\multicolumn{9}{@{}l@{}}{\textit{\textbf{Part D: Invariant Timing Boundary \& Metric Lexicon ($\text{SF}=1\text{ GB}$ Canonical 75-Query Baseline Values Shown)}}} \\
+$T_{\text{cold}}$ vs.\ $T_{\text{warm}}$ & Cold Disk/PCIe vs.\ Warm RAM/VRAM & All 6 Engines & L3 Disk $\rightarrow$ L2 $\rightarrow$ L1 & GPU L3 Disk: $131.79$ & GPU L2 Cold: $56.96$ & GPU L1 Warm: $22.25$ & Duck: $254.42\rightarrow 183.74$ & Polars: $116.88\rightarrow 82.47\text{ ms}$; DF: $134.18\rightarrow 96.30\text{ ms}$ \\
+$T_{\text{exec}}$ vs.\ $T_{\text{net}}$ vs.\ $T_{\text{L3}}$ & AST-Route Latency Boundaries & $N=75$ ($\text{SF}=1\text{ GB}$) & $T_{\text{router}}=4.145\text{ ms}$ & Parse: $3.476\text{ ms}$ & Meta+Inf: $0.669\text{ ms}$ & $\mathbf{T_{\text{exec}}=50.78\text{ ms}}$ & $\mathbf{T_{\text{net}}=54.92\text{ ms}}$ & Cold Footer $T_{\text{net}}=55.16\text{ ms}$; Level-3 Charged $T_{\text{L3}}=59.07\text{ ms}$ \\
+\bottomrule
+\end{tabular}
+\end{fitasttable}%
+\end{table*}
+
+\begin{table*}[!htbp]
+\centering
+\caption{Comprehensive CSCI Generalizability, Theoretical vs.\ Learned Weight Derivation, Weight-Perturbation Routing Sensitivity, and Models M1--M4 Calibration \& Cross-Workload Audit (\texttt{scripts/211\_\allowbreak{}v9\_\allowbreak{}section3\_\allowbreak{}4\_\allowbreak{}csci\_\allowbreak{}generalizability\_\allowbreak{}and\_\allowbreak{}M1\_\allowbreak{}M4\_\allowbreak{}audit.py}).}
+\label{tab:v9_sec3_4_csci_m1_m4_generalizability}
+\scriptsize
+\setlength{\tabcolsep}{2.6pt}
+\renewcommand{\arraystretch}{1.07}
+\begin{fitasttable}
+\begin{tabular}{@{}llcccccccl@{}}
+\toprule
+\textbf{Audit Section / Model} & \textbf{Feature / Weight / Workload Specification} & \textbf{Dim. / Scope} & \textbf{Top-1 (Hits)} & \textbf{Top-2} & \textbf{Exec ($T_{\text{exec}}$)} & \textbf{Net ($T_{\text{net}}$)} & \textbf{Mean Reg.} & \textbf{P95 Reg.} & \textbf{Calibration ($\text{ECE}$ / Brier / Q-Err) \& Statistical Verdict} \\
+\midrule
+\multicolumn{10}{@{}l@{}}{\textit{\textbf{Part A: Operator Memory-Pass Hierarchy vs.\ 25-Fold Leak-Free Ridge-NNLS Learned Weights ($\sum w_j = 16.0$, $\cos(\mathbf{w},\hat{\mathbf{w}})=0.9994$, Out-of-Fold $\rho=0.9968$)}}} \\
+$D(q),\ C(q)$ [Scan/Mask] & $\mathcal{O}(n)$ AST pipeline depth \& SIMD \texttt{CASE} mask & Pass $\approx 1.5\times$ & $w_D=1.50$ & $\hat{w}_D=1.46\pm 0.08$ & $w_C=1.50$ & $\hat{w}_C=1.44\pm 0.09$ & $|\Delta|\le 0.06$ & $\le 4.0\%$ diff & Linear scan/branch baseline ($1.5\times$ pass cost) \\
+$J(q),\ S(q)$ [Join/CTE] & $\mathcal{O}(|R_b|+|R_p|)$ hash join \& staged CTE buffer & Pass $\approx 2.5\text{--}3\times$ & $w_J=2.50$ & $\hat{w}_J=2.58\pm 0.14$ & $w_S=3.00$ & $\hat{w}_S=2.94\pm 0.16$ & $|\Delta|\le 0.08$ & $\le 3.2\%$ diff & LLC/DRAM hash probe misses + CTE materialization \\
+$W(q),\ U(q)$ [Win/Unnest] & $\mathcal{O}(n\log n)$ window sort \& $\mathcal{O}(n\bar{k})$ array unnest & Pass $\approx 3.5\text{--}4\times$ & $w_W=3.50$ & $\hat{w}_W=3.56\pm 0.15$ & $w_U=4.00$ & $\hat{w}_U=4.02\pm 0.18$ & $|\Delta|\le 0.06$ & $\le 1.7\%$ diff & Super-linear radix sort \& offset row expansion \\
+\midrule
+\multicolumn{10}{@{}l@{}}{\textit{\textbf{Part B: Four-Model Structural Ablation (\textbf{M1, M2, M3, M4}) Under 25-Seed LOSO-CV ($N=75$, $\text{SF}=1\text{ GB}$, Oracle $= 42.64\text{ ms}$)}}} \\
+\textbf{M1: Raw AST 7D} & $[D,N,J,S,W,U,C]$ (No $\hat{\sigma}$, No CSCI) & $7\text{D}$ ($6.72$ sp.) & $46.67\%$ ($35/75$) & $68.00\%$ & $56.91\text{ ms}$ & $61.06\text{ ms}$ & $50.87\%$ & $146.20\%$ & $\text{ECE}=11.24\%,\ \text{BS}=0.284,\ \text{Q-Err}=1.214$ (Ref.\ M1) \\
+\textbf{M2: AST + Selectivity 8D} & $[D,N,J,S,W,U,C,\hat{\sigma}]$ (Unweighted AST + $\hat{\sigma}$) & $8\text{D}$ ($6.84$ sp.) & $52.00\%$ ($39/75$) & $72.00\%$ & $53.97\text{ ms}$ & $58.12\text{ ms}$ & $44.20\%$ & $138.45\%$ & $\text{ECE}=8.42\%,\ \text{BS}=0.236,\ \text{Q-Err}=1.148$ ($p=0.0112$ vs.\ M1) \\
+\textbf{M3: AST + CSCI + Sel.\ 9D} & $[D,N,J,S,W,U,C,\text{CSCI}_{\text{canon}},\hat{\sigma}]$ (\textbf{Proposed}) & $\mathbf{9\text{D}}$ ($\mathbf{4.91}$ \textbf{sp.}) & $\mathbf{57.33\%\ (43/75)}$ & $\mathbf{76.00\%}$ & $\mathbf{50.78\text{ ms}}$ & $\mathbf{54.92\text{ ms}}$ & $\mathbf{34.98\%}$ & $\mathbf{114.11\%}$ & $\mathbf{\text{ECE}=4.18\%,\ \text{BS}=0.172,\ \text{Q-Err}=1.092}$ ($\mathbf{p=0.0038}$ \textbf{vs.\ M2}) \\
+\textbf{M4: AST + Learned CSCI 9D} & $[D,N,J,S,W,U,C,\text{CSCI}_{\hat{\mathbf{w}}^{(-k)}},\hat{\sigma}]$ (In-Fold NNLS) & $\mathbf{9\text{D}}$ ($\mathbf{4.94}$ \textbf{sp.}) & $\mathbf{57.33\%\ (43/75)}$ & $\mathbf{76.00\%}$ & $\mathbf{50.77\text{ ms}}$ & $\mathbf{54.91\text{ ms}}$ & $\mathbf{35.12\%}$ & $\mathbf{114.85\%}$ & $\mathbf{\text{ECE}=4.31\%,\ \text{BS}=0.175,\ \text{Q-Err}=1.095}$ ($\mathbf{p=0.0041}$ \textbf{vs.\ M2}) \\
+\midrule
+\multicolumn{10}{@{}l@{}}{\textit{\textbf{Part C: End-to-End Routing Decision Agreement, Latency, Tail Regret, and Calibration Sensitivity Under Weight Perturbations ($N=75$)}}} \\
+$\pm 10\%$ / $\pm 20\%$ MC Perturb. & $w_j \sim \mathcal{U}[(1\mp\delta)w_j]$ ($10{,}000$ trials) & $\bar{\rho}=0.996 / 0.988$ & $57.12\% / 56.85\%$ & $76.00\%$ & $50.89 / 51.06$ & $55.04 / 55.21$ & $35.24\% / 35.68\%$ & $114.7\% / 115.8\%$ & $98.96\%\ (74.2/75) / 97.84\%\ (73.4/75)$ decision match ($\text{ECE}\le 4.41\%$) \\
+$\pm 30\%$ / $\pm 50\%$ MC Perturb. & $w_j \sim \mathcal{U}[(1\mp\delta)w_j]$ ($10{,}000$ trials) & $\bar{\rho}=0.978 / 0.956$ & $56.27\% / 55.47\%$ & $75.33\%$ & $51.33 / 51.81$ & $55.48 / 55.96$ & $36.35\% / 37.42\%$ & $117.9\% / 121.4\%$ & $96.40\%\ (72.3/75) / 94.13\%\ (70.6/75)$ match; still beats M2 ($58.12\text{ ms}$) \\
+Equal vs.\ Inverted Weights & $\mathbf{w}_{\text{eq}}=[1..1]$ vs.\ $\mathbf{w}_{\text{inv}}=[4,3,2.5,2,1.5,4]$ & $\rho=0.981 / 0.741$ & $54.67\% / 52.00\%$ & $74.67\% / 72.0\%$ & $52.03 / 53.69$ & $56.18 / 57.84$ & $38.45\% / 43.10\%$ & $124.6\% / 136.8\%$ & Equal beats M2; Inverted hierarchy degrades P95 to $136.8\%$ ($\text{ECE}=7.95\%$) \\
+\midrule
+\multicolumn{10}{@{}l@{}}{\textit{\textbf{Part D: Cross-Workload Generalizability of \textbf{M1, M2, M3, M4} Across External, Unseen, Standard, and Multi-Scale SQL Suites}}} \\
+Unseen Seeds \texttt{S5} ($N=15$) & Strict Holdout (Train \texttt{S1--S4} $N=60\rightarrow$ Test $15$) & $\rho_{\text{part}}=0.5810$ & M2: $66.67\%$ & M3/M4: $\mathbf{73.33\%}$ & M3: $\mathbf{47.01\text{ ms}}$ & M2 $54.82\rightarrow \mathbf{51.16}$ & M2 $56.4\%\rightarrow \mathbf{44.9\%}$ & M2 $154.2\%\rightarrow \mathbf{136.2\%}$ & M3 $\text{ECE}=4.65\%$ vs.\ M2 $9.15\%$ (M4 Ridge $51.48\text{ ms}$; Unreg $69.55\text{ ms}$) \\
+Official TPC-H Q1--Q22 ($N=22$) & Nested 22-Fold LOO-CV ($\text{SF}=1\text{ GB}$) & $\rho_{\text{part}}=0.5840$ & M2: $63.64\%$ & M3/M4: $\mathbf{68.18\%}$ & M3: $\mathbf{12.83\text{ ms}}$ & M2 $18.84\rightarrow \mathbf{16.98}$ & M2 $14.2\%\rightarrow \mathbf{9.14\%}$ & M2 $52.1\%\rightarrow \mathbf{38.4\%}$ & M3/M4 reach $90.91\%$ Top-2 ($\text{ECE}: 7.85\%\rightarrow 4.42\%$) \\
+SSB Star-Join ($N=13$) & Strict Zero-Shot Transfer from TPC-H & $\rho_{\text{part}}=0.6412$ & M2: $84.62\%$ & M3/M4: $\mathbf{92.31\%}$ & M3: $\mathbf{8.00\text{ ms}}$ & M2 $13.48\rightarrow \mathbf{12.15}$ & M2 $11.2\%\rightarrow \mathbf{3.40\%}$ & M2 $34.6\%\rightarrow \mathbf{18.25\%}$ & Zero-shot star-schema transfer ($\text{ECE}: 7.90\%\rightarrow 3.85\%$) \\
+ClickBench Web ($N=20$) & Strict Zero-Shot Transfer from TPC-H & $\rho_{\text{part}}=0.5690$ & M2: $75.00\%$ & M3/M4: $\mathbf{80.00\%}$ & M3: $\mathbf{20.03\text{ ms}}$ & M2 $26.40\rightarrow \mathbf{24.18}$ & M2 $16.8\%\rightarrow \mathbf{9.45\%}$ & M2 $52.1\%\rightarrow \mathbf{34.80\%}$ & $95.00\%$ Top-2 on wide-table scans ($\text{ECE}: 8.10\%\rightarrow 4.50\%$) \\
+IMDB JOB ($N=33$) & 12D Sketch \& 9D Zero-Shot Transfer & $\rho_{\text{part}}=0.5180$ & M2: $72.73\%$ & M3/M4: $\mathbf{78.79\%}$ & M3: $\mathbf{5.12\text{ ms}}$ & M2 $5.42\rightarrow \mathbf{5.12}$ & M2 $24.6\%\rightarrow \mathbf{18.9\%}$ & M2 $68.5\%\rightarrow \mathbf{52.40\%}$ & $-16.1\text{ pp}$ P95 regret in 12D ($-28.1\text{ pp}$ in 9D: $214.5\%\rightarrow 186.4\%$) \\
+Multi-Scale $\text{SF}=100\text{ GB}$ ($N=75$) & 25-Seed LOSO-CV ($\mathbf{x}_q^{\text{scale}}\in\mathbb{R}^{10}$) & $\rho_{\text{part}}=0.5624$ & M2: $62.67\%$ & M3/M4: $\mathbf{68.00\%}$ & M3: $\mathbf{1138.65\text{ ms}}$ & M2 $1218.5\rightarrow \mathbf{1142.8}$ & M2 $26.9\%\rightarrow \mathbf{19.4\%}$ & M2 $84.2\%\rightarrow \mathbf{58.60\%}$ & $-75.65\text{ ms}$ \& $-25.60\text{ pp}$ P95 regret at $\text{SF}=100\text{ GB}$ ($\text{ECE}=3.92\%$) \\
+TPC-DS Snowflake ($N=30$, New) & Strict Zero-Shot Transfer from TPC-H & $\bar{J}=4.27,\ \overline{\text{CSCI}}=31.05$ & M2: $86.67\%$ & M3/M4: $\mathbf{93.33\%}$ & M3: $\mathbf{20.05\text{ ms}}$ & M2 $25.08\rightarrow \mathbf{24.20}$ & M2 $5.29\%\rightarrow \mathbf{1.61\%}$ & M2 $38.80\%\rightarrow \mathbf{8.76\%}$ & 12D Sketch reaches $\mathbf{96.67\%}$ Top-1 ($20.03\text{ ms}$, $\text{ECE}=6.73\%$) \\
+BIRD Financial ($N=20$, New) & Strict Zero-Shot Transfer from TPC-H & $\bar{J}=3.35,\ \overline{\text{CSCI}}=29.35$ & M2: $45.00\%$ & M3/M4: $\mathbf{90.00\%}$ & M3: $\mathbf{20.24\text{ ms}}$ & M2 $47.94\rightarrow \mathbf{24.39}$ & M2 $100.49\%\rightarrow \mathbf{9.03\%}$ & M2 $236.67\%\rightarrow \mathbf{80.69\%}$ & 12D Sketch reaches $\mathbf{95.00\%}$ Top-1 ($20.00\text{ ms}$, $\text{ECE}=8.05\%$) \\
+\bottomrule
+\end{tabular}
+\end{fitasttable}%
+\end{table*}
+
+\begin{table*}[!htbp]
+\centering
+\caption{Non-Stationary Workload Drift Recalibration and 180-Trial Fault-Injection Verification Matrix: (Part~A) Four-Policy Non-Stationary Workload Drift \& Dynamic Recalibration across 5 Epochs ($375$ queries); (Part~B) Six-Scenario Systematic Fault-Injection Matrix ($6\times 30 = 180$ trials with Wilson and Clopper--Pearson 95\% CIs); and (Part~C) Complete \texttt{V86-00}--\texttt{V86-09} Protocol \& Go/No-Go Gate Audit.}
+\label{tab:v9_roadmap_v86_closure}
+\scriptsize
+\setlength{\tabcolsep}{2.5pt}
+\renewcommand{\arraystretch}{1.07}
+\begin{fitasttable}
+\begin{tabular}{@{}llcccccccl@{}}
+\toprule
+\textbf{Roadmap Module / Policy / Scenario} & \textbf{Protocol / Trigger / Evidence Class} & \textbf{Scope / Trials} & \textbf{Triggers / False Alarm} & \textbf{Exec Net} & \textbf{Amort.\ Net} & \textbf{Mean Reg.} & \textbf{P95 (ms)} & \textbf{SLA Viol.\ / CI} & \textbf{Overhead \& Statistical / Gate Verdict} \\
+\midrule
+\multicolumn{10}{@{}l@{}}{\textit{\textbf{Part A: Four-Policy Workload Drift \& Dynamic Recalibration Across 5-Epoch Stream ($5\times 75 = 375$ Queries; $N_{\text{det}}=15,\ N_{\text{eval}}=60$/Epoch)}}} \\
+\textbf{P1: Static Frozen Router} & No update after Epoch E1 & $5$ Ep.\ ($300$ eval) & $0/5$ ($0.0\%$ FA) & $66.32\text{ ms}$ & $66.32\text{ ms}$ & $37.16\%$ & $158.00$ & $9.87\%$ Viol. & $0.0\text{ ms}$ calib.; degrades on E3 ($68.85$) \& E5 ($78.47\text{ ms}$) \\
+\textbf{P2: Periodic Recalibration} & Scheduled 5-canary every epoch & $5$ Ep.\ ($300$ eval) & $5/5$ ($100\%$ FA) & $64.87\text{ ms}$ & $71.73\text{ ms}$ & $33.62\%$ & $148.14$ & $8.27\%$ Viol. & $2{,}060\text{ ms}$ total calib.\ ($3$ unnecessary re-calibrations) \\
+\textbf{P3: Drift-Triggered (Proposed)} & $\text{PSI}>0.25$ or $\text{PI}<80\%$ / $\text{Q-Err}>2$ & $5$ Ep.\ ($300$ eval) & $\mathbf{2/5\ (0.0\%\text{ FA})}$ & $\mathbf{64.98\text{ ms}}$ & $\mathbf{66.35\text{ ms}}$ & $\mathbf{33.75\%}$ & $\mathbf{148.50}$ & $\mathbf{8.27\%}$ \textbf{Viol.} & $\mathbf{412.4\text{ ms}}$ total ($0.41\text{ ms}$ E3 + $412\text{ ms}$ E5; $p_{\text{Holm}}=0.0036$) \\
+\textbf{P4: Always Retrain Full GBDT} & Full 5-engine GBDT every epoch & $5$ Ep.\ ($300$ eval) & $5/5$ ($100\%$ FA) & $64.71\text{ ms}$ & $95.37\text{ ms}$ & $33.42\%$ & $147.72$ & $8.27\%$ Viol. & $9{,}200\text{ ms}$ retrain ($\mathbf{22.3\times}$ higher overhead vs.\ P3) \\
+\midrule
+\multicolumn{10}{@{}l@{}}{\textit{\textbf{Part B: Systematic Fault-Injection \& Recovery Matrix ($R_{\text{fault}}=30$ Trials/Scenario, $180$ Total Trials, $0$ Silent Wrong Results, $\text{EX}=1.000$)}}} \\
+\textbf{F1: GPU VRAM OOM Guard} & Rule U4 ($M_{\text{gpu\_max}}=1.28\text{ GB}$ cap) & $R=30$ trials & $30/30\ (100\%)$ & $0.20\text{ ms}$ det. & $97.71\text{ ms}$ & $0$ Unhandled & $170.38$ & $[88.65\%, 100\%]$ & Pre-execution prune GPU $\rightarrow$ Polars/DuckDB ($\text{EX}=1.000$) \\
+\textbf{F2: Host CPU RAM Pressure} & $2.0\text{ GB}$ cap on L2/L4 heavy joins & $R=30$ trials & $30/30\ (100\%)$ & $0.49\text{ ms}$ det. & $89.94\text{ ms}$ & $0$ Unhandled & $159.40$ & $[88.65\%, 100\%]$ & Streaming Polars / NVMe spill guard ($\text{EX}=1.000$) \\
+\textbf{F3: Cloud Timeout / Offline} & BigQuery $500\text{ ms}$ SLA deadline & $R=30$ trials & $30/30\ (100\%)$ & $0.63\text{ ms}$ det. & $54.18\text{ ms}$ & $0$ Unhandled & $106.85$ & $[88.65\%, 100\%]$ & Rule U2 cloud gate $\rightarrow$ local Arrow/GPU ($\text{EX}=1.000$) \\
+\textbf{F4: Corrupt Catalog Metadata} & Checksum mismatch on zone-map & $R=30$ trials & $30/30\ (100\%)$ & $0.52\text{ ms}$ det. & $82.95\text{ ms}$ & $0$ Unhandled & $156.92$ & $[88.65\%, 100\%]$ & $0.41\text{ ms}$ NVMe \texttt{seek(-8)} footer refresh ($\text{EX}=1.000$) \\
+\textbf{F5: Primary Engine Offline} & Top-1 engine crash at dispatch & $R=30$ trials & $30/30\ (100\%)$ & $1.00\text{ ms}$ det. & $97.28\text{ ms}$ & $0$ Unhandled & $174.15$ & $[88.65\%, 100\%]$ & Immediate failover to Top-2 candidate ($\text{EX}=1.000$) \\
+\textbf{F6: Dual Backend Failure} & Simultaneous GPU + Cloud offline & $R=30$ trials & $30/30\ (100\%)$ & $1.13\text{ ms}$ det. & $83.56\text{ ms}$ & $0$ Unhandled & $157.40$ & $[88.65\%, 100\%]$ & Degrades cleanly to 3-CPU Node~1B pool ($\text{EX}=1.000$) \\
+\textbf{Pooled All 6 Fault Scenarios} & \textbf{180 Real Fault-Injection Trials} & $\mathbf{R_{\text{tot}}=180}$ & $\mathbf{180/180\ (100\%)}$ & $\mathbf{0.66\text{ ms}}$ \textbf{det.} & $\mathbf{84.27\text{ ms}}$ & $\mathbf{0}$ \textbf{Silent Err} & $\mathbf{166.85}$ & $\mathbf{[97.91\%, 100\%]}$ & \textbf{Wilson 95\% CI $[97.91\%, 100\%]$; Clopper--Pearson $[97.97\%, 100\%]$} \\
+\midrule
+\multicolumn{10}{@{}l@{}}{\textit{\textbf{Part C: Summary of Multi-Suite Verification Protocols and Reproducibility Gates}}} \\
+\textbf{V86-00 / V86-01 / V86-02 (P0)} & Integrity + Fairness + Clean-Room & $213\text{Q}+15\text{ S6}$ & \textbf{Re-Audit + Ext.} & $100\%$ Traceable & $\text{EX}=1.000$ & $0.00\%$ Dev. & $100\%$ Agree & \textbf{Gates 1--4: GO} & \texttt{results/audit/}, \texttt{results/fairness/}, \texttt{results/repro/} \\
+\textbf{V86-03 / V86-04 / V86-05 (P1)} & CSCI + 4-Policy Drift + Pareto MO & $N=75\text{--}375\text{Q}$ & \textbf{Ext.\ + Net-New} & $\text{M3}>\text{M2}$ ($p=.0038$) & $\text{HV}=0.9186$ & $-3.41\text{ pp}$ Drift & $\text{ECE}=4.18\%$ & \textbf{Gate 5: GO} & \texttt{results/csci/}, \texttt{results/drift/}, \texttt{results/mo/} \\
+\textbf{V86-06 / V86-07 / V86-08 / V86-09} & 5-Ext.\ ($116\text{Q}$) + 3-HW + Fault + Stats & $228\text{Q},\ 180$ Fault & \textbf{Net-New + Audit} & $69.8\%\rightarrow 85.3\%$ & 3-Node Scoped & $180/180$ Recov. & $K=25$ Cluster & \textbf{Gates 6--7: GO} & \texttt{results/external/}, \texttt{hardware/}, \texttt{faults/}, \texttt{stats/} \\
+\bottomrule
+\end{tabular}
+\end{fitasttable}%
+\end{table*}
+
+\begin{table*}[!htbp]
+\centering
+\caption{Multi-Scale $\text{SF}=100\text{ GB}$ Credibility, Boundary, and Tier Reconciliation Audit ($N=75$ queries, $15$ queries/tier across L1--L5): (Part~A) BigQuery cloud latency decomposition into slot queueing, distributed slot execution, client WAN HTTPS/gRPC fetch, and cold GCS ingestion break-even; (Part~B) GPU vs.\ CPU Parquet column projection pushdown, row-group pruning, and uniform $9.00\text{ GB}$ NVMe disk spill audit; (Part~C) AST-Route end-to-end dispatch and transfer accounting across all six evaluation protocols; and (Part~D) exact 5-tier reconciliation matching Main Text Table~12 with $0.00\text{ ms}$ error.}
+\label{tab:v9_sec3_2_multiscale_sf100_audit}
+\scriptsize
+\setlength{\tabcolsep}{3.0pt}
+\renewcommand{\arraystretch}{1.08}
+\begin{fitasttable}
+\begin{tabular}{@{}llcccccccl@{}}
+\toprule
+\textbf{Audit Module} & \textbf{Scale / Engine / Protocol / Tier} & \textbf{Queue / Parse} & \textbf{Transfer / Spill} & \textbf{Compute / Exec} & \textbf{Server / Net Mean} & \textbf{Client Wall / P95} & \textbf{Bytes Read / Billed} & \textbf{Peak Mem / Cost} & \textbf{Boundary \& Verification Finding} \\
+\midrule
+\multicolumn{10}{l}{\textit{\textbf{Part A: BigQuery Cloud Latency Decomposition ($\tau_{\text{queue}} + \tau_{\text{server\_exec}} = T_{\text{server\_job}}$; $+ \tau_{\text{client\_net}} = T_{\text{client\_wall}}$) \& Cold GCS Break-Even}}} \\
+BQ Multi-Scale & $\text{SF}=1\text{ GB}$ ($N=75$, Clustered) & $48.20\text{ ms}$ & $+379.40\text{ ms}$ WAN & $697.19\text{ ms}$ & $745.39\text{ ms}$ & $1124.79\text{ ms}$ & $202.8\text{ MB}$ & $4210\text{ slot-ms}$ & Includes $48.20\text{ ms}$ queue; cold upload $8.4\text{ s}$ \\
+BQ Multi-Scale & $\text{SF}=10\text{ GB}$ ($N=75$, Clustered) & $64.50\text{ ms}$ & $+492.10\text{ ms}$ WAN & $1187.75\text{ ms}$ & $1252.25\text{ ms}$ & $1744.35\text{ ms}$ & $524.1\text{ MB}$ & $11.8\text{k slot-ms}$ & Beats DuckDB in L4 ($626.29$ vs.\ $1364.80\text{ ms}$) \\
+BQ Multi-Scale & $\text{SF}=30\text{ GB}$ ($N=75$, Clustered) & $86.30\text{ ms}$ & $+618.40\text{ ms}$ WAN & $1702.64\text{ ms}$ & $1788.94\text{ ms}$ & $2407.34\text{ ms}$ & $1572.3\text{ MB}$ & $24.7\text{k slot-ms}$ & Overtakes DuckDB ($2594\text{ ms}$) \& Polars ($1878\text{ ms}$) \\
+BQ Multi-Scale & $\mathbf{\text{SF}=100\text{ GB}}$ ($N=75$ Headline) & $\mathbf{112.40\text{ ms}}$ & $\mathbf{+784.60\text{ ms}}$ WAN & $\mathbf{2459.20\text{ ms}}$ & $\mathbf{2571.60\text{ ms}}$ & $\mathbf{3356.20\text{ ms}}$ & $\mathbf{5241.0\text{ MB}}$ & $\mathbf{48.4\text{k slot-ms}}$ & \textbf{Cold $840\text{ s}$ upload breaks even at $138\text{ Q}$ ($22\text{ Q}$ spill)} \\
+\midrule
+\multicolumn{10}{l}{\textit{\textbf{Part B: Parquet Projection/Row-Group Pruning Parity ($27.20\text{ GB}$ ZSTD $\rightarrow 5241.0\text{ MB}$ Read $\rightarrow 14.28\text{ GB}$ Decomp.) \& Uniform $9.0\text{ GB}$ Spill Cap ($\text{SF}=100\text{ GB}$)}}} \\
+Local CPU DBMS & DuckDB v2.0.0 (\texttt{memory\_limit='9GB'}) & $0.00\text{ ms}$ & $3302.0\text{ MB}$ Spill & $5854.78\text{ ms}$ & $8699.98\text{ ms}$ & $2845.20\text{ ms}$ I/O & $5241.0\text{ MB}$ & $9.00\text{ GB}$ RAM & Identical $80.73\%$ Parquet pruning; NVMe spill \\
+Local CPU Arrow & Polars v2.1.0 (\texttt{streaming=True}, $9\text{ GB}$) & $0.00\text{ ms}$ & $2845.0\text{ MB}$ Spill & $4361.02\text{ ms}$ & $6551.42\text{ ms}$ & $2190.40\text{ ms}$ I/O & $5241.0\text{ MB}$ & $9.00\text{ GB}$ RAM & Identical $80.73\%$ Parquet pruning; NVMe spill \\
+Local CPU Arrow & DataFusion v55.0 (\texttt{FairSpillPool(9GB)}) & $0.00\text{ ms}$ & $3118.0\text{ MB}$ Spill & $4524.00\text{ ms}$ & $6992.50\text{ ms}$ & $2468.50\text{ ms}$ I/O & $5241.0\text{ MB}$ & $9.00\text{ GB}$ RAM & Identical $80.73\%$ Parquet pruning; NVMe spill \\
+Local SIMT GPU & \textbf{RTX 2050 ($40\times$ Pinned PyArrow Stream)} & $\mathbf{0.00\text{ ms}}$ & $\mathbf{618.45\text{ ms}}$ PCIe & $\mathbf{581.15\text{ ms}}$ & $\mathbf{1199.60\text{ ms}}$ & $\mathbf{0.0\text{ MB}}$ Spill & $\mathbf{5241.0\text{ MB}}$ & $\mathbf{3.85\text{ GB}}$ VRAM & \textbf{Same PyArrow projection/pruning; $40\times 357\text{ MB}$ H2D} \\
+\midrule
+\multicolumn{10}{l}{\textit{\textbf{Part C: AST-Route Dispatch ($T_{\text{parse}}+T_{\text{meta}}+T_{\text{infer}}$) \& Transfer Inclusion Across All $\text{SF}=100\text{ GB}$ Evaluation Protocols ($N=75$)}}} \\
+Protocol P1 & \textbf{Same-Scale 10D LOSO-CV (Main Text Table~12 \& B7)} & $\mathbf{4.15\text{ ms}}$ & $\mathbf{517.24\text{ ms}}$ & $\mathbf{621.41\text{ ms}}$ & $\mathbf{1142.80\text{ ms}}$ & $16.40\% / 64.2\%$ & $80\%$ GPU / $20\%$ BQ & $\$507.06/1\text{M}$ & \textbf{Includes $4.15\text{ ms}$ dispatch + $494.76\text{ ms}$ PCIe + $22.48\text{ ms}$ Q} \\
+Protocol P2 & Same-Scale 10D Cold NVMe Footer \texttt{seek(-8)} & $4.39\text{ ms}$ & $517.24\text{ ms}$ & $621.41\text{ ms}$ & $1143.04\text{ ms}$ & $16.42\% / 64.3\%$ & $80\%$ GPU / $20\%$ BQ & $\$507.06/1\text{M}$ & Includes $0.413\text{ ms}$ cold NVMe footer read ($+0.24\text{ ms}$) \\
+Protocol P3 & Same-Scale 10D + Full Client WAN HTTPS/gRPC & $4.15\text{ ms}$ & $674.16\text{ ms}$ & $621.41\text{ ms}$ & $1299.72\text{ ms}$ & $21.85\% / 74.5\%$ & $80\%$ GPU / $20\%$ BQ & $\$507.06/1\text{M}$ & Adds $+156.92\text{ ms}$ client WAN; beats Polars by $5.04\times$ \\
+Protocol P4 & FinOps Zero-Cloud Policy B8 ($C_{\max}=\$0$) & $4.15\text{ ms}$ & $577.22\text{ ms}$ & $745.53\text{ ms}$ & $1326.90\text{ ms}$ & $35.50\% / 98.4\%$ & $93.3\%$ GPU / $6.7\%$ CPU & $\mathbf{\$0.00/1\text{M}}$ & $0\%$ cloud dispatch; $6.56\times$ faster than DuckDB \\
+Protocol P5 & Cross-Scale 10D LOSO-CV (Table~S7 Part~C) & $4.15\text{ ms}$ & $500.73\text{ ms}$ & $681.52\text{ ms}$ & $1186.40\text{ ms}$ & $19.15\% / 71.8\%$ & $77.3\%$ GPU / $20\%$ BQ & $\$507.06/1\text{M}$ & Pooled $\text{SF}\in\{1,10,30,100\}$ 10D model \\
+Protocol P6 & Leave-One-Scale-Out ($\text{Train SF}\{1,10,30\}\rightarrow 100$) & $4.15\text{ ms}$ & $492.50\text{ ms}$ & $717.85\text{ ms}$ & $1214.50\text{ ms}$ & $24.80\% / 138.4\%$ & $76.0\%$ GPU / $20\%$ BQ & $\$507.06/1\text{M}$ & Zero-shot unseen scale (Table~\ref{tab:v8_p0_systems_defense}); $5.39\times$ vs.\ Polars \\
+\midrule
+\multicolumn{10}{l}{\textit{\textbf{Part D: Unified L1--L5 Tier Reconciliation at $\text{SF}=100\text{ GB}$ ($n=15$ Queries/Tier, Exact Closure $\frac{1}{5}\sum_{t=1}^5 \bar{T}_{t,e} \equiv \bar{T}_{\text{Main Text Table 12},e}$ with $0.00\text{ ms}$ Error)}}} \\
+Tier L1 ($n=15$) & Scan \& Filter ($\text{CSCI}=6.83$) & DuckDB: $5642.10$ & Polars: $4118.40$ & DF: $4162.80$ & GPU: $1384.20$ & \textbf{BQ: $\mathbf{1493.51}$} & \textbf{AST: $\mathbf{1318.40}$} & Spill: $1850.0\text{ MB}$ & BQ Queue: $98.40\text{ ms}$ + Exec: $1395.11\text{ ms}$ \\
+Tier L2 ($n=15$) & Multi-Way Joins ($\text{CSCI}=27.95$) & DuckDB: $10721.45$ & Polars: $8052.10$ & DF: $8098.40$ & GPU: $1138.90$ & \textbf{BQ: $\mathbf{2302.18}$} & \textbf{AST: $\mathbf{1138.90}$} & Spill: $6840.0\text{ MB}$ & Peak CPU hash-join spill ($6.84\text{ GB}$); GPU $9.41\times$ \\
+Tier L3 ($n=15$) & Nested CTEs ($\text{CSCI}=17.01$) & DuckDB: $9372.80$ & Polars: $6964.20$ & DF: $7269.90$ & GPU: $1349.10$ & \textbf{BQ: $\mathbf{1700.85}$} & \textbf{AST: $\mathbf{1349.10}$} & Spill: $1850.0\text{ MB}$ & BQ Queue: $106.20\text{ ms}$ + Exec: $1594.65\text{ ms}$ \\
+Tier L4 ($n=15$) & Window Functions ($\text{CSCI}=17.30$) & DuckDB: $12462.15$ & Polars: $10122.60$ & DF: $11448.60$ & GPU: $1648.80$ & \textbf{BQ: $\mathbf{1286.16}$} & \textbf{AST: $\mathbf{1430.60}$} & Spill: $4120.0\text{ MB}$ & \textbf{BigQuery is fastest engine in L4 ($1286.16\text{ ms}$)} \\
+Tier L5 ($n=15$) & Array / \texttt{UNNEST} ($\text{CSCI}=16.65$) & DuckDB: $5301.40$ & Polars: $3499.80$ & DF: $3982.80$ & GPU: $477.00$ & \textbf{BQ: $\mathbf{6075.30}$} & \textbf{AST: $\mathbf{477.00}$} & Spill: $1850.0\text{ MB}$ & Distributed \texttt{UNNEST} shuffle raises BQ to $6075.30\text{ ms}$ \\
+\textbf{All ($N=75$)} & \textbf{Exact 5-Tier Mean ($\equiv$ Main Text Table~12 Part~A)} & \textbf{DuckDB: $\mathbf{8699.98}$} & \textbf{Polars: $\mathbf{6551.42}$} & \textbf{DF: $\mathbf{6992.50}$} & \textbf{GPU: $\mathbf{1199.60}$} & \textbf{BQ: $\mathbf{2571.60}$} & \textbf{AST: $\mathbf{1142.80}$} & \textbf{Spill: $\mathbf{3302.0\text{ MB}}$} & \textbf{Exact $0.00\text{ ms}$ / $0.0\text{ MB}$ closure across all engines} \\
+\bottomrule
+\end{tabular}
+\end{fitasttable}%
+\end{table*}
+% === END V9 SECTION 3.2 MULTI-SCALE SF=100 GB CREDIBILITY & BOUNDARY AUDIT ===
+
+\begin{table*}[!htbp]
+\centering
+\caption{Fair Guarded Baselines, Tier-to-Engine Mapping Rule, and Rule-by-Rule Uncertainty Guard Ablation (U1--U4) under 25-Seed LOSO-CV ($K=25$ independent seed clusters, $N=75$ queries at $\text{SF}=1\text{ GB}$). Primary statistical inference is reported at the independent seed-cluster level ($K=25$).}
+\label{tab:v852_fair_guarded_ablation}
+\label{tab:router_ablation}
+\scriptsize
+\setlength{\tabcolsep}{3.5pt}
+\renewcommand{\arraystretch}{1.15}
+\resizebox{0.98\textwidth}{!}{%
+\begin{tabular}{@{}lccccccccc@{}}
+\toprule
+\textbf{Routing Policy / Ablation Variant} & \textbf{Top-1 (\%)} & \textbf{Exec Mean (ms)} & \textbf{Net Incl.\ Parse (ms)} & \textbf{Mean Regret (\%)} & \textbf{P95 Regret (\%)} & \textbf{Severe Fail ($>100\%$)} & \textbf{Seed-Level $p_{\text{seed}}$ (Regret)} & \textbf{Energy (J)} & \textbf{FinOps (\$/1M)} \\
+\midrule
+Always GPU Cold (Best Single Engine at $\text{SF}=1$) & $49.33\%$ & $56.96$ & $56.96$ & $60.76\%$ & $257.31\%$ & $14.67\%$ & $0.0042$ & $0.644$ & $\$0.00$ \\
+Always Polars (Best CPU Engine on 75-Q Workload) & $13.33\%$ & $82.47$ & $82.47$ & $132.61\%$ & $358.40\%$ & $28.00\%$ & $0.0018$ & $3.170$ & $\$0.00$ \\
+Always DuckDB (Best CPU Engine on Official TPC-H) & $28.00\%$ & $183.74$ & $183.74$ & $271.10\%$ & $928.32\%$ & $46.67\%$ & $0.0001$ & $6.397$ & $\$0.00$ \\
+\midrule
+Tier-to-Engine Rule ($\text{L1,L2}\rightarrow\text{Polars};\ \text{L3--L5}\rightarrow\text{GPU}$) & $54.67\%$ & $48.92$ & $52.40$ & $41.20\%$ & $148.20\%$ & $12.00\%$ & $0.0342$ & $1.654$ & $\$0.00$ \\
+Ridge Linear Cost-Reg (Point-Estimate, No Guard) & $54.67\%$ & $49.12$ & $52.77$ & $42.15\%$ & $196.78\%$ & $13.33\%$ & $0.0124$ & $1.120$ & $\$0.00$ \\
+Ridge Linear Cost-Reg ($+ 12\%$ PCIe Margin Guard U1) & $56.00\%$ & $51.84$ & $55.49$ & $38.40\%$ & $138.50\%$ & $9.33\%$ & $0.0418$ & $1.285$ & $\$0.00$ \\
+Shallow Decision Tree $d=2$ (Point-Estimate, No Guard) & $53.33\%$ & $51.35$ & $55.00$ & $39.84\%$ & $150.87\%$ & $12.00\%$ & $0.0215$ & $1.245$ & $\$0.00$ \\
+Shallow Decision Tree $d=2$ ($+ 12\%$ PCIe Margin Guard U1) & $54.67\%$ & $52.90$ & $56.55$ & $36.90\%$ & $128.40\%$ & $8.00\%$ & $0.0485$ & $1.310$ & $\$0.00$ \\
+Always GPU $+ 12\%$ Margin Fallback Guard & $53.33\%$ & $53.42$ & $57.57$ & $37.47\%$ & $132.40\%$ & $8.00\%$ & $0.0389$ & $1.142$ & $\$0.00$ \\
+\midrule
+$\mathcal{R}_{\text{GBR-9D}}$ Ablation 1: Point-Estimate Only (No U1--U4) & $53.33\%$ & $54.49$ & $58.64$ ($62.79^{\ddagger}$) & $48.12\%$ & $164.80\%$ & $14.67\%$ & $0.0086$ & $1.210$ & $\$0.00$ \\
+$\mathcal{R}_{\text{GBR-9D}}$ Ablation 2: $+\text{U1}$ Only ($12\%$ PCIe Margin Guard) & $56.00\%$ & $50.95$ & $55.10$ ($59.25^{\ddagger}$) & $35.80\%$ & $118.40\%$ & $6.67\%$ & $0.3173$ & $1.365$ & $\$0.00$ \\
+$\mathcal{R}_{\text{GBR-9D}}$ Ablation 3: $+\text{U1}+\text{U2}$ ($+$ Conformal Cloud Gate~\cite{vovk2005algorithmic,angelopoulos2023conformal}$^{\dagger}$) & $57.33\%$ & $50.78$ & $54.92$ ($59.07^{\ddagger}$) & $34.98\%$ & $114.11\%$ & $6.67\%$ & $1.0000$ & $1.381$ & $\$0.00$ \\
+\textbf{$\mathcal{R}_{\text{GBR-9D}}$ Full ($\text{U1}+\text{U2}+\text{U3}+\text{U4}$, Proposed)} & $\mathbf{57.33\%}$ & $\mathbf{50.78}$ & $\mathbf{54.92}$ ($\mathbf{59.07}^{\ddagger}$) & $\mathbf{34.98\%}$ & $\mathbf{114.11\%}$ & $\mathbf{6.67\%}$ & \textbf{Ref.} & $\mathbf{1.381}$ & $\mathbf{\$0.00}$ \\
+\bottomrule
+\multicolumn{10}{@{}p{0.98\textwidth}@{}}{\scriptsize \textbf{Note:} $^{\dagger}$Consistent with Algorithm~1 and Main Text Table~6, Rule U1 denotes the $12\%$ PCIe Crossover Margin Guard, Rule U2 denotes the $90\%$ Conformal Cloud Upper-Bound Gate~\cite{vovk2005algorithmic,angelopoulos2023conformal}, Rule U3 denotes the Unanchored String Guard, and Rule U4 denotes Hard Memory-Wall Pruning. At $\text{SF}=1\text{ GB}$ (where serverless BigQuery averages $745.39\text{ ms}$), tail-regret compression from $164.80\%$ to $114.11\%$ is driven primarily by Rule U1, whereas Rule U2 activates under local memory saturation at $\text{SF}=100\text{ GB}$ (Exp~B7--B8), Rule U3 protects external JOB string queries, and Rule U4 prevents VRAM OOM under $M_{\text{gpu\_max}}\le 1.28\text{ GB}$ (Exp~B6). $^{\ddagger}$\textbf{Exec Mean ($T_{\text{exec}}$) vs.\ Net Incl.\ Parse ($T_{\text{net}} = T_{\text{exec}} + 4.145\text{ ms}$) vs.\ Level-3 SQL-to-Tensor Charged ($T_{\text{L3}}$):} For $\mathcal{R}_{\text{GBR-9D}}$ Full, pure engine execution time is $T_{\text{exec}} = 50.775\text{ ms}$ ($50.78\text{ ms}$), canonical net end-to-end latency including warm router dispatch ($+4.145\text{ ms}$) is $T_{\text{net}} = \mathbf{54.92\text{ ms}}$ ($55.16\text{ ms}$ under cold NVMe footer seek), and parenthesized $59.07\text{ ms}^{\ddagger}$ denotes the conservative Level-3 fairness bound charging an extra $+4.15\text{ ms}$ SQL-to-tensor transpilation penalty to GPU-dispatched queries (matching Table~\ref{tab:v9_benchmark_fairness_protocol} Row~2A). While the simple Tier-to-Engine Rule ($\text{L1,L2}\rightarrow\text{Polars};\ \text{L3--L5}\rightarrow\text{GPU}$) achieves $48.92\text{ ms}$ raw execution time ($52.40\text{ ms}$ net incl.\ $3.48\text{ ms}$ AST parse), it incurs $148.20\%$ P95 regret ($12.00\%$ severe failures) because it routes narrow-selectivity V1 queries in L3--L5 onto PCIe-bound GPU transfers.} \\
+\end{tabular}%
+}
+\end{table*}
+
+\begin{table*}[!htbp]
+\centering
+\caption{Benchmark Fairness Protocol Audit Across All $N=213$ Benchmark Queries ($7$ Suites): (Part A) Per-Suite Query Support \& Execution Semantics across $N=213$ queries; (Part B) Seven-Stage Cold vs.\ Warm Latency Decomposition ($\text{SF}=1\text{ GB}, N=75$); and (Part C) Direct Native-SQL Routing vs.\ SQL-to-Tensor Lowered Execution Isolation under Common Boundaries.}
+\label{tab:v9_benchmark_fairness_protocol}
+\scriptsize
+\setlength{\tabcolsep}{2.6pt}
+\renewcommand{\arraystretch}{1.10}
+\resizebox{0.96\textwidth}{!}{%
+\begin{tabular}{@{}lccccccccc@{}}
+\toprule
+\multicolumn{10}{@{}l@{}}{\textbf{Part A: Engine Architectural Paradigm, Native SQL vs.\ Tensor Lowering Semantics, and Query Support Matrix ($N=213$ Total Benchmark Queries Across 7 Suites)}} \\
+\midrule
+\textbf{Engine / Backend} & \textbf{Architectural Role} & \textbf{Core 75Q} & \textbf{TPC-H 22Q} & \textbf{JOB 33Q} & \textbf{SSB 13Q} & \textbf{ClickB.\ 20Q} & \textbf{TPC-DS / BIRD} & \textbf{Direct SQL Support} & \textbf{Transpilation / Lowering \& Fairness Boundary} \\
+\midrule
+DuckDB v2.0 & C++ Vectorized Analytical DBMS & $75/75$ & $22/22$ & $33/33$ & $13/13$ & $20/20$ & $30/30\ /\ 20/20$ & $213/213\ (100.0\%)$ & $0\%$ Transpiled; Reference Full SQL DBMS Baseline ($\text{EX}=1.000$) \\
+Google BigQuery & Serverless Cloud Warehouse & $75/75$ & $22/22$ & $33/33$ & $13/13$ & $20/20$ & $30/30\ /\ 20/20$ & $213/213\ (100.0\%)$ & $0\%$ Transpiled; \texttt{use\_query\_cache=False}; Rule U2 gates cloud floor \\
+Apache DataFusion v55.0 & Rust Arrow SQL Query Engine & $75/75$ & $22/22$ & $33/33$ & $13/13$ & $20/20$ & $30/30\ /\ 20/20$ & $213/213\ (100.0\%)$ & $0\%$ Transpiled; Native \texttt{array\_agg}/\texttt{unnest} \& subquery decorrelation \\
+Polars v2.1 (\texttt{SQLContext}) & Rust Lazy DataFrame/SQL Engine & $75/75$ & $22/22$ & $33/33$ & $13/13$ & $20/20$ & $30/30\ /\ 20/20$ & $194/213\ (91.1\%)$ & $19/213\ (8.9\%)$ \texttt{SQLGlot} dialect/unnest normalized into lazy Arrow plans \\
+SQLite 3 v3.51 & C B-Tree Row-Store Baseline & $75/75^{\text{a}}$ & $22/22$ & $33/33$ & $13/13$ & $20/20$ & $30/30\ /\ 20/20$ & $198/213\ (93.0\%)$ & $15/213\ (7.0\%)$ Tier L5 array queries staged via normalized child table \\
+PyTorch CUDA Prototype & \textbf{Author Tensor Backend (Non-DBMS)} & $75/75^{\text{b}}$ & $22/22^{\text{b}}$ & $33/33^{\text{b}}$ & $13/13^{\text{b}}$ & $20/20^{\text{b}}$ & $30/30\ /\ 20/20^{\text{b}}$ & $0/213\ (0.0\%\text{ SQL})$ & $209/213$ Pure Tensor Lowered $+ 4/213$ Hybrid Arrow-Filter; $+4.15\text{ ms}$ L3 charge \\
+\midrule
+\multicolumn{10}{@{}l@{}}{\textbf{Part B: Seven-Stage Cold vs.\ Warm Execution Latency Decomposition ($\sum_{s=1}^7 \tau_{s,e} \equiv T_{\text{total},e}$, $N=75$ Queries at $\text{SF}=1\text{ GB}$, All Values in ms)}} \\
+\midrule
+\textbf{Engine \& Execution Regime} & $\boldsymbol{\tau_{\text{parse}}}$ & $\boldsymbol{\tau_{\text{meta/inf}}}$ & $\boldsymbol{\tau_{\text{io\_load}}}$ & $\boldsymbol{\tau_{\text{ser\_cast}}}$ & $\boldsymbol{\tau_{\text{transfer}}}$ & $\boldsymbol{\tau_{\text{exec}}}$ & $\boldsymbol{\tau_{\text{mat}}}$ & \multicolumn{2}{c}{\textbf{Total $T_{\text{total}}$ [Cold $\rightarrow$ Warm Speedup \& Seed 95\% CI]}} \\
+\midrule
+SQLite 3 (Warm Row-Store B-Tree) & $1.12$ & $0.00$ & $0.00$ & $0.00$ & $0.00$ & $8414.85$ & $1.36$ & \multicolumn{2}{l}{$8417.33\text{ ms}$ (Cold File: $8942.15\text{ ms}$, $1.06\times$ $|$ CI: $[6412.19, 10819.70]$)} \\
+BigQuery Clustered (Uncached Cloud) & $14.20$ & $0.00$ & $186.40$ & $24.50$ & $82.10$ & $426.39$ & $11.80$ & \multicolumn{2}{l}{$745.39\text{ ms}$ (Unopt Scan: $1412.60\text{ ms}$, $1.90\times$ $|$ CI: $[515.64, 1026.49]$)} \\
+DuckDB v2.0 (Cold Disk Parquet $\rightarrow$ Warm Mem) & $0.87$ & $0.00$ & $70.68\rightarrow 0$ & $0.00$ & $0.00$ & $182.45$ & $0.42$ & \multicolumn{2}{l}{$254.42\text{ ms Cold}\rightarrow \mathbf{183.74\text{ ms Warm}}$ ($1.38\times, p < 0.001$ $|$ CI: $[110.71, 274.89]$)} \\
+DataFusion v55.0 (Cold Disk $\rightarrow$ Warm Arrow) & $1.04$ & $0.00$ & $37.88\rightarrow 0$ & $0.00$ & $0.00$ & $94.91$ & $0.35$ & \multicolumn{2}{l}{$134.18\text{ ms Cold}\rightarrow \mathbf{96.30\text{ ms Warm}}$ ($1.39\times, p < 0.001$ $|$ CI: $[78.31, 114.92]$)} \\
+Polars v2.1 (Cold Disk $\rightarrow$ Warm Arrow) & $0.78$ & $0.00$ & $34.42\rightarrow 0$ & $0.00$ & $0.00$ & $81.38$ & $0.31$ & \multicolumn{2}{l}{$116.88\text{ ms Cold}\rightarrow \mathbf{82.47\text{ ms Warm}}$ ($1.42\times, p < 0.001$ $|$ CI: $[67.93, 98.65]$)} \\
+PyTorch CUDA (L3 Disk $\rightarrow$ L3 Mem $\rightarrow$ L2 $\rightarrow$ L1) & $3.48$ & $0.67$ & $70.68\rightarrow 0$ & $1.42$ & $32.47$ & $22.25$ & $0.82$ & \multicolumn{2}{l}{$131.79\text{ Disk}\rightarrow 61.11\text{ L3}\rightarrow \mathbf{56.96\text{ L2 Cold}}\rightarrow \mathbf{22.25\text{ L1 Warm}}$ ($2.56\times$)} \\
+\textbf{AST-Route (Native-SQL Only Pool, $0\%$ Tensor)} & $\mathbf{3.48}$ & $\mathbf{0.67}$ & $\mathbf{0.00}$ & $\mathbf{0.00}$ & $\mathbf{0.00}$ & $\mathbf{64.62}$ & $\mathbf{0.35}$ & \multicolumn{2}{l}{$\mathbf{69.12\text{ ms Net}}$ ($1.19\times$ vs.\ Polars SQL, $2.66\times$ vs.\ DuckDB $|$ CI: $[56.85, 82.74]$)} \\
+\textbf{AST-Route (Canonical Heterogeneous Pool)} & $\mathbf{3.48}$ & $\mathbf{0.67}$ & $\mathbf{0.00}$ & $\mathbf{0.68}$ & $\mathbf{15.58}$ & $\mathbf{33.98}$ & $\mathbf{0.53}$ & \multicolumn{2}{l}{$\mathbf{54.92\text{ ms Warm Net}}$ ($55.16\text{ ms}$ Cold Footer $|$ CI: $[42.78, 68.50]$)} \\
+\midrule
+\multicolumn{10}{@{}l@{}}{\textbf{Part C: Direct Native-SQL Routing vs.\ SQL-to-Tensor Lowered Execution Isolation Across Controlled Boundary Regimes}} \\
+\midrule
+\textbf{Controlled Evaluation Regime} & \multicolumn{2}{l}{\textbf{Candidate Pool Scope}} & \textbf{Top-1} & \textbf{Top-2} & \textbf{Net (ms)} & \textbf{Mean Reg.} & \textbf{P95 Reg.} & \textbf{vs.\ Best Single} & \textbf{Seed-Cluster $p_{\text{seed}}$ \& Attribution Verdict} \\
+\midrule
+\textbf{1A. Direct Native-SQL Only (Node 1, $N=75$)} & \multicolumn{2}{l}{\textbf{SQL Engines Only (No GPU Tensor)}} & $\mathbf{74.67\%}$ & $\mathbf{96.00\%}$ & $\mathbf{69.12}$ & $\mathbf{9.64\%}$ & $\mathbf{42.80\%}$ & $\mathbf{1.19\times}$ (vs.\ Polars $82.47$) & $p_{\text{Holm}}=0.0084$; $2.77\times$ lower P95 regret without tensor ops \\
+\textbf{1B. Direct Native-SQL Only (Node 2A 22T, $N=30$ LOGO)} & \multicolumn{2}{l}{\textbf{SQL Engines Only (No GPU Tensor)}} & $\mathbf{86.67\%}$ & $\mathbf{100.0\%}$ & $\mathbf{62.05}$ & $\mathbf{8.83\%}$ & $\mathbf{44.07\%}$ & $\mathbf{1.15\times}$ (vs.\ DuckDB $71.19$) & $26/30$ Top-1; $p=0.0011$ vs.\ Polars ($71.43\text{ ms}$) \\
+\textbf{1B$^{\prime}$. Direct Native-SQL Only (Node 2C 22T, $N=75$ LOSO)} & \multicolumn{2}{l}{\textbf{SQL Engines Only (No GPU Tensor)}} & $\mathbf{97.33\%}$ & $\mathbf{100.0\%}$ & $\mathbf{35.11}$ & $\mathbf{0.18\%}$ & $\mathbf{1.45\%}$ & $\mathbf{1.35\times}$ (vs.\ Polars $47.54$) & $73/75$ Top-1 native retrain ($1.72\times$ vs.\ DuckDB $60.39\text{ ms}$) \\
+\textbf{1B$^{\prime\prime}$. Direct Native-SQL Only (Node 3B M1, $N=30$ LOGO)} & \multicolumn{2}{l}{\textbf{SQL Engines Only (No GPU Tensor)}} & $\mathbf{96.67\%}$ & $\mathbf{100.0\%}$ & $\mathbf{29.44}$ & $\mathbf{3.59\%}$ & $\mathbf{14.20\%}$ & $\mathbf{1.24\times}$ (vs.\ Polars $36.50$) & $29/30$ Top-1 on Apple M1 ARM64 (Oracle $28.42\text{ ms}$) \\
+\textbf{1C. Official TPC-H Q1--Q22 (Nested LOO-CV)} & \multicolumn{2}{l}{\textbf{Standard TPC-H Choke-Point SQL}} & $\mathbf{68.18\%}$ & $\mathbf{90.91\%}$ & $\mathbf{16.98}$ & $\mathbf{9.14\%}$ & $\mathbf{38.40\%}$ & $\mathbf{1.34\times}$ (vs.\ DuckDB $22.82$) & $p=0.0048$ vs.\ DuckDB ($2.52\times$ vs.\ Polars $42.79\text{ ms}$) \\
+\textbf{2A. Level-3 Full SQL-to-Tensor Charged ($N=75$)} & \multicolumn{2}{l}{\textbf{All 6 ($+4.15\text{ ms}$ Charged to GPU)}} & $\mathbf{52.00\%}$ & $\mathbf{74.67\%}$ & $\mathbf{59.07}$ & $\mathbf{35.88\%}$ & $\mathbf{120.60\%}$ & $\mathbf{1.03\times}$ (vs.\ GPU-L3 $61.11$) & $p_{\text{seed}}=0.0429$ (regret); $2.36\times$ lower P95 tail regret \\
+\textbf{2B. Common Cold On-Disk Parquet Boundary ($N=75$)} & \multicolumn{2}{l}{\textbf{All Local From Cold ZSTD Parquet}} & $\mathbf{61.33\%}$ & $\mathbf{73.33\%}$ & $\mathbf{113.74}$ & $\mathbf{28.32\%}$ & $\mathbf{105.28\%}$ & $\mathbf{1.03\times}$ (vs.\ Polars $116.88$) & $p_{\text{seed}}=0.0840$; $1.16\times$ vs.\ GPU Cold Disk ($131.79\text{ ms}$) \\
+\textbf{2C. Canonical Heterogeneous Pool ($N=75$)} & \multicolumn{2}{l}{\textbf{All 6 (Level-2 $+$ Router Overhead)}} & $\mathbf{57.33\%}$ & $\mathbf{76.00\%}$ & $\mathbf{54.92}$ & $\mathbf{34.98\%}$ & $\mathbf{114.11\%}$ & $\mathbf{1.04\times}$ (vs.\ GPU $56.96$) & $p_{\text{seed}}=0.0042$ (regret); $48.5\%$ SQL-only $+ 51.5\%$ Tensor gain \\
+\bottomrule
+\multicolumn{10}{@{}p{0.98\textwidth}@{}}{\scriptsize \textbf{Note:} $^{\text{a}}$In Tier L5 ($15$ queries), SQLite~3 executes normalized child-table joins because ANSI SQLite lacks native \texttt{ARRAY\_AGG}/\texttt{UNNEST} types. $^{\text{b}}$The PyTorch CUDA backend is an author-developed relational tensor execution prototype (compiling projection, boolean mask, radix hash-join, segmented group-by, bitonic sort, and prefix-scan window/unnest kernels from \texttt{SQLGlot} ASTs) rather than a standalone SQL DBMS; on Official TPC-H Q13/Q16/Q20/Q22 and JOB string filters, host Arrow pre-filtering feeds device tensor joins. Exact multiset equivalence ($\text{EX}=1.000$, max \texttt{FP64} relative error $\le 5.74\times 10^{-16} < 10^{-9}$) is verified across all $213$ queries.} \\
+\end{tabular}%
+}
+\end{table*}
+
+\clearpage
+{\sloppy
+\begin{thebibliography}{30}
+\small
+
+\bibitem{melnik2010dremel}
+Melnik S, Gubarev A, Long JJ, Romer G, Shivakumar S, Tolton M, Vassilakis T. Dremel: interactive analysis of web-scale datasets. Proc VLDB Endow. 2010;3(1--2):330--9.
+
+\bibitem{melnik2020dremel}
+Melnik S, Gubarev A, Long JJ, Romer G, Shivakumar S, Tolton M, et al. Dremel: a decade of interactive SQL analysis at web scale. Proc VLDB Endow. 2020;13(12):3461--72.
+
+\bibitem{lounissi2025funda}
+Das SK, Peter R, Zhang X, Lounissi M. FunDa: scalable serverless data analytics and in situ query processing. J Big Data. 2025;12(1):116. \url{https://doi.org/10.1186/s40537-025-01141-6}.
+
+\bibitem{raasveldt2019duckdb}
+Raasveldt M, M{\"u}hleisen H. DuckDB: an embeddable analytical database. In: Proceedings of the 2019 International Conference on Management of Data (SIGMOD). Amsterdam: ACM; 2019. p. 1981--4.
+
+\bibitem{kuiper2024duckdb_ooc}
+Kuiper M, M{\"u}hleisen H, Raasveldt M. Out-of-core join and aggregation processing in DuckDB. In: Companion of the 2024 International Conference on Management of Data (SIGMOD). Santiago: ACM; 2024. p. 1--14.
+
+\bibitem{lamb2024datafusion}
+Lamb A, Shen Y, Dani D, Qi Y, Chaudhary V, et al. Apache Arrow DataFusion: a fast, embeddable, modular analytic query engine. In: Companion of the 2024 International Conference on Management of Data (SIGMOD). Santiago: ACM; 2024. p. 5--17. \url{https://doi.org/10.1145/3626246.3653368}.
+
+\bibitem{chrysogelos2019hetexchange}
+Chrysogelos P, Karpathiotakis M, Appuswamy R, Ailamaki A. HetExchange: encapsulating heterogeneous CPU-GPU parallelism in JIT compiled engines. Proc VLDB Endow. 2019;12(5):544--56. \url{https://doi.org/10.14778/3303753.3303760}.
+
+\bibitem{shanbhag2020crystal}
+Shanbhag A, Madden S, Yu X. A study of the fundamental performance characteristics of GPUs and CPUs for database analytics. In: Proceedings of the 2020 ACM SIGMOD International Conference on Management of Data. Portland: ACM; 2020. p. 1617--32. \url{https://doi.org/10.1145/3318464.3380595}.
+
+\bibitem{bress2013hype}
+Bre{\ss} S, Beier F, Rauhe H, Sattler KU, Schallehn E, Saake G. Efficient co-processor utilization in database query processing. Inf Syst. 2013;38(8):1084--96. \url{https://doi.org/10.1016/j.is.2013.05.004}.
+
+\bibitem{schulze2024clickhouse}
+Schulze R, et al. ClickHouse: lightning-fast analytics for everyone. Proc VLDB Endow. 2024;17(12):3720--33.
+
+\bibitem{sethi2019presto}
+Sethi R, Traverso M, Sundstrom D, Phillips D, Xie W, Sun Y, et al. Presto: SQL on everything. In: 2019 IEEE 35th International Conference on Data Engineering (ICDE). Macao: IEEE; 2019. p. 1802--13.
+
+\bibitem{shojaee2024serverless} Shojaee Rad Z, Ghobaei-Arani M. Data pipeline approaches in serverless computing: a taxonomy, review, and research trends. J Big Data. 2024;11(1):82. \url{https://doi.org/10.1186/s40537-024-00939-0}.
+
+\bibitem{abdalla2022bigdata}
+Abdalla HB. A brief survey on big data: technologies, terminologies and data-intensive applications. J Big Data. 2022;9(1):107. \url{https://doi.org/10.1186/s40537-022-00659-3}.
+
+\bibitem{begoli2018calcite}
+Begoli E, Camacho-Rodr{\'i}guez J, Hyde J, Mior MJ, Lemire D. Apache Calcite: a foundational framework for optimized query processing over heterogeneous data sources. In: Proceedings of the 2018 International Conference on Management of Data (SIGMOD). Houston: ACM; 2018. p. 221--30.
+
+\bibitem{garcia2008database}
+Garcia-Molina H, Ullman JD, Widom J. Database systems: the complete book. 2nd ed. Upper Saddle River: Prentice-Hall; 2008.
+
+\bibitem{milicevic2024dlquery}
+Milicevic B, Babovic Z. A systematic review of deep learning applications in database query execution. J Big Data. 2024;11(1):173. \url{https://doi.org/10.1186/s40537-024-01025-1}.
+
+\bibitem{root2019mapd}
+Root C, Mostak T. MapD: a GPU-powered big data analytics and visualization platform. In: ACM SIGGRAPH 2016 Talks. Anaheim: ACM; 2016. p. 1--2.
+
+\bibitem{kim2022blazingsql}
+Kim K, et al. Accelerating relational data analytics using RAPIDS cuDF and BlazingSQL on GPUs. In: IEEE International Parallel and Distributed Processing Symposium Workshops (IPDPSW). IEEE; 2022. p. 812--21.
+
+\bibitem{tpc2022tpch}
+Transaction Processing Performance Council (TPC). TPC Benchmark H (Decision Support) Standard Specification, Revision 3.0.1. San Francisco: Transaction Processing Performance Council; 2022. \url{https://www.tpc.org/tpch/}.
+
+\bibitem{boncz2014tpch}
+Boncz P, Neumann T, Erling O. TPC-H analyzed: hidden messages and lessons learned from an influential benchmark. In: Technology Conference on Performance Evaluation and Benchmarking (TPCTC). Cham: Springer; 2014. p. 61--76. \url{https://doi.org/10.1007/978-3-319-04936-6_5}.
+
+\bibitem{dreseler2020quantifying}
+Dreseler M, Boissier M, Rabl T, Uflacker M. Quantifying TPC-H choke points and their optimizations. Proc VLDB Endow. 2020;13(8):1206--20. \url{https://doi.org/10.14778/3389133.3389138}.
+
+\bibitem{ahmed2020hibench}
+Ahmed N, Barczak ALC, Susnjak T, Rashid MA. A comprehensive performance analysis of Apache Hadoop and Apache Spark for large scale data sets using HiBench. J Big Data. 2020;7(1):110. \url{https://doi.org/10.1186/s40537-020-00388-5}.
+
+\bibitem{oneil2009ssb}
+O'Neil P, O'Neil E, Chen X, Revilak S. The Star Schema Benchmark and augmented fact table indexing. In: Technology Conference on Performance Evaluation and Benchmarking (TPCTC). Lyon: Springer; 2009. p. 237--52.
+
+\bibitem{leis2015job}
+Leis V, Gubichev A, Mirchev A, Boncz P, Kemper A, Neumann T. How good are query optimizers, really? Proc VLDB Endow. 2015;9(3):204--15. \url{https://doi.org/10.14778/2850583.2850594}.
+
+\bibitem{marcus2019neo}
+Marcus R, Negi P, Mao H, Zhang C, Alizadeh M, Kraska T, et al. Neo: a learned query optimizer. Proc VLDB Endow. 2019;12(11):1705--18. \url{https://doi.org/10.14778/3342263.3342644}.
+
+\bibitem{marcus2021bao}
+Marcus R, Negi P, Mao H, Tatbul N, Alizadeh M, Kraska T. Bao: making learned query optimization practical. In: Proceedings of the 2021 International Conference on Management of Data (SIGMOD). Virtual Event: ACM; 2021. p. 1275--88. \url{https://doi.org/10.1145/3448016.3452838}.
+
+\bibitem{hilprecht2022zeroshot}
+Hilprecht B, Binnig C. Zero-shot cost models for out-of-the-box learned cost prediction. Proc VLDB Endow. 2022;15(11):2361--74. \url{https://doi.org/10.14778/3551793.3551799}.
+
+\bibitem{tan2023stage}
+Duggan J, Cetintemel U, Papaemmanouil O, Upfal E. The BigDAWG polystore system. ACM SIGMOD Rec. 2015;44(2):11--6. \url{https://doi.org/10.1145/2814710.2814713}.
+
+\bibitem{gupta2023adaptive}
+Agrawal D, Chawla S, Contreras-Rojas B, Elmagarmid AK, Idris Y, Kaoudi Z, et al. RHEEM: enabling cross-platform data processing---may optimal cost be with you! Proc VLDB Endow. 2018;11(11):1414--27. \url{https://doi.org/10.14778/3236187.3236195}.
+
+\bibitem{li2023bird}
+Li J, Hui B, Qu G, Yang J, Li B, Li B, et al. Can LLM already serve as a database interface? A BIg bench for large-scale database grounded text-to-SQLs. Adv Neural Inf Process Syst (NeurIPS). 2023;36:42330--57.
+
+\bibitem{lei2025spider2}
+Lei F, Chen J, Ye Y, Cao R, Shin D, Su H, et al. Spider 2.0: evaluating language models on real-world enterprise text-to-SQL workflows. In: International Conference on Learning Representations (ICLR). 2025. p. 1--22.
+
+\bibitem{mao2024sqlglot}
+Mao T. SQLGlot: no-dependency SQL parser, transpiler, optimizer, and engine. GitHub Repository. 2024. \url{https://github.com/tobymao/sqlglot}. Accessed 15 Mar 2026.
+
+\bibitem{kabic2025maximus} Kabi\'{c} M, et al. Maximus: a modular accelerated query engine for data analytics on heterogeneous systems. Proc ACM Manag Data (PACMMOD / SIGMOD). 2025;3(3):1--25. \url{https://doi.org/10.1145/3725350}.
+
+\bibitem{yogatama2025sirius} Yogatama B, et al. Sirius: a GPU-native database execution engine integrated with DuckDB. Proc VLDB Endow. 2025;18(11):3812--25.
+
+\bibitem{liang2026elqo} Liang Z, Xu Q, Chen X, Chen J, Xia Y, Zheng K. E-LQO: a comprehensive energy evaluation framework for learned query optimization. Proc ACM Manag Data (PACMMOD / SIGMOD). 2026;4(4):1--27.
+
+\bibitem{vovk2005algorithmic}
+Vovk V, Gammerman A, Shafer G. Algorithmic learning in a random world. New York: Springer; 2005. p. 1--324. \url{https://doi.org/10.1007/b106715}
+
+\bibitem{angelopoulos2023conformal}
+Angelopoulos AN, Bates S. Conformal prediction: a gentle introduction. Found Trends Mach Learn. 2023;16(4):494--591. \url{https://doi.org/10.1561/2200000101}
+
+\bibitem{friedman2001greedy}
+Friedman JH. Greedy function approximation: a gradient boosting machine. Ann Stat. 2001;29(5):1189--1232. \url{https://doi.org/10.1214/aos/1013203451}
+
+\bibitem{raasveldt2018fair}
+Raasveldt M, Holanda P, Gubner T, M{\"u}hleisen H. Fair benchmarking considered difficult: common pitfalls in database performance testing. In: Proceedings of the Workshop on Testing Database Systems (DBTest@SIGMOD); 2018. p. 1--6. \url{https://doi.org/10.1145/3209950.3209955}
+
+\bibitem{ganapathi2009predicting}
+Ganapathi A, Kuno H, Dayal U, Wiener JL, Fox A, Jordan M, et al. Predicting multiple metrics for queries: better decisions enabled by machine learning. In: Proceedings of the IEEE 25th International Conference on Data Engineering (ICDE); 2009. p. 592--603. \url{https://doi.org/10.1109/ICDE.2009.130}
+
+\bibitem{nathan2024stage}
+Nathan V, Kipf A, Horn D, Saxena H, Kraska T, Narayanasamy S, et al. Stage: query execution time prediction in Amazon Redshift. In: Companion of the 2024 International Conference on Management of Data (SIGMOD/PODS); 2024. p. 180--192. \url{https://doi.org/10.1145/3626246.3653392}
+
+\bibitem{clickbench2022}
+ClickHouse Inc. ClickBench: a benchmark for analytical DBMS. 2022. \url{https://benchmark.clickhouse.com/}
+
+\bibitem{vink2024polars}
+Vink R, et al. Polars: blazingly fast DataFrames in Rust and Python (v1.36.1 / v2.1.0). Zenodo; 2024. \url{https://doi.org/10.5281/zenodo.7697217}
+
+\bibitem{hipp2020sqlite}
+Hipp DR. SQLite: a self-contained, serverless, zero-configuration SQL database engine (v3.51.0). 2025. \url{https://www.sqlite.org/}
+
+\bibitem{paszke2019pytorch}
+Paszke A, Gross S, Massa F, Lerer A, Bradbury J, Chanan G, et al. PyTorch: an imperative style, high-performance deep learning library. In: Advances in Neural Information Processing Systems (NeurIPS); 2019. p. 8024--8035.
+
+\bibitem{pedregosa2011scikit}
+Pedregosa F, Varoquaux G, Gramfort A, Michel V, Thirion B, Grisel O, et al. Scikit-learn: machine learning in Python. J Mach Learn Res. 2011;12:2825--2830.
+
+\bibitem{boncz2017jcch}
+Boncz P, Angelil T, R{\"o}diger W. JCC-H: adding join-crossing correlations and skew to TPC-H. In: Performance Evaluation and Benchmarking for the Era of Artificial Intelligence (TPCTC); 2017. p. 103--119. \url{https://doi.org/10.1007/978-3-319-72401-0_8}
+
+\bibitem{nambiar2006tpcds}
+Nambiar RO, Poess M. The making of TPC-DS. In: Proceedings of the 32nd International Conference on Very Large Data Bases (VLDB). Seoul: VLDB Endowment; 2006. p. 1049--58.
+
+\end{thebibliography}
+}
+\end{document}

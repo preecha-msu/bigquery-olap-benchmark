@@ -1,0 +1,8 @@
+Evaluation_Regime,Distribution_Shift_Type,Nominal_Target_Pct,Standard_Split_Conformal_Coverage_Pct,Mondrian_Complexity_Weighted_Coverage_Pct,Routed_Top1_Acc_Pct,Routed_P95_Abs_Regret_ms
+"In-Domain Seed Holdout (25-Seed LOSO-CV, N=75)",Exchangeable Parametric Seeds,90.0,91.33,90.0,57.33,33.25
+"Leave-One-Template-Out (5-Tier LOTO-CV, N=75)",Unseen SQL Operator Template Family,90.0,34.67,35.0,52.0,42.43
+"IMDB Join Order Benchmark (JOB, N=33, 9D Zero-Shot)",Severe Multi-Join Cyclic Schema Shift (21 Tables),90.0,63.64,78.79,21.21,39.85
+"IMDB Join Order Benchmark (JOB, N=33, 12D Sketch + Mondrian)",Join-Selectivity Calibrated External Transfer,90.0,81.82,89.39,87.88,6.42
+"Star Schema Benchmark (SSB, N=13) & ClickBench (N=24)",Star-Join & Wide-Table Clickstream Schemas,90.0,86.49,91.89,94.59,8.15
+"TPC-DS Snowflake Workload (N=30, 11 Tables, SF=1)",Multi-Fact Snowflake Schema Shift,90.0,83.33,90.0,93.33,7.84
+"BIRD Multi-Domain SQL Workload (N=20, 5 Schemas)",Cross-Domain Enterprise Schema Shift,90.0,85.0,90.0,95.0,4.92

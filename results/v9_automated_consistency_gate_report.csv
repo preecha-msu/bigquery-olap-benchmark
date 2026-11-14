@@ -1,0 +1,9 @@
+gate_id,measured_value,passed,status
+G1_Abstract_Word_Count_Under_350,284 words,True,PASS
+G2_Main_Text_Page_Count_25_to_30,30 pages (Supp: 14 pages),True,PASS
+G3_Zero_Undefined_Refs_Main_and_Supp,"Main=0, Supp=0, Cites=0",True,PASS
+G4_Zero_Leaked_Reviewer_Response_Phrases,"0 occurrences of 'Reviewer Section', 'Reviewer Four-Model', 'V86-'",True,PASS
+G5_Zero_Extreme_Scientific_PValues,0 occurrences of 10^{-4..99} or e-04..99 p-values,True,PASS
+G6_Unified_213_Queries_Across_7_Suites,213 benchmark queries (97 core + 116 external; 228 incl. S6),True,PASS
+G7_Relative_and_Absolute_Regret_Reported,114.11% P95 rel regret and 34.51 ms P95 abs regret present,True,PASS
+G8_Negative_Controls_LOEO_and_Mondrian_Present,"Uniform Random (104.98), LOEO (98.9%), Mondrian, Redset present",True,PASS
