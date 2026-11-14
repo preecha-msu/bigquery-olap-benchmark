@@ -1,0 +1,8 @@
+Engine_Scope,Sensor_Class,Reps_Per_Tier,Idle_Power_W,Mean_Active_Power_W,Total_Energy_J_Query,Net_Dynamic_Energy_J,Efficiency_MB_per_J,MAE_J,RMSE_J,MACE_Pct,Bland_Altman_Bias_J,Bland_Altman_95LoA_J,Spearman_rho
+RTX 2050 Cold (Measured GPU Board E_GPU),Direct Physical NVML Shunt (250 Hz),50,4.8,11.41,0.65,0.376,534.9,0.008,0.01,1.24,0.001,"[-0.018, +0.020]",0.9996
+RTX 2050 Warm (Measured GPU Board E_GPU),Direct Physical NVML Shunt (250 Hz),50,4.8,11.24,0.25,0.143,1390.8,0.003,0.004,1.1,-0.0004,"[-0.017, +0.016]",0.9969
+Polars v2.1 (Estimated CPU Package E_CPU),Ring-3 TDP Model vs. CMOS DVFS (P~u^1.28),50,14.5,38.44,3.17,1.969,109.7,0.098,0.102,3.09,-0.002,"[-0.201, +0.197]",0.9988
+DataFusion v55.0 (Estimated CPU Package E_CPU),Ring-3 TDP Model vs. CMOS DVFS (P~u^1.28),50,14.5,35.2,3.39,2.0,102.6,0.099,0.112,3.15,0.032,"[-0.210, +0.275]",0.9984
+DuckDB v2.0 (Estimated CPU Package E_CPU),Ring-3 TDP Model vs. CMOS DVFS (P~u^1.28),50,14.5,34.81,6.397,3.731,54.4,0.205,0.214,3.21,-0.004,"[-0.422, +0.414]",0.9982
+Composite System (GPU Offload + Host CPU Idle),NVML Shunt + Host Ring-3 + ACPI Battery Rail,50,19.3,27.74,1.58,0.481,220.1,0.042,0.051,2.66,0.009,"[-0.088, +0.106]",0.9991
+Mainboard ACPI DC Battery Shunt (45s Sustained),Physical Battery-Rail Shunt (46.40W vs 30.01W CPU),50,30.89,46.4,0.792,0.265,439.0,0.313,0.328,39.52,0.313,"[+0.245, +0.381]",0.9945

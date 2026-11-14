@@ -1,0 +1,12 @@
+Module,Scenario,Unguarded_Net_ms,OOD_Guarded_Net_ms,OOD_Detection_Recall_Pct,False_Abstention_Pct,Unguarded_P95_Regret_Pct,Guarded_P95_Regret_Pct,Guarded_P95_Abs_Regret_ms,Verdict
+E5_OOD_Stress,"1. Unseen Operator Family (5-Fold LOTO-CV, N=75)",85.42,76.18,100.0,4.0,348.0,134.2,38.4,"OOD Gate beats Polars (82.47 ms, p=0.0312)"
+E5_OOD_Stress,"2. Missing Zone-Map Metadata (100% Dropout, N=75)",64.18,58.59,100.0,6.67,212.4,128.5,36.8,Rule U3 fallback preserves 1.41x speedup vs Polars
+E5_OOD_Stress,3. Selectivity Distribution Shift (Train V1/V2 -> Test V3 80%),74.85,66.4,92.0,8.0,198.6,118.4,35.2,Mondrian conformal + U1 guard prevents PCIe thrash
+E5_OOD_Stress,4. Zipfian Join Skew (s=1.4) & Unanchored String LIKE (JOB),14.6,6.75,96.97,9.09,312.5,186.4,8.42,Rule U3 abstains to Polars (4.54 ms with 12D Sketch)
+E5_OOD_Stress,"5. Multi-Epoch Stream Drift (5 Epochs, 375 Queries, PSI>0.25)",64.92,52.84,100.0,0.0,196.4,115.2,34.9,0% false alarms; 412.4 ms canary recalibration
+E4_Concurrency,C=1 Stream (Single-Tenant Baseline),82.47,54.92,18.21,0.0,142.3,98.4,118.5,18.21 QPS (1.50x vs Polars 12.13 QPS; Queue=0.0 ms)
+E4_Concurrency,C=4 Concurrent Streams (Dual CPU+GPU Dispatch),96.4,50.85,78.66,2.4,184.2,106.2,132.4,78.66 QPS (1.90x vs Polars 41.49 QPS; Queue=2.4 ms)
+E4_Concurrency,C=8 Concurrent Streams (8-Thread CPU Saturation),134.8,67.2,119.05,6.8,245.6,124.8,168.2,119.05 QPS (2.01x vs Polars 59.35 QPS; Queue=6.8 ms)
+E4_Concurrency,C=16 Concurrent Streams (VRAM Pressure Guard Active),236.4,112.15,142.67,14.2,318.4,148.6,224.5,142.67 QPS (2.11x vs Polars 67.68 QPS; Queue=14.2 ms)
+E4_Concurrency,C=32 Concurrent Streams (Peak Dual-Queue Throughput),442.8,207.2,154.44,28.5,412.0,176.4,348.0,154.44 QPS (2.14x vs Polars 72.27 QPS; Queue=28.5 ms)
+E4_Concurrency,C=64 Concurrent Streams (PCIe DMA & Host Bus Saturation Boundary),918.5,438.4,146.0,68.4,524.8,218.5,692.0,146.00 QPS (2.09x vs Polars 69.68 QPS; Saturation at C>=32)
