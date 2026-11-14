@@ -1,7 +1,7 @@
 # AST-Route V9 Reviewer Revision Roadmap Closure Summary (`V86-00` – `V86-09`)
 
-- **Manuscript Target**: `manuscript/bigquery_olap_benchmark_V9.tex` (`SHA-256: 11572a748be8c94f3593c7f3ab6a2001411b373dd542ddf0e8271b34ae9d716d`)
-- **Submission Archive**: `Journal_of_Big_Data_Snapp_Submission_Flat9.zip` (`SHA-256: 9174b2aea8d83afb97ce14d19e37cdfef1d74b9069ca49110f98c6b974fdc1b9`)
+- **Manuscript Target**: `manuscript/bigquery_olap_benchmark_V9.tex` (`SHA-256: 15ee39c951f0d8414f3257b3ac352bfcb86a7a99dd5bd96023f35f4b969ba762`)
+- **Submission Archive**: `Journal_of_Big_Data_Snapp_Submission_Flat9.zip` (`SHA-256: df986f5aed7c29fb2076c125fad6d54648a6b7b3cd0e98ba3e5044469f3e64bf`)
 - **Execution Policy**: Zero Estimation / 100% Real Execution & Direct Raw Log Re-Computation
 
 ## 1. Execution Status Across All 10 Roadmap Work Packages

@@ -2058,13 +2058,17 @@ def update_manuscript_v9_and_rebuild_zip(
         tex = tex.replace(old_sec33_ext_row, new_sec33_ext_row, 1)
 
     # 3. Update Section 3.4 Table 25 Part D to include TPC-DS (N=30) and BIRD (N=20)
+    mean_j_t = round(float(df_t["Joins"].mean()), 2)
+    mean_csci_t = round(float(df_t["CSCI_Score"].mean()), 2)
+    mean_j_b = round(float(df_b["Joins"].mean()), 2)
+    mean_csci_b = round(float(df_b["CSCI_Score"].mean()), 2)
     old_sec34_partd_end = (
         r"Multi-Scale $\text{SF}=100\text{ GB}$ ($N=75$) & 25-Seed LOSO-CV ($\mathbf{x}_q^{\text{scale}}\in\mathbb{R}^{10}$) & $\rho_{\text{part}}=0.5624$ & M2: $62.67\%$ & M3/M4: $\mathbf{68.00\%}$ & M3: $\mathbf{1138.65\text{ ms}}$ & M2 $1218.5\rightarrow \mathbf{1142.8}$ & M2 $26.9\%\rightarrow \mathbf{19.4\%}$ & M2 $84.2\%\rightarrow \mathbf{58.60\%}$ & $-75.65\text{ ms}$ \& $-25.60\text{ pp}$ P95 regret at $\text{SF}=100\text{ GB}$ ($\text{ECE}=3.92\%$) \\"
     )
     new_sec34_partd_end = (
         old_sec34_partd_end + "\n" +
-        rf"TPC-DS Snowflake ($N=30$, New) & Strict Zero-Shot Transfer from TPC-H & $J=4.33,\ \text{{CSCI}}=30.13$ & M2: ${t_m2['top1_acc_pct']:.2f}\%$ & M3/M4: $\mathbf{{{t_m3['top1_acc_pct']:.2f}\%}}$ & M3: $\mathbf{{{t_m3['exec_mean_ms']:.2f}\text{{ ms}}}}$ & M2 ${t_m2['net_mean_ms']:.2f}\rightarrow \mathbf{{{t_m3['net_mean_ms']:.2f}}}$ & M2 ${t_m2['mean_regret_pct']:.2f}\%\rightarrow \mathbf{{{t_m3['mean_regret_pct']:.2f}\%}}$ & M2 ${t_m2['p95_regret_pct']:.2f}\%\rightarrow \mathbf{{{t_m3['p95_regret_pct']:.2f}\%}}$ & 12D Sketch reaches $\mathbf{{{t_12d['top1_acc_pct']:.2f}\%}}$ Top-1 (${t_12d['exec_mean_ms']:.2f}\text{{ ms}}$, $\text{{ECE}}={t_12d['ece_pct']:.2f}\%$) \\" + "\n" +
-        rf"BIRD Enterprise ($N=20$, New) & Strict Zero-Shot Transfer from TPC-H & $J=3.35,\ \text{{CSCI}}=28.75$ & M2: ${b_m2['top1_acc_pct']:.2f}\%$ & M3/M4: $\mathbf{{{b_m3['top1_acc_pct']:.2f}\%}}$ & M3: $\mathbf{{{b_m3['exec_mean_ms']:.2f}\text{{ ms}}}}$ & M2 ${b_m2['net_mean_ms']:.2f}\rightarrow \mathbf{{{b_m3['net_mean_ms']:.2f}}}$ & M2 ${b_m2['mean_regret_pct']:.2f}\%\rightarrow \mathbf{{{b_m3['mean_regret_pct']:.2f}\%}}$ & M2 ${b_m2['p95_regret_pct']:.2f}\%\rightarrow \mathbf{{{b_m3['p95_regret_pct']:.2f}\%}}$ & 12D Sketch reaches $\mathbf{{{b_12d['top1_acc_pct']:.2f}\%}}$ Top-1 (${b_12d['exec_mean_ms']:.2f}\text{{ ms}}$, $\text{{ECE}}={b_12d['ece_pct']:.2f}\%$) \\"
+        rf"TPC-DS Snowflake ($N=30$, New) & Strict Zero-Shot Transfer from TPC-H & $\bar{{J}}={mean_j_t:.2f},\ \overline{{\text{{CSCI}}}}={mean_csci_t:.2f}$ & M2: ${t_m2['top1_acc_pct']:.2f}\%$ & M3/M4: $\mathbf{{{t_m3['top1_acc_pct']:.2f}\%}}$ & M3: $\mathbf{{{t_m3['exec_mean_ms']:.2f}\text{{ ms}}}}$ & M2 ${t_m2['net_mean_ms']:.2f}\rightarrow \mathbf{{{t_m3['net_mean_ms']:.2f}}}$ & M2 ${t_m2['mean_regret_pct']:.2f}\%\rightarrow \mathbf{{{t_m3['mean_regret_pct']:.2f}\%}}$ & M2 ${t_m2['p95_regret_pct']:.2f}\%\rightarrow \mathbf{{{t_m3['p95_regret_pct']:.2f}\%}}$ & 12D Sketch reaches $\mathbf{{{t_12d['top1_acc_pct']:.2f}\%}}$ Top-1 (${t_12d['exec_mean_ms']:.2f}\text{{ ms}}$, $\text{{ECE}}={t_12d['ece_pct']:.2f}\%$) \\" + "\n" +
+        rf"BIRD Enterprise ($N=20$, New) & Strict Zero-Shot Transfer from TPC-H & $\bar{{J}}={mean_j_b:.2f},\ \overline{{\text{{CSCI}}}}={mean_csci_b:.2f}$ & M2: ${b_m2['top1_acc_pct']:.2f}\%$ & M3/M4: $\mathbf{{{b_m3['top1_acc_pct']:.2f}\%}}$ & M3: $\mathbf{{{b_m3['exec_mean_ms']:.2f}\text{{ ms}}}}$ & M2 ${b_m2['net_mean_ms']:.2f}\rightarrow \mathbf{{{b_m3['net_mean_ms']:.2f}}}$ & M2 ${b_m2['mean_regret_pct']:.2f}\%\rightarrow \mathbf{{{b_m3['mean_regret_pct']:.2f}\%}}$ & M2 ${b_m2['p95_regret_pct']:.2f}\%\rightarrow \mathbf{{{b_m3['p95_regret_pct']:.2f}\%}}$ & 12D Sketch reaches $\mathbf{{{b_12d['top1_acc_pct']:.2f}\%}}$ Top-1 (${b_12d['exec_mean_ms']:.2f}\text{{ ms}}$, $\text{{ECE}}={b_12d['ece_pct']:.2f}\%$) \\"
     )
     if old_sec34_partd_end in tex and "TPC-DS Snowflake ($N=30$, New)" not in tex:
         tex = tex.replace(old_sec34_partd_end, new_sec34_partd_end, 1)
@@ -2085,10 +2089,6 @@ def update_manuscript_v9_and_rebuild_zip(
     weighted_net_12d = round(weighted_exec_12d + 4.15, 2)
     weighted_reg_9d = round((33 * 84.49 + 13 * 2.82 + 20 * 9.45 + 30 * t_m3["mean_regret_pct"] + 20 * b_m3["mean_regret_pct"]) / 116.0, 2)
     weighted_reg_12d = round((33 * 18.88 + 13 * 2.82 + 20 * 9.45 + 30 * t_12d["mean_regret_pct"] + 20 * b_12d["mean_regret_pct"]) / 116.0, 2)
-    mean_j_t = round(float(df_t["Joins"].mean()), 2)
-    mean_csci_t = round(float(df_t["CSCI_Score"].mean()), 2)
-    mean_j_b = round(float(df_b["Joins"].mean()), 2)
-    mean_csci_b = round(float(df_b["CSCI_Score"].mean()), 2)
 
     sec35_block = rf"""
 % === BEGIN V9 SECTION 3.5 EXTENDED EXTERNAL GENERALIZATION ON TPC-DS (N=30) AND BIRD (N=20) ===
@@ -2152,7 +2152,7 @@ Rule-Based / \textbf{{M1: Raw AST 7D}} & Heuristic ($J,W$) / Unweighted AST 7D &
 
     # 5. Update the Conclusion external validation sentence to match the exact 116-query / 5-suite numbers
     old_conc_ext_pattern = re.compile(
-        r"safe zero-shot cross-schema transfer across (?:66|130|116) external queries .*?(?=,\s*1\.14\\times\\text\{--\}2\.14\\times)"
+        r"safe zero-shot cross-schema transfer across (?:66|130|116) external queries .*?(?=,\s*\$?1\.14\\times\\text\{--\}2\.14\\times)"
     )
     new_conc_ext_str = (
         rf"safe zero-shot cross-schema transfer across 116 external queries from five cross-schema benchmarks "
