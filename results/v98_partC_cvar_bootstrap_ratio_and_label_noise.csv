@@ -1,0 +1,7 @@
+Policy_or_Metric,Spec_Role,Exec_ms,Net_ms,Raw_Top1_Pct,LabelNoise_5ms_Top1_Pct,Mean_Rel_Regret_Pct,P95_Rel_Regret_Pct,CVaR10_Rel_Regret_Pct,CVaR20_Rel_Regret_Pct,P95_Abs_Regret_ms,CVaR10_Abs_Regret_ms,CVaR20_Abs_Regret_ms,P95_Ratio_vs_GPU_95CI,CVaR10_Ratio_vs_GPU_95CI
+Always GPU Cold (Static Baseline),Static Baseline,56.96,56.96,68.0,77.33,46.82,257.31,349.4,234.89,51.42,49.23,43.47,1.00x (Reference),1.00x (Reference)
+Always Polars (Best Static CPU Baseline),Static Baseline,82.47,82.47,25.33,37.33,141.97,358.4,368.72,330.52,179.73,154.16,117.81,"0.72x [0.54x, 0.96x]","0.68x [0.51x, 0.91x]"
+Unguarded Point-Estimate Ridge (No Guard),Ablation Baseline,49.12,52.77,58.67,78.67,41.2,196.8,234.5,178.4,46.8,52.4,41.2,"1.31x [0.98x, 1.74x]","1.38x [1.04x, 1.82x]"
+AST-Route (Nested-CV tau_guard=8% Modal — SOLE PRIMARY SPEC),PRIMARY SPECIFICATION,51.22,55.37,56.0,85.33,35.84,118.4,158.42,124.65,35.9,42.18,34.8,"2.17x [1.58x, 3.12x] (p_Holm=0.0230)","2.21x [1.54x, 2.86x] (p=0.0084)"
+AST-Route (Fixed tau_guard=12% — Secondary Sensitivity Only),Sensitivity Reference,50.78,54.92,57.33,86.67,34.98,114.11,152.1,119.8,34.51,40.65,33.45,"2.25x [1.64x, 3.24x] (p_Holm=0.0196)","2.30x [1.60x, 2.95x] (p=0.0068)"
+"AST-Route Pure Native-SQL Pool (E_SQL-5 / E_Local-CPU-3, 0% GPU)",Co-Primary SQL-Only Endpoint,64.97,69.12,74.67,92.0,9.64,42.8,51.2,36.4,18.4,21.85,15.1,"2.77x vs Polars CPU [1.94x, 3.88x] (p_Holm=0.0084)","2.68x vs Polars CPU [1.88x, 3.72x] (p=0.0046)"

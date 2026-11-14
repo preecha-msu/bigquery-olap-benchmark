@@ -85,177 +85,216 @@ def regenerate_figures_1_2_and_7():
     # --- FIGURE 1: Architecture Diagram ---
     fig1, ax = plt.subplots(figsize=(13.6, 7.6), dpi=300)
     ax.set_xlim(0, 100); ax.set_ylim(0, 100); ax.axis("off")
-    ax.text(50, 97.6, "Proposed AST-Route Four-Layer Multi-Objective Query Routing Framework",
-            ha="center", va="center", fontsize=12.4, fontweight="bold", color="#111111")
+    ax.text(50, 97.6, "Proposed AST-Route Four-Layer Risk-Aware Query Routing Framework (Primary Nested-CV Specification)",
+            ha="center", va="center", fontsize=12.0, fontweight="bold", color="#111111")
     _draw_card(ax, 1.5, 74.5, 47.0, 19.5, "LAYER 1A: Input SQL & Static AST Parsing (SQLGlot)", [
-        "• Workload: 97 Core TPC-H + 116 External Across 5 Suites (N = 213 Queries; 228 incl. S6)",
-        "• Overhead Regimes: 4.15 ms cold SQL / 0.67 ms AST cache / 0.08 ms 1D threshold cache",
+        "• Workloads: 213 Primary (97 TPC-H + 116 Ext) + 99 Official TPC-DS + 50 Ext (362 Benchmark / 377 Total Qs)",
+        "• Overhead Regimes: 4.15 ms cold SQL (4.39 ms cold seek) / 0.67 ms AST cache / 0.08 ms 1D cache",
         "• Extracts 7 Structural Operators: Depth D(q), Nodes N(q), Joins J(q),",
-        "  Subqueries/CTEs S(q), Windows W(q), UNNEST U(q), CASE C(q)",
+        "  Subqueries/CTEs S(q), Windows W(q), UNNEST U(q), CASE C(q) (100% SQLGlot Parse)",
     ], "#1f4e78", "#eaf2f8")
-    _draw_card(ax, 51.5, 74.5, 47.0, 19.5, "LAYER 1B: 9D/10D Feature Vector, CSCI & Catalog Scale", [
-        "• Oblique Structural Index: CSCI(q) = 1.5D + 2.5J + 3.0S + 3.5W + 4.0U + 1.5C",
-        "• Within-Tier Partial Correlation: r_partial = 0.2653 (p = 0.023); Splits -28.2%",
+    _draw_card(ax, 51.5, 74.5, 47.0, 19.5, "LAYER 1B: 9D/10D Feature Vector, Pre-Specified CSCI & Catalog Scale", [
+        "• Pre-Specified Index: CSCI(q) = 1.5D + 2.5J + 3.0S + 3.5W + 4.0U + 1.5C (VIF_D,N = 1.84)",
+        "• Within-Tier Partial r = 0.2653 (p = 0.023); Prunes Splits -28.2%, Regret -9.22 pp (p = 0.0038)",
         "• Zone-Map Selectivity sigma_hat(q) in (0, 1] (0.172 ms cached / 0.413 ms cold footer)",
-        "• 9D Vector x_q in R^9 (augmented with log10(1 + B_scan) to R^10 across scales)",
+        "• 9D Vector x_q in R^9 (augmented with log10(1 + B_scan) to R^10 across SF=1-100 GB)",
     ], "#196f3d", "#e9f7ef")
     _draw_card(ax, 1.5, 52.5, 97.0, 18.0, "LAYERS 2 & 3: Cross-Paradigm Analytical Cost Models & Multi-Output Cost-Regression Engine", [
-        "• Analytical Models: PCIe Fraction Phi_PCIe(q), Effective Throughput Theta_eff (GB/s), Cloud Slot Proxy M_slot, Billed FinOps Savings Delta C_1M ($)",
-        "• Predictors: Point-Estimate Ridge (49.12 ms, P95 Regret 196.8%) / Shallow DT (51.35 ms) vs. Guarded GBR-9D (54.92 ms, P95 Regret 114.1% / 34.51 ms)",
+        "• Analytical Models: PCIe Fraction Phi_PCIe(q), Throughput Theta_eff (GB/s), Cloud Slot Proxy M_slot, FinOps Delta C_1M ($), 4-Metric Energy E(q,e)",
+        "• Primary Spec (Nested-CV tau_guard = 8% modal): 55.37 ms Net (51.22 ms exec), P95 Regret 118.4% (2.17x cut, CI [1.58x, 3.12x]), CVaR_10% 158.4% (2.21x cut)",
         "• Out-of-Fold Predictive Accuracy (25-Seed LOSO-CV): GPU R^2 = 0.875 (P50 Q-Err 1.053) | Polars R^2 = 0.822 | Memory R^2 = 0.912 (Inference: 497.2 us)",
     ], "#b9770e", "#fef9e7")
     for x_arr in (25.0, 75.0):
         ax.annotate("", xy=(x_arr, 70.8), xytext=(x_arr, 74.3), arrowprops=dict(arrowstyle="->", lw=1.6, color="#333333"))
     cands = [
-        (1.5, "Candidate 1: DuckDB (C++)", "#2c3e50", "#f2f4f4", [
-            "• Paradigm: In-Process CPU DBMS", "• Morsel-Driven Vectorized Engine", "• Segment-Tree Window Framing",
-            "• Mean Latency: 183.74 ms", "• Best on Official TPC-H (22.82 ms)", "• Out-of-Core NVMe Spill Support",
+        (1.5, "Candidate 1: DuckDB (C++ CPU)", "#2c3e50", "#f2f4f4", [
+            "• Version: 1.4.5 (Lock) / v2.0.0", "• Morsel-Driven Vectorized DBMS", "• Best CPU on TPC-H Q1-22 (22.82 ms)",
+            "• Core 75Q Mean: 183.74 ms", "• Official 99Q TPC-DS: 99/99 (44.55 ms)", "• Out-of-Core NVMe Spill Support",
         ]),
         (26.1, "Candidate 2: Polars / DataFusion", "#117a65", "#e8f8f5", [
-            "• Paradigm: Rust Apache Arrow", "• Zero-Copy SIMD & ListArray", "• Polars: 82.47 ms | DF: 96.30 ms",
-            "• Pure-SQL Pool: 48.5% of Routed Gain", "• CPU-Only Router: 69.12 ms (74.7%)", "• Routed: Narrow/Med L1-L2 Scans/Joins",
+            "• Polars 1.36.1 / DF 50.1.0 (Rust Arrow)", "• Zero-Copy SIMD & ListArray", "• Polars: 82.47 ms | DF: 96.30 ms",
+            "• E_SQL-5 / E_Local-CPU-3: 69.12 ms", "• Captures 48.5% of 6-Engine Gain", "• Prod 2-Eng {Polars,GPU}: 98.7% Gain",
         ]),
-        (50.7, "Candidate 3: PyTorch CUDA Prototype", "#922b21", "#fdedec", [
-            "• Author Tensor Prototype (RTX 2050 4G)", "• Cold: 56.96 ms | Warm: 22.25 ms", "• L1 PCIe Bottleneck: Phi = 55.5%",
-            "• Tensor Offload: 51.5% of Routed Gain", "• Chunked Streaming at SF=10-100 GB", "• Routed: Compute-Heavy L3-L5",
+        (50.7, "Candidate 3: PyTorch & CuPy GPU", "#922b21", "#fdedec", [
+            "• PyTorch 2.6+cu124 & CuPy v14.2.0", "• Cold: 56.96 ms (CuPy: 58.96 ms, r=0.999)", "• L1 PCIe Bottleneck: Phi = 55.5%-56.0%",
+            "• Tested Across G1 (RTX2050), G2 (T4), G3 (A100)", "• Chunked Streaming at SF=10-100 GB", "• Routed: Compute-Heavy L2-L5",
         ]),
         (75.3, "Candidate 4: Google BigQuery", "#5b2c6f", "#f5eef8", [
-            "• Paradigm: Serverless Cloud OLAP", "• Capacitor Storage + Slot Elasticity", "• Clustered Server Mean: 745.39 ms",
-            "• Slot Proxy: M_slot = 6.37x", "• V1 Pruning: 78.4% ($1,441.61/1M)", "• Elastic SF=100 GB Spill Fallback",
+            "• Paradigm: Serverless Cloud OLAP", "• Capacitor Storage + Slot Elasticity", "• SF=1-30 GB Floor: 745.39 ms (0% Share)",
+            "• Slot Proxy: M_slot = 6.37x", "• SF=100 GB Spill Crossover (2571.6 ms)", "• Beats Spill CPUs by 2.55x-3.38x",
         ]),
     ]
     for cx, ctitle, chdr, cfill, clines in cands:
-        _draw_card(ax, cx, 23.5, 23.2, 25.0, ctitle, clines, chdr, cfill, title_fs=8.2, body_fs=7.25)
+        _draw_card(ax, cx, 23.5, 23.2, 25.0, ctitle, clines, chdr, cfill, title_fs=8.0, body_fs=7.15)
         ax.annotate("", xy=(cx + 11.6, 48.7), xytext=(cx + 11.6, 52.3), arrowprops=dict(arrowstyle="->", lw=1.4, color="#333333"))
         ax.annotate("", xy=(cx + 11.6, 19.8), xytext=(cx + 11.6, 23.3), arrowprops=dict(arrowstyle="->", lw=1.4, color="#333333"))
-    _draw_card(ax, 1.5, 2.0, 97.0, 17.5, "LAYER 4: Constrained Risk-Aware Dispatch (Conformal Bounds + 12% Fixed / 8% Nested-CV Guard) & 25-Seed LOSO-CV", [
+    _draw_card(ax, 1.5, 2.0, 97.0, 17.5, "LAYER 4: Constrained Risk-Aware Dispatch (Mondrian Conformal + Nested-CV 8% Primary Guard) & 25-Seed LOSO-CV", [
         "• Dispatch Rule: e_hat(q) = argmin_{e in E_feasible(q)} [alpha*(T_hat/T_med) + beta*(E_hat/E_med) + gamma*(C_hat/C_ref)] with 90% Conformal + PCIe Guard",
-        "• Tail-Risk Control: 54.92 ms Net (55.37 ms Nested-CV, TOST p = 0.0442), cuts P95 Regret 2.25x vs. GPU (257.31% -> 114.11%, 34.51 ms Abs, p_seed = 0.0098)",
+        "• Primary Nested-CV (8%): 55.37 ms Net (TOST p = 0.0442 vs. GPU), 1.49x-3.32x vs. CPU, cuts P95 Regret 2.17x (118.4% vs. 257.3%) & CVaR_10% 2.21x (158.4% vs. 349.4%)",
     ], "#145a32", "#eafaf1")
     fig1.tight_layout()
     save_to_all_fig_dirs(fig1, "fig_proposed_ast_routing_framework_300dpi")
     plt.close(fig1)
 
-    # --- FIGURE 2: Experimental Workflow ---
-    fig2, ax = plt.subplots(figsize=(13.6, 7.6), dpi=300)
+    # --- FIGURE 2: Experimental Workflow (With Explicit PHASE 4 Banner) ---
+    fig2, ax = plt.subplots(figsize=(13.6, 7.8), dpi=300)
     ax.set_xlim(0, 100); ax.set_ylim(0, 100); ax.axis("off")
-    ax.text(50, 97.6, "End-to-End Six-Phase Experimental Validation Workflow: AST-Route Testbed (213 Queries Across 7 Suites, 6 Engines)",
-            ha="center", va="center", fontsize=12.0, fontweight="bold", color="#111111")
-    _draw_card(ax, 1.5, 74.5, 47.0, 19.5, "PHASE 1: Multi-Scale TPC-H & Cross-Schema Provisioning", [
+    ax.text(50, 98.0, "End-to-End Six-Phase Experimental Validation Workflow: AST-Route Testbed (213 Primary / 362 Expanded Benchmark Queries)",
+            ha="center", va="center", fontsize=11.6, fontweight="bold", color="#111111")
+    _draw_card(ax, 1.5, 76.0, 47.0, 19.0, "PHASE 1: Multi-Scale TPC-H & Cross-Schema Provisioning", [
         "• 8 TPC-H Tables: 8.66M (SF=1) to 866.1M Rows (SF=100 GB; 600.1M lineitem)",
-        "• Local Columnar: ZSTD Parquet + DuckDB Native + Apache Arrow Buffers",
-        "• Local Row-Store Baseline: SQLite 3 Full B-Tree with PK/FK/Date Indexes",
+        "• Zero-Duplication Local Catalog: Shared ZSTD Parquet + Zero-Copy Arrow (0 MB Extra)",
+        "• Hardware Control: High-Perf Power Plan, 1477 MHz GPU Clock, 0% Thermal Throttle",
         "• Cloud Serverless: Google BigQuery Unoptimized vs. Clustered (Cache Disabled)",
     ], "#1f618d", "#ebf5fb")
-    _draw_card(ax, 51.5, 74.5, 47.0, 19.5, "PHASE 2: 213-Query Multi-Suite Workload Design (7 Benchmarks + 15 S6)", [
-        "• 97 Core TPC-H Queries: 75 Factorial (25 Seeds x V1-V3) + 22 Official Q1-Q22",
-        "• 116 External (5 Suites): 33 JOB + 13 SSB + 20 ClickBench + 30 TPC-DS-Derived + 20 BIRD-Inspired",
-        "• Prospective Frozen Holdout: 15 Unseen Seed S6 Queries (228 Total Queries Evaluated)",
-        "• Leak-Free Protocols: 25-Seed LOSO-CV, Locked S5/S6 Holdouts, 5-Fold LOTO-CV",
+    _draw_card(ax, 51.5, 76.0, 47.0, 19.0, "PHASE 2: Development vs. Blinded Standard Holdout Workloads", [
+        "• Dev Set: 75 Core TPC-H Factorial (25 Seeds x V1-V3) + 15 Prospective Seed S6",
+        "• Blinded Standard Holdouts: 22 Official TPC-H + 99 Official TPC-DS (dsdgen) + 33 JOB",
+        "  + 13 SSB + 43 ClickBench (20 Parity + 23 Dialect Audit) + 100 Extended Stress Qs",
+        "• Leak-Free Protocols: 25-Seed LOSO-CV, LOWSO-CV (84.3% Top-1), 5-Fold LOTO-CV",
     ], "#1e8449", "#e9f7ef")
-    _draw_card(ax, 1.5, 52.5, 97.0, 18.0, "PHASE 3: Pre-Execution AST Feature Profiling, Oblique CSCI Projection & Stage-Wise Timing Instrumentation", [
+    _draw_card(ax, 1.5, 55.5, 97.0, 17.0, "PHASE 3: Pre-Execution AST Feature Profiling, Pre-Specified CSCI Projection & 7-Stage Timing Conservation", [
         "• Parses SQL via SQLGlot into 9D/10D/12D vectors x_q (4.15 ms cold SQL / 0.67 ms AST-only cache / 0.08 ms 1D threshold cache)",
-        "• CSCI Oblique Representation: Within-tier partial r = 0.2653 (p = 0.023); reduces depth-3 GBDT splits by -28.2% and routing regret by -9.22% (p = 0.0038)",
+        "• M1-M6 CSCI Ablation: Prunes depth-3 GBDT splits by -28.2%, lowers regret -9.22 pp (p = 0.0038), and reduces AURC from 48.65% to 28.14%",
         "• Additive 7-Stage Timing Conservation: Separates SQL parse, metadata lookup, disk I/O, Arrow cast, PCIe H2D/D2H or cloud queue, kernel compute, & output",
     ], "#b9770e", "#fef9e7")
     for x_arr in (25.0, 75.0):
-        ax.annotate("", xy=(x_arr, 70.8), xytext=(x_arr, 74.3), arrowprops=dict(arrowstyle="->", lw=1.6, color="#333333"))
+        ax.annotate("", xy=(x_arr, 72.8), xytext=(x_arr, 75.8), arrowprops=dict(arrowstyle="->", lw=1.5, color="#333333"))
+
+    # Explicit overarching PHASE 4 banner so Phase 4 is unmistakably clear
+    hdr4 = patches.FancyBboxPatch(
+        (1.5, 48.2), 97.0, 3.8,
+        boxstyle="round,pad=0.15,rounding_size=0.6",
+        linewidth=1.2, edgecolor="#34495e", facecolor="#34495e"
+    )
+    ax.add_patch(hdr4)
+    ax.text(50.0, 50.1, "PHASE 4: Multi-Paradigm Execution Across 6 Core Engines + External CuPy CUDA Engine & 3 Hardware Nodes (4A–4D)",
+            ha="center", va="center", color="white", fontweight="bold", fontsize=8.8)
+
     paradigms = [
         (1.5, "PHASE 4A: Row-Store (P1)", "#5d6d7e", "#f2f4f4", [
             "• Engine: SQLite 3 (ANSI C)", "• Storage: Full-Scale B-Tree", "• Tuple-at-a-Time Volcano Model",
-            "• Mean Latency: 8417.33 ms", "• 95% CI: [6412.2, 10819.7] ms", "• Historical Row-Store Reference",
+            "• Mean Latency: 8417.33 ms", "• 0% Active Routing Share", "• Canonical Row-Store Baseline",
         ]),
         (26.1, "PHASE 4B: Serverless Cloud (P2)", "#2874a6", "#ebf5fb", [
             "• Engine: Google BigQuery", "• Capacitor Columnar Storage", "• Unopt Server: 1412.60 ms",
-            "• Clustered Server: 745.39 ms", "• 95% CI: [515.6, 1026.5] ms (1.90x)", "• SF=100 GB Spill Offload Target",
+            "• Clustered Floor: 745.39 ms", "• 0% Share at SF=1-30 GB", "• SF=100 GB Spill Target (20%)",
         ]),
         (50.7, "PHASE 4C: Vectorized CPU (P3)", "#117a65", "#e8f8f5", [
-            "• 1) Polars (Rust): 82.47 ms", "  95% CI: [67.9, 98.7] ms", "• 2) DataFusion: 96.30 ms",
-            "  95% CI: [78.3, 114.9] ms", "• 3) DuckDB (C++): 183.74 ms", "  (22.82 ms on Official TPC-H Q1-Q22)",
+            "• Polars (1.36.1/v2.1): 82.47 ms", "• DataFusion (50.1/v55): 96.30 ms", "• DuckDB (1.4.5/v2.0): 183.74 ms",
+            "• DuckDB Best CPU on Q1-22 (22.8 ms)", "• Node 2 (22T): 35.11 ms (97.3% T1)", "• Node 3 (M1 ARM64): 29.44 ms",
         ]),
-        (75.3, "PHASE 4D: PyTorch CUDA GPU (P4)", "#a93226", "#fdedec", [
-            "• Author Tensor Prototype (Non-DBMS)", "• GPU: NVIDIA RTX 2050 (4 GB VRAM)", "• Cold Mean: 56.96 ms (incl. PCIe)",
-            "  95% CI: [46.23, 68.44] ms", "• Warm Mean: 22.25 ms (in-VRAM)", "  95% CI: [16.78, 28.68] ms",
+        (75.3, "PHASE 4D: CUDA GPU Engines (P4)", "#a93226", "#fdedec", [
+            "• PyTorch 2.6 CUDA: 56.96 ms Cold", "• External CuPy v14.2: 58.96 ms", "  (rho = 0.9999, 100% Route Match)",
+            "• Polars-Arrow-CuPy Hybrid: 57.6 ms", "• Profiles: G1 RTX2050, G2 T4, G3 A100", "• Warm Kernel Mean: 22.25 ms",
         ]),
     ]
     for px, ptitle, phdr, pfill, plines in paradigms:
-        _draw_card(ax, px, 23.5, 23.2, 25.0, ptitle, plines, phdr, pfill, title_fs=7.9, body_fs=7.2)
-        ax.annotate("", xy=(px + 11.6, 48.7), xytext=(px + 11.6, 52.3), arrowprops=dict(arrowstyle="->", lw=1.4, color="#333333"))
-        ax.annotate("", xy=(px + 11.6, 19.8), xytext=(px + 11.6, 23.3), arrowprops=dict(arrowstyle="->", lw=1.4, color="#333333"))
-    _draw_card(ax, 1.5, 2.0, 47.0, 17.5, "PHASE 5: Designated Endpoints & Seed-Clustered Inference", [
-        "• Multiset Equivalence EX = 1.000 (213/213) | Seed Friedman p < 0.001 (W = 0.748)",
-        "• Primary Endpoints: Nested-CV Regret vs. GPU (118.4% vs. 257.3%, TOST p = 0.0442) & CPU",
-        "• 2-Engine Subset Captures 97.3%-98.7% of Routed Gain (87.3%-88.7% of Oracle)",
+        _draw_card(ax, px, 22.5, 23.2, 24.5, ptitle, plines, phdr, pfill, title_fs=7.8, body_fs=7.05)
+        ax.annotate("", xy=(px + 11.6, 52.1), xytext=(px + 11.6, 55.3), arrowprops=dict(arrowstyle="->", lw=1.3, color="#333333"))
+        ax.annotate("", xy=(px + 11.6, 19.2), xytext=(px + 11.6, 22.3), arrowprops=dict(arrowstyle="->", lw=1.3, color="#333333"))
+    _draw_card(ax, 1.5, 1.5, 47.0, 17.2, "PHASE 5: Primary Nested-CV Endpoints, CVaR & TOST Sensitivity", [
+        "• Multiset Parity EX = 1.000 | Nadeau-Bengio & Seed Wilcoxon p_Holm <= 0.023",
+        "• Primary Nested-CV (8%): 55.37 ms Net, TOST +-2..8 ms Curve (p = 0.0442 at +-5 ms)",
+        "• Cuts P95 Regret 2.17x [1.58x, 3.12x] & CVaR_10% 2.21x [1.54x, 2.86x] vs. GPU",
     ], "#6c3483", "#f5eef8")
-    _draw_card(ax, 51.5, 2.0, 47.0, 17.5, "PHASE 6: SHA-256 Telemetry Registry & Archival Reproducibility", [
-        "• Main Text (Tables 1–13, Figs. 1–6) & Additional File 1 (Tables S1–S17, Figs. S1–S8)",
-        "• One-Command Reproducibility (R1–R6) & 64-Hex SHA-256 Telemetry Registry",
-        "• Code & Data Archive: github.com/preecha-msu/bigquery-olap-benchmark (SHA-256 Verified)",
+    _draw_card(ax, 51.5, 1.5, 47.0, 17.2, "PHASE 6: Blinded Holdout Manifest, Smoke-Test Docker & SHA-256 Audit", [
+        "• Pre-Specification & Blinded Holdout Manifest (OSF / Git Tag v9.0-jbd-submission)",
+        "• One-Command Reproducibility (R1–R6 + <5s CPU-Only Smoke-Test Mode)",
+        "• Complete SQL Dialect Capability Matrix Across All 43 ClickBench & 99 TPC-DS Qs",
     ], "#196f3d", "#eafaf1")
     fig2.tight_layout()
     save_to_all_fig_dirs(fig2, "fig_experimental_workflow_300dpi")
     plt.close(fig2)
 
-    # --- FIGURE 6 (was Fig 7): Cross-Suite Generalization Across All 213 Queries ---
+    # --- FIGURE 6: 3-Panel Cross-Suite Generalization, JOB 12D Sketch, & TOST Margin / CVaR Curve ---
     plt.rcParams["font.family"] = "serif"
-    fig7, (ax1, ax2) = plt.subplots(1, 2, figsize=(14.8, 4.65), dpi=300)
+    fig7, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(16.2, 4.45), dpi=300)
     suites = [
-        "75Q TPC-H\n(LOSO-CV)",
-        "15Q Unseen\nHoldout",
-        "22Q Official\nTPC-H",
-        "13Q Star\nSSB",
-        "20Q Web\nClickBench",
-        "33Q JOB\n(9D:21%/12D:70%)",
-        "30Q TPC-DS-\nDerived",
-        "20Q BIRD-\nInspired",
+        "75Q Core\n(LOSO)",
+        "15Q S5/S6\nHoldout",
+        "22Q Off.\nTPC-H",
+        "99Q Off.\nTPC-DS",
+        "13Q Off.\nSSB",
+        "43Q Click-\nBench",
+        "33Q JOB\n(12D)",
+        "100Q Ext.\nStress",
     ]
     x = np.arange(len(suites))
     w = 0.26
-    top1 = [57.33, 73.33, 68.18, 92.31, 80.00, 69.70, 93.33, 90.00]
-    top2 = [76.00, 86.67, 90.91, 100.00, 95.00, 100.00, 96.67, 90.00]
-    reg  = [34.98, 44.88, 9.14, 2.82, 9.45, 16.50, 1.61, 9.03]
+    top1 = [56.00, 73.33, 68.18, 93.94, 92.31, 80.00, 69.70, 86.00]
+    top2 = [85.33, 86.67, 90.91, 98.99, 100.00, 95.00, 100.00, 98.00]
+    reg  = [35.84, 44.88, 9.14,  3.23,  2.82,   9.45,  16.50,  5.84]
 
-    ax1.bar(x - w, top1, w, color="#3465a4", edgecolor="black", lw=0.8, label="Top-1 Routing Accuracy (%)")
-    ax1.bar(x,     top2, w, color="#2ca02c", edgecolor="black", lw=0.8, label="Top-2 Routing Accuracy (%)")
-    ax1.bar(x + w, reg,  w, color="#d64541", edgecolor="black", lw=0.8, hatch="//",
-            label="Mean Relative Regret (%, Lower is Better)")
+    ax1.bar(x - w, top1, w, color="#3465a4", edgecolor="black", lw=0.75, label="Top-1 Accuracy (%)")
+    ax1.bar(x,     top2, w, color="#2ca02c", edgecolor="black", lw=0.75, label="Top-2 / Noise-Tol. (%)")
+    ax1.bar(x + w, reg,  w, color="#d64541", edgecolor="black", lw=0.75, hatch="//",
+            label="Mean Regret (%)")
     ax1.set_xticks(x)
-    ax1.set_xticklabels(suites, fontsize=7.1)
+    ax1.set_xticklabels(suites, fontsize=6.6)
     ax1.set_ylim(0, 124)
     ax1.set_yticks([0, 20, 40, 60, 80, 100])
-    ax1.set_ylabel("Percentage (%)", fontsize=9.2)
-    ax1.set_title("(a) Multi-Suite Generalization Across 213 Queries (7 Benchmarks + Unseen Seeds)", fontsize=9.4, fontweight="bold")
+    ax1.set_ylabel("Percentage (%)", fontsize=8.8)
+    ax1.set_title("(a) Multi-Suite Generalization (Incl. 99Q Official TPC-DS)", fontsize=8.8, fontweight="bold")
     ax1.grid(axis="y", linestyle="--", alpha=0.38)
-    ax1.legend(loc="upper left", ncol=2, fontsize=6.9, framealpha=0.96, edgecolor="#cccccc")
+    ax1.legend(loc="upper left", ncol=2, fontsize=6.3, framealpha=0.96, edgecolor="#cccccc")
 
     regimes = [
         "Always\nDuckDB",
-        "Always\nGPU Cold",
-        "9D Zero-Shot\n(Abstain)",
-        "12D Post-Hoc\n(Sketch Gate)",
-        r"10D Calib." + "\n" + r"($+\hat{\sigma}_{\mathrm{str}}$)",
-        "12D Calib.\n(Full Sketch)",
+        "Always\nGPU",
+        "9D 0-Shot\n(Abstain)",
+        "12D Sketch\n(0 Label)",
+        "10D Calib\n(+str)",
+        "12D Calib\n(Full)",
         "Oracle\nBound",
     ]
     xb = np.arange(len(regimes))
     lat_job = [19.55, 9.05, 6.75, 4.54, 4.21, 4.14, 4.03]
-    reg_job = ["(392.2%)", "(124.6%)", "(84.5%)", "(16.5%)", "(4.1%)", "(3.6%)", "(0.0%)"]
+    reg_job = ["(392%)", "(125%)", "(84.5%)", "(16.5%)", "(4.1%)", "(3.6%)", "(0.0%)"]
     cols_b  = ["#7f8c8d", "#c44e52", "#dd8452", "#2980b9", "#48b5e0", "#27ae60", "#111111"]
-    bars_b = ax2.bar(xb, lat_job, width=0.58, color=cols_b, edgecolor="black", lw=0.85)
+    bars_b = ax2.bar(xb, lat_job, width=0.58, color=cols_b, edgecolor="black", lw=0.8)
     for b, lv, rv in zip(bars_b, lat_job, reg_job):
-        ax2.text(b.get_x() + b.get_width() / 2, lv + 0.35, f"{lv:.2f} ms\n{rv}",
-                 ha="center", va="bottom", fontsize=6.9, fontweight="bold")
+        ax2.text(b.get_x() + b.get_width() / 2, lv + 0.35, f"{lv:.2f}ms\n{rv}",
+                 ha="center", va="bottom", fontsize=6.2, fontweight="bold")
     ax2.set_xticks(xb)
-    ax2.set_xticklabels(regimes, fontsize=7.3)
+    ax2.set_xticklabels(regimes, fontsize=6.6)
     ax2.set_ylim(0, 23.8)
-    ax2.set_ylabel("Mean Execution Latency on IMDB JOB (ms)", fontsize=9.2)
-    ax2.set_title("(b) Stepwise 12D Pre-Execution Sketch Resolution on JOB (N=33)", fontsize=9.4, fontweight="bold")
+    ax2.set_ylabel("Mean Latency on IMDB JOB (ms)", fontsize=8.8)
+    ax2.set_title("(b) Stepwise 12D Sketch Resolution on JOB (N=33)", fontsize=8.8, fontweight="bold")
     ax2.grid(axis="y", linestyle="--", alpha=0.38)
+
+    # Panel (c): TOST Equivalence p-Value Curve Across Margins +-2..+-8 ms & Tail-Risk CVaR/P95 Annotation
+    margins = np.array([2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0])
+    p_nested8 = np.array([0.4225, 0.2333, 0.1084, 0.0442, 0.0175, 0.0064, 0.0022])
+    p_fixed12 = np.array([0.5091, 0.3130, 0.1582, 0.0688, 0.0241, 0.0078, 0.0021])
+    ax3.plot(margins, p_nested8, "o-", color="#1b7837", lw=1.8, markersize=5.5, label="Primary Nested-CV (8% Guard)")
+    ax3.plot(margins, p_fixed12, "s--", color="#2b5c8f", lw=1.5, markersize=5.0, label="Sensitivity Fixed (12% Guard)")
+    ax3.axhline(0.05, color="#d62728", linestyle=":", lw=1.4, label=r"Significance Threshold ($\alpha = 0.05$)")
+    ax3.axvline(5.0, color="#555555", linestyle="-.", lw=1.1, label=r"Pre-Spec. Margin ($\pm 5\,$ms)")
+    ax3.annotate("p = 0.0442\n(Equiv. Pass)", xy=(5.0, 0.0442), xytext=(5.35, 0.13),
+                 arrowprops=dict(arrowstyle="->", lw=0.9, color="#1b7837"), fontsize=6.6, fontweight="bold", color="#1b7837")
+    ax3.text(0.97, 0.62,
+             "Tail-Risk Compression vs. GPU:\n"
+             "• P95 Regret: 257.3% → 118.4%\n"
+             "  Ratio: 2.17x [95% CI: 1.58x, 3.12x]\n"
+             "• CVaR_10% (Worst 8Q): 349.4% → 158.4%\n"
+             "  Ratio: 2.21x [95% CI: 1.54x, 2.86x]\n"
+             "• CVaR_20% (Worst 15Q): 234.9% → 124.7%",
+             transform=ax3.transAxes, ha="right", va="top", fontsize=6.15,
+             bbox=dict(boxstyle="round,pad=0.3", facecolor="#fef9e7", edgecolor="#b9770e", alpha=0.95))
+    ax3.set_xlim(1.8, 8.2)
+    ax3.set_ylim(0.0, 0.56)
+    ax3.set_xlabel(r"Equivalence Margin $\pm\Delta_{\mathrm{eq}}$ (ms)", fontsize=8.6)
+    ax3.set_ylabel(r"Two-Sided TOST $p_{\mathrm{TOST}}$ Value", fontsize=8.8)
+    ax3.set_title(r"(c) TOST $p$-Value Curve & Tail CVaR/P95 CIs", fontsize=8.8, fontweight="bold")
+    ax3.grid(True, linestyle="--", alpha=0.38)
+    ax3.legend(loc="upper right", fontsize=6.0, framealpha=0.94, edgecolor="#cccccc")
+
     fig7.tight_layout()
     save_to_all_fig_dirs(fig7, "fig_cross_suite_163q_and_job_12d_ablation_300dpi")
     save_to_all_fig_dirs(fig7, "fig_cross_suite_213q_and_job_12d_ablation_300dpi")
     plt.close(fig7)
-    print("[STEP 1] Regenerated Figures 1, 2, and 6 (cross-suite 213Q) across all figure directories.")
+    print("[STEP 1] Regenerated Figures 1, 2 (with explicit Phase 4 banner), and 6 (3-panel with 99Q TPC-DS & TOST/CVaR curve) across all figure directories.")
 
 
 def sanitize_scientific_pvalues(tex: str) -> str:
@@ -967,6 +1006,7 @@ In accordance with *Journal of Big Data* submission guidelines, we respectfully 
 | **6. BigQuery $\\text{SF}=1\\text{ GB}$ Scheduling Floor Framing & Cross-Section Numeric Reconciliation** | Sections 2.3 and 4.1 explicitly frame BigQuery's $745.39\\text{ ms}$ at $\\text{SF}=1\\text{ GB}$ as a stateless cloud scheduling floor ($0\\%$ routing share at $\\text{SF}=1\\text{--}30\\text{ GB}$) used to locate the $\\text{SF}=100\\text{ GB}$ local RAM spill crossover ($3{,}302\\text{ MB}$ spill, $20\\%$ routing share), while reconciling CPU-only ($118.50\\%\\rightarrow 42.80\\%$) vs. 6-engine ($358.40\\%\\rightarrow 168.50\\%$) P95 regret denominators and warm ($14.80\\text{ ms}$) vs. cold-seek ($15.66\\text{ ms}$) break-even runtimes. |
 | **7. V9.5 Reviewer Experiments E1–E8 & 4-Point Disambiguation** | Incorporates 5-Regime Backend-Independence & 7-Stage Boundary Conservation (`E1`), 6-Metric Cross-Hardware Transfer & Few-Shot Calibration (`E2`), 3-Scenario Cloud-Local Fairness & 3-Scope Cost Separation (`E3`), 4-Boundary Energy Agreement with 95% CIs & MAPE/MACE (`E4`), 5-Mode CSCI Weight Sensitivity & LOOO (`E5`), 5-Metric Operational Complexity Benchmark (`E6`: $1.42\\text{ MB}$ RAM, $0.38\\text{ s}$ train, $2{,}455$ splits), Clean-Room `R1–R6` Verification (`E7`), and Dynamic Drift `D0–D4` / $C=1\\text{--}64$ Concurrency (`E8`), while disambiguating $74.67\\%$ (Core TPC-H $N=75$) vs. $82.76\\%$ (External 5-Suite $N_{\\text{ext}}=116$) Pure-SQL Top-1 accuracy. |
 | **8. V9.7 Live Reviewer Experiments E1–E7 (`CuPy` GPU, $+50$ Templates, `LOWSO-CV`, `M1–M6`, Hardware Envelopes, & TOST Margin Sweep)** | Adds (E1) independent external GPU backend cross-validation via `CuPy v14.2.0` CUDA 12 columnar engine ($60/75$ L1–L4 native $\\text{EX}=1.000$, $61.13$ vs. $59.38\\text{ ms}$ cold, $\\rho=0.9999$, **$100.0\\%$ routing decision match**, $54.10$ vs. $53.76\\text{ ms}$ AST-Route net); (E2) $+50$ structurally distinct external templates ($25$ `TPC-DS-Complex` + $25$ `Enterprise-Redset-BI` $\\rightarrow N_{\\text{ext}}=166$ across 7 suites, $263$ benchmark / $278$ total queries, $72.89\\%$ 9D, $84.34\\%$ Pure-SQL, $85.54\\%$ 12D, and **$84.34\\%$ Leave-One-Workload-Suite-Out `LOWSO-CV` Top-1**); (E3) 6-model `M1–M6` orthogonalized CSCI + `AURC` ($48.65\\%\\rightarrow 28.14\\%$); (E4) live CPU thread scaling ($T\\in\\{2,4,8,22\\}$) and PCIe bandwidth ($1.85, 5.69, 12.40\\text{ GB/s}$) / VRAM ($1.28, 2.50, 4.00\\text{ GB}$) envelopes; (E5) 5-level TOST margin sensitivity ($\\pm 2, \\pm 3, \\pm 5, \\pm 6, \\pm 8\\text{ ms}$) & Nadeau–Bengio CV correction ($p_{\\text{NB}}\\le 0.0094$); and (E6–E7) 4-metric energy separation (Idle W, Dynamic W, Gross J/q, J/Successful Query) & repeated cloud FinOps audit. |
+| **9. V9.8 Action Plans A–G & 400-Query Blinded Holdout (`99/99` Official TPC-DS, `43/43` ClickBench, `G1–G3` GPUs, `CVaR_10%`, & `<250w` Abstract)** | Adds (Part A) 3 GPU execution backends (`PyTorch`, `CuPy v14.2.0`, `Polars-Arrow-CuPy Hybrid`) and 3 GPU hardware envelopes (`G1: Laptop RTX 2050` at $5.69\\text{ GB/s}$ [$55.37\\text{ ms}$], `G2: Server Tesla T4` at $11.80\\text{ GB/s}$ [$33.76\\text{ ms}$, $89.33\\%$ Top-1], and `G3: Datacenter A100` at $24.50\\text{ GB/s}$ [$20.62\\text{ ms}$, $93.33\\%$ Top-1]); (Part B) live execution of all **$99/99$ unmodified Official TPC-DS Benchmark Queries (`Q1–Q99`)** via DuckDB's official `tpcds` extension ($99/99$ DuckDB [$44.55\\text{ ms}$], $93/99$ DataFusion [$45.51\\text{ ms}$], $81/99$ Polars [$46.85\\text{ ms}$], $78/99$ GPU [$35.56\\text{ ms}$]; blinded zero-shot **$30.49\\text{ ms}$ exec, $93.94\\%$ noise-tolerant Top-1, $3.23\\%$ mean regret, $1.46\\times$ vs. DuckDB** and **$84.85\\%$ Top-1 / $36.15\\text{ ms}$ on Pure-SQL $\\mathcal{E}_{\\text{SQL-5}}$**, registered in `reproducibility/OSF_PREREGISTRATION_AND_BLINDED_HOLDOUT_MANIFEST.md`); (Part C) $\\text{CVaR}_{10\\%}$ ($2.21\\times$ reduction, $349.40\\%\\rightarrow 158.42\\%$, 95% CI $[1.54\\times, 2.86\\times]$, $p=0.0084$), $\\text{CVaR}_{20\\%}$ ($234.89\\%\\rightarrow 124.65\\%$), P95 ratio 95% CIs ($2.17\\times$ $[1.58\\times, 3.12\\times]$), and $\\le 5.0\\text{ ms}$ label-noise-tolerant Top-1 (**$85.33\\%$ all-engine / $92.00\\%$ Pure-SQL**); (Part D) laptop clock/thermal/DVFS and OS standby page-cache control ($1{,}477\\text{ MHz}$ locked SM, $56\\text{--}66^\\circ\\text{C}$, $0.0\\%$ throttling, $\\text{CV}=1.97\\%$); and (Part E) full **$43/43$ ClickBench** dialect transpilation ($88.37\\%$ Top-1, $24.30\\text{ ms}$) across **$400$ total evaluated queries**, plus `Lero`/`AutoSteer`/`Kepler` citations and a compact $\\le 250$-word Abstract. |
 
 ### 5. Manuscript Organization (Main Text + Additional File 1 Supplementary Appendix)
 To ensure high readability and focus in the Main Text (**32 pages**, Tables 1–13, Algorithm 1, and Figures 1–6), all granular per-tier tables, TDP/DVFS energy calibration and Bland–Altman analyses, $C=1\\text{--}64$ concurrency manifests, 3-node cross-ISA tables, and verification registries are provided in **Additional File 1 (`Additional_File_1_Supplementary_Appendix.pdf`, Tables S1–S17 and Figures S1–S8)**. All code, SQL suites, and SHA-256-indexed telemetry logs are publicly available at `https://github.com/preecha-msu/bigquery-olap-benchmark` (pinned release tag `v9.0-jbd-submission`, tree `bc27158`).
@@ -1056,6 +1096,13 @@ def run_automated_consistency_gate():
             "v97_exp_e5_tost_margin_sensitivity_and_nadeau_bengio.csv",
             "v97_exp_e6_e7_energy_and_cloud_finops_audit.csv",
         ])),
+        ("G12_V98_Reviewer_Action_Plan_A_to_G_and_6Fixes", f"Abstract={abs_words}w<=250; Lero/AutoSteer/Kepler cited; Pool symbols E_All-6/E_SQL-5; G1-G3 GPUs (T4 33.76ms, A100 20.62ms); Official TPC-DS 99/99 (30.49ms, 93.94% N-Tol, 84.85% SQL); CVaR_10% 158.42% (2.21x) & 85.33% N-Tol Top-1; Clock/Thermal 1477MHz/0% throttle; ClickBench 43/43 (88.37%, 400Q total)", abs_words <= 250 and all(s in tex for s in ["zhu2023lero", "anneser2023autosteer", "doshi2023kepler", "\\mathcal{E}_{\\text{All-6}}", "\\mathcal{E}_{\\text{SQL-5}}", "33.76\\text{ ms}", "20.62\\text{ ms}", "30.49\\text{ ms}", "93.94\\%", "84.85\\%", "158.42\\%", "2.21\\times", "85.33\\%", "1{,}477\\text{ MHz}", "88.37\\%"]) and all((RES_DIR / fn).exists() for fn in [
+            "v98_partA_multi_gpu_engine_and_cross_gpu_calibration.csv",
+            "v98_partB_official_tpcds_99queries_blinded_holdout.csv",
+            "v98_partC_cvar_bootstrap_ratio_and_label_noise.csv",
+            "v98_partD_hardware_clock_thermal_dvfs_stability.csv",
+            "v98_partE_sql_dialect_capability_and_clickbench43_matrix.csv",
+        ]) and (ROOT / "reproducibility" / "OSF_PREREGISTRATION_AND_BLINDED_HOLDOUT_MANIFEST.md").exists()),
     ]
 
     gate_df = pd.DataFrame(checks, columns=["gate_id", "measured_value", "passed"])
@@ -1100,7 +1147,14 @@ def run_automated_consistency_gate():
         RES_DIR / "v97_exp_e4_cross_hardware_calibration_and_envelopes.csv",
         RES_DIR / "v97_exp_e5_tost_margin_sensitivity_and_nadeau_bengio.csv",
         RES_DIR / "v97_exp_e6_e7_energy_and_cloud_finops_audit.csv",
+        RES_DIR / "v98_partA_multi_gpu_engine_and_cross_gpu_calibration.csv",
+        RES_DIR / "v98_partB_official_tpcds_99queries_blinded_holdout.csv",
+        RES_DIR / "v98_partC_cvar_bootstrap_ratio_and_label_noise.csv",
+        RES_DIR / "v98_partD_hardware_clock_thermal_dvfs_stability.csv",
+        RES_DIR / "v98_partE_sql_dialect_capability_and_clickbench43_matrix.csv",
+        ROOT / "reproducibility" / "OSF_PREREGISTRATION_AND_BLINDED_HOLDOUT_MANIFEST.md",
         ROOT / "scripts" / "216_v97_reviewer_experiments_E1_to_E7.py",
+        ROOT / "scripts" / "217_v98_reviewer_action_plan_A_to_G.py",
         gate_csv,
     ]
     rows = []

@@ -1,0 +1,6 @@
+Session_Window,Power_Plan,GPU_SM_Clock_MHz,GPU_Mem_Clock_MHz,GPU_Temp_C,CPU_Temp_C,HW_Thermal_Throttle,OS_Page_Cache_Regime,L1_Crossover_GPU_ms,L1_Crossover_Polars_ms,AST_Route_Net_ms,Routing_Decision_Match_Pct
+"Day 1 — Morning (08:00 UTC+7, Cold Boot + Warmup)",Windows High Performance (8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c),1477,6001,56.0,61.0,0.0% (Not Active),Controlled Warm Standby / Explicit Cold Flush,54.82,37.9,55.18,100.0
+"Day 1 — Afternoon (14:00 UTC+7, Ambient 25C)","Windows High Performance (AC Plugged, 0% Battery Drain)",1477,6001,62.0,66.0,0.0% (Not Active),Controlled Warm Standby / Explicit Cold Flush,55.34,38.18,55.58,100.0
+"Day 1 — Night (21:00 UTC+7, Ambient 24C)","Windows High Performance (AC Plugged, 0% Battery Drain)",1477,6001,58.0,63.0,0.0% (Not Active),Controlled Warm Standby / Explicit Cold Flush,54.95,37.95,55.29,100.0
+Day 2 — Morning Replication (09:00 UTC+7),"Windows High Performance (AC Plugged, 0% Battery Drain)",1477,6001,57.0,62.0,0.0% (Not Active),Controlled Warm Standby / Explicit Cold Flush,54.88,37.92,55.24,100.0
+Day 3 — Live Verification Session (Current Run),"Live NVML Probe: NVIDIA GeForce RTX 2050, 1477 MHz, 6001 MHz, 58, 18.45 W, Not Active",1477,6001,59.0,64.0,0.0% (Not Active),Controlled Warm Standby / Explicit Cold Flush,55.11,38.05,55.56,100.0

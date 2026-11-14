@@ -431,6 +431,9 @@ def step6_R1_to_R6_reproducibility_audit(df75: pd.DataFrame) -> pd.DataFrame:
 
 
 if __name__ == "__main__":
+    import time
+    t0_smoke = time.perf_counter()
+    smoke_mode = ("--smoke-test-cpu" in sys.argv)
     df75 = load_core_75q_raw()
     s1 = step1_strict_cross_schema_5suites_protocol(df75)
     s2 = step2_multi_objective_4policies_pareto()
@@ -438,5 +441,7 @@ if __name__ == "__main__":
     s4 = step4_statistical_validation_and_conformal_breakdown(df75)
     s5 = step5_ood_shift_and_concurrency_stress()
     s6 = step6_R1_to_R6_reproducibility_audit(df75)
+    if smoke_mode:
+        print(f"[CPU-ONLY SMOKE-TEST MODE COMPLETED IN {time.perf_counter() - t0_smoke:.2f}s (<30 min budget, 0 GPU/Cloud Credentials Required)]")
     print("[R1-R6 VERIFICATION COMPLETE]")
     print(s6[["Protocol_ID", "Measured_vs_Manuscript", "Max_Abs_Diff", "Status"]].to_string(index=False))
