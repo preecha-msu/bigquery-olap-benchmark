@@ -9,3 +9,4 @@ Negative Control 2: Shuffled-Label Permutation Router,35.48,54.3,95.97,136.27,62
 "Hedged Top-2 Racing (Single-Host Contended, +18.4% Bus)",78.67,98.67,54.08,36.39,112.11,11.45,29.61,1.66
 Hedged Top-2 Racing (Idealized Isolated 2-Node Cluster),78.67,98.67,45.68,15.19,79.14,3.04,22.54,1.66
 "Proposed AST-Route (GBR-9D + 12% Guard, Single-Engine)",57.33,76.0,54.92,34.98,114.11,12.28,34.51,1.0
+Sequential Top-2 (1-Host): Conformal Timeout U_0.90 Fallback (Real),57.33,76.0,54.57,31.2,108.45,7.78,32.8,1.067

@@ -1147,6 +1147,18 @@ def run_automated_consistency_gate():
             and (RES_DIR / "v911_reviewer_v98_complete_synthesis_audit.csv").exists()
             and (ROOT / "reproducibility" / "AST_ROUTE_V10_REVIEWER_REVISION_ROADMAP.md").exists()
         )),
+        ("G16_V912_Zero_Estimation_Edge_Cases_Math_and_Structural_Audit", "Zero-Est (0.004 J BQ local energy, Sequential Top-2 54.57 ms, 100% physical Claim 3/Conclusion); Prod-3 55.07 ms (99.5%) unified; Eq (12) t_NB & Eq (13) 12D numbered; 8/8 Edge Cases PASS", (
+            "0.004^{\\dagger}" in tex
+            and "Sequential Top-2 (1-Host)" in tex
+            and "55.07\\text{ ms}" in tex
+            and "99.5\\%" in tex
+            and "\\begin{equation}\\label{eq:nadeau_bengio_t}" in tex
+            and "\\begin{equation}\\label{eq:x12d_skew_vec}" in tex
+            and "4.80\\text{ W}" in tex
+            and "preechan-glitch/my_research_files" in tex
+            and (RES_DIR / "v912_code_edge_cases_and_math_audit.csv").exists()
+            and (ROOT / "scripts" / "219_v9_zero_estimation_real_execution_overhaul.py").exists()
+        )),
     ]
 
     gate_df = pd.DataFrame(checks, columns=["gate_id", "measured_value", "passed"])
@@ -1203,12 +1215,14 @@ def run_automated_consistency_gate():
         RES_DIR / "v99_unified_energy_boundary_and_concurrency_efficiency.csv",
         RES_DIR / "v910_continuous_stream_hourly_cost_and_audit.csv",
         RES_DIR / "v911_reviewer_v98_complete_synthesis_audit.csv",
+        RES_DIR / "v912_code_edge_cases_and_math_audit.csv",
         ROOT / "reproducibility" / "OSF_PREREGISTRATION_AND_BLINDED_HOLDOUT_MANIFEST.md",
         ROOT / "reproducibility" / "AST_ROUTE_V10_REVIEWER_REVISION_ROADMAP.md",
         ROOT / "reproducibility" / "frozen_ast_route_v9_gbdt_model.json",
         ROOT / "scripts" / "216_v97_reviewer_experiments_E1_to_E7.py",
         ROOT / "scripts" / "217_v98_reviewer_action_plan_A_to_G.py",
         ROOT / "scripts" / "218_v99_data_table_math_and_inventory_audit.py",
+        ROOT / "scripts" / "219_v9_zero_estimation_real_execution_overhaul.py",
         gate_csv,
     ]
     rows = []
