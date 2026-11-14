@@ -88,7 +88,7 @@ def regenerate_figures_1_2_and_7():
     ax.text(50, 97.6, "Proposed AST-Route Four-Layer Risk-Aware Query Routing Framework (Primary Nested-CV Specification)",
             ha="center", va="center", fontsize=12.0, fontweight="bold", color="#111111")
     _draw_card(ax, 1.5, 74.5, 47.0, 19.5, "LAYER 1A: Input SQL & Static AST Parsing (SQLGlot)", [
-        "• Workloads: 213 Primary (97 TPC-H + 116 Ext) + 99 Official TPC-DS + 50 Ext (362 Benchmark / 377 Total Qs)",
+        "• Master Corpus: 400 Total SQL Qs = 75 Core Dev + 325 Holdout (213 Primary 7-Suite / 362 Expanded)",
         "• Overhead Regimes: 4.15 ms cold SQL (4.39 ms cold seek) / 0.67 ms AST cache / 0.08 ms 1D cache",
         "• Extracts 7 Structural Operators: Depth D(q), Nodes N(q), Joins J(q),",
         "  Subqueries/CTEs S(q), Windows W(q), UNNEST U(q), CASE C(q) (100% SQLGlot Parse)",
@@ -139,8 +139,8 @@ def regenerate_figures_1_2_and_7():
     # --- FIGURE 2: Experimental Workflow (With Explicit PHASE 4 Banner) ---
     fig2, ax = plt.subplots(figsize=(13.6, 7.8), dpi=300)
     ax.set_xlim(0, 100); ax.set_ylim(0, 100); ax.axis("off")
-    ax.text(50, 98.0, "End-to-End Six-Phase Experimental Validation Workflow: AST-Route Testbed (213 Primary / 362 Expanded Benchmark Queries)",
-            ha="center", va="center", fontsize=11.6, fontweight="bold", color="#111111")
+    ax.text(50, 98.0, "End-to-End Six-Phase Experimental Validation Workflow: AST-Route (400 Total Queries: 75 Dev + 325 Holdout [213 Primary])",
+            ha="center", va="center", fontsize=11.4, fontweight="bold", color="#111111")
     _draw_card(ax, 1.5, 76.0, 47.0, 19.0, "PHASE 1: Multi-Scale TPC-H & Cross-Schema Provisioning", [
         "• 8 TPC-H Tables: 8.66M (SF=1) to 866.1M Rows (SF=100 GB; 600.1M lineitem)",
         "• Zero-Duplication Local Catalog: Shared ZSTD Parquet + Zero-Copy Arrow (0 MB Extra)",
@@ -1067,9 +1067,9 @@ def run_automated_consistency_gate():
     abs_words = len(abs_clean.split())
 
     # Page counts from logs
-    m_pages = re.search(r"Output written on bigquery_olap_benchmark_V9\.pdf \((\d+) pages", log_txt)
+    m_pages = re.search(r"Output written on .*?\((\d+) pages", log_txt, re.S)
     main_pages = int(m_pages.group(1)) if m_pages else -1
-    m_spages = re.search(r"Output written on Additional_File_1_Supplementary_Appendix\.pdf \((\d+) pages", supp_log_txt)
+    m_spages = re.search(r"Output written on .*?\((\d+) pages", supp_log_txt, re.S)
     supp_pages = int(m_spages.group(1)) if m_spages else -1
 
     undef_refs = len(re.findall(r"LaTeX Warning: Reference .* undefined", log_txt))
@@ -1103,6 +1103,21 @@ def run_automated_consistency_gate():
             "v98_partD_hardware_clock_thermal_dvfs_stability.csv",
             "v98_partE_sql_dialect_capability_and_clickbench43_matrix.csv",
         ]) and (ROOT / "reproducibility" / "OSF_PREREGISTRATION_AND_BLINDED_HOLDOUT_MANIFEST.md").exists()),
+        ("G13_V99_Workload_Inventory_Math_and_Reviewer_Criteria", "400 Qs (75 Dev + 325 Holdout), Policy P1, 5-Boundary/VRAM, FAR/FRR, 4-Sensor Energy, 3-Group/5-Mech", (
+            "325" in tex
+            and "400" in tex
+            and "Policy~P1" in tex
+            and "False Acceptance Rate" in tex
+            and "Three-Group Evaluation Organization" in tex
+            and "Five Physical Systems Mechanisms" in tex
+            and all((RES_DIR / fn).exists() for fn in [
+                "v99_master_workload_inventory_and_integrity_audit.csv",
+                "v99_common_execution_boundary_and_vram_stress.csv",
+                "v99_pareto_15weight_simplex_and_stability.csv",
+                "v99_conformal_shift_ood_far_frr_audit.csv",
+                "v99_unified_energy_boundary_and_concurrency_efficiency.csv",
+            ])
+        )),
     ]
 
     gate_df = pd.DataFrame(checks, columns=["gate_id", "measured_value", "passed"])
@@ -1152,9 +1167,15 @@ def run_automated_consistency_gate():
         RES_DIR / "v98_partC_cvar_bootstrap_ratio_and_label_noise.csv",
         RES_DIR / "v98_partD_hardware_clock_thermal_dvfs_stability.csv",
         RES_DIR / "v98_partE_sql_dialect_capability_and_clickbench43_matrix.csv",
+        RES_DIR / "v99_master_workload_inventory_and_integrity_audit.csv",
+        RES_DIR / "v99_common_execution_boundary_and_vram_stress.csv",
+        RES_DIR / "v99_pareto_15weight_simplex_and_stability.csv",
+        RES_DIR / "v99_conformal_shift_ood_far_frr_audit.csv",
+        RES_DIR / "v99_unified_energy_boundary_and_concurrency_efficiency.csv",
         ROOT / "reproducibility" / "OSF_PREREGISTRATION_AND_BLINDED_HOLDOUT_MANIFEST.md",
         ROOT / "scripts" / "216_v97_reviewer_experiments_E1_to_E7.py",
         ROOT / "scripts" / "217_v98_reviewer_action_plan_A_to_G.py",
+        ROOT / "scripts" / "218_v99_data_table_math_and_inventory_audit.py",
         gate_csv,
     ]
     rows = []

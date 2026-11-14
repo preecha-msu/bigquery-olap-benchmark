@@ -1,0 +1,16 @@
+Grid_ID,Policy_Label,Alpha_Latency,Beta_Energy,Gamma_Cost,Net_Latency_ms_SF1,P95_Regret_Pct_SF1,Active_Energy_J_per_Q,Cloud_Cost_USD_per_1M_SF100,Net_Latency_ms_SF100,Hypervolume_3D,Pareto_Dominance_Status,Perturbation_Stability_pm005_Pct
+W01_P1_Pure_Latency,Policy P1: Pure Latency Mode (Headline Default in Abstract & Sec 4.3),1.0,0.0,0.0,55.37 (Nested-CV 8%) / 54.92 (Fixed 12%),118.40% (Nested-CV) / 114.11% (Fixed),1.381,507.06,1142.8,0.9142,Pareto-Optimal Vertex (Minimum Latency),98.67
+W02_Latency_Dominant_A,"Simplex Interior Near-P1 (Latency-Dominant, Mild Energy Weight)",0.8,0.2,0.0,55.04,114.85%,1.295,507.06,1146.2,0.9164,Non-Dominated Pareto Frontier,98.67
+W03_Latency_Dominant_B,"Simplex Interior Near-P1 (Latency-Dominant, Mild Cost Weight)",0.8,0.0,0.2,54.96,114.40%,1.362,405.65,1152.4,0.9171,Non-Dominated Pareto Frontier,98.67
+W04_Latency_Dominant_C,Simplex Interior (70% Latency / 15% Energy / 15% Cost),0.7,0.15,0.15,55.10,115.10%,1.268,354.94,1158.1,0.9179,Non-Dominated Pareto Frontier,97.33
+W05_Balanced_Latency_Energy,Simplex Edge (60% Latency / 40% Energy / 0% Cost),0.6,0.4,0.0,55.42,116.90%,1.112,456.35,1154.6,0.9182,Non-Dominated Pareto Frontier,97.33
+W06_Balanced_Latency_Cost,Simplex Edge (60% Latency / 0% Energy / 40% Cost),0.6,0.0,0.4,55.02,114.90%,1.31,253.53,1179.4,0.9175,Non-Dominated Pareto Frontier,97.33
+W07_P4_Balanced_Knee,Policy P4: Balanced Multi-Objective Knee Point (50% Latency / 30% Energy / 20% Cost),0.5,0.3,0.2,55.34,115.80%,1.045,304.24,1168.5,0.9186,Pareto Knee Point (-24.3% Energy & -40.0% Cloud Cost vs P1),97.33
+W08_Centroid_Equal,Simplex Centroid (Equal Weights 33.3% / 33.3% / 33.3%),0.33,0.33,0.34,55.58,118.20%,0.984,202.82,1196.3,0.9192,Non-Dominated Pareto Frontier,96.0
+W09_Energy_Balanced,Simplex Interior (30% Latency / 50% Energy / 20% Cost),0.3,0.5,0.2,55.86,124.50%,0.912,202.82,1204.8,0.9198,Non-Dominated Pareto Frontier,96.0
+W10_Cost_Balanced,Simplex Interior (30% Latency / 20% Energy / 50% Cost),0.3,0.2,0.5,55.24,116.40%,1.148,101.41,1248.6,0.9178,Non-Dominated Pareto Frontier,97.33
+W11_P2_Green_Energy,Policy P2: Green Energy-Aware Mode (10% Latency / 80% Energy / 10% Cost),0.1,0.8,0.1,56.40,142.60%,0.812,152.12,1228.4,0.921,Pareto-Optimal Vertex (-41.2% Energy vs P1; -74.4% vs Polars 3.170 J),96.0
+W12_P3_FinOps_CostCap,Policy P3: FinOps Strict Zero-Cloud Mode (20% Latency / 10% Energy / 70% Cost),0.2,0.1,0.7,55.12,115.80%,1.24,0.0,1326.9,0.9168,"Pareto-Optimal Vertex ($0.00 Cloud Fee; Saves $507-$2,535/1M at SF=100 GB)",98.67
+W13_Pure_Energy_Vertex,Simplex Extreme Vertex: Pure Energy Minimization (0% Latency / 100% Energy / 0% Cost),0.0,1.0,0.0,56.82,148.90%,0.782,152.12,1242.1,0.9204,Pareto Vertex (Absolute Min Local Energy 0.782 J/q),96.0
+W14_Pure_Cost_Vertex,Simplex Extreme Vertex: Pure Cloud Cost Minimization (0% Latency / 0% Energy / 100% Cost),0.0,0.0,1.0,55.18,116.20%,1.248,0.0,1326.9,0.9162,Pareto Vertex ($0.00 Cloud Fee; identical cloud cap to P3),98.67
+W15_Energy_Cost_Edge,Simplex Edge (0% Latency / 50% Energy / 50% Cost),0.0,0.5,0.5,56.54,144.20%,0.804,0.0,1341.2,0.9195,Non-Dominated Pareto Frontier ($0.00 Cloud + 0.804 J/q),96.0
