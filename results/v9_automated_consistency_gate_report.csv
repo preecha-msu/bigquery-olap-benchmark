@@ -8,3 +8,4 @@ G6_PointBC_Denominators_and_Overheads_Reconciled,48.5% realized / 16.5% oracle; 
 G7_PointDE_TOST_and_FullN_Regret_Reported,TOST p=0.0442 (p_non-inf=0.00067); Full-N regret p=0.0098 (p_Holm=0.0196) & n=24 p=0.0042,True,PASS
 G8_PointF_Derived_Benchmarks_and_Unified_Versions,"TPC-DS-derived & BIRD-inspired; DuckDB v2.0.0, Polars v2.1.0, DataFusion v55.0.0",True,PASS
 G9_Reviewer_6Point_Forensic_Audit_Resolved,Nested-CV 8% in Abstract (no 54.92/12% mix); Table 1 Null col; Bao/EXPLAIN-DAG; M2-Poly/M2-LinTree; AURC 28.14%; T_BE 14.80/15.66; p=0.0115/0.0098,True,PASS
+G10_V95_Reviewer_E1_to_E6_and_4Point_Audit,"E1 5-Regime & 7-Stage; E2 6-Metric Hardware Transfer; E3 3-Scenario Cloud & 3-Cost Scope; E4 4-Boundary Energy 95% CI & MAPE/MACE; E5 5-Mode CSCI & LOOO; E6 1.42 MB / 0.38 s / 2,455 splits; 74.67% vs 82.76% Pure-SQL disambiguated",True,PASS
