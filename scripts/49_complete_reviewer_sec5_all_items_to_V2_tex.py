@@ -7,7 +7,7 @@ scripts/49_complete_reviewer_sec5_all_items_to_V2_tex.py
 1. ค้นหาไฟล์ ast_complexity_summary.csv อัตโนมัติทั่วทั้งโปรเจกต์ (workloads/ หรือ results/)
 2. [ข้อ 5.1]: คำนวณ VIF (Variance Inflation Factor), Individual vs. Grouped Feature Importance,
    และ Out-of-Fold Permutation / TreeSHAP Importance จริง
-3. [ข้อ 5.2]: รายงาน Construct Validity เพิ่มเติม (Correlation กับ Query Execution Complexity
+3. [ข้อ 5.2]: รายงาน Operator-Tier Alignment เพิ่มเติม (Correlation กับ Query Execution Complexity
    และ External Workload TPC-H Q1-Q22 Partial Correlation)
 4. [ข้อ 5.3]: รายงาน Pre-Execution Zone-Map Selectivity Estimation Error (MAE = 3.84%, Q-Error = 1.092)
    และผลทดสอบเมื่อ Metadata ไม่สมบูรณ์ (Incomplete/Missing Metadata Fallback)
@@ -188,7 +188,7 @@ def update_v2_tex_with_sec5_items(metrics: dict) -> None:
         print(f"[FIX-5.4-TABLE2A] แทรกตารางเปรียบเทียบ Related Work (Table 2A) ใน Section 2.2: {n_rw > 0}")
 
     # =========================================================================
-    # 2. [ข้อ 5.2]: เสริม Construct Validity ใน Section 3.4 ข้อ 1 (หน้า 8)
+    # 2. [ข้อ 5.2]: เสริม Operator-Tier Alignment ใน Section 3.4 ข้อ 1 (หน้า 8)
     # =========================================================================
     target_sec34_1 = "while Leave-One-Operator-Out (LOOO) drops maintain $\\bar{\\rho} = 0.9005 \\pm 0.0906$."
     addition_sec34_1 = (
@@ -202,7 +202,7 @@ def update_v2_tex_with_sec5_items(metrics: dict) -> None:
     )
     if target_sec34_1 in tex and "0.5124" not in tex:
         tex = tex.replace(target_sec34_1, addition_sec34_1, 1)
-        print("[FIX-5.2] เสริมหลักฐาน Construct Validity (Execution Complexity, Partial Correlation, และ External TPC-H Q1-Q22) ใน Section 3.4 ข้อ 1 สำเร็จ!")
+        print("[FIX-5.2] เสริมหลักฐาน Operator-Tier Alignment (Execution Complexity, Partial Correlation, และ External TPC-H Q1-Q22) ใน Section 3.4 ข้อ 1 สำเร็จ!")
 
     # =========================================================================
     # 3. [ข้อ 5.3]: เสริมการพิสูจน์ Pre-Execution Selectivity ใน Section 3.1 (หน้า 6) และ Section 4.7 ข้อ 3 (หน้า 18)

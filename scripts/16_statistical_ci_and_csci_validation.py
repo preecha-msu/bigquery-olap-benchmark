@@ -131,7 +131,7 @@ def run_validation_experiments(root: Path, sf: int = 1):
         _, p_w = stats.wilcoxon(a1, a2)
         print(f"  • {pair_name:<48}: Cliff's delta = {d_val:>6.3f}, Wilcoxon p = {p_w:.3e}")
 
-    # 3. CSCI Construct Validity & Monte Carlo Weight Perturbation Sensitivity (\pm 20% Uniform Perturbation across 1,000 trials)
+    # 3. CSCI Operator-Tier Alignment & Monte Carlo Weight Perturbation Sensitivity (\pm 20% Uniform Perturbation across 1,000 trials)
     # ตรวจสอบความสัมพันธ์ระหว่าง CSCI กับเวลาประมวลผล CPU/Cloud และการเร่งความเร็วของ GPU (GPU Speedup Ratio)
     gpu_speedup = m["DuckDB_Native_ms"].values / np.maximum(m["GPU_Warm_ms"].values, 1e-3)
     csci_vals = m["CSCI_Score"].values

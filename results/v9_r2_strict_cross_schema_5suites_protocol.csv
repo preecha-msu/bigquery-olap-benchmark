@@ -2,15 +2,15 @@ Dataset,N,Regime,Median_QError,P90_QError,Top1_Pct,Top2_Pct,Exec_ms,Net_ms,Mean_
 1. IMDB JOB (21-Table Cyclic/String Skew),33,Regime 1: Strict Zero-Shot 9D (0 Ext. Labels),1.68,3.42,21.21,100.0,6.75,10.9,84.49,186.4,3.07,8.42,100.0
 2. SSB (5-Table Star Schema Joins),13,Regime 1: Strict Zero-Shot 9D (0 Ext. Labels),1.24,1.78,92.31,100.0,8.0,12.15,2.82,18.25,0.25,1.45,15.38
 3. ClickBench (Flat Wide-Table Web Analytics),20,Regime 1: Strict Zero-Shot 9D (0 Ext. Labels),1.29,1.86,80.0,95.0,20.03,24.18,9.45,34.8,1.63,5.8,25.0
-"4. TPC-DS (11-Table Snowflake, 3-CTE, Window)",30,Regime 1: Strict Zero-Shot 9D (0 Ext. Labels),1.21,1.72,93.33,96.67,20.05,24.2,1.61,8.76,0.34,2.15,13.33
-5. BIRD-Inspired (6-Table Financial Ratios),20,Regime 1: Strict Zero-Shot 9D (0 Ext. Labels),1.31,1.94,90.0,90.0,20.24,24.39,9.03,80.69,0.45,4.12,15.0
+"4. TPC-DS-Derived (11-Table Snowflake, 3-CTE, Window)",30,Regime 1: Strict Zero-Shot 9D (0 Ext. Labels),1.21,1.72,93.33,96.67,20.05,24.2,1.61,8.76,0.34,2.15,13.33
+5. BIRD-Inspired Synthetic Financial (6-Table Ratios),20,Regime 1: Strict Zero-Shot 9D (0 Ext. Labels),1.31,1.94,90.0,90.0,20.24,24.39,9.03,80.69,0.45,4.12,15.0
 Pooled All 5 Suites (Strict Zero-Shot 9D),116,Regime 1: Strict Zero-Shot 9D (0 Ext. Labels),1.36,2.18,69.83,96.55,14.95,19.1,27.95,82.4,1.35,6.2,39.66
 "Pooled All 5 Suites (Pure Native-SQL Pool, 0% GPU)",116,Regime 1-SQL: Pure Native-SQL 9D (No GPU Prototype),1.28,1.89,82.76,98.28,16.99,21.14,7.42,31.5,1.18,4.85,0.0
 1. IMDB JOB (21-Table Cyclic/String Skew),33,Regime 2: Static 12D Catalog Sketch (0 Ext. Labels),1.26,1.84,69.7,100.0,4.54,8.69,16.12,48.2,0.86,2.95,36.36
-"4. TPC-DS (11-Table Snowflake, 3-CTE, Window)",30,Regime 2: Static 12D Catalog Sketch (0 Ext. Labels),1.17,1.58,96.67,96.67,20.03,24.18,1.54,8.76,0.32,2.15,10.0
-5. BIRD-Inspired (6-Table Financial Ratios),20,Regime 2: Static 12D Catalog Sketch (0 Ext. Labels),1.22,1.69,95.0,95.0,20.0,24.15,3.98,8.05,0.21,1.65,10.0
+"4. TPC-DS-Derived (11-Table Snowflake, 3-CTE, Window)",30,Regime 2: Static 12D Catalog Sketch (0 Ext. Labels),1.17,1.58,96.67,96.67,20.03,24.18,1.54,8.76,0.32,2.15,10.0
+5. BIRD-Inspired Synthetic Financial (6-Table Ratios),20,Regime 2: Static 12D Catalog Sketch (0 Ext. Labels),1.22,1.69,95.0,95.0,20.0,24.15,3.98,8.05,0.21,1.65,10.0
 Pooled All 5 Suites (Static 12D Catalog Sketch),116,Regime 2: Static 12D Catalog Sketch (0 Ext. Labels),1.23,1.74,85.34,98.28,14.27,18.42,8.14,34.8,0.67,2.95,20.69
 1. IMDB JOB (21-Table Cyclic/String Skew),33,Regime 3: Schema-Calibrated 5-Fold Nested CV,1.15,1.49,84.85,100.0,4.02,8.17,6.45,24.1,0.34,1.4,18.18
-"4. TPC-DS (11-Table Snowflake, 3-CTE, Window)",30,Regime 3: Schema-Calibrated 5-Fold Nested CV,1.12,1.41,96.67,100.0,19.72,23.87,0.04,1.2,0.01,0.25,6.67
-5. BIRD-Inspired (6-Table Financial Ratios),20,Regime 3: Schema-Calibrated 5-Fold Nested CV,1.14,1.45,100.0,100.0,19.79,23.94,0.0,0.0,0.0,0.0,5.0
+"4. TPC-DS-Derived (11-Table Snowflake, 3-CTE, Window)",30,Regime 3: Schema-Calibrated 5-Fold Nested CV,1.12,1.41,96.67,100.0,19.72,23.87,0.04,1.2,0.01,0.25,6.67
+5. BIRD-Inspired Synthetic Financial (6-Table Ratios),20,Regime 3: Schema-Calibrated 5-Fold Nested CV,1.14,1.45,100.0,100.0,19.79,23.94,0.0,0.0,0.0,0.0,5.0
 Pooled All 5 Suites (Schema-Calibrated 5-Fold CV),116,Regime 3: Schema-Calibrated 5-Fold Nested CV,1.15,1.48,91.38,99.14,13.84,17.99,2.98,18.25,0.24,1.4,12.93

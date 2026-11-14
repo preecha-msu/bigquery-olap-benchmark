@@ -431,7 +431,7 @@ def run_audit1_raw_csv_inventory_and_recalculation() -> dict:
 
 # ==============================================================================
 # Audit 2: CSCI Collinearity, Fold-Wise Residualization, Permutation Importance,
-#          and Partial Correlation Construct Validity (Reviewer 5.1 & 5.2)
+#          and Partial Correlation Operator-Tier Alignment (Reviewer 5.1 & 5.2)
 # ==============================================================================
 def run_audit2_csci_collinearity_and_construct_validity(engine_latencies: dict) -> dict:
     ast_path = locate_real_csv(["ast_complexity_summary.csv"])
@@ -535,7 +535,7 @@ def run_audit2_csci_collinearity_and_construct_validity(engine_latencies: dict) 
         fold_vif_dn.append(1.0 / (1.0 - r2_f))
         csci_res_dn_oof[te_mask] = csci_exact[te_mask] - (Z_te @ b_tr)
 
-    # 5. Extract real selectivity sigma(q) and Tier numbers for Construct Validity & GBDT Permutation Importance
+    # 5. Extract real selectivity sigma(q) and Tier numbers for Operator-Tier Alignment & GBDT Permutation Importance
     routing_pred_path = locate_real_csv(["raw_query_routing_predictions_sf1.csv", "merged_75queries_all_engines_sf1.csv"])
     sigma_real = None
     if routing_pred_path is not None:
@@ -1100,7 +1100,7 @@ def update_manuscript_v2_tex(
                 ins_pos = sec32_match.start()
                 tex = tex[:ins_pos] + table_2b_block + "\n" + tex[ins_pos:]
 
-    # 4. Inject V5 Construct Validity (Partial Spearman) & Grouped Permutation Importance note idempotently
+    # 4. Inject V5 Operator-Tier Alignment (Partial Spearman) & Grouped Permutation Importance note idempotently
     v5_construct_note = (
         r"% === BEGIN V5 CONSTRUCT VALIDITY NOTE ===" + "\n"
         rf"To further verify construct validity beyond unadjusted GPU speedup correlation (addressing potential confounding from query length and data volume), rank-based partial correlation analysis across all $N=75$ queries confirms that $\text{{CSCI}}(q)$ correlates strongly with total relational operator count ($\rho = {audit2['rho_ops']:.4f}$) even after simultaneously controlling for AST syntax node count $N(q)$ and selectivity $\sigma(q)$ ($\rho_{{\text{{partial}}}} = {audit2['prho_ops']:.4f}$, $\text{{df}}=71$, $p < 10^{{-6}}$), while joint grouped permutation importance on the 9D gradient-boosted router confirms that structural AST+CSCI features and zone-map selectivity contribute complementary predictive signal without collinearity instability." + "\n"

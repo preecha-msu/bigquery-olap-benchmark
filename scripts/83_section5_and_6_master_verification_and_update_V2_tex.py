@@ -462,7 +462,7 @@ def update_v2_tex_for_sections_5_and_6(ver: dict) -> dict[str, bool]:
 
     # --------------------------------------------------------------------------
     # 2. [Sec 5.2] Add Partial Correlation Controlling Simultaneously for Tier AND Selectivity
-    #    + External SSB CSCI Construct Validation in Section 3.4 Item 1
+    #    + External SSB CSCI Operator-Tier Alignment in Section 3.4 Item 1
     # --------------------------------------------------------------------------
     tier_sig_clause = (
         rf" (and retains a statistically significant within-tier/selectivity-adjusted partial correlation of "

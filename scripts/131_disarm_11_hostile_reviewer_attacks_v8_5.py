@@ -26,7 +26,7 @@ Radical Scientific Honesty:
   7. Fixes Leave-One-Scale-Out (1214.50 ms) comparison in Table 22 to explicitly
      compare against Always GPU at SF=100 GB (1199.60 ms, +1.24% gap) and adds
      significance testing for the OOD LOTO-CV gate (76.18 vs. 82.47 ms Polars).
-  8. Removes circular "Known-Groups Construct Validity" claims for CSCI,
+  8. Removes circular "Known-Groups Operator-Tier Alignment" claims for CSCI,
      reclassifying Kruskal-Wallis across L1-L5 as a Design Stratification Check
      and highlighting within-tier partial correlation (rho = 0.2653, p = 0.0233).
   9. Re-labels the 12D JOB Catalog Sketch extension as "Post-Hoc Exploratory

@@ -302,7 +302,7 @@ All revisions adhere strictly to the \textbf{100\% Real Execution / Zero Synthet
 \midrule
 \textbf{3. GPU/CPU Fairness \& 3-Level Timing} & Separate pure kernel compute from PCIe transfers and end-to-end SQL parsing/dispatch overhead under strict FP64 symmetry. & Reported 6-operator mapping and Level~1 ($22.25\text{ ms}$), Level~2 ($56.96\text{ ms}$), and Level~3 ($61.11\text{ ms}$ mem / $131.79\text{ ms}$ disk) equivalence in Sec.~3.4, Table~4, and Table~13B. \\
 \midrule
-\textbf{4. CSCI Construct Validity \& Baselines} & Prove CSCI adds predictive signal beyond raw AST counts without collinearity; benchmark against Ridge, DT, $k$-NN, and tuned rules. & Confirmed $\text{VIF}_{D,N}=1.84$, $-28.2\%$ split reduction, and $-9.22\%$ regret drop ($p=0.0038$); synchronized full baseline matrix with P95/P99 regret in Tables~8, 9, and 14A. \\
+\textbf{4. CSCI Operator-Tier Alignment \& Baselines} & Prove CSCI adds predictive signal beyond raw AST counts without collinearity; benchmark against Ridge, DT, $k$-NN, and tuned rules. & Confirmed $\text{VIF}_{D,N}=1.84$, $-28.2\%$ split reduction, and $-9.22\%$ regret drop ($p=0.0038$); synchronized full baseline matrix with P95/P99 regret in Tables~8, 9, and 14A. \\
 \midrule
 \textbf{5. External Schemas \& Operator Bounds} & Evaluate zero-shot transfer across diverse schemas (JOB, SSB, ClickBench, Q1--Q22) and state honest failure boundaries. & Validated across 163 queries; added \textbf{Table~16} \& \textbf{Fig.~13} for 12D JOB sketches ($84.49\% \rightarrow 3.55\%$ regret) and LOTO-CV ($85.42\text{ ms}$) operator-family scope bound. \\
 \midrule

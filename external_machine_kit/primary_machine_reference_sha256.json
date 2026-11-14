@@ -1,0 +1,9 @@
+{
+  "ast_complexity_summary.csv": "4cb5f7477fd24dc77a6fd2b58063d9868cf7126ea89e6d902a695ccebd58d9d9",
+  "raw_benchmark_sf1.csv": "7d69610e86863845ae7cbb5ce25d81202a6d25317db25a35c4a14b7715dca8c5",
+  "raw_bigquery_cloud_sf1.csv": "7aee23711627a085062c7cf883f9404ce3aceaac2e5c080fa3a9060563458e5f",
+  "raw_gpu_cuda_sf1.csv": "50201ab2ea90e96f4b49796c5707641699be5d38e37505bb2d0b085e6803c7d2",
+  "raw_multi_software_sf1.csv": "4d6ba9d612f4c309ec096d61ee368394fc9a5d343155647bd094f5f55b750524",
+  "raw_hardware_energy_sf1.csv": "1a607af26e1bfddaef3e44661e94d2ac55c180ee43e2ac824bf7b7e264cea8e7",
+  "merged_75queries_all_engines_sf1.csv": "5eb9a13b43a164f5f11bbee91a774372446182487cab251cc1048f540574d0e3"
+}

@@ -1,0 +1,6 @@
+Controlled_Regime,Configured_Threads,Queries_Completed,Window_Duration_s,Measured_CPU_Util_Pct,Est_CPU_Pkg_Linear_TDP_W,Est_CPU_Pkg_NonLinear_DVFS_W,Model_Curve_Delta_W
+Idle_0T,0,0,1.2,38.75,26.32,23.56,2.755
+DuckDB_1T,1,8,1.695,15.37,19.19,17.27,1.913
+DuckDB_2T,2,15,1.573,24.74,22.04,19.6,2.442
+DuckDB_4T,4,25,1.519,36.25,25.56,22.82,2.734
+DuckDB_8T,8,35,1.536,63.52,33.87,31.56,2.312

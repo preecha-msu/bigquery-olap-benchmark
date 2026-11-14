@@ -112,7 +112,7 @@ def regenerate_updated_figures_1_and_2():
         "LAYER 1B: 9-Dimensional Feature Vector & Validated CSCI",
         [
             "• Composite Index: CSCI(q) = 1.5D + 2.5J + 3.0S + 3.5W + 4.0U + 1.5C",
-            "• Construct Validity: Spearman rho = 0.4935 | 10k-MC Stability rho = 0.9880",
+            "• Operator-Tier Alignment: Spearman rho = 0.4935 | 10k-MC Stability rho = 0.9880",
             "• Zone-Map Predicate Selectivity Factor: sigma(q) in (0, 1] across V1-V3",
             "• 9D Routing Vector: x_q = [D, N, J, S, W, U, C, CSCI, sigma(q)]^T in R^9"
         ],

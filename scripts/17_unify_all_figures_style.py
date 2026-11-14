@@ -116,7 +116,7 @@ def generate_figure1_framework():
         "LAYER 1A: Input SQL & Static AST Parsing (SQLGlot)",
         [
             "• Input Workload: 75 Factorial SQL Queries (25 Canonical Seeds x V1-V3)",
-            "• Zero-Execution Static Parsing via SQLGlot (< 0.8 ms overhead)",
+            "• Zero-Execution Static Parsing via SQLGlot (3.48 ms AST parse)",
             "• Extracts Operator Topology: Depth D(q), Nodes N(q), Joins J(q),",
             "  Subqueries/CTEs S(q), Windows W(q), UNNEST U(q), CASE C(q)"
         ],
@@ -128,7 +128,7 @@ def generate_figure1_framework():
         "LAYER 1B: 9-Dimensional Feature Vector & CSCI",
         [
             "• Validated Composite Index: CSCI(q) = 1.5D + 2.5J + 3.0S + 3.5W + 4.0U + 1.5C",
-            "• Construct Validity: Spearman rho = 0.4935, 10,000-MC Stability rho = 0.9880 (±20%)",
+            "• Operator-Tier Alignment: Partial rho = 0.5477, 10,000-MC Stability rho = 0.9880 (±20%)",
             "• Zone-Map Predicate Selectivity Factor: sigma(q) in (0, 1] across V1-V3",
             "• 9D Routing Vector: x_q = [D, N, J, S, W, U, C, CSCI, sigma(q)]^T in R^9"
         ],
@@ -248,10 +248,10 @@ def generate_figure2_workflow():
 
     draw_card_with_header(
         ax, 0.02, 0.515, 0.96, 0.195,
-        "PHASE 3: Static AST Feature Profiling, CSCI Construct Validation & Hardware Telemetry Instrumentation",
+        "PHASE 3: Static AST Feature Profiling, CSCI Operator-Tier Alignment & Hardware Telemetry Instrumentation",
         [
             "• Parses all 75 SQL queries via SQLGlot into 9D vectors x_q = [D, N, J, S, W, U, C, CSCI, sigma(q)]^T (Mean CSCI = 29.66; Range: 15.3 in L1 to 37.1 in L4)",
-            "• CSCI Construct Validation: Spearman rho = 0.4935 (p = 6.84e-6) vs. GPU Speedup; 10,000-Trial Monte Carlo Weight Perturbation Stability rho = 0.9880 (±20%)",
+            "• CSCI Operator-Tier Alignment: Partial rho = 0.5477 (p = 6.84e-6) vs. GPU Speedup; 10,000-Trial Monte Carlo Weight Perturbation Stability rho = 0.9880 (±20%)",
             "• High-Frequency Sensor Polling (250 Hz psutil + NVIDIA NVML + cudaEvent): Captures Latency (ms), CPU/GPU (%), RAM/VRAM (GB), Energy (J), Perf/Watt"
         ],
         hdr_color="#B45309", bg_color="#FFFBEB", border_color="#92400E", hdr_ratio=0.24
@@ -504,7 +504,7 @@ def generate_figure7_hardware_energy():
     ax1.bar(x + 2*w, df_hw["Energy_GPU_Warm_J"], w, label="RTX 2050 GPU (Warm In-VRAM)",  color=PALETTE["deep_blue"],  edgecolor="black", lw=0.75)
     ax1.set_yscale("log")
     ax1.set_ylabel("Energy Consumption per Query (Joules, Log Scale)")
-    ax1.set_title("(a) Per-Query Energy Footprint Across Paradigms")
+    ax1.set_title("(a) Est. CPU Pkg & Meas. GPU Energy (J)")
     ax1.set_xticks(x); ax1.set_xticklabels(xt)
     ax1.set_ylim(0.06, 900)
     ax1.grid(axis="y", which="both", linestyle="--")
@@ -517,7 +517,7 @@ def generate_figure7_hardware_energy():
     ax2.bar(x + 2*w, df_hw["PerfWatt_GPU_Warm_MB_per_J"],   w, label="RTX 2050 GPU (Warm In-VRAM)", color=PALETTE["deep_blue"],  edgecolor="black", lw=0.75)
     ax2.set_yscale("log")
     ax2.set_ylabel("Performance per Watt (MB/Joule, Log Scale)")
-    ax2.set_title("(b) Green OLAP Energy Efficiency (Perf/Watt)")
+    ax2.set_title("(b) Energy-Aware Scan Efficiency (MB/J)")
     ax2.set_xticks(x); ax2.set_xticklabels(xt)
     ax2.set_ylim(1.5, 9000)
     ax2.grid(axis="y", which="both", linestyle="--")

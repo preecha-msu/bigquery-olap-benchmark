@@ -108,7 +108,7 @@ def regenerate_figure1_and_figure2():
         "LAYER 1B: 9D/10D Feature Vector, CSCI & Catalog Scale",
         [
             "• Validated Index: CSCI(q) = 1.5D + 2.5J + 3.0S + 3.5W + 4.0U + 1.5C",
-            "• Construct Validity: Partial rho = 0.5477 (p = 3.68e-7); 10,000-MC rho = 0.9880 (±20%)",
+            "• Operator-Tier Alignment: Partial rho = 0.5477 (p = 3.68e-7); 10,000-MC rho = 0.9880 (±20%)",
             "• Zone-Map Selectivity sigma_hat(q) in (0, 1] (0.172 ms cached / 0.413 ms cold footer)",
             "• 9D Vector x_q in R^9 (augmented with log10(1 + B_scan) to R^10 across scales)",
         ],
@@ -237,10 +237,10 @@ def regenerate_figure1_and_figure2():
 
     draw_card(
         ax2, 0.015, 0.51, 0.97, 0.18,
-        "PHASE 3: Static AST Feature Profiling, CSCI Construct Validation & Hardware Telemetry Instrumentation",
+        "PHASE 3: Static AST Feature Profiling, CSCI Operator-Tier Alignment & Hardware Telemetry Instrumentation",
         [
             "• Parses SQL via SQLGlot into 9D/10D vectors x_q (Mean CSCI = 29.66, Range: 15.3 in L1 to 37.1 in L4; 0.172 ms cached / 0.413 ms cold footer)",
-            "• CSCI Construct Validation: Partial rho = 0.5477 (p = 3.68e-7) vs. GPU Speedup; 10,000-Trial Monte Carlo Weight Stability rho_bar = 0.9880 (±20%)",
+            "• CSCI Operator-Tier Alignment: Partial rho = 0.5477 (p = 3.68e-7) vs. GPU Speedup; 10,000-Trial Monte Carlo Weight Stability rho_bar = 0.9880 (±20%)",
             "• 250 Hz Hardware Polling (psutil + NVIDIA NVML + cudaEventRecord): Captures Latency (ms), CPU/GPU (%), RAM/VRAM (GB), Device Energy (J, MB/J)",
         ],
         header_color="#b85d18", body_color="#fdf5ed", edge_color="#b85d18"

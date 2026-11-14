@@ -115,7 +115,7 @@ def generate_all_synchronized_figures() -> None:
         "LAYER 1B: 9D/10D Feature Vector, CSCI & Catalog Scale",
         [
             "• Validated Index: CSCI(q) = 1.5D + 2.5J + 3.0S + 3.5W + 4.0U + 1.5C",
-            "• Construct Validity: Partial rho = 0.5477 (VIF = 1.84); 10,000-MC rho = 0.9880 (±20%)",
+            "• Operator-Tier Alignment: Partial rho = 0.5477 (VIF = 1.84); 10,000-MC rho = 0.9880 (±20%)",
             "• Pre-Execution Zone-Map Selectivity sigma_hat(q) in (0, 1] (MAE = 3.84%, Q-Err = 1.092)",
             "• 9D Vector x_q in R^9 (extended to R^10 across SF=1–100 GB & R^12 with 10.2 KB sketches)",
         ],
@@ -203,10 +203,10 @@ def generate_all_synchronized_figures() -> None:
     )
     draw_card(
         ax2, 0.015, 0.51, 0.97, 0.18,
-        "PHASE 3: Static AST Feature Profiling, CSCI Construct Validation & Hardware Telemetry Instrumentation",
+        "PHASE 3: Static AST Feature Profiling, CSCI Operator-Tier Alignment & Hardware Telemetry Instrumentation",
         [
             "• Parses SQL queries via SQLGlot into 9D/10D/12D vectors x_q (Mean CSCI = 29.66, Range: 15.3 in L1 to 37.1 in L4; 4.15 ms warm overhead)",
-            "• CSCI Construct Validation: Partial rho = 0.5477 (p = 3.68e-7) vs. GPU Speedup; 10,000-Trial Monte Carlo Weight Stability rho_bar = 0.9880 (±20%)",
+            "• CSCI Operator-Tier Alignment: Partial rho = 0.5477 (p = 3.68e-7) vs. GPU Speedup; 10,000-Trial Monte Carlo Weight Stability rho_bar = 0.9880 (±20%)",
             "• High-Frequency Sensor Polling (250 Hz psutil + NVIDIA NVML + cudaEvent): Captures Latency (ms), CPU/GPU (%), RAM/VRAM (GB), Energy (J), MB/J",
         ],
         header_color="#b85d18", body_color="#fdf5ed", edge_color="#b85d18"
@@ -548,7 +548,7 @@ def generate_all_synchronized_figures() -> None:
     ax13a.grid(axis="y", linestyle="--", alpha=0.4)
     ax13a.legend(loc="upper right", fontsize=7.4)
 
-    job_steps = ["Always\nDuckDB", "Always\nGPU Cold", "9D Zero-Shot\n(Abstain)", "12D Zero-Shot\n(Sketch Gate)", "10D Calib.\n(+sigma_str)", "12D Calib.\n(Full Sketch)", "Oracle\nBound"]
+    job_steps = ["Always\nDuckDB", "Always\nGPU Cold", "9D Zero-Shot\n(Abstain)", "12D Post-Hoc\n(Sketch Gate)", "10D Calib.\n(+sigma_str)", "12D Calib.\n(Full Sketch)", "Oracle\nBound"]
     job_lat = [19.55, 9.05, 6.75, 4.54, 4.21, 4.14, 4.03]
     job_reg = [392.15, 124.57, 84.49, 16.50, 4.05, 3.55, 0.00]
     j_cols = ["#7f8c8d", "#c44e52", "#dd8452", "#3498db", "#5bc0de", "#2ca02c", "#111111"]

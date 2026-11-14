@@ -1,0 +1,15 @@
+Scale_Factor,Engine_or_Policy,Mean_Latency_ms,Local_Active_Energy_J,1_Est_Cloud_Query_Charge_USD_1M,2_Local_HW_Amortization_USD_1M,3_Assumed_Electricity_Cost_USD_1M,Reference_Combined_Footprint_USD_1M,Accounting_Scope_Note
+SF=1 GB,SQLite 3 (Row-Store Baseline),8417.33,126.26,0.0,88.85,4.209,93.059,Local CPU B-Tree (Sunk HW + High Elec.)
+SF=1 GB,Always DuckDB (C++ Vectorized),183.74,6.397,0.0,1.939,0.213,2.152,Local CPU Pkg Est. ($0 Marginal Cloud Fee)
+SF=1 GB,Always DataFusion (Rust Arrow),96.3,3.393,0.0,1.016,0.113,1.129,Local CPU Pkg Est. ($0 Marginal Cloud Fee)
+SF=1 GB,Always Polars (Rust Arrow),82.47,3.17,0.0,0.871,0.106,0.977,Local CPU Pkg Est. ($0 Marginal Cloud Fee)
+SF=1 GB,Always GPU Cold (RTX 2050),56.96,0.644,0.0,0.601,0.021,0.622,Meas. NVML GPU Board ($1.58 J Host+GPU sys)
+SF=1 GB,Always BigQuery (Unoptimized),1412.6,0.0,2072.45,0.0,0.0,2072.45,"Remote Serverless Scan ($6.25/TiB, 0 J Local)"
+SF=1 GB,Always BigQuery (Clustered),745.39,0.0,1267.66,0.0,0.0,1267.66,Clustered Partition/Block Pruning (10 MiB floor)
+SF=1 GB,Proposed AST-Route (B1 Pure Lat.),54.92,1.381,0.0,0.58,0.046,0.626,Hybrid Local CPU+GPU ($0 Marginal Cloud Charge)
+SF=1 GB,Proposed AST-Route (B5 Energy),70.2,0.748,0.0,0.741,0.025,0.766,Energy-Prioritized Mode (-45.8% Energy)
+SF=100 GB,Always DuckDB (Out-of-Core Spill),8699.98,385.4,0.0,91.833,12.847,104.68,"3,302 MB Disk Spill ($0 Cloud, High Local Time)"
+SF=100 GB,Always Polars (Streaming Arrow),6551.42,256.2,0.0,69.154,8.54,77.694,"Host DRAM Cap Spill ($0 Cloud, High Local Time)"
+SF=100 GB,Always BigQuery (Clustered),2571.6,0.0,126766.0,0.0,0.0,126766.0,Full Cloud Offload at SF=100 GB ($6.25/TiB)
+SF=100 GB,AST-Route B7 (Cloud-Elastic),1142.8,12.84,507.06,12.063,0.428,519.551,Routes Spill-Bound L1/L4 to BQ ($507.06/1M Scan)
+SF=100 GB,AST-Route B8 (Zero-Cloud Cap),1326.9,16.35,0.0,14.006,0.545,14.551,Hard Cloud Cap C_cloud=$0 (40x Chunked Local)

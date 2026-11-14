@@ -54,7 +54,7 @@ def patch_three_items() -> None:
         n4 = 1
     print(f"[POLISH-4] แทรกคำอธิบายผลรันจริงของ JOB ใน Section 4.8 ข้อ 2 (หน้า 20): {n4 > 0}")
 
-    # [POLISH-5] แทรก Construct Validity เพิ่มเติมใน Section 3.4 ข้อ 1 (ต่อท้าย 0.0906$.)
+    # [POLISH-5] แทรก Operator-Tier Alignment เพิ่มเติมใน Section 3.4 ข้อ 1 (ต่อท้าย 0.0906$.)
     sec34_add = (
         r" Beyond GPU speedup, $\text{CSCI}(q)$ correlates significantly with multi-engine query execution complexity---including "
         r"distributed cloud slot compute time on BigQuery ($\rho = 0.5124, p = 2.41\times 10^{-6}$), Apache DataFusion CPU latency ($\rho = 0.3839, p = 0.0007$), "
@@ -70,7 +70,7 @@ def patch_three_items() -> None:
         )
     else:
         n5 = 1
-    print(f"[POLISH-5] แทรก Construct Validity เพิ่มเติมใน Section 3.4 ข้อ 1 (หน้า 9): {n5 > 0}")
+    print(f"[POLISH-5] แทรก Operator-Tier Alignment เพิ่มเติมใน Section 3.4 ข้อ 1 (หน้า 9): {n5 > 0}")
 
     # [POLISH-6] แทรกผลทดสอบ Missing-Metadata Fallback ใน Section 4.7 ข้อ 3 (ต่อท้าย (45 queries).)
     sec47_add = (

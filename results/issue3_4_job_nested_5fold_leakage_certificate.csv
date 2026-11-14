@@ -1,0 +1,6 @@
+Outer_Fold,Train_Template_Count,HeldOut_Test_Template_Count,Inner_Tuning_Protocol,Template_Overlap_Count,Catalog_Sketch_Source,Runtime_Labels_Used_From_Test_Fold,HeldOut_Test_Templates
+Fold_1,26,7,Inner 4-Fold CV within 26 train templates,0,Static table column MCV/trigram (0 query runtime labels),0,"1a,6a,11a,16a,21a,26a,31a"
+Fold_2,26,7,Inner 4-Fold CV within 26 train templates,0,Static table column MCV/trigram (0 query runtime labels),0,"2a,7a,12a,17a,22a,27a,32a"
+Fold_3,26,7,Inner 4-Fold CV within 26 train templates,0,Static table column MCV/trigram (0 query runtime labels),0,"3a,8a,13a,18a,23a,28a,33a"
+Fold_4,27,6,Inner 4-Fold CV within 27 train templates,0,Static table column MCV/trigram (0 query runtime labels),0,"4a,9a,14a,19a,24a,29a"
+Fold_5,27,6,Inner 4-Fold CV within 27 train templates,0,Static table column MCV/trigram (0 query runtime labels),0,"5a,10a,15a,20a,25a,30a"

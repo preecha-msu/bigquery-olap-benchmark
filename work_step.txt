@@ -4,6 +4,8 @@ E:\TeachPree\Research_Academic_Services\bigquery-olap-benchmark
 google Cloud -> msu-sql-benchmark -> IAM & Admin -> Service Accounts --????
 click Account Created -> Key -> Add Key -> JSON
 
+PREECHA NOIUMKAR received the M.Sc. degree in information technology from the Faculty of Information Technology, King Mongkut's Institute of Technology North Bangkok (KMITNB),Bangkok, Thailand. He is currently a Lecturer and Researcher with the Department of Information Technology, Faculty of Informatics, Mahasarakham University, Maha Sarakham, Thailand, where he teaches courses on relational database management systems, enterprise data engineering, server and network administration, and artificial intelligence. His main interests include machine learning, deep learning architecture design, neural network activation functions, natural language processing, and neuro-symbolic artificial intelligence. His work involves enterprise database reliability and educational technology tasks (e.g., Text-to-SQL synthesis and verification, database query optimization and security, genomic sequence classification, and collaborative virtual learning systems).
+
 
 Journal of Big Data Q1 1.964
 Future Generation Computer Systems (FGCS) Q1 1.484
@@ -14,5 +16,146 @@ E:\TeachPree\Research_Academic_Services\bigquery-olap-benchmark
 การประเมินจากมุมมอง Reviewer ของวารสารระดับนานาชาติ โดยพิจารณาทั้ง Novelty, Methodological Rigor, Experimental Design, Statistical Validity, Reproducibility, Research Contribution และความเหมาะสมกับวารสาร Journal of Big Data
 
 โดยยึดหลักการ "Zero Estimation / 100% Real Execution" (ไม่มีการประมาณการหรือจำลองตัวเลข ทุกค่าต้องเกิดจากการรันจริง วัดผลจริง และมี Log พร้อม SHA-256 ยืนยันความสอดคล้องทุกตาราง)
-
 แต่ละงานต้องอัปเดตสถานะ Checklist ในการทำงาน
+
+ตรวจสอบ References แก้ไขรายละเอียดบรรณานุกรมเดิมที่คลาดเคลื่อน
+
+AST-aware Query Routing
+
+Cost Prediction Model
+
+Rule-based Routing
+
+Routing Regret
+
+***********************เพิ่ม Chat ใหม่************************************
+จากไฟล์บทวิจารณ์ของ Reviewer จงตรวจสอบและแก้ไขข้อมูล ทำแบบทดสอบเพื่อให้ได้ข้อมูลที่ถูกต้องตามหลักวิชาการ ในฐานะที่ปรึกษาวิจัย ให้มองในมุมอง reviewer แบบไม่มี bias ปรับปรุงให้ได้เปอร์เซนต์การตอบรับ 85% ขึ้นไป การดำเนินการทุกอย่างต้อง โดยยึดหลักการ "Zero Estimation / 100% Real Execution" (ไม่มีการประมาณการหรือจำลองตัวเลข ทุกค่าต้องเกิดจากการรันจริง วัดผลจริง และมี Log พร้อม SHA-256 ยืนยันความสอดคล้องทุกตาราง) ก่อนสรุปคำตอบ ให้ตรวจสอบ Edge cases ของโค้ดชุดนี้ และเช็คความถูกต้องของสมการคณิตศาสตร์/สถิติทุกบรรทัด หากชุดคำสั่งมีบรรทัดที่ยาวให้แสดงทีละคำสั่ง แต่ถ้าสั้นให้เขียนสคลิปรวมกันรันตามลำดับ
+ต่อไปนี้ทุกครั้งที่มีการปรับปรุงแก้ไขโค้ด LaTeX ของบทความ ให้เขียนเป็นสคริปต์อัตโนมัติเพื่อบันทึกทับลงที่ไฟล์ลงใน
+E:\TeachPree\Research_Academic_Services\bigquery-olap-benchmark\manuscript\bigquery_olap_benchmark_V9.tex
+สร้างไฟล์ E:\TeachPree\Research_Academic_Services\bigquery-olap-benchmark\Journal_of_Big_Data_Snapp_Submission_Flat9.zip ทุกครั้งที่แก้ไข
+หากมีการแก้ไฟล์ bigquery_olap_benchmark_V9.tex ให้ replace บน github ไม่ต้องสำรอง
+และตรวจสอบให้ดีอย่าให้สคลิปท์ขาดหาย
+
+
+
+ให้ upload file bigquery_olap_benchmark_V9.tex ขึ้นบน GitHub
+และหากมีการแก้ไฟล์ bigquery_olap_benchmark_V9.tex ให้ replace บนgithub ไม่ต้องสำรอง
+https://github.com/preechan-glitch/my_research_files
+
+
+*******************ถามคำถามให้วิเคราะห์**********************************
+เพื่่อ submission ที่ Journal of Big Data ผมได้แก้เอกสารเบื้องต้นไปแล้ว ในฐานะผู้เชี่ยวชาญ จงมองในมุมมอง Reviewer ว่ามีโอกาสตอบรับกี่ % และคำแนะนำเพิ่มเติม เพิ่มกระบวนการใดเพื่อสร้างความน่าเชื่อถือ และน้ำหนักของงานวิจัย
+
+
+10: Big Data Computing and Service
+20: Big Data Modelling
+30: Big Data Platforms
+40: Big Data Intelligence
+50: Big Data Knowledge Engineering
+60: Big Data Center
+70: Big Data Enabling Technologies
+80: Big Data Visualization
+90: Big Data Validation
+100: Big Data Security
+110: Big Data Computing Infrastructures
+120: Big Data Policies
+130: Big Data Storage
+140: Big Data Search and Mining
+150: Big Data Collection Sensors
+160: Big Data Networks
+170: Big Data Management
+180: Big Data Tools
+190: Big Data Economics
+200: Scientific Algorithms of Big Data
+210: Big Data Architectures
+220: Cloud Computing Techniques for Big Data
+230: Big Data Applications
+240: Big Data in Energy and Environment Applications
+250: Big Data for Bio-Medical and Healthcare Services
+260: Big Data Education and Learning
+270: Big Data in Multimedia and Social Networks
+280: Smart City, Transportation and Tourism
+290: Big Data for Enterprise, Government and Society
+
+*****************thai*******************************
+AST-Route: เฟรมเวิร์กการจัดเส้นทางคิวรีและการทำนายต้นทุนแบบหลายวัตถุประสงค์ที่อาศัยโครงสร้างต้นไม้ไวยากรณ์ (AST) ครอบคลุมคลาวด์แบบไร้เซิร์ฟเวอร์, เวกเตอร์ไรเซชันซีพียู (C++/Rust) และเอนจินโอแลปที่เร่งความเร็วด้วยจีพียู
+
+****************eng*********************************
+AST-Route: An AST-Aware Multi-Objective Query Routing and Cost-Prediction Framework Across Serverless Cloud, Vectorized CPU (C++/Rust), and GPU-Accelerated OLAP Engines
+
+***************abstrack****************************
+ความเป็นมา: โครงสร้างพื้นฐานการวิเคราะห์ข้อมูลสมัยใหม่ประกอบด้วยคลังข้อมูลบนคลาวด์แบบไร้เซิร์ฟเวอร์ (Serverless Cloud Data Warehouses) เอนจินฐานข้อมูลวิเคราะห์แบบเวกเตอร์บนซีพียู และเอนจินเชิงสัมพันธ์ที่เร่งความเร็วด้วยหน่วยประมวลผลกราฟิก (GPU)
+ผลการวิเคราะห์เชิงประจักษ์ชี้ให้เห็นว่าไม่มีเอนจินใดที่สามารถทำงานได้ดีที่สุดในทุกรูปแบบของชุดคำสั่ง (Queries) และระดับสเกลข้อมูล ($\text{SF} \in \{1, 10, 30, 100\}\text{ GB}$) โดยการสแกนข้อมูลแบบง่ายมักประสบปัญหาคอขวดจากการถ่ายโอนข้อมูลผ่านบัส PCIe บน GPU และค่าใช้จ่ายในการจัดตารางเวลาบนคลาวด์ ขณะที่ไปป์ไลน์การประมวลผลหน้าต่าง (Window) และการแตกอาเรย์ (UNNEST) ที่มีความซับซ้อนสูงจะสร้างภาระหนักให้แก่ซีพียู นอกจากนี้ ชุดข้อมูลที่มีขนาดเกินกว่าหน่วยความจำ VRAM หรือ DRAM จะบังคับให้ระบบต้องทำสตรีมมิ่งข้อมูลแบบแบ่งส่วน (Chunked Streaming) หรือเกิดการสำรองข้อมูลลงดิสก์ (Disk Spilling)ระเบียบวิธีวิจัย: ผู้วิจัยนำเสนอ AST-Route ซึ่งเป็นเฟรมเวิร์กการจัดเส้นทางคิวรีก่อนการประมวลผลจริง (Pre-execution query routing framework) ที่ทำหน้าที่ประสานการทำงานของ 6 เอนจินจาก 4 รูปแบบสถาปัตยกรรมขั้นตอนแรก เฟรมเวิร์กจะใช้การแทนที่ฟีเจอร์ที่รับรู้โครงสร้าง AST (AST-aware feature representation) เพื่อสกัดเวกเตอร์โครงสร้างและความเลือกสรร (Structural-selectivity vector) ขนาด 9 มิติ ($\mathbf{x}_q \in \mathbb{R}^9$ และขยายเป็น $\mathbf{x}_q^{\text{scale}} \in \mathbb{R}^{10}$ สำหรับการจัดเส้นทางแบบหลายสเกล) ภายในเวลาเพียง $3.65$ มิลลิวินาที โดยไม่ต้องคอมไพล์แผนผังการประมวลผลทางกายภาพ (Physical plan) ซึ่งเป็นการผสานค่าความเลือกสรรของแผนที่โซนในแค็ตตาล็อก (Catalog zone-map selectivity) เข้ากับดัชนีความซับซ้อนเชิงโครงสร้างเชิงประกอบที่ได้รับการตรวจสอบความถูกต้องแล้ว ($\text{CSCI}$, โดยมีค่าสหสัมพันธ์บางส่วน $\rho_{\text{partial}} = 0.5477$ และค่า $\text{VIF}_{D,N} = 1.84$)ขั้นตอนที่สอง ตัวทำนายต้นทุนแบบหลายวัตถุประสงค์ (Multi-objective cost predictor) จะทำประมาณการเวลาแฝง (Latency) พลังงานของอุปกรณ์ และหน่วยความจำที่ใช้งานภายในเวลา $497.2$ ไมโครวินาที (มีค่า Q-Error มัธยฐานอยู่ที่ $1.007\text{--}1.172$) เพื่อขับเคลื่อนการจัดส่งคิวรีแบบพาเรโต (Pareto dispatch) ที่มีความเป็นไปได้ด้านหน่วยความจำ ครอบคลุมทั้งมิติเวลาแฝง พลังงาน และคลาวด์ โดยใช้ช่วงความเชื่อมั่นคอนฟอร์มัล (Conformal intervals) ที่ระดับ $90\%$ และมีเกณฑ์ป้องกันการใช้บัส PCIe ที่ $12\%$ผลการศึกษา: จากการประเมินผลผ่านคิวรี $163$ ชุด ครอบคลุมชุดทดสอบมาตรฐาน $5$ ชุด ภายใต้การตรวจสอบไขว้แบบ Leave-One-Seed-Out ที่ไม่มีการรั่วไหลของข้อมูล ($\text{SF}=1\text{ GB}$) พบว่า AST-Route สามารถลดความเสี่ยงหางยาว (Tail-risk reduction) ได้อย่างsubstantial โดยทำเวลาแฝงสุทธิได้ $54.92$ มิลลิวินาที (ความแม่นยำ Top-1 ที่ $57.33\%$, Top-2 ที่ $76.00\%$, ค่า Regret เฉลี่ย $34.98\%$, และพลังงานอุปกรณ์ประมาณการ $1.381$ จูล) ซึ่งมีประสิทธิภาพเหนือกว่าเอนจินซีพียูแบบคงที่ $1.50\times\text{--}3.35\times$ ($p_{\text{Holm,seed}} \le 0.0171$) และทำผลงานได้ทัดเทียมกับโหมดใช้งาน GPU ตลอดเวลา ($56.96$ มิลลิวินาที) ในขณะที่สามารถกดความเสี่ยงหางยาว P95 ลงจาก $257.31\%$ เหลือเพียง $114.11\%$ พร้อมทั้งลดอัตราความล้มเหลวที่มีค่า Regret เกิน $100\%$ ลงครึ่งหนึ่ง ($14.67\% \rightarrow 6.67\%$)นอกจากนี้ AST-Route ยังแสดงให้เห็นถึงความสามารถในการทั่วไป (Generalization) ข้ามสเกลและข้ามภาระงาน โดยคงความแม่นยำ Top-1 ไว้ที่ $74.67\%\text{--}86.67\%$ ในโหมดซีพียูอย่างเดียว สามารถถ่ายทอดองค์ความรู้แบบ Zero-shot ไปยัง Seed ที่ไม่เคยเห็นมาก่อน, ชุดทดสอบ TPC-H Q1–Q22, SSB, ClickBench และ JOB ได้อย่างราบรื่น รวมถึงสามารถรองรับสตรีมคิวรีพร้อมกันตั้งแต่ $C=1\text{--}32$ สตรีม ($154.44\text{ QPS}$) และสเกลข้อมูล $\text{SF}=1\text{--}100\text{ GB}$ ($3.35\times\text{--}7.61\times$) สิ่งสำคัญคือ การตรวจสอบแบบ Leave-One-Tier-Out ($\text{85.42 ms}$ เทียบกับ Polars ที่ $\text{82.47 ms}$) ได้ช่วยกำหนดขอบเขตการแปร Varian ของการประมาณค่าเมื่อละเว้นคลาสตัวดำเนินการ SQL ใหม่ ๆ ้อไว้อย่างชัดเจนสรุป: AST-Route ช่วยให้เกิดการประสานงานจัดเส้นทางคิวรีแบบฮีทเทอโรเจเนียส (Heterogeneous query orchestration) ที่รวดเร็วและตระหนักรู้ความเสี่ยง เมื่อชุดข้อมูลฝึกอบรมครอบคลุมกลุ่มตัวดำเนินการ SQL ที่เป็นเป้าหมาย (สามารถดูซอร์สโค้ดได้ที่ https://github.com/preecha-msu/bigquery-olap-benchmark)
+
+*************keyword********thai***************
+AST-Route: กรอบการทำงานสำหรับการจัดเส้นทางคิวรีแบบหลายวัตถุประสงค์และการทำนายต้นทุนที่รับรู้โครงสร้าง AST ข้ามระบบคลังข้อมูลคลาวด์แบบไร้เซิร์ฟเวอร์ ระบบประมวลผลเวกเตอร์บนซีพียู (C++/Rust) และระบบประมวลผลเชิงวิเคราะห์ที่เร่งความเร็วด้วยจีพียู
+
+*************keyword********eng***************
+AST-Route: An AST-Aware Multi-Objective Query Routing and Cost-Prediction Framework Across Serverless Cloud, Vectorized CPU (C++/Rust), and GPU-Accelerated OLAP Engines
+
+
+
+
+จงแปลเป็นภาษาไทยวิชาการ อ่านเข้าใจง่าย สละสลวย ภายใต้วิจัย หัวข้อต่อไปนี้
+ชื่อไทย : xxx
+ชื่อภาษาอังกฤษ : yyyy
+1. หลักการและเหตุผลและที่มาของโครงการวิจัย (Rationale and Background)
+2. ทบทววรรณกรรมงานวิจัยที่เกี่ยวข้อง (Review Literature)
+3. คำถาม/วัตถุประสงค์/สมมติฐานการวิจัย (Research Questions/Objectives/Hypothesis)
+	3.1 คำถามการวิจัย
+    3.2 วัตถุประสงค์ของการวิจัย
+    3.3 สมมติฐานการวิจัย
+4. คำสำคัญ(Keywords)
+5. ระเบียบวิธีการวิจัย (Research Methodology)
+6. วิธีการเข้าถึงอาสาสมัคร (Approach to participant)
+7. การวิเคราะห์ข้อมูลและสถิติที่ใช้วิเคราะห์ (Data Analysis and Statistics)
+    7.1 ตัวชี้วัดประสิทธิภาพเชิงปริมาณ
+    7.2 สถิติที่ใช้ในการทดสอบสมมติฐาน
+8. ข้อพิจารณาด้านจริยธรรม (Ethical Consideration)
+9. ประโยชน์ที่คาดว่าจะได้รับจากการวิจัย (Expected or Anticipated Benefit Gain)
+10. ระยะเวลาที่ใช้ในการวิจัยตั้งแต่เริ่มต้นจนสิ้นสุดโครงการ (Study Period)
+11. สถานที่ดำเนินการวิจัย (Venue of the Study) 
+12. การบริหารงานวิจัยและตารางการปฏิบัติงาน (Tabulation of Research Activities and Timeline)
+13. เอกสารอ้างอิง (References)
+
+*************************
+*******ข้อมูล**************
+*************************
+ชื่อไทย : กรอบการทำงานสำหรับการจัดเส้นทางคิวรีแบบหลายวัตถุประสงค์และการพยากรณ์ต้นทุนโดยใช้โครงสร้างต้นไม้ความหมายนามธรรม (AST-Route) ข้ามระบบคลังข้อมูลคลาวด์แบบไร้เซิร์ฟเวอร์ ระบบประมวลผลเวกเตอร์บนซีพียู (C++/Rust) และเอนจินวิเคราะห์ข้อมูลเชิงลึก (OLAP) ที่เร่งความเร็วด้วยจีพียู
+ชื่อภาษาอังกฤษ : AST-Route: An AST-Aware Multi-Objective Query Routing and Cost-Prediction Framework Across Serverless Cloud, Vectorized CPU (C++/Rust), and GPU-Accelerated OLAP Engines
+1. หลักการและเหตุผลและที่มาของโครงการวิจัย (Rationale and Background)
+2. ทบทววรรณกรรมงานวิจัยที่เกี่ยวข้อง (Review Literature)
+3. คำถาม/วัตถุประสงค์/สมมติฐานการวิจัย (Research Questions/Objectives/Hypothesis)
+	3.1 คำถามการวิจัย
+    3.2 วัตถุประสงค์ของการวิจัย
+    3.3 สมมติฐานการวิจัย
+4. คำสำคัญ(Keywords)
+5. ระเบียบวิธีการวิจัย (Research Methodology)
+6. วิธีการเข้าถึงอาสาสมัคร (Approach to participant)
+7. การวิเคราะห์ข้อมูลและสถิติที่ใช้วิเคราะห์ (Data Analysis and Statistics)
+    7.1 ตัวชี้วัดประสิทธิภาพเชิงปริมาณ
+    7.2 สถิติที่ใช้ในการทดสอบสมมติฐาน
+8. ข้อพิจารณาด้านจริยธรรม (Ethical Consideration)
+9. ประโยชน์ที่คาดว่าจะได้รับจากการวิจัย (Expected or Anticipated Benefit Gain)
+10. ระยะเวลาที่ใช้ในการวิจัยตั้งแต่เริ่มต้นจนสิ้นสุดโครงการ (Study Period)
+11. สถานที่ดำเนินการวิจัย (Venue of the Study) 
+12. การบริหารงานวิจัยและตารางการปฏิบัติงาน (Tabulation of Research Activities and Timeline)
+13. เอกสารอ้างอิง (References)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

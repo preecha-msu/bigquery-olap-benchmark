@@ -151,11 +151,11 @@ def regenerate_all_figures_v2() -> None:
 
     # 2. Figure 4
     tiers_lbl = [
-        "L1: Scan/Filter\n(CSCI_v2=27.9)",
-        "L2: Multi-Join\n(CSCI_v2=36.2)",
-        "L3: Nested CTE\n(CSCI_v2=41.4)",
-        "L4: Window\n(CSCI_v2=41.7)",
-        "L5: UNNEST\n(CSCI_v2=43.6)",
+        "L1: Scan/Filter\n(CSCI=15.3)",
+        "L2: Multi-Join\n(CSCI=26.8)",
+        "L3: Nested CTE\n(CSCI=36.7)",
+        "L4: Window\n(CSCI=37.1)",
+        "L5: UNNEST\n(CSCI=32.4)",
     ]
     duck_nat = [50.84, 264.53, 121.92, 78.16, 403.27]
     gpu_warm = [24.46, 49.05, 14.98, 9.94, 12.84]

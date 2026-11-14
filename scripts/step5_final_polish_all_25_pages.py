@@ -104,7 +104,7 @@ def final_polish_manuscript() -> None:
         )
         print(f"[POLISH-4] แทรกคำอธิบายผลรันจริงของ JOB ใน Section 4.8 ข้อ 2 (หน้า 20): {n_s48 > 0}")
 
-    # 4. แทรก Construct Validity เพิ่มเติมใน Section 3.4 ข้อ 1 (หน้า 9) และ Missing-Metadata Fallback ใน Section 4.7 ข้อ 3 (หน้า 19)
+    # 4. แทรก Operator-Tier Alignment เพิ่มเติมใน Section 3.4 ข้อ 1 (หน้า 9) และ Missing-Metadata Fallback ใน Section 4.7 ข้อ 3 (หน้า 19)
     sec34_add = (
         r" Beyond GPU speedup, $\text{CSCI}(q)$ correlates significantly with multi-engine query execution complexity---including "
         r"distributed cloud slot compute time on BigQuery ($\rho = 0.5124, p = 2.41\times 10^{-6}$), Apache DataFusion CPU latency ($\rho = 0.3839, p = 0.0007$), "
@@ -118,7 +118,7 @@ def final_polish_manuscript() -> None:
             tex,
             count=1,
         )
-        print(f"[POLISH-5] แทรก Construct Validity เพิ่มเติมใน Section 3.4 ข้อ 1 (หน้า 9): {n_s34 > 0}")
+        print(f"[POLISH-5] แทรก Operator-Tier Alignment เพิ่มเติมใน Section 3.4 ข้อ 1 (หน้า 9): {n_s34 > 0}")
 
     sec47_add = (
         r" Moreover, when zone-map metadata is deliberately masked on $50\%$ of test queries (simulating incomplete catalog statistics on external tables and falling back to default parametric operator priors without executing the query), "
