@@ -1,6 +1,6 @@
 gate_id,measured_value,passed,status
-G1_Abstract_Word_Count_Under_350,226 words,True,PASS
-G2_Main_Text_Page_Count_25_to_32,32 pages (Supp: 16 pages),True,PASS
+G1_Abstract_Word_Count_Under_350,235 words,True,PASS
+G2_Main_Text_Page_Count_25_to_33,33 pages (Supp: 16 pages),True,PASS
 G3_Zero_Undefined_Refs_Main_and_Supp,"Main=0, Supp=0, Cites=0",True,PASS
 G4_Zero_Leaked_Reviewer_Response_Phrases,"0 occurrences of 'Reviewer Section', 'Credibility Audit', 'V86-'",True,PASS
 G5_PointA_SF100_PCIe_Bandwidth_Reconciled,"3,518.98 MB / 5,690.0 MB/s = 618.45 ms PCIe + 581.15 ms kernel = 1,199.60 ms",True,PASS
@@ -10,6 +10,7 @@ G8_PointF_Derived_Benchmarks_and_Unified_Versions,"TPC-DS-derived & BIRD-inspire
 G9_Reviewer_6Point_Forensic_Audit_Resolved,Co-Equal Nested-CV 8% (55.37 ms) & Fixed 12% (54.92 ms) in Abstract; Table 1 Null col; Bao/EXPLAIN-DAG; M2-Poly/M2-LinTree; AURC 28.14%; T_BE 14.80/15.66; p=0.0115/0.0098,True,PASS
 G10_V95_Reviewer_E1_to_E6_and_4Point_Audit,"E1 5-Regime & 7-Stage; E2 6-Metric Hardware Transfer; E3 3-Scenario Cloud & 3-Cost Scope; E4 4-Boundary Energy 95% CI & MAPE/MACE; E5 5-Mode CSCI & LOOO; E6 1.42 MB / 0.38 s / 2,455 splits; 74.67% vs 82.76% Pure-SQL disambiguated",True,PASS
 G11_V97_Experiments_E1_to_E7_and_Global_Audit,"E1 CuPy v14.2.0 GPU (61.13 ms, rho=0.9999, 100% match); E2 +50 templates (N_ext=166, 263/278Q, LOWSO-CV 84.34%); E3 M1-M6 AURC (36.80/38.42/28.65/28.22%); E4 CPU cores & PCIe envelopes; E5 TOST +-2..8 ms & Nadeau-Bengio; E6-E7 4-Metric Energy & Cloud Audit",True,PASS
-G12_V98_Reviewer_Action_Plan_A_to_G_and_6Fixes,"Abstract=226w<=250; Lero/AutoSteer/Kepler cited; Pool symbols E_All-6/E_SQL-5; G1-G3 GPUs (T4 33.76ms, A100 20.62ms); Official TPC-DS 99/99 (30.49ms, 64.65% Exact / 93.94% N-Tol, 84.85% SQL); CVaR_10% 158.42% (2.21x) & 85.33% N-Tol Top-1; Clock/Thermal 1477MHz/0% throttle; ClickBench 43/43 (88.37%, 400Q total)",True,PASS
+G12_V98_Reviewer_Action_Plan_A_to_G_and_6Fixes,"Abstract=235w<=250; Lero/AutoSteer/Kepler cited; Pool symbols E_All-6/E_SQL-5; G1-G3 GPUs (T4 33.76ms, A100 20.62ms); Official TPC-DS 99/99 (30.49ms, 64.65% Exact / 93.94% N-Tol, 84.85% SQL); CVaR_10% 158.42% (2.21x) & 85.33% N-Tol Top-1; Clock/Thermal 1477MHz/0% throttle; ClickBench 43/43 (88.37%, 400Q total)",True,PASS
 G13_V99_Workload_Inventory_Math_and_Reviewer_Criteria,"400 Qs (4-Cat: 75+55+115+155), Policy P1, 5-Boundary/VRAM, FAR/FRR, 4-Sensor Energy, 3-Group/5-Mech",True,PASS
 G14_V910_Reviewer_GroupA_Candor_ZeroMarkdownStars_DistinctModelHash,"0 '**' in .tex; Distinct Model SHA-256 f0e5f17c832472e3 vs CSV 89b1ec64cca15b2d; 4-Cat Taxonomy (0 '325 untouched'); Analytical G2/G3; 7-Stage Subtraction Audit; 1-Hr Stream (1,194.2 s/hr, 8.29 Wh/hr)",True,PASS
+G15_V911_Reviewer_V98_Evaluation_Closure,"0 N_tot=163; HV_r/DSR=0%/R_E/R_C; 5-Metric CuPy (1.34 GB VRAM, 100% match); Primary 8% vs Sens 12% + t_NB eq + 10% guard (55.08 ms); 4-Level Energy + 8 BQ Dims; Multi-Scale TPC-DS (SF=0.02/1/10 GB, 164.20 ms); V10 Roadmap",True,PASS
