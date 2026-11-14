@@ -85,10 +85,10 @@ def regenerate_figures_1_2_and_7():
     # --- FIGURE 1: Architecture Diagram ---
     fig1, ax = plt.subplots(figsize=(13.6, 7.6), dpi=300)
     ax.set_xlim(0, 100); ax.set_ylim(0, 100); ax.axis("off")
-    ax.text(50, 97.6, "Proposed AST-Route Four-Layer Risk-Aware Query Routing Framework (Primary Nested-CV Specification)",
-            ha="center", va="center", fontsize=12.0, fontweight="bold", color="#111111")
+    ax.text(50, 97.6, "Proposed AST-Route Four-Layer Risk-Aware Query Routing Framework (Co-Equal 8% Nested-CV & 12% Fixed Guards)",
+            ha="center", va="center", fontsize=11.8, fontweight="bold", color="#111111")
     _draw_card(ax, 1.5, 74.5, 47.0, 19.5, "LAYER 1A: Input SQL & Static AST Parsing (SQLGlot)", [
-        "• Master Corpus: 400 Total SQL Qs = 75 Core Dev + 325 Holdout (213 Primary 7-Suite / 362 Expanded)",
+        "• Master 4-Category Corpus (400 SQL Qs): 75 Core Dev + 55 Diag. + 115 Derived + 155 Untouched",
         "• Overhead Regimes: 4.15 ms cold SQL (4.39 ms cold seek) / 0.67 ms AST cache / 0.08 ms 1D cache",
         "• Extracts 7 Structural Operators: Depth D(q), Nodes N(q), Joins J(q),",
         "  Subqueries/CTEs S(q), Windows W(q), UNNEST U(q), CASE C(q) (100% SQLGlot Parse)",
@@ -100,8 +100,8 @@ def regenerate_figures_1_2_and_7():
         "• 9D Vector x_q in R^9 (augmented with log10(1 + B_scan) to R^10 across SF=1-100 GB)",
     ], "#196f3d", "#e9f7ef")
     _draw_card(ax, 1.5, 52.5, 97.0, 18.0, "LAYERS 2 & 3: Cross-Paradigm Analytical Cost Models & Multi-Output Cost-Regression Engine", [
-        "• Analytical Models: PCIe Fraction Phi_PCIe(q), Throughput Theta_eff (GB/s), Cloud Slot Proxy M_slot, FinOps Delta C_1M ($), 4-Metric Energy E(q,e)",
-        "• Primary Spec (Nested-CV tau_guard = 8% modal): 55.37 ms Net (51.22 ms exec), P95 Regret 118.4% (2.17x cut, CI [1.58x, 3.12x]), CVaR_10% 158.4% (2.21x cut)",
+        "• Analytical Models: PCIe Fraction Phi_PCIe(q), Throughput Theta_eff (GB/s), Cloud Slot Proxy M_slot, FinOps Delta C_1M ($), 4-Sensor Energy E(q,e)",
+        "• Co-Equal Guards: Nested-CV 8% (55.37 ms Net, P95 Regret 118.4% [2.17x cut], CVaR_10% 158.4%) & Fixed 12% (54.92 ms Net, P95 114.1% [2.25x cut])",
         "• Out-of-Fold Predictive Accuracy (25-Seed LOSO-CV): GPU R^2 = 0.875 (P50 Q-Err 1.053) | Polars R^2 = 0.822 | Memory R^2 = 0.912 (Inference: 497.2 us)",
     ], "#b9770e", "#fef9e7")
     for x_arr in (25.0, 75.0):
@@ -117,7 +117,7 @@ def regenerate_figures_1_2_and_7():
         ]),
         (50.7, "Candidate 3: PyTorch & CuPy GPU", "#922b21", "#fdedec", [
             "• PyTorch 2.6+cu124 & CuPy v14.2.0", "• Cold: 56.96 ms (CuPy: 58.96 ms, r=0.999)", "• L1 PCIe Bottleneck: Phi = 55.5%-56.0%",
-            "• Tested Across G1 (RTX2050), G2 (T4), G3 (A100)", "• Chunked Streaming at SF=10-100 GB", "• Routed: Compute-Heavy L2-L5",
+            "• Measured: G1 RTX 2050 (T4/A100 Proj.)", "• Chunked Streaming at SF=10-100 GB", "• Routed: Compute-Heavy L2-L5",
         ]),
         (75.3, "Candidate 4: Google BigQuery", "#5b2c6f", "#f5eef8", [
             "• Paradigm: Serverless Cloud OLAP", "• Capacitor Storage + Slot Elasticity", "• SF=1-30 GB Floor: 745.39 ms (0% Share)",
@@ -128,9 +128,9 @@ def regenerate_figures_1_2_and_7():
         _draw_card(ax, cx, 23.5, 23.2, 25.0, ctitle, clines, chdr, cfill, title_fs=8.0, body_fs=7.15)
         ax.annotate("", xy=(cx + 11.6, 48.7), xytext=(cx + 11.6, 52.3), arrowprops=dict(arrowstyle="->", lw=1.4, color="#333333"))
         ax.annotate("", xy=(cx + 11.6, 19.8), xytext=(cx + 11.6, 23.3), arrowprops=dict(arrowstyle="->", lw=1.4, color="#333333"))
-    _draw_card(ax, 1.5, 2.0, 97.0, 17.5, "LAYER 4: Constrained Risk-Aware Dispatch (Mondrian Conformal + Nested-CV 8% Primary Guard) & 25-Seed LOSO-CV", [
+    _draw_card(ax, 1.5, 2.0, 97.0, 17.5, "LAYER 4: Minimalist 2/3-Engine Tail-Safe Dispatch (Mondrian Conformal + Co-Equal 8% / 12% PCIe Guards)", [
         "• Dispatch Rule: e_hat(q) = argmin_{e in E_feasible(q)} [alpha*(T_hat/T_med) + beta*(E_hat/E_med) + gamma*(C_hat/C_ref)] with 90% Conformal + PCIe Guard",
-        "• Primary Nested-CV (8%): 55.37 ms Net (TOST p = 0.0442 vs. GPU), 1.49x-3.32x vs. CPU, cuts P95 Regret 2.17x (118.4% vs. 257.3%) & CVaR_10% 2.21x (158.4% vs. 349.4%)",
+        "• Minimalist 2-Eng {Polars,GPU} captures 98.7% gain (55.28 ms); 8% Guard (55.37 ms, TOST +-5ms p=0.0442) & 12% Guard (54.92 ms, TOST +-6ms p=0.0241)",
     ], "#145a32", "#eafaf1")
     fig1.tight_layout()
     save_to_all_fig_dirs(fig1, "fig_proposed_ast_routing_framework_300dpi")
@@ -139,24 +139,24 @@ def regenerate_figures_1_2_and_7():
     # --- FIGURE 2: Experimental Workflow (With Explicit PHASE 4 Banner) ---
     fig2, ax = plt.subplots(figsize=(13.6, 7.8), dpi=300)
     ax.set_xlim(0, 100); ax.set_ylim(0, 100); ax.axis("off")
-    ax.text(50, 98.0, "End-to-End Six-Phase Experimental Validation Workflow: AST-Route (400 Total Queries: 75 Dev + 325 Holdout [213 Primary])",
-            ha="center", va="center", fontsize=11.4, fontweight="bold", color="#111111")
+    ax.text(50, 98.0, "End-to-End Six-Phase Experimental Validation Workflow: AST-Route (400 Queries: 75 Dev + 55 Diag + 115 Derived + 155 Untouched)",
+            ha="center", va="center", fontsize=11.1, fontweight="bold", color="#111111")
     _draw_card(ax, 1.5, 76.0, 47.0, 19.0, "PHASE 1: Multi-Scale TPC-H & Cross-Schema Provisioning", [
         "• 8 TPC-H Tables: 8.66M (SF=1) to 866.1M Rows (SF=100 GB; 600.1M lineitem)",
         "• Zero-Duplication Local Catalog: Shared ZSTD Parquet + Zero-Copy Arrow (0 MB Extra)",
         "• Hardware Control: High-Perf Power Plan, 1477 MHz GPU Clock, 0% Thermal Throttle",
         "• Cloud Serverless: Google BigQuery Unoptimized vs. Clustered (Cache Disabled)",
     ], "#1f618d", "#ebf5fb")
-    _draw_card(ax, 51.5, 76.0, 47.0, 19.0, "PHASE 2: Development vs. Blinded Standard Holdout Workloads", [
-        "• Dev Set: 75 Core TPC-H Factorial (25 Seeds x V1-V3) + 15 Prospective Seed S6",
-        "• Blinded Standard Holdouts: 22 Official TPC-H + 99 Official TPC-DS (dsdgen) + 33 JOB",
-        "  + 13 SSB + 43 ClickBench (20 Parity + 23 Dialect Audit) + 100 Extended Stress Qs",
-        "• Leak-Free Protocols: 25-Seed LOSO-CV, LOWSO-CV (84.3% Top-1), 5-Fold LOTO-CV",
+    _draw_card(ax, 51.5, 76.0, 47.0, 19.0, "PHASE 2: Four-Category Epistemic Workload Taxonomy (400 SQL Qs)", [
+        "• Cat I Core Dev (75Q): TPC-H 25 Seeds x V1-V3 | Cat II Diag. (55Q): 22 TPC-H + 33 JOB",
+        "• Cat III Author-Derived Zero-Shot (115Q): 15 S6 + 30 TPC-DS-Der + 20 BIRD + 50 Ext",
+        "• Cat IV Strictly Untouched 3rd-Party (155Q): 99 Official TPC-DS + 43 CB + 13 SSB",
+        "• Leak-Free Protocols: 25-Seed LOSO-CV, 7-Suite LOWSO-CV (84.3% T1), 5-Fold LOTO-CV",
     ], "#1e8449", "#e9f7ef")
     _draw_card(ax, 1.5, 55.5, 97.0, 17.0, "PHASE 3: Pre-Execution AST Feature Profiling, Pre-Specified CSCI Projection & 7-Stage Timing Conservation", [
         "• Parses SQL via SQLGlot into 9D/10D/12D vectors x_q (4.15 ms cold SQL / 0.67 ms AST-only cache / 0.08 ms 1D threshold cache)",
         "• M1-M6 CSCI Ablation: Prunes depth-3 GBDT splits by -28.2%, lowers regret -9.22 pp (p = 0.0038), and reduces AURC from 48.65% to 28.14%",
-        "• Additive 7-Stage Timing Conservation: Separates SQL parse, metadata lookup, disk I/O, Arrow cast, PCIe H2D/D2H or cloud queue, kernel compute, & output",
+        "• 7-Stage Timing Conservation: Direct timers for Parse, Metadata, Cast, PCIe H2D/D2H, Mat & Total; Derived internal SQL kernel (GPU event sync +-0.12-0.48 ms)",
     ], "#b9770e", "#fef9e7")
     for x_arr in (25.0, 75.0):
         ax.annotate("", xy=(x_arr, 72.8), xytext=(x_arr, 75.8), arrowprops=dict(arrowstyle="->", lw=1.5, color="#333333"))
@@ -168,7 +168,7 @@ def regenerate_figures_1_2_and_7():
         linewidth=1.2, edgecolor="#34495e", facecolor="#34495e"
     )
     ax.add_patch(hdr4)
-    ax.text(50.0, 50.1, "PHASE 4: Multi-Paradigm Execution Across 6 Core Engines + External CuPy CUDA Engine & 3 Hardware Nodes (4A–4D)",
+    ax.text(50.0, 50.1, "PHASE 4: Multi-Paradigm Execution Across 6 Core Engines + External CuPy CUDA Engine & 3 Physical Nodes (4A–4D)",
             ha="center", va="center", color="white", fontweight="bold", fontsize=8.8)
 
     paradigms = [
@@ -186,22 +186,22 @@ def regenerate_figures_1_2_and_7():
         ]),
         (75.3, "PHASE 4D: CUDA GPU Engines (P4)", "#a93226", "#fdedec", [
             "• PyTorch 2.6 CUDA: 56.96 ms Cold", "• External CuPy v14.2: 58.96 ms", "  (rho = 0.9999, 100% Route Match)",
-            "• Polars-Arrow-CuPy Hybrid: 57.6 ms", "• Profiles: G1 RTX2050, G2 T4, G3 A100", "• Warm Kernel Mean: 22.25 ms",
+            "• Polars-Arrow-CuPy Hybrid: 57.6 ms", "• Measured: G1 RTX 2050 (G2/G3 Proj.)", "• Warm Kernel Mean: 22.25 ms",
         ]),
     ]
     for px, ptitle, phdr, pfill, plines in paradigms:
         _draw_card(ax, px, 22.5, 23.2, 24.5, ptitle, plines, phdr, pfill, title_fs=7.8, body_fs=7.05)
         ax.annotate("", xy=(px + 11.6, 52.1), xytext=(px + 11.6, 55.3), arrowprops=dict(arrowstyle="->", lw=1.3, color="#333333"))
         ax.annotate("", xy=(px + 11.6, 19.2), xytext=(px + 11.6, 22.3), arrowprops=dict(arrowstyle="->", lw=1.3, color="#333333"))
-    _draw_card(ax, 1.5, 1.5, 47.0, 17.2, "PHASE 5: Primary Nested-CV Endpoints, CVaR & TOST Sensitivity", [
+    _draw_card(ax, 1.5, 1.5, 47.0, 17.2, "PHASE 5: Co-Equal 8% & 12% Guards, CVaR & Exploratory TOST Curve", [
         "• Multiset Parity EX = 1.000 | Nadeau-Bengio & Seed Wilcoxon p_Holm <= 0.023",
-        "• Primary Nested-CV (8%): 55.37 ms Net, TOST +-2..8 ms Curve (p = 0.0442 at +-5 ms)",
-        "• Cuts P95 Regret 2.17x [1.58x, 3.12x] & CVaR_10% 2.21x [1.54x, 2.86x] vs. GPU",
+        "• Co-Equal: 8% Nested-CV (55.37 ms, TOST +-5ms p=0.0442) & 12% Fixed (54.92 ms, p=0.0688)",
+        "• Cuts P95 Regret 2.17x-2.25x & CVaR_10% 2.21x-2.26x; 2-Eng {Polars,GPU} = 98.7% Gain",
     ], "#6c3483", "#f5eef8")
-    _draw_card(ax, 51.5, 1.5, 47.0, 17.2, "PHASE 6: Blinded Holdout Manifest, Smoke-Test Docker & SHA-256 Audit", [
-        "• Pre-Specification & Blinded Holdout Manifest (OSF / Git Tag v9.0-jbd-submission)",
+    _draw_card(ax, 51.5, 1.5, 47.0, 17.2, "PHASE 6: Git-Locked Model Hash, Smoke-Test Docker & SHA-256 Audit", [
+        "• Distinct SHA-256: Frozen Model (f0e5f17c...) vs. Core Telemetry CSV (89b1ec64...)",
         "• One-Command Reproducibility (R1–R6 + <5s CPU-Only Smoke-Test Mode)",
-        "• Complete SQL Dialect Capability Matrix Across All 43 ClickBench & 99 TPC-DS Qs",
+        "• Official 99Q TPC-DS: 64.65% Exact Top-1 (84.85% SQL-5, 93.94% <=5ms Tol., 3.23% Regret)",
     ], "#196f3d", "#eafaf1")
     fig2.tight_layout()
     save_to_all_fig_dirs(fig2, "fig_experimental_workflow_300dpi")
@@ -222,12 +222,12 @@ def regenerate_figures_1_2_and_7():
     ]
     x = np.arange(len(suites))
     w = 0.26
-    top1 = [56.00, 73.33, 68.18, 93.94, 92.31, 80.00, 69.70, 86.00]
-    top2 = [85.33, 86.67, 90.91, 98.99, 100.00, 95.00, 100.00, 98.00]
+    top1 = [56.00, 73.33, 68.18, 64.65, 92.31, 80.00, 69.70, 86.00]
+    top2 = [85.33, 86.67, 90.91, 93.94, 100.00, 95.00, 100.00, 98.00]
     reg  = [35.84, 44.88, 9.14,  3.23,  2.82,   9.45,  16.50,  5.84]
 
-    ax1.bar(x - w, top1, w, color="#3465a4", edgecolor="black", lw=0.75, label="Top-1 Accuracy (%)")
-    ax1.bar(x,     top2, w, color="#2ca02c", edgecolor="black", lw=0.75, label="Top-2 / Noise-Tol. (%)")
+    ax1.bar(x - w, top1, w, color="#3465a4", edgecolor="black", lw=0.75, label="Exact Top-1 (%)")
+    ax1.bar(x,     top2, w, color="#2ca02c", edgecolor="black", lw=0.75, label="Top-2 / ≤5ms Tol. (%)")
     ax1.bar(x + w, reg,  w, color="#d64541", edgecolor="black", lw=0.75, hatch="//",
             label="Mean Regret (%)")
     ax1.set_xticks(x)
@@ -235,7 +235,7 @@ def regenerate_figures_1_2_and_7():
     ax1.set_ylim(0, 124)
     ax1.set_yticks([0, 20, 40, 60, 80, 100])
     ax1.set_ylabel("Percentage (%)", fontsize=8.8)
-    ax1.set_title("(a) Multi-Suite Generalization (Incl. 99Q Official TPC-DS)", fontsize=8.8, fontweight="bold")
+    ax1.set_title("(a) Multi-Suite Generalization (Exact vs. ≤5ms Tol. Top-1)", fontsize=8.8, fontweight="bold")
     ax1.grid(axis="y", linestyle="--", alpha=0.38)
     ax1.legend(loc="upper left", ncol=2, fontsize=6.3, framealpha=0.96, edgecolor="#cccccc")
 
@@ -263,30 +263,30 @@ def regenerate_figures_1_2_and_7():
     ax2.set_title("(b) Stepwise 12D Sketch Resolution on JOB (N=33)", fontsize=8.8, fontweight="bold")
     ax2.grid(axis="y", linestyle="--", alpha=0.38)
 
-    # Panel (c): TOST Equivalence p-Value Curve Across Margins +-2..+-8 ms & Tail-Risk CVaR/P95 Annotation
+    # Panel (c): Exploratory TOST Equivalence p-Value Curve Across Margins +-2..+-8 ms & Tail-Risk CVaR/P95 Annotation
     margins = np.array([2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0])
     p_nested8 = np.array([0.4225, 0.2333, 0.1084, 0.0442, 0.0175, 0.0064, 0.0022])
     p_fixed12 = np.array([0.5091, 0.3130, 0.1582, 0.0688, 0.0241, 0.0078, 0.0021])
-    ax3.plot(margins, p_nested8, "o-", color="#1b7837", lw=1.8, markersize=5.5, label="Primary Nested-CV (8% Guard)")
-    ax3.plot(margins, p_fixed12, "s--", color="#2b5c8f", lw=1.5, markersize=5.0, label="Sensitivity Fixed (12% Guard)")
+    ax3.plot(margins, p_nested8, "o-", color="#1b7837", lw=1.8, markersize=5.5, label="Co-Equal Nested-CV (8% Guard)")
+    ax3.plot(margins, p_fixed12, "s--", color="#2b5c8f", lw=1.5, markersize=5.0, label="Co-Equal Fixed (12% Guard)")
     ax3.axhline(0.05, color="#d62728", linestyle=":", lw=1.4, label=r"Significance Threshold ($\alpha = 0.05$)")
-    ax3.axvline(5.0, color="#555555", linestyle="-.", lw=1.1, label=r"Pre-Spec. Margin ($\pm 5\,$ms)")
-    ax3.annotate("p = 0.0442\n(Equiv. Pass)", xy=(5.0, 0.0442), xytext=(5.35, 0.13),
-                 arrowprops=dict(arrowstyle="->", lw=0.9, color="#1b7837"), fontsize=6.6, fontweight="bold", color="#1b7837")
+    ax3.axvline(5.0, color="#555555", linestyle="-.", lw=1.1, label=r"Router-Overhead Margin ($\pm 5\,$ms)")
+    ax3.annotate("8%: p=0.0442\n12%: p=0.0688", xy=(5.0, 0.0442), xytext=(5.30, 0.13),
+                 arrowprops=dict(arrowstyle="->", lw=0.9, color="#1b7837"), fontsize=6.3, fontweight="bold", color="#1b7837")
     ax3.text(0.97, 0.62,
              "Tail-Risk Compression vs. GPU:\n"
-             "• P95 Regret: 257.3% → 118.4%\n"
-             "  Ratio: 2.17x [95% CI: 1.58x, 3.12x]\n"
+             "• P95 Regret: 257.3% → 118.4% (8%)\n"
+             "  / 114.1% (12%), Ratio: 2.17x–2.25x\n"
              "• CVaR_10% (Worst 8Q): 349.4% → 158.4%\n"
              "  Ratio: 2.21x [95% CI: 1.54x, 2.86x]\n"
-             "• CVaR_20% (Worst 15Q): 234.9% → 124.7%",
-             transform=ax3.transAxes, ha="right", va="top", fontsize=6.15,
+             "• 2-Eng {Polars,GPU}: 98.7% of Gain",
+             transform=ax3.transAxes, ha="right", va="top", fontsize=6.1,
              bbox=dict(boxstyle="round,pad=0.3", facecolor="#fef9e7", edgecolor="#b9770e", alpha=0.95))
     ax3.set_xlim(1.8, 8.2)
     ax3.set_ylim(0.0, 0.56)
     ax3.set_xlabel(r"Equivalence Margin $\pm\Delta_{\mathrm{eq}}$ (ms)", fontsize=8.6)
-    ax3.set_ylabel(r"Two-Sided TOST $p_{\mathrm{TOST}}$ Value", fontsize=8.8)
-    ax3.set_title(r"(c) TOST $p$-Value Curve & Tail CVaR/P95 CIs", fontsize=8.8, fontweight="bold")
+    ax3.set_ylabel(r"Exploratory Two-Sided TOST $p_{\mathrm{TOST}}$", fontsize=8.8)
+    ax3.set_title(r"(c) Exploratory TOST Curve (8% vs 12%) & Tail CIs", fontsize=8.8, fontweight="bold")
     ax3.grid(True, linestyle="--", alpha=0.38)
     ax3.legend(loc="upper right", fontsize=6.0, framealpha=0.94, edgecolor="#cccccc")
 
@@ -1006,7 +1006,8 @@ In accordance with *Journal of Big Data* submission guidelines, we respectfully 
 | **6. BigQuery $\\text{SF}=1\\text{ GB}$ Scheduling Floor Framing & Cross-Section Numeric Reconciliation** | Sections 2.3 and 4.1 explicitly frame BigQuery's $745.39\\text{ ms}$ at $\\text{SF}=1\\text{ GB}$ as a stateless cloud scheduling floor ($0\\%$ routing share at $\\text{SF}=1\\text{--}30\\text{ GB}$) used to locate the $\\text{SF}=100\\text{ GB}$ local RAM spill crossover ($3{,}302\\text{ MB}$ spill, $20\\%$ routing share), while reconciling CPU-only ($118.50\\%\\rightarrow 42.80\\%$) vs. 6-engine ($358.40\\%\\rightarrow 168.50\\%$) P95 regret denominators and warm ($14.80\\text{ ms}$) vs. cold-seek ($15.66\\text{ ms}$) break-even runtimes. |
 | **7. V9.5 Reviewer Experiments E1–E8 & 4-Point Disambiguation** | Incorporates 5-Regime Backend-Independence & 7-Stage Boundary Conservation (`E1`), 6-Metric Cross-Hardware Transfer & Few-Shot Calibration (`E2`), 3-Scenario Cloud-Local Fairness & 3-Scope Cost Separation (`E3`), 4-Boundary Energy Agreement with 95% CIs & MAPE/MACE (`E4`), 5-Mode CSCI Weight Sensitivity & LOOO (`E5`), 5-Metric Operational Complexity Benchmark (`E6`: $1.42\\text{ MB}$ RAM, $0.38\\text{ s}$ train, $2{,}455$ splits), Clean-Room `R1–R6` Verification (`E7`), and Dynamic Drift `D0–D4` / $C=1\\text{--}64$ Concurrency (`E8`), while disambiguating $74.67\\%$ (Core TPC-H $N=75$) vs. $82.76\\%$ (External 5-Suite $N_{\\text{ext}}=116$) Pure-SQL Top-1 accuracy. |
 | **8. V9.7 Live Reviewer Experiments E1–E7 (`CuPy` GPU, $+50$ Templates, `LOWSO-CV`, `M1–M6`, Hardware Envelopes, & TOST Margin Sweep)** | Adds (E1) independent external GPU backend cross-validation via `CuPy v14.2.0` CUDA 12 columnar engine ($60/75$ L1–L4 native $\\text{EX}=1.000$, $61.13$ vs. $59.38\\text{ ms}$ cold, $\\rho=0.9999$, **$100.0\\%$ routing decision match**, $54.10$ vs. $53.76\\text{ ms}$ AST-Route net); (E2) $+50$ structurally distinct external templates ($25$ `TPC-DS-Complex` + $25$ `Enterprise-Redset-BI` $\\rightarrow N_{\\text{ext}}=166$ across 7 suites, $263$ benchmark / $278$ total queries, $72.89\\%$ 9D, $84.34\\%$ Pure-SQL, $85.54\\%$ 12D, and **$84.34\\%$ Leave-One-Workload-Suite-Out `LOWSO-CV` Top-1**); (E3) 6-model `M1–M6` orthogonalized CSCI + `AURC` ($48.65\\%\\rightarrow 28.14\\%$); (E4) live CPU thread scaling ($T\\in\\{2,4,8,22\\}$) and PCIe bandwidth ($1.85, 5.69, 12.40\\text{ GB/s}$) / VRAM ($1.28, 2.50, 4.00\\text{ GB}$) envelopes; (E5) 5-level TOST margin sensitivity ($\\pm 2, \\pm 3, \\pm 5, \\pm 6, \\pm 8\\text{ ms}$) & Nadeau–Bengio CV correction ($p_{\\text{NB}}\\le 0.0094$); and (E6–E7) 4-metric energy separation (Idle W, Dynamic W, Gross J/q, J/Successful Query) & repeated cloud FinOps audit. |
-| **9. V9.8 Action Plans A–G & 400-Query Blinded Holdout (`99/99` Official TPC-DS, `43/43` ClickBench, `G1–G3` GPUs, `CVaR_10%`, & `<250w` Abstract)** | Adds (Part A) 3 GPU execution backends (`PyTorch`, `CuPy v14.2.0`, `Polars-Arrow-CuPy Hybrid`) and 3 GPU hardware envelopes (`G1: Laptop RTX 2050` at $5.69\\text{ GB/s}$ [$55.37\\text{ ms}$], `G2: Server Tesla T4` at $11.80\\text{ GB/s}$ [$33.76\\text{ ms}$, $89.33\\%$ Top-1], and `G3: Datacenter A100` at $24.50\\text{ GB/s}$ [$20.62\\text{ ms}$, $93.33\\%$ Top-1]); (Part B) live execution of all **$99/99$ unmodified Official TPC-DS Benchmark Queries (`Q1–Q99`)** via DuckDB's official `tpcds` extension ($99/99$ DuckDB [$44.55\\text{ ms}$], $93/99$ DataFusion [$45.51\\text{ ms}$], $81/99$ Polars [$46.85\\text{ ms}$], $78/99$ GPU [$35.56\\text{ ms}$]; blinded zero-shot **$30.49\\text{ ms}$ exec, $93.94\\%$ noise-tolerant Top-1, $3.23\\%$ mean regret, $1.46\\times$ vs. DuckDB** and **$84.85\\%$ Top-1 / $36.15\\text{ ms}$ on Pure-SQL $\\mathcal{E}_{\\text{SQL-5}}$**, registered in `reproducibility/OSF_PREREGISTRATION_AND_BLINDED_HOLDOUT_MANIFEST.md`); (Part C) $\\text{CVaR}_{10\\%}$ ($2.21\\times$ reduction, $349.40\\%\\rightarrow 158.42\\%$, 95% CI $[1.54\\times, 2.86\\times]$, $p=0.0084$), $\\text{CVaR}_{20\\%}$ ($234.89\\%\\rightarrow 124.65\\%$), P95 ratio 95% CIs ($2.17\\times$ $[1.58\\times, 3.12\\times]$), and $\\le 5.0\\text{ ms}$ label-noise-tolerant Top-1 (**$85.33\\%$ all-engine / $92.00\\%$ Pure-SQL**); (Part D) laptop clock/thermal/DVFS and OS standby page-cache control ($1{,}477\\text{ MHz}$ locked SM, $56\\text{--}66^\\circ\\text{C}$, $0.0\\%$ throttling, $\\text{CV}=1.97\\%$); and (Part E) full **$43/43$ ClickBench** dialect transpilation ($88.37\\%$ Top-1, $24.30\\text{ ms}$) across **$400$ total evaluated queries**, plus `Lero`/`AutoSteer`/`Kepler` citations and a compact $\\le 250$-word Abstract. |
+| **9. V9.8 Action Plans A–G & 400-Query Blinded Holdout (`99/99` Official TPC-DS, `43/43` ClickBench, `G1–G3` GPUs, `CVaR_10%`, & `<250w` Abstract)** | Adds (Part A) 3 GPU execution backends (`PyTorch`, `CuPy v14.2.0`, `Polars-Arrow-CuPy Hybrid`), physically measured `G1: Laptop RTX 2050` at $5.69\\text{ GB/s}$ [$55.37\\text{ ms}$], and analytical bandwidth-envelope projections for `G2: Server Tesla T4` ($11.80\\text{ GB/s}$, $33.76\\text{ ms}$, $89.33\\%$ Top-1) and `G3: Datacenter A100` ($24.50\\text{ GB/s}$, $20.62\\text{ ms}$, $93.33\\%$ Top-1); (Part B) live execution of all **$99/99$ unmodified Official TPC-DS Benchmark Queries (`Q1–Q99`)** via DuckDB's official `tpcds` extension ($99/99$ DuckDB [$44.55\\text{ ms}$], $93/99$ DataFusion [$45.51\\text{ ms}$], $81/99$ Polars [$46.85\\text{ ms}$], $78/99$ GPU [$35.56\\text{ ms}$]; blinded zero-shot **$64.65\\%$ Exact Top-1 [$93.94\\%$ $\\le 5\\text{ ms}$ noise-tolerant Top-1], $30.49\\text{ ms}$ exec, $3.23\\%$ mean regret, $1.46\\times$ vs. DuckDB** and **$84.85\\%$ Exact Top-1 / $36.15\\text{ ms}$ on Pure-SQL $\\mathcal{E}_{\\text{SQL-5}}$**, registered in `reproducibility/OSF_PREREGISTRATION_AND_BLINDED_HOLDOUT_MANIFEST.md`); (Part C) $\\text{CVaR}_{10\\%}$ ($2.21\\times$ reduction, $349.40\\%\\rightarrow 158.42\\%$, 95% CI $[1.54\\times, 2.86\\times]$, $p=0.0084$), $\\text{CVaR}_{20\\%}$ ($234.89\\%\\rightarrow 124.65\\%$), P95 ratio 95% CIs ($2.17\\times$ $[1.58\\times, 3.12\\times]$), and $\\le 5.0\\text{ ms}$ label-noise-tolerant Top-1 (**$85.33\\%$ all-engine / $92.00\\%$ Pure-SQL**); (Part D) laptop clock/thermal/DVFS and OS standby page-cache control ($1{,}477\\text{ MHz}$ locked SM, $56\\text{--}66^\\circ\\text{C}$, $0.0\\%$ throttling, $\\text{CV}=1.97\\%$); and (Part E) full **$43/43$ ClickBench** dialect transpilation ($88.37\\%$ Top-1, $24.30\\text{ ms}$) across **$400$ total evaluated queries**, plus `Lero`/`AutoSteer`/`Kepler` citations and a compact $\\le 250$-word Abstract. |
+| **10. V9.10 Reviewer Group A & B Synthesis (Protocol Candor, Co-Equal `8%`/`12%` Guards, Distinct Model SHA-256 `f0e5f17c...`, 4-Category Epistemic Taxonomy, Analytical `G2/G3`, 7-Stage Subtraction Audit, & 1-Hour Stream Cost)** | (1) Transparently frames `OSF_PREREGISTRATION_AND_BLINDED_HOLDOUT_MANIFEST.md` as an internal Git-locked repository protocol (locked after Core $N=75$ dev and prior to `S6` & Official TPC-DS `Q1–Q99`) and reports Nested-CV $8\\%$ ($55.37\\text{ ms}$, $118.40\\%$ P95, $p_{\\text{TOST}}=0.0442$) and Fixed $12\\%$ ($54.92\\text{ ms}$, $114.11\\%$ P95, $p_{\\text{TOST},\\pm 5\\text{ms}}=0.0688$, $p_{\\text{TOST},\\pm 6\\text{ms}}=0.0241$) on co-equal footing; (2) Serializes `reproducibility/frozen_ast_route_v9_gbdt_model.json` with distinct SHA-256 `f0e5f17c832472e3...` vs. telemetry CSV `89b1ec64cca15b2d...`; (3) Reclassifies `G2 (Tesla T4)` and `G3 (A100)` as analytical bandwidth-envelope projections; (4) Partitions all $400$ queries into 4 epistemic categories ($75$ Cat I Dev + $55$ Cat II Diagnostic Standard [`22` TPC-H + `33` JOB] + $115$ Cat III Author-Derived Zero-Shot + $155$ Cat IV Strictly Untouched Standard [`99` Official TPC-DS + `43` ClickBench + `13` SSB]); (5) Reports Official TPC-DS 99Q Exact Top-1 ($64.65\\%$ All-6, $84.85\\%$ SQL-5) first with $\\text{SF}=0.02$ vs. $\\text{SF}=1\\text{--}10\\text{ GB}$ scale context; (6) Discloses direct vs. derived-by-subtraction 7-stage timing ($\\pm 0.12\\text{--}0.48\\text{ ms}$ CUDA event sync residual) and 1-hour continuous stream accounting ($1{,}194.2\\text{ s/hr}$, $29.83\\text{ kJ/hr}$ [$8.29\\text{ Wh/hr}$], $\\$0.039\\text{/hr}$ at $21{,}600\\text{ q/hr}$); and (7) Purges all literal `**` markdown tokens from `.tex`. |
 
 ### 5. Manuscript Organization (Main Text + Additional File 1 Supplementary Appendix)
 To ensure high readability and focus in the Main Text (**32 pages**, Tables 1–13, Algorithm 1, and Figures 1–6), all granular per-tier tables, TDP/DVFS energy calibration and Bland–Altman analyses, $C=1\\text{--}64$ concurrency manifests, 3-node cross-ISA tables, and verification registries are provided in **Additional File 1 (`Additional_File_1_Supplementary_Appendix.pdf`, Tables S1–S17 and Figures S1–S8)**. All code, SQL suites, and SHA-256-indexed telemetry logs are publicly available at `https://github.com/preecha-msu/bigquery-olap-benchmark` (pinned release tag `v9.0-jbd-submission`, tree `bc27158`).
@@ -1085,7 +1086,7 @@ def run_automated_consistency_gate():
         ("G6_PointBC_Denominators_and_Overheads_Reconciled", "48.5% realized / 16.5% oracle; 97.3%-98.7% routed / 87.3%-88.7% oracle; 4.15/0.67/0.08 ms", all(s in tex for s in ["48.5\\%", "16.5\\%", "0.67\\text{ ms}", "0.08\\text{ ms}"])),
         ("G7_PointDE_TOST_and_FullN_Regret_Reported", "TOST p=0.0442 (p_non-inf=0.00067); Full-N regret p=0.0098 (p_Holm=0.0196) & n=24 p=0.0042", all(s in tex for s in ["0.0442", "0.00067", "0.0098", "0.0196"])),
         ("G8_PointF_Derived_Benchmarks_and_Unified_Versions", "TPC-DS-derived & BIRD-inspired; DuckDB v2.0.0, Polars v2.1.0, DataFusion v55.0.0", all(s in tex for s in ["TPC-DS-derived", "BIRD-inspired", "DuckDB v2.0.0", "Polars v2.1.0", "DataFusion v55.0.0"])),
-        ("G9_Reviewer_6Point_Forensic_Audit_Resolved", "Nested-CV 8% in Abstract (no 54.92/12% mix); Table 1 Null col; Bao/EXPLAIN-DAG; M2-Poly/M2-LinTree; AURC 28.14%; T_BE 14.80/15.66; p=0.0115/0.0098", ("55.37" in abs_text and "54.92" not in abs_text and "Explicit Negative \\& Null Results" in tex and "M2-Poly" in tex and "M2-LinTree" in tex and "28.14\\%" in tex and "15.66" in tex and "0.0115" in tex)),
+        ("G9_Reviewer_6Point_Forensic_Audit_Resolved", "Co-Equal Nested-CV 8% (55.37 ms) & Fixed 12% (54.92 ms) in Abstract; Table 1 Null col; Bao/EXPLAIN-DAG; M2-Poly/M2-LinTree; AURC 28.14%; T_BE 14.80/15.66; p=0.0115/0.0098", ("55.37" in abs_text and "54.92" in abs_text and "Explicit Negative \\& Null Results" in tex and "M2-Poly" in tex and "M2-LinTree" in tex and "28.14\\%" in tex and "15.66" in tex and "0.0115" in tex)),
         ("G10_V95_Reviewer_E1_to_E6_and_4Point_Audit", "E1 5-Regime & 7-Stage; E2 6-Metric Hardware Transfer; E3 3-Scenario Cloud & 3-Cost Scope; E4 4-Boundary Energy 95% CI & MAPE/MACE; E5 5-Mode CSCI & LOOO; E6 1.42 MB / 0.38 s / 2,455 splits; 74.67% vs 82.76% Pure-SQL disambiguated", all(s in tex for s in ["Regime~1A", "Regime~2B", "Scenario~1", "Scenario~2", "Scenario~3", "MAPE/MACE", "Leave-One-Operator-Out", "1.42\\text{ MB}", "0.38\\text{ s}", "2{,}455"])),
         ("G11_V97_Experiments_E1_to_E7_and_Global_Audit", "E1 CuPy v14.2.0 GPU (61.13 ms, rho=0.9999, 100% match); E2 +50 templates (N_ext=166, 263/278Q, LOWSO-CV 84.34%); E3 M1-M6 AURC (36.80/38.42/28.65/28.22%); E4 CPU cores & PCIe envelopes; E5 TOST +-2..8 ms & Nadeau-Bengio; E6-E7 4-Metric Energy & Cloud Audit", all(s in tex for s in ["CuPy v14.2.0", "61.13", "0.9999", "TPC-DS-Complex", "Enterprise-Redset-BI", "LOWSO-CV", "84.34\\%", "Nadeau--Bengio", "36.80\\%", "28.22\\%"]) and all((RES_DIR / fn).exists() for fn in [
             "v97_exp_e1_external_gpu_backend_validation.csv",
@@ -1096,15 +1097,15 @@ def run_automated_consistency_gate():
             "v97_exp_e5_tost_margin_sensitivity_and_nadeau_bengio.csv",
             "v97_exp_e6_e7_energy_and_cloud_finops_audit.csv",
         ])),
-        ("G12_V98_Reviewer_Action_Plan_A_to_G_and_6Fixes", f"Abstract={abs_words}w<=250; Lero/AutoSteer/Kepler cited; Pool symbols E_All-6/E_SQL-5; G1-G3 GPUs (T4 33.76ms, A100 20.62ms); Official TPC-DS 99/99 (30.49ms, 93.94% N-Tol, 84.85% SQL); CVaR_10% 158.42% (2.21x) & 85.33% N-Tol Top-1; Clock/Thermal 1477MHz/0% throttle; ClickBench 43/43 (88.37%, 400Q total)", abs_words <= 250 and all(s in tex for s in ["zhu2023lero", "anneser2023autosteer", "doshi2023kepler", "\\mathcal{E}_{\\text{All-6}}", "\\mathcal{E}_{\\text{SQL-5}}", "33.76\\text{ ms}", "20.62\\text{ ms}", "30.49\\text{ ms}", "93.94\\%", "84.85\\%", "158.42\\%", "2.21\\times", "85.33\\%", "1{,}477\\text{ MHz}", "88.37\\%"]) and all((RES_DIR / fn).exists() for fn in [
+        ("G12_V98_Reviewer_Action_Plan_A_to_G_and_6Fixes", f"Abstract={abs_words}w<=250; Lero/AutoSteer/Kepler cited; Pool symbols E_All-6/E_SQL-5; G1-G3 GPUs (T4 33.76ms, A100 20.62ms); Official TPC-DS 99/99 (30.49ms, 64.65% Exact / 93.94% N-Tol, 84.85% SQL); CVaR_10% 158.42% (2.21x) & 85.33% N-Tol Top-1; Clock/Thermal 1477MHz/0% throttle; ClickBench 43/43 (88.37%, 400Q total)", abs_words <= 250 and all(s in tex for s in ["zhu2023lero", "anneser2023autosteer", "doshi2023kepler", "\\mathcal{E}_{\\text{All-6}}", "\\mathcal{E}_{\\text{SQL-5}}", "33.76\\text{ ms}", "20.62\\text{ ms}", "30.49\\text{ ms}", "64.65\\%", "93.94\\%", "84.85\\%", "158.42\\%", "2.21\\times", "85.33\\%", "1{,}477\\text{ MHz}", "88.37\\%"]) and all((RES_DIR / fn).exists() for fn in [
             "v98_partA_multi_gpu_engine_and_cross_gpu_calibration.csv",
             "v98_partB_official_tpcds_99queries_blinded_holdout.csv",
             "v98_partC_cvar_bootstrap_ratio_and_label_noise.csv",
             "v98_partD_hardware_clock_thermal_dvfs_stability.csv",
             "v98_partE_sql_dialect_capability_and_clickbench43_matrix.csv",
         ]) and (ROOT / "reproducibility" / "OSF_PREREGISTRATION_AND_BLINDED_HOLDOUT_MANIFEST.md").exists()),
-        ("G13_V99_Workload_Inventory_Math_and_Reviewer_Criteria", "400 Qs (75 Dev + 325 Holdout), Policy P1, 5-Boundary/VRAM, FAR/FRR, 4-Sensor Energy, 3-Group/5-Mech", (
-            "325" in tex
+        ("G13_V99_Workload_Inventory_Math_and_Reviewer_Criteria", "400 Qs (4-Cat: 75+55+115+155), Policy P1, 5-Boundary/VRAM, FAR/FRR, 4-Sensor Energy, 3-Group/5-Mech", (
+            "155" in tex
             and "400" in tex
             and "Policy~P1" in tex
             and "False Acceptance Rate" in tex
@@ -1117,6 +1118,19 @@ def run_automated_consistency_gate():
                 "v99_conformal_shift_ood_far_frr_audit.csv",
                 "v99_unified_energy_boundary_and_concurrency_efficiency.csv",
             ])
+        )),
+        ("G14_V910_Reviewer_GroupA_Candor_ZeroMarkdownStars_DistinctModelHash", "0 '**' in .tex; Distinct Model SHA-256 f0e5f17c832472e3 vs CSV 89b1ec64cca15b2d; 4-Cat Taxonomy (0 '325 untouched'); Analytical G2/G3; 7-Stage Subtraction Audit; 1-Hr Stream (1,194.2 s/hr, 8.29 Wh/hr)", (
+            "**" not in tex
+            and "**" not in (MS_DIR / "Additional_File_1_Supplementary_Appendix.tex").read_text(encoding="utf-8")
+            and "325 untouched" not in tex.lower()
+            and "f0e5f17c" in tex
+            and "89b1ec64" in tex
+            and "analytical bandwidth-envelope projection" in tex.lower()
+            and "derived by subtraction" in tex.lower()
+            and "1{,}194.2" in tex
+            and "8.29\\text{ Wh/hr}" in tex
+            and (ROOT / "reproducibility" / "frozen_ast_route_v9_gbdt_model.json").exists()
+            and (RES_DIR / "v910_continuous_stream_hourly_cost_and_audit.csv").exists()
         )),
     ]
 
@@ -1172,7 +1186,9 @@ def run_automated_consistency_gate():
         RES_DIR / "v99_pareto_15weight_simplex_and_stability.csv",
         RES_DIR / "v99_conformal_shift_ood_far_frr_audit.csv",
         RES_DIR / "v99_unified_energy_boundary_and_concurrency_efficiency.csv",
+        RES_DIR / "v910_continuous_stream_hourly_cost_and_audit.csv",
         ROOT / "reproducibility" / "OSF_PREREGISTRATION_AND_BLINDED_HOLDOUT_MANIFEST.md",
+        ROOT / "reproducibility" / "frozen_ast_route_v9_gbdt_model.json",
         ROOT / "scripts" / "216_v97_reviewer_experiments_E1_to_E7.py",
         ROOT / "scripts" / "217_v98_reviewer_action_plan_A_to_G.py",
         ROOT / "scripts" / "218_v99_data_table_math_and_inventory_audit.py",
