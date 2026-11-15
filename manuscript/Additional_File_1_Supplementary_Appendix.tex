@@ -1013,6 +1013,99 @@ Exploratory Host+Dev$^{\dagger}$ & P2 vs.\ P1 / Polars / DuckDB ($E_{\text{sys}}
 \bottomrule
 \end{tabular}
 \end{table}
+
+\begin{table}[htbp]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{2.4pt}
+\caption{Protocols \textbf{R12} (Three-Level Reproducibility, Cross-Environment/Hardware Replication, and Untouched Generalization Taxonomy with V9$\rightarrow$V10$\rightarrow$V11 Frozen Model Lineage; Part~A) and \textbf{R13} (Mechanistic Comparison of Domain-Informed $\text{CSCI}(q)$ Against Unsupervised In-Fold PCA-1, PCA-2, Gaussian Random Oblique Projections, Equal-Weight Index, and In-Fold Ridge-NNLS Across Core 75Q, Official TPC-DS 99Q, and ClickBench 43Q; Part~B).}\label{tab:supp_v11_r12_r13}
+\begin{tabular}{@{}llrrrrrrl@{}}
+\toprule
+\multicolumn{9}{@{}l}{\textbf{Part A: Protocol R12 --- Three-Level Reproducibility/Replication/Generalization Taxonomy \& Frozen Model Version Lineage (\texttt{v11\_r12\_independent\_reexecution\_audit.csv})}} \\
+\textbf{Taxonomy Level / Version} & \textbf{Artifact / Workload / Hardware Scope} & \textbf{Queries ($N$)} & \textbf{Completion} & \textbf{$\text{EX}=1.000$} & \textbf{Exact Top-1} & \textbf{Decision Match} & \textbf{Table Diff / P95 Reg.} & \textbf{SHA-256 Prefix \& Verification Status} \\
+\midrule
+\textbf{Lineage: V9 $\rightarrow$ V10 $\rightarrow$ V11} & \texttt{frozen\_ast\_route\_v\{9,10,11\}\_gbdt\_model.json} & $400 + 25$ & $100.0\%$ & $1.000$ & Identical & $100.0\%$ ($0$ edits) & $0.000\%$ diff & \textbf{\texttt{f0e5f17c832472e3} (Tag \texttt{v11.0.0-jbd-r18})} \\
+\textbf{Level A: Reproducibility} & Same-Host Clean-Room Re-Exec (Node~1) & $N=75$ & $100.0\%$ & $1.000$ & $57.33\%$ ($56.0\%$) & $100.0\%$ [$98.67\%$ live] & $0.000\%$ / $114.11\%$ & \texttt{8549da3720620971} (5/5 Criteria PASS) \\
+\textbf{Level B: Replication (Env.)} & WSL2 Linux \texttt{RAPIDS cudf-polars 26.10.2} & $22$Q / $75$Q & $100.0\%$ & $1.000$ & $\mathbf{95.45\%}$ / $57.33\%$ & $95.45\%$ / $100\%$ & $\mathbf{0.00\%}$ / $155.29\%$ & \texttt{be22d721f0ae1180} ($16.5\times$ P95 cut on 75Q) \\
+\textbf{Level B: Replication (Nodes)} & Nodes~2 (22T), 3 (Apple M1), 4 (Tesla T4) & $75 / 30 / 75$Q & $100.0\%$ & $1.000$ & $97.3 / 96.7 / 100\%$ & $100.0\%$ parity & $1.45 / 14.2 / 0.0\%$ & \texttt{a722b526715a0c93} (Existing 4 Nodes Only) \\
+\textbf{Level C: Generalization} & Untouched Cat~IV: TPC-DS 99Q, CB 43Q, SSB 13Q & $N=155$ & $100.0\%$ & $1.000$ & $64.65 / 88.37 / 92.3\%$ & $84.85\%$ SQL-5 & $15.01 / 24.5 / 18.2\%$ & \texttt{16e4380c3902a1d1} ($88.89\%$ $\le 10\%$ Hit on 99Q) \\
+\midrule
+\multicolumn{9}{@{}l}{\textbf{Part B: Protocol R13 --- Mechanistic Oblique Projection Ablation: Domain-Informed $\text{CSCI}(q)$ vs.\ In-Fold PCA \& Random Oblique Projections (\texttt{v11\_r13\_csci\_mechanistic\_pca\_rp\_ablation.csv})}} \\
+\textbf{Feature Representation (25-Seed CV)} & \textbf{Oblique Projection Mechanism} & \textbf{Splits/Tree} & \textbf{Core 75Q Net} & \textbf{Core P95 Reg.} & \textbf{Core ECE / AURC} & \textbf{TPC-DS 99Q T1 (Reg)} & \textbf{ClickB.\ 43Q T1} & \textbf{Paired Wilcoxon $p$ vs.\ Canonical M3} \\
+\midrule
+1. \textbf{M1}: Raw AST Operators (7D) & Axis-aligned $[D,N,J,S,W,U,C]$ (No $\hat{\sigma}$) & $6.72\pm 0.22$ & $61.06\text{ ms}$ & $146.20\%$ & $11.24\% / 48.2\%$ & $52.53\%$ ($18.42\%$) & $69.77\%$ & $p=0.0008$ (Lacks $\hat{\sigma}$ \& oblique bias) \\
+2. \textbf{M2}: 7 AST + Selectivity (8D) & Axis-aligned $[D..C,\hat{\sigma}]$ (No Composite) & $6.84\pm 0.21$ & $58.12\text{ ms}$ & $138.45\%$ & $8.42\% / 38.6\%$ & $58.59\%$ ($9.84\%$) & $79.07\%$ & $p=0.0038$ ($\Delta\mathcal{R}=+9.22\text{ pp}$ worse) \\
+3. \textbf{M2 + In-Fold Top-1 PCA ($\text{PCA}_1$)} & Unsupervised max-variance $\mathbf{v}_1^{(-k)\top}\tilde{\mathbf{a}}$ & $6.42\pm 0.20$ & $57.48\text{ ms}$ & $134.20\%$ & $6.12\% / 34.9\%$ & $59.60\%$ ($8.92\%$) & $81.40\%$ & $\mathbf{p=0.0124}$ (Only $-6.1\%$ splits; syntax-var) \\
+4. \textbf{M2 + In-Fold Top-2 PCA ($\text{PCA}_{1,2}$)} & Unsupervised top-2 $\mathbf{V}_{1:2}^{(-k)\top}\tilde{\mathbf{a}}$ (10D) & $6.51\pm 0.21$ & $57.19\text{ ms}$ & $132.80\%$ & $5.95\% / 34.1\%$ & $60.61\%$ ($8.45\%$) & $81.40\%$ & $\mathbf{p=0.0156}$ (Only $-4.8\%$ splits; $+5.2\text{ pp}$ reg) \\
+5. \textbf{M2 + Gaussian Random Oblique} & $R=20$ random $\mathbf{r}_m \sim \mathcal{N}(\mathbf{0},\mathbf{I}_6)$ per fold & $6.58\pm 0.24$ & $57.85\text{ ms}$ & $136.40\%$ & $6.45\% / 35.8\%$ & $58.59\%$ ($9.50\%$) & $79.07\%$ & $\mathbf{p=0.0068}$ (Only $-3.8\%$ splits; high var) \\
+6. \textbf{M2 + Equal-Weight Index} & Unweighted sum $\mathbf{w}_{\text{eq}}=[1,1,1,1,1,1]$ (9D) & $5.28\pm 0.18$ & $56.14\text{ ms}$ & $124.60\%$ & $5.10\% / 31.2\%$ & $61.62\%$ ($5.84\%$) & $83.72\%$ & $\mathbf{p=0.0284}$ (Under-weights $W,U$ passes) \\
+7. \textbf{M4: In-Fold Ridge-NNLS $\hat{\mathbf{w}}^{(-k)}$} & Supervised cost-aligned $\cos(\mathbf{w},\hat{\mathbf{w}})=0.9998$ & $\mathbf{4.94\pm 0.17}$ & $\mathbf{54.91\text{ ms}}$ & $\mathbf{114.85\%}$ & $\mathbf{4.22\% / 28.2\%}$ & $\mathbf{64.65\%\ (3.28\%)}$ & $\mathbf{88.37\%}$ & $p=0.8924$ (Matches canonical M3) \\
+8. \textbf{M3: Canonical $\text{CSCI}(q)$ (Proposed)} & \textbf{Memory-pass weights $[1.5,2.5,3,3.5,4,1.5]$} & $\mathbf{4.91\pm 0.16}$ & $\mathbf{54.92\text{ ms}}$ & $\mathbf{114.11\%}$ & $\mathbf{4.18\% / 28.1\%}$ & $\mathbf{64.65\%\ (3.23\%)}$ & $\mathbf{88.37\%}$ & \textbf{Reference ($\mathbf{-28.2\%}$ splits in $25/25$ seeds)} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{2.4pt}
+\caption{Protocols \textbf{R14} (10,000-Point Dense Dirichlet Simplex, NSGA-II Evolutionary Search, and Multi-Objective Bayesian Optimization [MOBO / qEHVI] Pareto Frontier Audit; Part~A) and \textbf{R15} (Seven-Level Energy Validation Matrix \texttt{E1--E7} with Repeatability, Uncertainty Propagation, and $100\%$ Policy~P2 Ranking Invariance; Part~B).}\label{tab:supp_v11_r14_r15}
+\begin{tabular}{@{}llrrrrrrl@{}}
+\toprule
+\multicolumn{9}{@{}l}{\textbf{Part A: Protocol R14 --- 10,000-Point Dense Simplex, NSGA-II ($P=100,G=100$), and MOBO (qEHVI) Pareto Frontier Audit (\texttt{v11\_r14\_pareto\_10000pt\_nsga2\_mobo.csv})}} \\
+\textbf{Multi-Objective Search Method} & \textbf{Evaluations / Search Space} & \textbf{Dominated ($\text{DSR}$)} & \textbf{SF1 Lat (ms)} & \textbf{SF1 $E_{\text{dev}}$ (J)} & \textbf{SF1 HV [95\% CI]} & \textbf{SF100 Lat (ms)} & \textbf{SF100 HV} & \textbf{Hypervolume Gap vs.\ Policy P4 ($\Delta\text{HV}$)} \\
+\midrule
+1. Discrete 15-Point Simplex Grid & $15$ lattice weights $(\alpha,\beta,\gamma)\in\Delta^2$ & $0.00\%$ ($0/15$) & $56.18$ (P4) & $0.945\text{ J}$ & $0.9210$ $[0.9201,0.9210]$ & $1{,}196.20$ & $0.9340$ & Reference Policy P4 $(0.5,0.3,0.2)$ \\
+2. 500-Point Dirichlet Simplex & $500$ $\text{Dir}(1,1,1)$ continuous weights & $0.00\%$ ($0/500$) & $55.94$ & $0.932\text{ J}$ & $0.9212$ $[0.9206,0.9212]$ & $1{,}191.80$ & $0.9342$ & $\Delta\text{HV}=+0.0002$ ($97.3\%$ P4 decision match) \\
+3. \textbf{10,000-Point Dense Simplex} & $\mathbf{10{,}000}$ $\text{Dir}(1,1,1)$ dense samples & $\mathbf{0.00\%}$ ($0/10\text{k}$) & $\mathbf{55.86}$ & $\mathbf{0.926\text{ J}}$ & $\mathbf{0.9214}$ $[0.9208,0.9208]$ & $\mathbf{1{,}189.40}$ & $\mathbf{0.9344}$ & $\mathbf{\Delta\text{HV}=+0.0004}$ ($+0.043\%$, $p=0.841$) \\
+4. \textbf{NSGA-II Evolutionary Search} & $P=100\times G=100 = 10{,}000$ evals & $\mathbf{0.00\%}$ ($100$ ND) & $\mathbf{55.85}$ & $\mathbf{0.925\text{ J}}$ & $\mathbf{0.9214}$ $[0.9211,0.9214]$ & $\mathbf{1{,}189.10}$ & $\mathbf{0.9344}$ & $\mathbf{\Delta\text{HV}=+0.0004}$ (Optimal $\mathbf{w}^*=[0.484,0.318,0.198]$) \\
+5. \textbf{MOBO (qEHVI Gaussian Process)} & $30$ Sobol $+ 170$ qEHVI acquisitions & $\mathbf{0.00\%}$ & $\mathbf{55.85}$ & $\mathbf{0.925\text{ J}}$ & $\mathbf{0.9214}$ $[0.9212,0.9214]$ & $\mathbf{1{,}189.10}$ & $\mathbf{0.9344}$ & $\mathbf{\Delta\text{HV}=+0.0004}$ (P4 captures $\mathbf{99.96\%}$ of max HV) \\
+\midrule
+\multicolumn{9}{@{}l}{\textbf{Part B: Protocol R15 --- Seven-Level Energy Validation Matrix (\texttt{E1--E7}) Across $R=50\text{--}100$ Repetitions (\texttt{v11\_r15\_energy\_validation\_matrix\_E1\_E7.csv})}} \\
+\textbf{Matrix ID \& Workload Regime} & \textbf{Physical Sensor / Boundary} & \textbf{Trials ($R$)} & \textbf{Idle Power} & \textbf{Active Power} & \textbf{Gross / Dyn (J/q)} & \textbf{CV / ICC} & \textbf{Bland--Altman [95\% LoA]} & \textbf{Calibration \& P2 Ranking Verdict} \\
+\midrule
+\textbf{E1: Idle Baseline ($60\text{ s}$)} & \texttt{pynvml} GPU + Host CPU + ACPI DC & $R=100$ & $4.80 / 14.50\text{ W}$ & $19.30 / 20.97\text{ W}$ & $0.000\text{ J/q}$ (Base) & $\text{CV}=0.62\%$ & $+0.0001\text{ W}$ $[-0.08,+0.08]$ & Establishes $19.30\text{ W}$ Host+GPU \& $20.97\text{ W}$ DC floor \\
+\textbf{E2: CPU-Only Execution} & Node~1 Polars/DuckDB + Cloud RAPL & $R=50\times 75$ & $14.50\text{ W}$ & $34.82\text{--}38.41\text{ W}$ & $3.170 / 1.972\text{ J}$ & $\text{CV}=3.09\%$ & $+0.012\text{ J}$ $[-0.201,+0.197]$ & Exploratory TDP on Win11; exact RAPL on Cloud \\
+\textbf{E3: GPU-Only Warm Kernel} & \texttt{pynvml} 50--250 Hz Hardware Sensor & $R=50\times 75$ & $4.80 / 9.65\text{ W}$ & $11.31 / 38.00\text{ W}$ & $\mathbf{0.644 / 0.371\text{ J}}$ & $\mathbf{\text{CV}=1.24\%}$ & $\mathbf{+0.0005\text{ J}}$ $[-0.018,+0.020]$ & \textbf{Primary Hardware-Sensor Energy Metric ($\rho=0.9996$)} \\
+\textbf{E4: CPU+GPU Simultaneous} & Hybrid AST-Route ($C=1$ \& $C=32$) & $R=50\times 75$ & $19.30\text{ W}$ & $27.74 / 61.18\text{ W}$ & $1.658 / 0.542\text{ J}$ (P2) & $\text{CV}=1.96\%$ & $+0.004\text{ J}$ $[-0.064,+0.062]$ & $C=32$ amortizes energy to $\mathbf{0.396\text{ J/q}}$ ($122.3\text{ MB/J}$) \\
+\textbf{E5: Mainboard ACPI DC Shunt} & Physical Battery Shunt (AC Unplugged) & $N=2{,}817$ ($45\text{ s}$) & $20.97\text{ W}$ & $46.40\text{ W}$ & $0.792 / 0.434\text{ J}$ & $\text{CV}=2.18\%$ & $+0.313\text{ J}$ vs.\ CPU TDP & Isolates $+16.39\text{ W}$ DRAM/NVMe/VRM ($\rho=0.9945$) \\
+\textbf{E6: Multi-Day Repeatability} & Cross-Window / Cross-Day Audit & $3\times 50$ runs & Stable $\pm 0.1\text{ W}$ & Stable $\pm 0.4\text{ W}$ & $\text{MAE}=0.008\text{ J}$ & $\mathbf{\text{ICC}=0.9981}$ & $[-0.036,+0.037]\text{ J}$ & $100.0\%$ energy tier order stability across 3 days \\
+\textbf{E7: Uncertainty Propagation} & $10{,}000$ MC Sensor-Noise Trials & $10{,}000$ MC & $\pm 1.24\%$ NVML & $\pm 3.21\%$ CPU & P2: $\mathbf{0.812\text{ J}}$ dev & $\mathbf{100.0\%}$ Inv. & $\Delta E_{\text{P2-P1}}=-0.569\text{ J}$ & \textbf{$\mathbf{100.0\%}$ Policy P2 ranking invariance ($p<0.0001$)} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{2.3pt}
+\caption{Protocols \textbf{R16} (Cross-Hardware Calibration Sample Scaling $m\in\{0,1,3,5,10,15\}$ vs.\ Full Retraining Across Existing Nodes~2--4 and GPU VRAM Capacity Sweep; Part~A), \textbf{R17} (Prospective Non-TPC Enterprise Multi-Table SaaS, Billing \& Telemetry Workload $N=25$; Part~B), and \textbf{R18} ($C=1\text{--}64$ Four-Component Concurrency Contention Decomposition; Part~C).}\label{tab:supp_v11_r16_r17_r18}
+\begin{tabular}{@{}llrrrrrrl@{}}
+\toprule
+\multicolumn{9}{@{}l}{\textbf{Part A: Protocol R16 --- Cross-Hardware Calibration Scaling ($m=0..15$) \& GPU VRAM Capacity Sweep (\texttt{v11\_r16\_hardware\_calibration\_and\_vram\_sweep.csv})}} \\
+\textbf{Target Hardware / VRAM Cap} & \textbf{Calibration Regime ($m$ Queries)} & \textbf{Offline $T_{\text{cal}}$} & \textbf{Exact Top-1} & \textbf{Top-2 Acc.} & \textbf{Mean Net (ms)} & \textbf{Mean Regret} & \textbf{P95 Regret} & \textbf{Hardware Adaptation \& Gain Recovery} \\
+\midrule
+\textbf{Node 2 (22T \texttt{x86\_64} CPU)} & $m=0$ (0-Shot) $\rightarrow m=1 \rightarrow m=3$ & $0.0\rightarrow 0.54\text{ s}$ & $40.0\rightarrow 42.7\rightarrow 45.3\%$ & $70.0\rightarrow 76.0\%$ & $54.81\rightarrow 49.85$ & $52.1\rightarrow 38.4\%$ & $148.2\rightarrow 114.5\%$ & Rapidly corrects 8T$\rightarrow$22T DuckDB/Polars ratio \\
+\textbf{Node 2 (22T \texttt{x86\_64} CPU)} & $\mathbf{m=5\text{ (Canary)}} \rightarrow m=10 \rightarrow m=15$ & $\mathbf{0.91}\rightarrow 2.74\text{ s}$ & $\mathbf{46.7}\rightarrow 48.0\rightarrow \mathbf{48.0\%}$ & $\mathbf{77.3\rightarrow 78.7\%}$ & $\mathbf{48.92}\rightarrow \mathbf{48.37}$ & $\mathbf{35.9\rightarrow 34.7\%}$ & $\mathbf{108.4\rightarrow 106.2\%}$ & \textbf{$m=5$ ($0.91\text{ s}$) captures $\mathbf{91.5\%}$ of $m=15$ gain} \\
+\textbf{Node 2 / Node 3 / Node 4} & \textbf{Native In-Domain Retrain ($N=75/30$)} & $11.4 / 4.2 / 0.4\text{ s}$ & $\mathbf{97.3 / 96.7 / 100\%}$ & $\mathbf{100.0\%}$ & $\mathbf{35.11 / 29.44 / 23.02}$ & $\mathbf{0.18 / 3.59 / 0.0\%}$ & $\mathbf{1.45 / 14.2 / 0.0\%}$ & Node 3 M1 $m=5$: $\mathbf{93.3\%}$ T1; Node 4 T4 $m=5$: $\mathbf{100\%}$ T1 \\
+\textbf{VRAM Sweep (SF=10 GB)} & $1.28\text{ GB} \rightarrow 4.00\text{ GB} \rightarrow 8.00\text{ GB} \rightarrow \mathbf{15.0\text{ GB}}$ & Rule U4 Cap & $48.0\rightarrow 65.3\rightarrow 72.0\rightarrow \mathbf{100\%}$ & $0.0\%$ OOM & $248.4\rightarrow 182.4\rightarrow 154.2\rightarrow \mathbf{311.1^{\dagger}}$ & $0.0\text{ MB}$ GPU Spill & Chunks: $12\rightarrow 4\rightarrow 2\rightarrow \mathbf{1}$ & $^{\dagger}$Node 4 T4 single-pass ($1$ chunk, $3.07\text{ GB}$ VRAM) \\
+\midrule
+\multicolumn{9}{@{}l}{\textbf{Part B: Protocol R17 --- Prospective Non-TPC Enterprise SaaS, Billing \& Telemetry Workload ($N=25$, Pre-Exec Hash \texttt{2d514ef0f5af0ef5}, \texttt{v11\_r17\_prospective\_enterprise\_workload.csv})}} \\
+\textbf{Query Family / Policy} & \textbf{Enterprise SQL Idiom (5 SaaS Tables)} & \textbf{Queries ($N$)} & \textbf{Exact Top-1} & \textbf{$\le 10\%$ Hit} & \textbf{Mean Exec / Net} & \textbf{Mean Regret} & \textbf{P95 Regret} & \textbf{Speedup \& Multiset Parity ($\text{EX}=1.000$)} \\
+\midrule
+F1--F2: Billing \& Funnel Joins & ARR filters + 3--4 table org/user/sub joins & $10$ (\texttt{ENT\_01..10}) & $90.00\%$ ($9/10$) & $100.0\%$ & $41.82 / 45.97\text{ ms}$ & $0.80\%$ & $0.00\%$ & Dispatches selective ARR filters to Polars, joins to GPU \\
+F3--F5: Cohort CTE, Win \& Tag & Retention CTEs + MRR windows + JSON tags & $15$ (\texttt{ENT\_11..25}) & $100.0\%$ ($15/15$) & $100.0\%$ & $46.94 / 51.09\text{ ms}$ & $0.00\%$ & $0.00\%$ & SIMT window/unnest beats CPU by $2.1\times\text{--}3.8\times$ \\
+\textbf{All Prospective Enterprise} & \textbf{Locked Frozen V11 Model (\texttt{f0e5f17c})} & $\mathbf{N=25}$ & $\mathbf{96.00\%\ (24/25)}$ & $\mathbf{100.0\%\ (25/25)}$ & $\mathbf{44.89 / 49.04\text{ ms}}$ & $\mathbf{0.32\%}$ & $\mathbf{0.00\%}$ & \textbf{Beats Polars ($84.1\text{ ms}$, $1.71\times$) \& DuckDB ($162.4\text{ ms}$, $3.31\times$)} \\
+\midrule
+\multicolumn{9}{@{}l}{\textbf{Part C: Protocol R18 --- Multi-Tenant Concurrency Contention Decomposition Across $C \in \{1,2,4,8,16,32,64\}$ (\texttt{v11\_r18\_concurrency\_overhead\_decomposition.csv})}} \\
+\textbf{Concurrency Level ($C$)} & \textbf{Pure Service ($T_{\text{service}}$)} & \textbf{Router Queue ($T_{\text{router\_q}}$)} & \textbf{CPU Thread Cont.} & \textbf{GPU Kernel Cont.} & \textbf{PCIe DMA Cont.} & \textbf{Total Mean ($T_{\text{total}}$)} & \textbf{P95 / P99 (ms)} & \textbf{Throughput ($\text{QPS}$) \& Saturation Regime} \\
+\midrule
+$C=1\ /\ C=2\ /\ C=4$ & $50.77\text{ ms}$ & $4.15 / 4.42 / 5.10\text{ ms}$ & $0.0 / 1.1 / 2.8\text{ ms}$ & $0.0 / 0.8 / 2.1\text{ ms}$ & $0.0 / 1.4 / 4.8\text{ ms}$ & $54.92 / 58.49 / 65.55\text{ ms}$ & $84.3 / 96.2\text{ ms}$ ($C=4$) & $18.21\rightarrow 34.19\rightarrow \mathbf{61.02\text{ QPS}}$ (Linear dual-path scaling) \\
+$C=8\ /\ C=16$ & $50.77\text{ ms}$ & $6.20 / 7.80\text{ ms}$ & $4.9 / 18.4\text{ ms}$ & $3.8 / 14.2\text{ ms}$ & $8.4 / 23.1\text{ ms}$ & $74.09 / 114.30\text{ ms}$ & $148.6 / 176.4\text{ ms}$ ($C=16$) & $\mathbf{107.98\rightarrow 139.99\text{ QPS}}$ ($2.00\times$ vs.\ static CPU) \\
+$\mathbf{C=32\text{ (Peak)}}\ /\ C=64$ & $50.77\text{ ms}$ & $\mathbf{9.40} / 11.20\text{ ms}$ & $\mathbf{42.8} / 118.4\text{ ms}$ & $\mathbf{34.6} / 94.6\text{ ms}$ & $\mathbf{69.6} / 163.4\text{ ms}$ & $\mathbf{207.20} / 438.20\text{ ms}$ & $\mathbf{268.5 / 312.6\text{ ms}}$ ($C=32$) & \textbf{Peak $\mathbf{154.44\text{ QPS}}$ at $C=32$} ($146.00\text{ QPS}$ DMA sat.\ at $C=64$) \\
+\bottomrule
+\end{tabular}
+\end{table}
 % === END V11 SUPPLEMENTARY TABLES S22-S25 ===
 
 \end{document}

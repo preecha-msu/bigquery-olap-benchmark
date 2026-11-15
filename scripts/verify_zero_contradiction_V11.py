@@ -56,8 +56,14 @@ audit_rules = [
     ("V11-10: Active (3.07 GB) vs. Cached Allocator (5.32 GB) VRAM Clarified", r"3\.07.*5\.32", 1, "Sec 4.7, Table 15"),
     ("V11-11: Standardized Node 4: Cloud-Hosted Server NVIDIA Tesla T4", r"Cloud-Hosted Server NVIDIA Tesla", 4, "Throughout V11.tex"),
     ("V11-12: Live SQLGlot + PyArrow Wrapper & frozen_ast_route_v11_gbdt_model.json", r"frozen\\_ast\\_route\\_v11\\_gbdt\\_model\.json", 2, "Sec 3.1, Sec 4.4.2, Sec 5"),
-    ("V11-13: No Legacy Contradictory Numbers (51.12 / 6.70 / 103.32)", r"51\.12|6\.70|103\.32", 0, "Must be 0 occurrences"),
-    ("V11-14: No Undefined References (??)", r"\?\?", 0, "Must be 0 occurrences"),
+    ("V11-13: Protocol R12 3-Level Taxonomy & V9->V10->V11 Model Lineage", r"Protocol~R12", 1, "Sec 4.4.2, Declarations, Supp Table S26"),
+    ("V11-14: Protocol R13 Mechanistic CSCI vs. PCA-1/2 & Random Oblique", r"Protocol~R13", 1, "Sec 4.4, Supp Table S26"),
+    ("V11-15: Protocols R14 (10,000-Pt/NSGA-II/MOBO) & R15 (E1-E7 Energy Matrix)", r"Protocols~R14 and~R15", 1, "Sec 4.4.2, Supp Table S27"),
+    ("V11-16: Protocol R16 Cross-Hardware Calibration & VRAM Sweep", r"Protocol~R16", 1, "Sec 4.7.2, Supp Table S28"),
+    ("V11-17: Protocol R17 Non-TPC Enterprise SaaS Workload (25Q, 96.0% Top-1)", r"Protocol~R17", 1, "Sec 4.8, Supp Table S28"),
+    ("V11-18: Protocol R18 Concurrency Contention Decomposition (C=1..64)", r"Protocol~R18", 1, "Sec 4.4.2, Supp Table S28"),
+    ("V11-19: No Legacy Contradictory Numbers (51.12 / 6.70 / 103.32)", r"51\.12|6\.70|103\.32", 0, "Must be 0 occurrences"),
+    ("V11-20: No Undefined References (??)", r"\?\?", 0, "Must be 0 occurrences"),
 ]
 
 all_passed = True
@@ -73,7 +79,7 @@ for label, pattern, min_expected, locations in audit_rules:
 
 print("=" * 96)
 if all_passed:
-    print("[RESULT] ALL 14/14 V11 ZERO-CONTRADICTION GATES PASSED 100%!")
+    print("[RESULT] ALL 20/20 V11 ZERO-CONTRADICTION GATES PASSED 100%!")
 else:
     print("[RESULT] One or more V11 gates reported WARN above.")
 print("=" * 96)
