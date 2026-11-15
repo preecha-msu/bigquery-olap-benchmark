@@ -60,10 +60,16 @@ audit_rules = [
     ("V11-14: Protocol R13 Mechanistic CSCI vs. PCA-1/2 & Random Oblique", r"Protocol~R13", 1, "Sec 4.4, Supp Table S26"),
     ("V11-15: Protocols R14 (10,000-Pt/NSGA-II/MOBO) & R15 (E1-E7 Energy Matrix)", r"Protocols~R14 and~R15", 1, "Sec 4.4.2, Supp Table S27"),
     ("V11-16: Protocol R16 Cross-Hardware Calibration & VRAM Sweep", r"Protocol~R16", 1, "Sec 4.7.2, Supp Table S28"),
-    ("V11-17: Protocol R17 Non-TPC Enterprise SaaS Workload (25Q, 96.0% Top-1)", r"Protocol~R17", 1, "Sec 4.8, Supp Table S28"),
+    ("V11-17: Protocol R17 Non-TPC Enterprise SaaS Workload (25Q, 54.93/59.08 ms)", r"54\.93\\text\{ ms\}", 1, "Sec 4.8, Supp Table S28"),
     ("V11-18: Protocol R18 Concurrency Contention Decomposition (C=1..64)", r"Protocol~R18", 1, "Sec 4.4.2, Supp Table S28"),
-    ("V11-19: No Legacy Contradictory Numbers (51.12 / 6.70 / 103.32)", r"51\.12|6\.70|103\.32", 0, "Must be 0 occurrences"),
-    ("V11-20: No Undefined References (??)", r"\?\?", 0, "Must be 0 occurrences"),
+    ("V11-19: Protocol R19 CSCI Mathematical Proof & Grouped Block Perm (+33.44 pp)", r"Protocol~R19", 1, "Sec 4.4, Supp Table S29"),
+    ("V11-20: Protocol R20 Independent Multi-Domain Enterprise 45Q (70Q Total, 95.71%)", r"Protocol~R20", 1, "Sec 4.8, Supp Table S29"),
+    ("V11-21: Protocol R21 Directional Cross-Hardware Transfer Matrix (m=0,5,Full)", r"Protocol~R21", 1, "Sec 4.7.2, Supp Table S30"),
+    ("V11-22: Protocol R22 Non-Stationary Dynamic Workload & Burst SLA Stress Test", r"Protocol~R22", 1, "Sec 4.4.2, Supp Table S30"),
+    ("V11-23: Protocol R23 Three-Scope Energy Measurement Boundary Audit (rho=1.000)", r"Protocol~R23", 1, "Sec 4.4.2, Supp Table S30"),
+    ("V11-24: Dual-Unit Polars p-Values (p_Holm,query=0.0011 & p_Holm,seed=0.0171)", r"p_\{\\text\{Holm,query\}\}=0\.0011", 2, "Abstract, Sec 4.3, Sec 5"),
+    ("V11-25: Figure 1 Caption Updated to (V11) (Zero Legacy '(V10)' Caption)", r"Framework \(V10\):", 0, "Must be 0 occurrences"),
+    ("V11-26: No Legacy Contradictory Numbers (51.12 / 6.70 / 103.32 / 44.89 ms R17) & No ??", r"51\.12|6\.70|103\.32|44\.89\\text\{ ms\}|\?\?", 0, "Must be 0 occurrences"),
 ]
 
 all_passed = True
@@ -75,11 +81,11 @@ for label, pattern, min_expected, locations in audit_rules:
     status = "PASS" if ok else "WARN"
     if not ok:
         all_passed = False
-    print(f"[{status:4s}] {label:<68} | Found: {found:2d} | {locations}")
+    print(f"[{status:4s}] {label:<72} | Found: {found:2d} | {locations}")
 
 print("=" * 96)
 if all_passed:
-    print("[RESULT] ALL 20/20 V11 ZERO-CONTRADICTION GATES PASSED 100%!")
+    print(f"[RESULT] ALL {len(audit_rules)}/{len(audit_rules)} V11 ZERO-CONTRADICTION GATES PASSED 100%!")
 else:
     print("[RESULT] One or more V11 gates reported WARN above.")
 print("=" * 96)

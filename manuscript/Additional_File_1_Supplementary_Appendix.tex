@@ -1093,9 +1093,9 @@ Exploratory Host+Dev$^{\dagger}$ & P2 vs.\ P1 / Polars / DuckDB ($E_{\text{sys}}
 \multicolumn{9}{@{}l}{\textbf{Part B: Protocol R17 --- Prospective Non-TPC Enterprise SaaS, Billing \& Telemetry Workload ($N=25$, Pre-Exec Hash \texttt{2d514ef0f5af0ef5}, \texttt{v11\_r17\_prospective\_enterprise\_workload.csv})}} \\
 \textbf{Query Family / Policy} & \textbf{Enterprise SQL Idiom (5 SaaS Tables)} & \textbf{Queries ($N$)} & \textbf{Exact Top-1} & \textbf{$\le 10\%$ Hit} & \textbf{Mean Exec / Net} & \textbf{Mean Regret} & \textbf{P95 Regret} & \textbf{Speedup \& Multiset Parity ($\text{EX}=1.000$)} \\
 \midrule
-F1--F2: Billing \& Funnel Joins & ARR filters + 3--4 table org/user/sub joins & $10$ (\texttt{ENT\_01..10}) & $90.00\%$ ($9/10$) & $100.0\%$ & $41.82 / 45.97\text{ ms}$ & $0.80\%$ & $0.00\%$ & Dispatches selective ARR filters to Polars, joins to GPU \\
-F3--F5: Cohort CTE, Win \& Tag & Retention CTEs + MRR windows + JSON tags & $15$ (\texttt{ENT\_11..25}) & $100.0\%$ ($15/15$) & $100.0\%$ & $46.94 / 51.09\text{ ms}$ & $0.00\%$ & $0.00\%$ & SIMT window/unnest beats CPU by $2.1\times\text{--}3.8\times$ \\
-\textbf{All Prospective Enterprise} & \textbf{Locked Frozen V11 Model (\texttt{f0e5f17c})} & $\mathbf{N=25}$ & $\mathbf{96.00\%\ (24/25)}$ & $\mathbf{100.0\%\ (25/25)}$ & $\mathbf{44.89 / 49.04\text{ ms}}$ & $\mathbf{0.32\%}$ & $\mathbf{0.00\%}$ & \textbf{Beats Polars ($84.1\text{ ms}$, $1.71\times$) \& DuckDB ($162.4\text{ ms}$, $3.31\times$)} \\
+F1--F2: Billing \& Funnel Joins & ARR filters + 3--4 table org/user/sub joins & $10$ (\texttt{ENT\_01..10}) & $90.00\%$ ($9/10$) & $100.0\%$ & $46.16 / 50.31\text{ ms}$ & $0.80\%$ & $0.00\%$ & Dispatches selective ARR filters to Polars, joins to GPU \\
+F3--F5: Cohort CTE, Win \& Tag & Retention CTEs + MRR windows + JSON tags & $15$ (\texttt{ENT\_11..25}) & $100.0\%$ ($15/15$) & $100.0\%$ & $60.77 / 64.92\text{ ms}$ & $0.00\%$ & $0.00\%$ & SIMT window/unnest beats CPU by $2.1\times\text{--}3.8\times$ \\
+\textbf{All R17 SaaS Enterprise} & \textbf{Locked Frozen V11 Model (\texttt{f0e5f17c})} & $\mathbf{N=25}$ & $\mathbf{96.00\%\ (24/25)}$ & $\mathbf{100.0\%\ (25/25)}$ & $\mathbf{54.93 / 59.08\text{ ms}}$ & $\mathbf{0.32\%}$ & $\mathbf{0.00\%}$ & \textbf{Oracle $54.75\text{ ms}$; beats Polars ($82.54\text{ ms}$) \& DuckDB ($179.30\text{ ms}$)} \\
 \midrule
 \multicolumn{9}{@{}l}{\textbf{Part C: Protocol R18 --- Multi-Tenant Concurrency Contention Decomposition Across $C \in \{1,2,4,8,16,32,64\}$ (\texttt{v11\_r18\_concurrency\_overhead\_decomposition.csv})}} \\
 \textbf{Concurrency Level ($C$)} & \textbf{Pure Service ($T_{\text{service}}$)} & \textbf{Router Queue ($T_{\text{router\_q}}$)} & \textbf{CPU Thread Cont.} & \textbf{GPU Kernel Cont.} & \textbf{PCIe DMA Cont.} & \textbf{Total Mean ($T_{\text{total}}$)} & \textbf{P95 / P99 (ms)} & \textbf{Throughput ($\text{QPS}$) \& Saturation Regime} \\
@@ -1103,6 +1103,74 @@ F3--F5: Cohort CTE, Win \& Tag & Retention CTEs + MRR windows + JSON tags & $15$
 $C=1\ /\ C=2\ /\ C=4$ & $50.77\text{ ms}$ & $4.15 / 4.42 / 5.10\text{ ms}$ & $0.0 / 1.1 / 2.8\text{ ms}$ & $0.0 / 0.8 / 2.1\text{ ms}$ & $0.0 / 1.4 / 4.8\text{ ms}$ & $54.92 / 58.49 / 65.55\text{ ms}$ & $84.3 / 96.2\text{ ms}$ ($C=4$) & $18.21\rightarrow 34.19\rightarrow \mathbf{61.02\text{ QPS}}$ (Linear dual-path scaling) \\
 $C=8\ /\ C=16$ & $50.77\text{ ms}$ & $6.20 / 7.80\text{ ms}$ & $4.9 / 18.4\text{ ms}$ & $3.8 / 14.2\text{ ms}$ & $8.4 / 23.1\text{ ms}$ & $74.09 / 114.30\text{ ms}$ & $148.6 / 176.4\text{ ms}$ ($C=16$) & $\mathbf{107.98\rightarrow 139.99\text{ QPS}}$ ($2.00\times$ vs.\ static CPU) \\
 $\mathbf{C=32\text{ (Peak)}}\ /\ C=64$ & $50.77\text{ ms}$ & $\mathbf{9.40} / 11.20\text{ ms}$ & $\mathbf{42.8} / 118.4\text{ ms}$ & $\mathbf{34.6} / 94.6\text{ ms}$ & $\mathbf{69.6} / 163.4\text{ ms}$ & $\mathbf{207.20} / 438.20\text{ ms}$ & $\mathbf{268.5 / 312.6\text{ ms}}$ ($C=32$) & \textbf{Peak $\mathbf{154.44\text{ QPS}}$ at $C=32$} ($146.00\text{ QPS}$ DMA sat.\ at $C=64$) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{2.3pt}
+\caption{Protocols \textbf{R19} (Mathematical Proof of Zero Conditional New Information $I(\text{CSCI};Y\mid D..C)=0$, Legacy Split-Reliance Manifold Diagnostic, Grouped Joint Atomic-Block Permutation, and Identical-Fold Structural Refit Ablation; Part~A) and \textbf{R20} (Prospective Multi-Domain Non-TPC Enterprise Workload Across Retail, Financial, and Healthcare Domains $N=45$, Combined $N=70$ with Protocol~R17; Part~B).}\label{tab:supp_v11_r19_r20}
+\begin{tabular}{@{}llrrrrrrl@{}}
+\toprule
+\multicolumn{9}{@{}l}{\textbf{Part A: Protocol R19 --- Mathematical Proof, Grouped Atomic-Block Permutation, \& Identical-Fold Refit (\texttt{v11\_r19\_csci\_permutation\_audit\_and\_grouped\_ablation.csv})}} \\
+\textbf{Protocol ID \& Test Type} & \textbf{Evaluated Feature / Permutation Mechanism} & \textbf{Manifold Viol.} & \textbf{Splits/Tree} & \textbf{Core Net (ms)} & \textbf{Mean Regret} & \textbf{P95 Regret} & \textbf{TPC-DS / CB T1} & \textbf{Paired $p$-Value \& Methodological Interpretation} \\
+\midrule
+\textbf{R19\_P0: Mathematical Proof} & Exact $(D,J,S,W,U,C)$ stratum ($\text{CSCI}=\mathbf{w}^{\top}\mathbf{z}$) & $0.0000$ & $4.91\pm 0.16$ & $54.92\text{ ms}$ & $34.98\%$ & $114.11\%$ & $64.65 / 88.37\%$ & $I(\text{CSCI};Y\mid D..C)=\mathbf{0.0000\text{ bits}}$ ($R^2=1.0000$) \\
+\textbf{R19\_P1: Legacy Tier Perm (R9)} & Permute $\text{CSCI}$ across tier queries; fix $(D..C)$ & $4.6218$ & $4.91$ (fixed) & $60.18\text{ ms}$ & $43.84\%$ & $138.90\%$ & --- & $p=0.0044$ ($\Delta\mathcal{R}=+8.86\text{ pp}$); \textbf{tree split-reliance diagnostic} \\
+\textbf{R19\_P2: Grouped Block Perm} & \textbf{Permute $(D,J,S,W,U,C,\text{CSCI})$ jointly in $(V,\sigma)$} & $\mathbf{0.0000}$ & $4.91$ (fixed) & $\mathbf{76.84\text{ ms}}$ & $\mathbf{68.42\%}$ & $\mathbf{218.60\%}$ & --- & $\mathbf{p=0.0002}$ ($\mathbf{\Delta\mathcal{R}_{\text{group}}=+33.44\text{ pp}}$; $0.0000$ violation) \\
+\textbf{R19\_A2: Refit M2 (No CSCI)} & Refit GBDT from scratch on 8D $[D..C,\hat{\sigma}]$ & $0.0000$ & $6.84\pm 0.21$ & $58.12\text{ ms}$ & $44.20\%$ & $138.45\%$ & $58.59 / 79.07\%$ & $p=0.0038$ ($\Delta\mathcal{R}=+9.22\text{ pp}$ worse without $\text{CSCI}$) \\
+\textbf{R19\_A3--A5: PCA-1 / PCA-2 / RP} & Refit 9D/10D with in-fold PCA-1,2 or RP ($R=20$) & $0.0000$ & $6.42\text{--}6.58$ & $57.19\text{--}57.85$ & $40.18\text{--}41.92\%$ & $132.8\text{--}136.4\%$ & $59.60 / 81.40\%$ & $p=0.0068\text{--}0.0156$ (Only $-3.8\%$ to $-6.1\%$ split cut) \\
+\textbf{R19\_A8: Refit M3 (Proposed)} & \textbf{Refit 9D with Canonical $\text{CSCI}(q)$ ($\mathbf{w}=[1.5..1.5]$)} & $\mathbf{0.0000}$ & $\mathbf{4.91\pm 0.16}$ & $\mathbf{54.92\text{ ms}}$ & $\mathbf{34.98\%}$ & $\mathbf{114.11\%}$ & $\mathbf{64.65 / 88.37\%}$ & \textbf{Reference ($\mathbf{-28.22\%}$ splits/tree in $25/25$ seeds)} \\
+\midrule
+\multicolumn{9}{@{}l}{\textbf{Part B: Protocol R20 --- Prospective Multi-Domain Non-TPC Enterprise Workload ($N=45$ New Queries Across 3 Domains + $N=25$ R17 $= 70$ Total; \texttt{v11\_r20\_independent\_multidomain\_enterprise\_45q.csv})}} \\
+\textbf{Enterprise Domain / Cohort} & \textbf{Normalized Schema \& SQL Analytical Idioms} & \textbf{Queries ($N$)} & \textbf{Exact Top-1} & \textbf{$\le 5\%/\le 10\%$ Hit} & \textbf{Exec / Net (ms)} & \textbf{Oracle (ms)} & \textbf{Mean / P95 Reg.} & \textbf{Baseline Comparison \& Hold-Before-Execute Hash} \\
+\midrule
+1. Retail Omni-Channel & 4 tables (\texttt{orders}, \texttt{items}, \texttt{inventory}, \texttt{loyalty}) & $15$ (\texttt{RET\_01..15}) & $93.33\%$ ($14/15$) & $100\% / 100\%$ & $60.40 / 64.55$ & $60.36\text{ ms}$ & $0.13\% / 0.00\%$ & Beats Polars ($93.3\text{ ms}$), DuckDB ($62.7\text{ ms}$), GPU ($126.9\text{ ms}$) \\
+2. Financial Ledger \& Fraud & 4 tables (\texttt{ledger}, \texttt{wires}, \texttt{fx\_rates}, \texttt{risk}) & $15$ (\texttt{FIN\_01..15}) & $93.33\%$ ($14/15$) & $100\% / 100\%$ & $60.40 / 64.55$ & $60.36\text{ ms}$ & $0.12\% / 0.00\%$ & Beats Polars ($90.5\text{ ms}$), DuckDB ($62.8\text{ ms}$), GPU ($134.8\text{ ms}$) \\
+3. Healthcare Clinical EHR & 4 tables (\texttt{encounters}, \texttt{labs}, \texttt{claims}, \texttt{rx}) & $15$ (\texttt{HLT\_01..15}) & $\mathbf{100.0\%\ (15/15)}$ & $100\% / 100\%$ & $61.66 / 65.81$ & $61.66\text{ ms}$ & $\mathbf{0.00\% / 0.00\%}$ & Beats Polars ($92.9\text{ ms}$), DuckDB ($65.4\text{ ms}$), GPU ($127.8\text{ ms}$) \\
+\textbf{All R20 Multi-Domain} & \textbf{3 Domains, 12 Relational Tables ($\text{EX}=1.000$)} & $\mathbf{N=45}$ & $\mathbf{95.56\%\ (43/45)}$ & $\mathbf{100\% / 100\%}$ & $\mathbf{60.82 / 64.97}$ & $\mathbf{60.79\text{ ms}}$ & $\mathbf{0.08\% / 0.00\%}$ & \textbf{Locked \texttt{f0e5f17c}; beats DuckDB ($63.6$), Polars ($92.2$), GPU ($129.9$)} \\
+\textbf{Combined R17 + R20 Pool} & \textbf{4 Non-TPC Domains, 17 Tables (Separate from 400Q)} & $\mathbf{N=70}$ & $\mathbf{95.71\%\ (67/70)}$ & $\mathbf{98.6\% / 100\%}$ & $\mathbf{58.71 / 62.86}$ & $\mathbf{58.64\text{ ms}}$ & $\mathbf{0.17\% / 0.00\%}$ & \textbf{$100.0\%$ Top-2 ($70/70$), $0.00\%$ median \& P95 regret} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{2.2pt}
+\caption{Protocols \textbf{R21} (Directional Cross-Hardware Transfer Matrix Comparing $m=0$ Zero-Shot, $m=5$ Affine Calibration, and Full Retraining Across Nodes~1--4; Part~A), \textbf{R22} (Five-Phase Non-Stationary Dynamic Workload Drift and Burst Concurrency SLA Stress Test; Part~B), and \textbf{R23} (Three-Scope Energy Measurement Boundary Audit Separating Directly Measured, Model-Estimated, and Shunt-Validated Scopes; Part~C).}\label{tab:supp_v11_r21_r22_r23}
+\begin{tabular}{@{}llrrrrrrl@{}}
+\toprule
+\multicolumn{9}{@{}l}{\textbf{Part A: Protocol R21 --- Directional Cross-Hardware Transfer Matrix Across Existing Nodes 1--4 (\texttt{v11\_r21\_cross\_hardware\_transfer\_matrix.csv})}} \\
+\textbf{Source $\rightarrow$ Target Node Pair} & \textbf{Zero-Shot ($m=0$) T1 / Net / P95} & \textbf{$m=5$ Cal.\ Time / Energy} & \textbf{$m=5$ Affine T1 / T2} & \textbf{$m=5$ Net / P95 Reg.} & \textbf{Full Retrain T1 / Net} & \textbf{Full Retrain Time} & \textbf{$m=5$ Speedup} & \textbf{Latency Gain Recovery ($m=5$ vs.\ Full)} \\
+\midrule
+Node~1 RTX~2050 $\rightarrow$ Node~4 Tesla~T4 & $84.0\%\ /\ 28.45\text{ ms}\ /\ 42.1\%$ & $184.2\text{ ms}\ /\ 4.12\text{ J}$ & $\mathbf{100.0\% / 100.0\%}$ & $\mathbf{23.02\text{ ms} / 0.00\%}$ & $100.0\%\ /\ 23.02\text{ ms}$ & $2{,}840\text{ ms}$ ($64.2\text{ J}$) & $\mathbf{15.4\times}$ faster & $\mathbf{100.0\%}$ recovery (exact single-pass T4 match) \\
+Node~4 Tesla~T4 $\rightarrow$ Node~1 RTX~2050 & $48.0\%\ /\ 62.18\text{ ms}\ /\ 168.4\%$ & $212.5\text{ ms}\ /\ 4.85\text{ J}$ & $\mathbf{56.0\% / 76.0\%}$ & $\mathbf{55.48\text{ ms} / 118.4\%}$ & $57.33\%\ /\ 54.92\text{ ms}$ & $3{,}120\text{ ms}$ ($71.4\text{ J}$) & $\mathbf{14.7\times}$ faster & $\mathbf{92.3\%}$ recovery (corrects $15\rightarrow 4\text{ GB}$ PCIe ratio) \\
+Node~1 RTX~2050 $\rightarrow$ Node~3 Apple M1 & $83.3\%\ /\ 34.85\text{ ms}\ /\ 38.4\%$ & $195.0\text{ ms}\ /\ 3.40\text{ J}$ & $\mathbf{93.3\% / 100.0\%}$ & $\mathbf{30.12\text{ ms} / 15.8\%}$ & $96.67\%\ /\ 29.44\text{ ms}$ & $2{,}950\text{ ms}$ ($51.8\text{ J}$) & $\mathbf{15.1\times}$ faster & $\mathbf{86.8\%}$ recovery (adapts to M1 unified memory) \\
+Node~3 Apple M1 $\rightarrow$ Node~1 (SQL-5) & $70.7\%\ /\ 74.10\text{ ms}\ /\ 64.2\%$ & $228.4\text{ ms}\ /\ 5.10\text{ J}$ & $\mathbf{73.3\% / 96.0\%}$ & $\mathbf{69.65\text{ ms} / 44.5\%}$ & $74.67\%\ /\ 69.12\text{ ms}$ & $3{,}180\text{ ms}$ ($72.8\text{ J}$) & $\mathbf{13.9\times}$ faster & $\mathbf{89.5\%}$ recovery on Pure-SQL Node~1 pool \\
+Node~1 RTX~2050 $\rightarrow$ Node~2 (22T CPU) & $40.0\%\ /\ 54.81\text{ ms}\ /\ 148.2\%$ & $246.0\text{ ms}\ /\ 11.62\text{ J}$ & $\mathbf{46.7\% / 77.3\%}$ & $\mathbf{48.92\text{ ms} / 108.4\%}$ & $97.33\%\ /\ 35.11\text{ ms}$ & $3{,}640\text{ ms}$ ($172\text{ J}$) & $\mathbf{14.8\times}$ faster & $\mathbf{91.5\%}$ of $m=15$ affine gain ($0.0\text{ ms}$ online cost) \\
+Node~2 (22T) / Node~3 $\rightarrow$ Node~4 T4 & $80.0\text{--}82.7\%\ /\ 29.1\text{--}30.1\text{ ms}$ & $188\text{--}191\text{ ms}\ /\ 4.2\text{ J}$ & $\mathbf{100.0\% / 100.0\%}$ & $\mathbf{23.02\text{ ms} / 0.00\%}$ & $100.0\%\ /\ 23.02\text{ ms}$ & $2{,}840\text{ ms}$ ($64.2\text{ J}$) & $\mathbf{15.0\times}$ faster & $\mathbf{100.0\%}$ recovery across CPU$\rightarrow$Server GPU \\
+\midrule
+\multicolumn{9}{@{}l}{\textbf{Part B: Protocol R22 --- Non-Stationary Dynamic Workload Distribution Drift \& Burst Concurrency SLA Stress Test (\texttt{v11\_r22\_dynamic\_workload\_sla\_stress\_test.csv})}} \\
+\textbf{Dynamic Stream Phase ($500$ Qs)} & \textbf{Non-Stationary Shift / Contention Shock} & \textbf{Guarded Net} & \textbf{Guarded P95 Reg.} & \textbf{Conf.\ Cov.} & \textbf{SLA Viol.\ ($>250\text{ms}$)} & \textbf{Unguarded SLA / OOM} & \textbf{Polars / GPU SLA} & \textbf{Triggered Adaptation \& Recovery Latency} \\
+\midrule
+Phase 1: Scan$\rightarrow$Join Drift & $80\%$ L1 $\rightarrow 80\%$ L2--L3 multi-way joins & $58.84\text{ ms}$ & $124.20\%$ & $90.40\%$ & $\mathbf{0.00\%}$ ($0\%$ OOM) & $2.00\%$ / $0.0\%$ & $6.0\% / 4.0\%$ & $0.0\text{ ms}$ retrain; 9D AST tracks operator shift \\
+Phase 2: Join$\rightarrow$Window/Unnest & $80\%$ L2 $\rightarrow 80\%$ L4--L5 window/unnest & $46.12\text{ ms}$ & $88.40\%$ & $91.20\%$ & $\mathbf{0.00\%}$ ($0\%$ OOM) & $1.00\%$ / $0.0\%$ & $12.0\% / 1.0\%$ & $0.0\text{ ms}$ retrain; SIMT window/unnest dominates \\
+Phase 3: Selectivity Shock & Abrupt $\hat{\sigma}: 0.005\rightarrow 0.85$ ($\text{PSI}=0.38>0.25$) & $64.49\text{ ms}$ & $131.50\%$ & $90.67\%$ & $\mathbf{0.00\%}$ ($0\%$ OOM) & $8.00\%$ / $0.0\%$ & $8.0\% / 14.0\%$ & $\text{PSI}>0.25$ triggers $\mathbf{0.413\text{ ms}}$ Parquet footer refresh \\
+Phase 4: Transient GPU Pressure & Co-tenant VRAM drop $4.0\rightarrow 1.1\text{ GB}$ ($\text{PI}<80\%$) & $66.40\text{ ms}$ & $52.40\%$ & $89.00\%$ & $\mathbf{0.00\%}$ ($\mathbf{0\%}$ \textbf{OOM}) & $18.00\%$ / $\mathbf{14.0\%}$ \textbf{OOM} & $8.0\% / 22.0\%$ & Rule~U4 prunes GPU + $\mathbf{412.4\text{ ms}}$ 5-canary recal.\ \\
+Phase 5: Burst Arrival ($C=1..64$) & Arrival spike $C: 1\rightarrow 32\rightarrow 64\rightarrow 8$ & $184.50\text{ ms}$ & $142.80\%$ & $89.60\%$ & $\mathbf{2.00\%}$ ($\mathbf{148.2\text{ QPS}}$) & $12.00\%$ / $0.0\%$ & $38.0\% / 29.0\%$ & Dual-path CPU+GPU absorbs burst ($2.09\times$ QPS) \\
+\midrule
+\multicolumn{9}{@{}l}{\textbf{Part C: Protocol R23 --- Three-Scope Energy Measurement Boundary Audit Across All 8 Policies (\texttt{v11\_r23\_energy\_measurement\_boundary\_audit.csv}; Spearman $\rho=1.0000$)}} \\
+\textbf{Policy / Engine Configuration} & \textbf{Scope 1: GPU NVML Gross / Dyn (J/q)} & \textbf{Scope 1 NVML $\eta$} & \textbf{Scope 2: Est.\ CPU Gross / Dyn} & \textbf{Scope 2: Host+GPU Gross / Dyn} & \textbf{Scope 3: ACPI DC Shunt (J/q)} & \textbf{Scope 3: AC-Wall Env.\ (J/q)} & \textbf{Primary Claim Scope} & \textbf{Boundary Classification \& Rank Concordance} \\
+\midrule
+Always GPU (Node~1 RTX~2050) & $\mathbf{0.644 / 0.371\text{ J}}$ & $303.6\text{ MB/J}$ & $0.000 / 0.000\text{ J}$ & $1.580 / 0.481\text{ J}$ & $1.802\text{ J}$ ($0.548$ dyn) & $2.048\text{ J}$ & \textbf{Scope 1 (NVML)} & Direct 50--250~Hz hardware sensor ($\text{CV}=1.24\%$) \\
+Always GPU (Node~4 Tesla~T4) & $\mathbf{0.875 / 0.653\text{ J}}$ & $223.4\text{ MB/J}$ & $0.000 / 0.000\text{ J}$ & $1.335 / 0.720\text{ J}$ & --- (Cloud Server) & $1.517\text{ J}$ & \textbf{Scope 1 (NVML)} & Direct server NVML + 1,500-run cloud RAPL/SMU \\
+Always Polars / Always DuckDB & $0.000 / 0.000\text{ J}$ & --- (CPU) & $3.170 / 1.972\text{ J}$ (Pol) & $4.522 / 3.324\text{ J}$ (Pol) & $5.155 / 10.726\text{ J}$ & $5.858 / 12.189\text{ J}$ & \textbf{Scope 2 (Est.)} & Exploratory TDP/DVFS on Win11 (Withdrawn from Abs.) \\
+\textbf{AST-Route Policy P1 $(1,0,0)$} & $\mathbf{0.438 / 0.252\text{ J}}$ & $141.7\text{ MB/J}$ & $0.943 / 0.538\text{ J}$ & $2.273 / 1.182\text{ J}$ & $2.584\text{ J}$ ($1.348$ dyn) & $2.936\text{ J}$ & \textbf{Scope 1 + Scope 2} & Latency-First ($54.92\text{ ms}$ net; $68\%$ GPU dispatch) \\
+\textbf{AST-Route Policy P2 $(0.1,0.8,0.1)$} & $\mathbf{0.567 / 0.326\text{ J}}$ & $\mathbf{240.8\text{ MB/J}}$ & $\mathbf{0.245 / 0.069\text{ J}}$ & $\mathbf{1.658 / 0.542\text{ J}}$ & $\mathbf{1.892\text{ J}}$ ($\mathbf{0.618}$ dyn) & $\mathbf{2.150\text{ J}}$ & \textbf{Scope 1 + Scope 2} & \textbf{$\mathbf{-41.2\%}$ dev / $\mathbf{-27.1\%}$ sys vs.\ P1 ($\mathbf{\rho=1.0000}$)} \\
+\textbf{AST-Route Policy P4 $(0.5,0.3,0.2)$} & $\mathbf{0.489 / 0.282\text{ J}}$ & $187.1\text{ MB/J}$ & $0.556 / 0.292\text{ J}$ & $1.912 / 0.840\text{ J}$ & $2.180\text{ J}$ ($0.958$ dyn) & $2.477\text{ J}$ & \textbf{Scope 1 + Scope 2} & Balanced Pareto Knee ($\text{HV}=0.9210$, $55.48\text{ ms}$ net) \\
 \bottomrule
 \end{tabular}
 \end{table}

@@ -1,0 +1,16 @@
+Check_ID,Audit_Component,Mathematical_Equation_or_Invariant,Empirical_Result,Status
+EC16,R19_CSCI_Exact_Stratum_Invariance,"CSCI = w^T z in span(D,J,S,W,U,C) => Delta_CSCI = 0 and I(CSCI;Y|z) = 0","Violation=0.0000, Delta_Regret=0.00 pp",PASS
+EC17,R19a_Grouped_Block_Permutation_Manifold_Preservation,"|CSCI_pi(i) - w^T z_pi(i)| == 0 across all 1,000 grouped block permutations","Violation=0.0000, Delta_Regret=+33.44 pp (p=0.0002)",PASS
+EC18,R19b_Split_Complexity_Reduction_Identity,(4.91 - 6.84) / 6.84 * 100% = -28.22%,Computed=-28.22% vs Reported=-28.22%,PASS
+EC19,A2_Polars_Holm_Bonferroni_Dual_Unit_Verification,"p_Holm,query (N=75) = 0.0011 and p_Holm,seed (S=25) = 0.0171 explicitly labeled","p_Holm,query=0.0011, p_Holm,seed=0.0171",PASS
+EC20,A2_TOST_Equivalence_Margin_8Pct_vs_12Pct,"Guard 8% upper 90% CI (+4.48 ms) < 5.0 ms; Guard 12% (+5.14 ms) in (5.0, 6.0) ms","Guard8_UB=+4.48 ms (<=5ms PASS), Guard12_UB=+5.14 ms (>5ms, <=6ms PASS)",PASS
+EC21,R20_Hold_Before_Execute_Chronology_45Q,PostExec_Timestamp_ns > PreExec_Timestamp_ns and 16-hex SHA-256 for all 45 queries,"N=45, Chronology_Valid=45/45",PASS
+EC22,R20_Regret_Formula_Exactness_45Q,Regret_Pct == (AST_Route_Exec_ms - Oracle_ms)/Oracle_ms * 100 >= 0,"Max_Diff=0.000000%, Top1=43/45 (95.56%)",PASS
+EC23,R17_Plus_R20_70Q_Enterprise_Combined_Accounting,N_R17 (25) + N_R20 (45) = 70 queries; Top-1 = (24 + 43)/70 = 67/70 (95.71%),"Total_Q=70, Top1=67/70 (95.71%)",PASS
+EC24,R17_Latency_Exec_and_Net_Exact_Match,Mean_Exec (54.93 ms) + Router_Overhead (4.15 ms) = Mean_Net (59.08 ms); Oracle = 54.75 ms,"Exec=54.93 ms, Net=59.08 ms, Oracle=54.75 ms",PASS
+EC25,R21_Cross_Hardware_Calibration_Monotonicity,Top1(m=5) > Top1(m=0) and MeanRegret(m=5) < MeanRegret(m=0) across all 8 transfer pairs,"Pairs_Verified=8/8, Mean_Top1_Gain=+15.32 pp",PASS
+EC26,R22_Dynamic_Drift_Quantile_and_SLA_Dominance,Mean < P95 < P99 for all 25 rows and Guarded P4 <= Unguarded SLA Violation in all 5 phases,"Order_Valid=True, P4_Dominates_Unguarded=True, P4_OOM=0.0%",PASS
+EC27,R23_Energy_Component_Additivity_Identity,E_GPU_Direct + E_CPU_Est == E_Composite_HostGPU for all 8 policies,Max_Additivity_Error=0.000000 J/q,PASS
+EC28,R23_Energy_Boundary_Ranking_Invariance,"Spearman rho = 1.0000 across Composite Estimate, Mainboard DC Shunt, and AC-Wall Envelope",Ranks_Identical=True (P2=2.330 J/q < P4=2.460 J/q < ... < GPU=4.480 J/q),PASS
+EC29,R23_Throughput_Efficiency_MB_per_J_Identity,MB/J == 1000 MB / (J/query) at SF=1 GB across all policies,Max_Diff=0.0000 MB/J,PASS
+EC30,PostExec_Frozen_Model_SHA256_Lineage_Invariance,SHA256(V9) == SHA256(V10) == SHA256(V11) == f0e5f17c...,SHA256=f0e5f17c832472e3... (Zero Post-Hoc Refitting),PASS
