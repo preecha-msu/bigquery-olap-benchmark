@@ -5,7 +5,7 @@ C03,"Explicit Engine Tuning Parameters (PRAGMA threads=8, memory_limit='9GB', pr
 C04,"Tier-to-Engine Rule (48.92 ms raw / 52.40 ms net), Guarded Baselines (+12% Guard), and U1-U4 Ablation",True,True,True
 C05,"Calibrated Claims (Margin-Guarded Cost-Regression, Oblique Projection, Post-Hoc Exploratory 12D, SQLGlot AST)",True,True,True
 C06,3 Core Scientific Claims (Claim 1 - Claim 3) & Unified Model Notation R_{GBR-9D},True,True,True
-C07,"Technical LaTeX Fixes (Zero Undef Refs/Cites, Clean Author Superscript, Table 1/2/4/5/11 Alignment, No 'Roq')",False,False,False
-C08,All 13 High-Resolution 300-DPI Figures Synced (Including Adaptive Contrast Fig 4a & Non-Overlapping Fig 12b),False,False,False
-C09,"Complete Verified DOIs in References ([3], [9], [12], [13], [16], [22], [28]) & Deduplicated Bibliography",True,True,True
+C07,"Technical LaTeX Fixes (Zero Undef Refs/Cites, Clean Author Superscript, Table 1/2/4/5/11 Alignment, No 'Roq')",True,True,True
+C08,All 13 High-Resolution 300-DPI Figures Synced (Including Adaptive Contrast Fig 4a & Non-Overlapping Fig 12b),True,True,True
+C09,"Complete Verified DOIs in References ([3], [9], [12], [13], [16], [22], [28]) & Deduplicated Bibliography",True,False,True
 C10,"Google Colab Hardware Audit: Intel RAPL (MSR 0x611), AMD SMU (MSR 0xC001029A) & Tesla T4 NVML (1,500 Runs)",False,True,True

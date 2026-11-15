@@ -2,9 +2,14 @@
   "v9_tex_lines": 1173,
   "v10_tex_lines_before": 1175,
   "v10_tex_lines_after_merge": 1175,
-  "lines_present_in_v9_but_missing_in_v10_before_merge_count": 0,
-  "lines_present_in_v9_sample": [],
-  "lines_present_in_v10_only_count": 1,
+  "lines_present_in_v9_but_missing_in_v10_before_merge_count": 4,
+  "lines_present_in_v9_sample": [
+    "Das SK, Peter R, Zhang X, Lounissi M. FunDa: scalable serverless data analytics and in situ query processing. J Big Data. 2025;12(1):116. \\url{https://doi.org/10.1186/s40537-025-01141-6}.",
+    "Abdalla HB. A brief survey on big data: technologies, terminologies and data-intensive applications. J Big Data. 2022;9(1):107. \\url{https://doi.org/10.1186/s40537-022-00659-3}.",
+    "Milicevic B, Babovic Z. A systematic review of deep learning applications in database query execution. J Big Data. 2024;11(1):173. \\url{https://doi.org/10.1186/s40537-024-01025-1}.",
+    "Ahmed N, Barczak ALC, Susnjak T, Rashid MA. A comprehensive performance analysis of Apache Hadoop and Apache Spark for large scale data sets using HiBench. J Big Data. 2020;7(1):110. \\url{https://doi.org/10.1186/s40537-020-00388-5}."
+  ],
+  "lines_present_in_v10_only_count": 5,
   "v9_pdf_pages": 0,
   "v10_pdf_pages_before": 0
 }

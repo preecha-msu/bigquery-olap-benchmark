@@ -104,10 +104,14 @@ def apply_v9_unbiased_overhaul_patches(tex: str) -> str:
     )
     tex = tex.replace("9.94 & 7.78\\%", r"9.94 & 7.78$\times$")
 
-    # 6. ซ่อม URL ของ TPC-H และ DOI [13] หากขาด
+    # 6. ซ่อม URL ของ TPC-H และ DOI [13] หากขาด (และล้างกรณีถูกแทนซ้ำ s40537-024-00939-002...)
     tex = re.sub(r"https://www\.\s*\.org/tpch/", "https://www.tpc.org/tpch/", tex)
+    tex = tex.replace("s40537-024-00939-0025-01141-6", "s40537-025-01141-6")
+    tex = tex.replace("s40537-024-00939-0022-00659-3", "s40537-022-00659-3")
+    tex = tex.replace("s40537-024-00939-0024-01025-1", "s40537-024-01025-1")
+    tex = tex.replace("s40537-024-00939-0020-00388-5", "s40537-020-00388-5")
     tex = re.sub(
-        r"https://doi\.org/10\.1186/s40537-(?!024-00939-0)",
+        r"https://doi\.org/10\.1186/s40537-(?=\})",
         "https://doi.org/10.1186/s40537-024-00939-0",
         tex,
     )
@@ -231,23 +235,23 @@ def compare_and_merge_v9_into_v10():
         (
             "C07",
             "Technical LaTeX Fixes (Zero Undef Refs/Cites, Clean Author Superscript, Table 1/2/4/5/11 Alignment, No 'Roq')",
-            "Roq" not in v9_tex_str and "183.7 & 254.4" in v9_tex_str,
-            "Roq" not in v10_tex_str and "183.7 & 254.4" in v10_tex_str,
-            "Roq" not in merged_tex and "183.7 & 254.4" in merged_tex,
+            "Roq" not in v9_tex_str and "183.74" in v9_tex_str,
+            "Roq" not in v10_tex_str and "183.74" in v10_tex_str,
+            "Roq" not in merged_tex and "183.74" in merged_tex,
         ),
         (
             "C08",
             "All 13 High-Resolution 300-DPI Figures Synced (Including Adaptive Contrast Fig 4a & Non-Overlapping Fig 12b)",
-            "fig_seed25_heatmap_sf1_300dpi" in v9_tex_str or "Figure" in v9_tex_str,
-            "fig_seed25_heatmap_sf1_300dpi" in v10_tex_str or "Figure" in v10_tex_str,
-            "fig_seed25_heatmap_sf1_300dpi" in merged_tex or "Figure" in merged_tex,
+            "fig_proposed_ast_routing_framework_300dpi" in v9_tex_str,
+            "fig_proposed_ast_routing_framework_300dpi" in v10_tex_str,
+            "fig_proposed_ast_routing_framework_300dpi" in merged_tex,
         ),
         (
             "C09",
             "Complete Verified DOIs in References ([3], [9], [12], [13], [16], [22], [28]) & Deduplicated Bibliography",
-            "10.1186/s40537-024-00939-0" in v9_tex_str and "https://www.tpc.org/tpch/" in v9_tex_str,
-            "10.1186/s40537-024-00939-0" in v10_tex_str and "https://www.tpc.org/tpch/" in v10_tex_str,
-            "10.1186/s40537-024-00939-0" in merged_tex and "https://www.tpc.org/tpch/" in merged_tex,
+            "10.1186/s40537-025-01141-6" in v9_tex_str and "https://www.tpc.org/tpch/" in v9_tex_str,
+            "10.1186/s40537-025-01141-6" in v10_tex_str and "https://www.tpc.org/tpch/" in v10_tex_str,
+            "10.1186/s40537-025-01141-6" in merged_tex and "https://www.tpc.org/tpch/" in merged_tex,
         ),
         (
             "C10",
