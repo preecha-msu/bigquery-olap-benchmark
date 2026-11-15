@@ -1,0 +1,13 @@
+Suite_and_Scale,Policy_or_Engine,Backend_Origin,Exact_Top1_Pct,Mean_Exec_ms,Net_Latency_Incl_Router_ms,Mean_Rel_Regret_Pct,P95_Rel_Regret_Pct,CVaR10_Rel_Regret_Pct,Native_libcudf_Support_Pct
+Core_75Q_SF1_1GB,Always RAPIDS cudf-polars GPU (Cold Parquet->GPU),Independent 3rd-Party NVIDIA RAPIDS (libcudf-cu12 26.10.2),0.0,216.04,216.04,700.27,2562.35,2491.98,100.0
+Core_75Q_SF1_1GB,Always RAPIDS cudf-polars GPU (Warm In-Memory Lazy),Independent 3rd-Party NVIDIA RAPIDS (libcudf-cu12 26.10.2),0.0,216.19,216.19,0.0,0.0,0.0,100.0
+Core_75Q_SF1_1GB,AST-Route + RAPIDS cudf-polars (tau=8% Nested-CV),AST-Route GBDT + 3rd-Party RAPIDS cudf-polars + Polars/DuckDB CPU,57.33,66.81,70.96,40.55,155.29,263.12,100.0
+Core_75Q_SF1_1GB,AST-Route + RAPIDS cudf-polars (tau=12% Default),AST-Route GBDT + 3rd-Party RAPIDS cudf-polars + Polars/DuckDB CPU,57.33,66.81,70.96,40.55,155.29,263.12,100.0
+Official_TPCH_22Q_SF1_1GB,Always RAPIDS cudf-polars GPU (SF1_1GB Cold),Independent 3rd-Party NVIDIA RAPIDS (libcudf-cu12 26.10.2),13.64,275.72,275.72,274.86,646.38,777.42,100.0
+Official_TPCH_22Q_SF1_1GB,Always RAPIDS cudf-polars GPU (SF1_1GB Warm),Independent 3rd-Party NVIDIA RAPIDS (libcudf-cu12 26.10.2),9.09,137.86,137.86,0.0,0.0,0.0,100.0
+Official_TPCH_22Q_SF1_1GB,Always Polars CPU (SF1_1GB Cold),Polars Rust Vectorized CPU Engine,86.36,77.17,77.17,4.17,29.1,30.6,100.0
+Official_TPCH_22Q_SF1_1GB,AST-Route + RAPIDS cudf-polars (SF1_1GB),AST-Route Hybrid (RAPIDS cudf-polars GPU + Polars CPU),95.45,70.59,74.74,0.0,0.0,0.01,100.0
+Official_TPCH_22Q_SF10_10GB,Always RAPIDS cudf-polars GPU (SF10_10GB Cold),Independent 3rd-Party NVIDIA RAPIDS (libcudf-cu12 26.10.2),4.55,2179.09,2179.09,74.06,163.11,244.45,100.0
+Official_TPCH_22Q_SF10_10GB,Always RAPIDS cudf-polars GPU (SF10_10GB Warm),Independent 3rd-Party NVIDIA RAPIDS (libcudf-cu12 26.10.2),9.09,2012.58,2012.58,0.0,0.0,0.0,100.0
+Official_TPCH_22Q_SF10_10GB,Always Polars CPU (SF10_10GB Cold),Polars Rust Vectorized CPU Engine,95.45,1524.39,1524.39,0.34,0.0,2.47,100.0
+Official_TPCH_22Q_SF10_10GB,AST-Route + RAPIDS cudf-polars (SF10_10GB),AST-Route Hybrid (RAPIDS cudf-polars GPU + Polars CPU),95.45,1524.39,1528.54,0.34,0.0,2.47,100.0

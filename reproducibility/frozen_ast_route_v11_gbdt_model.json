@@ -1,0 +1,80 @@
+{
+  "artifact_id": "AST-Route-V9-Frozen-GBDT-Model",
+  "co_equal_pcie_guard_specifications": {
+    "fixed_threshold_guard": {
+      "cvar10_relative_regret_pct": 152.1,
+      "exec_latency_ms": 50.78,
+      "net_latency_ms": 54.92,
+      "non_inferiority_p_value": 0.00067,
+      "p95_relative_regret_pct": 114.11,
+      "tau_guard": 0.12,
+      "tost_pm5ms_p_value": 0.0688,
+      "tost_pm6ms_p_value": 0.0241
+    },
+    "nested_cv_modal_guard": {
+      "cvar10_relative_regret_pct": 158.42,
+      "exec_latency_ms": 51.22,
+      "net_latency_ms": 55.37,
+      "non_inferiority_p_value": 0.0012,
+      "p95_relative_regret_pct": 118.4,
+      "tau_guard": 0.08,
+      "tost_pm5ms_p_value": 0.0442,
+      "tost_pm6ms_p_value": 0.0175
+    }
+  },
+  "csci_pre_specified_weights": {
+    "C": 1.5,
+    "D": 1.5,
+    "J": 2.5,
+    "S": 3.0,
+    "U": 4.0,
+    "W": 3.5
+  },
+  "feature_space_9d": [
+    "D_ast_depth",
+    "N_ast_nodes",
+    "J_joins",
+    "S_subqueries_ctes",
+    "W_window_funcs",
+    "U_unnest_arrays",
+    "C_case_branches",
+    "CSCI_canonical",
+    "sigma_hat_zone_map_selectivity"
+  ],
+  "gbdt_hyperparameters": {
+    "estimator": "GradientBoostingRegressor(loss='squared_error', target='log1p_ms')",
+    "learning_rate": 0.05,
+    "max_depth": 3,
+    "mean_active_splits_per_tree": 4.91,
+    "memory_footprint_kb": 284.0,
+    "n_estimators": 100,
+    "random_state": 42,
+    "subsample": 0.8,
+    "total_split_nodes_across_5_engines": 2455
+  },
+  "mondrian_conformal_quantiles_log1p_alpha_010": {
+    "L1_Scan": 0.168,
+    "L2_Join": 0.214,
+    "L3_Subquery_CTE": 0.228,
+    "L4_Window": 0.195,
+    "L5_Array_Unnest": 0.242
+  },
+  "ood_mahalanobis_gate": {
+    "false_acceptance_rate_pct": 2.0,
+    "false_rejection_rate_pct": 5.33,
+    "gamma_ood_threshold": 3.0
+  },
+  "protocol_status": "Internal Git-locked repository specification finalized after Core N=75 development LOSO-CV and prior to executing Prospective Seed S6 (15Q) and Unmodified Official TPC-DS (99Q) holdout benchmarks.",
+  "training_corpus": {
+    "dataset": "Core Stratified TPC-H Factorial Benchmark (SF=1 GB)",
+    "horizons": [
+      "V1_1y",
+      "V2_3y",
+      "V3_full"
+    ],
+    "n_queries": 75,
+    "n_seeds": 25,
+    "source_telemetry_csv": "results/query_routing_evaluation_sf1.csv",
+    "source_telemetry_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

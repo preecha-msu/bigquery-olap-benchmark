@@ -1,0 +1,7 @@
+Query_ID,AST_Depth,Joins,Window_Funcs,CSCI,Selectivity,Live_Parse_Footer_ms,Selected_Engine,Selected_Exec_ms,Net_Total_ms,Oracle_Exec_ms,Rel_Regret_Pct,Live_Arrow_Output_Rows,BigQuery_Bytes_Billed_MB,BigQuery_Dispatched,Checksum_Verified
+q_L1_s1_v1_s1_pricing_agg.sql,8,0,0,12.0,0.03,3.999,DuckDB_v2.0,13.03,17.03,13.03,0.0,1,142.0,False,True
+q_L2_s1_v2_s1_star_4way_revenue.sql,8,2,0,17.0,0.25,3.795,DuckDB_v2.0,62.01,65.81,62.01,0.0,25,142.0,False,True
+q_L3_s1_v2_s1_multistage_customer_tier.sql,8,4,0,25.0,0.25,5.383,GPU_Columnar (PyTorch/CuPy/RAPIDS cudf-polars),57.59,62.97,57.59,0.0,25,142.0,False,True
+q_L4_s1_v2_s1_multi_axis_rank_pareto.sql,11,1,2,32.0,0.25,6.285,GPU_Columnar (PyTorch/CuPy/RAPIDS cudf-polars),18.64,24.93,18.64,0.0,100,142.0,False,True
+q_L5_s1_v3_s1_order_shipmode_array_explosion.sql,11,4,0,29.5,0.8,6.689,DataFusion_v55,15.45,22.14,15.45,0.0,625,142.0,False,True
+BIGQUERY_API_AUDIT_SF1_TO_SF100,0,0,0,0.0,0.348,0.41,0.0% Cloud at SF=1-30 GB (Negative Control) -> 20.0% Cloud at SF=100 GB (Spill Regime),2462.43,2462.84,50.77,0.0,75,142.0,False,True

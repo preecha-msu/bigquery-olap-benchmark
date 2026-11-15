@@ -910,4 +910,109 @@ Doshi K, Kipf A, Nathan V, Saxena H, Kraska T, et al. Kepler: robust learning fo
 
 \end{thebibliography}
 }
+
+% === BEGIN V11 SUPPLEMENTARY TABLES S22-S25 ===
+\clearpage
+\section{V11 Extended Tables Moved from Main Manuscript \& Independent GPU / Statistical Audits}
+\label{sec:v11_supplementary_tables}
+
+To streamline the main manuscript while preserving 100\% archival completeness, Tables~\ref{tab:supp_key_findings_glance} and \ref{tab:supp_v9_mo_energy_ood_repro} house the full Key-Findings-at-a-Glance synthesis and the Multi-Objective Pareto / Exploratory Host+Device Energy / OOD / Reproducibility synthesis moved from the main text. Tables~\ref{tab:supp_v11_cudf_polars} and \ref{tab:supp_v11_strong_baselines_cluster} report the new V11 real-execution benchmarks for the independent third-party GPU engine (\texttt{NVIDIA RAPIDS cudf-polars 26.10.2 / libcudf-cu12 26.10.2}) across Official TPC-H Q1--Q22 ($\text{SF}=1\text{ GB}$ and $\text{SF}=10\text{ GB}$) and Core 75Q ($\text{SF}=1\text{ GB}$), alongside direct paired statistical comparisons against all strong baselines and hierarchical $G_{\text{core}}=10$ template-family cluster bootstrap confidence intervals.
+
+\begin{table}[htbp]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{3.5pt}
+\caption{Key empirical findings at a glance across all six evaluation dimensions ($N=400$ total SQL queries across 4 epistemic categories and 10 suites, $\text{SF}=1\text{ GB}$ to $100\text{ GB}$, and 4 physical hardware nodes; moved from Main Manuscript Table~1).}\label{tab:supp_key_findings_glance}
+\begin{tabular}{@{}p{2.3cm}p{3.9cm}p{4.3cm}p{2.9cm}@{}}
+\toprule
+\textbf{Evaluation Dimension} & \textbf{Key Empirical Finding} & \textbf{Primary Quantitative Evidence (95\% CI / Test)} & \textbf{Practical Takeaway} \\
+\midrule
+\textbf{1. Core Routing \& Tail-Risk Control} (\S\ref{sec:router_eval}) & \textbf{AST-Route} matches Always GPU mean latency while cutting P95 tail regret by $\mathbf{2.17\times\text{--}2.25\times}$ under co-equal $8\%$ and $12\%$ guards. & \textbf{Nested-CV $8\%$}: $\mathbf{55.37\text{ ms}}$, P95 $\mathbf{118.40\%}$ ($p_{\text{tpl}}=0.0074$). \textbf{Default $12\%$}: $\mathbf{54.92\text{ ms}}$ ($1.50\times$ vs.\ Polars, $p_{\text{Holm}}=0.0011$), P95 $\mathbf{114.11\%}$ ($p_{\text{tpl}}=0.0061$). & Eliminates catastrophic PCIe H2D/D2H stalls on selective L1/L2 queries. \\
+\textbf{2. Independent Third-Party GPU (\texttt{RAPIDS cudf-polars})} (\S\ref{sec:router_eval}) & \textbf{AST-Route} generalizes without retraining to \texttt{NVIDIA RAPIDS cudf-polars 26.10.2} (\texttt{libcudf-cu12}) at $\text{SF}=1$ and $10\text{ GB}$. & \textbf{Official TPC-H Q1--Q22}: $\mathbf{95.45\%}$ Exact Top-1, $\mathbf{0.00\%}$ P95 regret ($\mathbf{70.59\text{ ms}}$ vs.\ $137.86\text{ ms}$ static cudf-polars at $\text{SF}=1$; $\mathbf{1{,}524.39\text{ ms}}$ at $\text{SF}=10\text{ GB}$). \textbf{Core 75Q}: $\mathbf{16.50\times}$ P95 regret cut. & Proves routing gains are not an artifact of our custom PyTorch/CuPy GPU pipeline. \\
+\textbf{3. Minimalist 2/3-Engine Subsets} (\S\ref{sec:router_eval}) & A 2-engine \textbf{$\{\text{Polars}, \text{GPU}\}$} subset captures $\mathbf{98.7\%}$ of the full 6-engine latency reduction over Polars. & \textbf{Min-2}: $\mathbf{55.28\text{ ms}}$ net vs.\ $54.92\text{ ms}$ full 6-engine ($\Delta = +0.36\text{ ms}$, $p=0.41$, $\mathbf{76.00\%}$ Exact Top-1); \textbf{Min-3} ($+\text{DuckDB}$): $\mathbf{54.98\text{ ms}}$ ($\mathbf{99.8\%}$ gain). & Production deployments need only \textbf{Polars + GPU} (+ DuckDB/BigQuery at scale). \\
+\textbf{4. Multi-Objective \& NVML GPU Energy} (\S\ref{sec:cost_qerror}) & Multi-objective Policies P1--P4 are Pareto-efficient across 500 Dirichlet simplex weights ($\text{DSR}=0.0\%$). & \textbf{Hardware-sensor NVML}: $0.644\text{ J/q}$ (RTX 2050), $0.668\text{ J/q}$ (CuPy), $0.875\text{ J/q}$ (Server Tesla T4). \textbf{P3 (Cost)}: $\mathbf{\$0.00/1\text{M}}$ at $\text{SF}=100\text{ GB}$ (saves $\mathbf{\$507.06/1\text{M}}$). \textbf{P4}: $\text{HV}=\mathbf{0.9210}$. & Enables zero-retraining tuning across speed, energy, and cloud FinOps budgets. \\
+\textbf{5. External \& Multi-Scale Generalization} (\S\ref{sec:multiscale_eval}) & Zero-shot routing generalizes to Official 99-query TPC-DS, 33-query JOB, and $\text{SF}=100\text{ GB}$ across 4 nodes. & \textbf{Official 99Q TPC-DS}: $\mathbf{30.49\text{ ms}}$ ($\mathbf{64.65\%}$ Exact Top-1 [$\mathbf{84.85\%}$ on $\mathcal{E}_{\text{SQL-5}}$], $\mathbf{79.80\%}$ $\le 5\%$ / $\mathbf{88.89\%}$ $\le 10\%$ hit, $\mathbf{3.23\%}$ regret). \textbf{JOB 12D}: $\mathbf{4.54\text{ ms}}$ ($69.70\%$ Top-1). & Lightweight $10.18\text{ KB}$ catalog sketches resolve string/join-skew limits. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{2.2pt}
+\caption{Synthesis of multi-objective Pareto policies (Part~A), hardware-sensor NVML and exploratory Host+Device energy validation (Part~B), out-of-distribution (OOD) stress testing (Part~C), and clean-room reproducibility verification (Part~D) (moved from Main Manuscript Table~10).}\label{tab:supp_v9_mo_energy_ood_repro}
+\begin{tabular}{@{}llrrrrrrrr@{}}
+\toprule
+\multicolumn{10}{@{}l}{\textbf{Part A: Multi-Objective Policies ($\text{SF}=1\text{ GB}$ / $\text{SF}=100\text{ GB}$, $N=75$, 500-Point Dirichlet Simplex $\text{DSR}=0.0\%$ Dominated)}} \\
+\textbf{Policy / Baseline} & \textbf{Weights $(\alpha,\beta,\gamma)$} & \textbf{SF1 Lat} & \textbf{SF1 $E_{\text{dev}}$ (J)} & \textbf{SF1 $\mathcal{R}_T/\mathcal{R}_E$} & \textbf{SF1 HV} & \textbf{SF100 Lat} & \textbf{SF100 Cloud \$/1M} & \textbf{SF100 HV} & \textbf{Engine Dispatch Mix (SF1 / SF100)} \\
+\midrule
+Static DuckDB / Polars & Single-Engine CPU & $183.7 / 82.5$ & $6.40 / 3.17^{\dagger}$ & $62.1\% / 164\%$ & $0.5180$ & $8{,}700 / 6{,}551$ & $\$0.00 / \$0.00$ & $0.4120$ & $100\%$ CPU (Spills $>9\text{ GB}$ RAM at SF100) \\
+Static BigQuery Cloud & Serverless Cloud & $745.39\text{ ms}$ & $0.089\text{ J}$ & $1{,}824\% / 0\%$ & $0.3140$ & $2{,}571.60\text{ ms}$ & $\$507.06/1\text{M}$ & $0.4890$ & $100\%$ Cloud ($\mathcal{R}_C=40.0\%$ unclustered) \\
+\textbf{P1: Latency-First} & $\mathbf{(1.0, 0.0, 0.0)}$ & $\mathbf{54.92\text{ ms}}$ & $\mathbf{1.381\text{ J}}$ & $\mathbf{34.98\% / 78.2\%}$ & $\mathbf{0.8965}$ & $\mathbf{1{,}142.80\text{ ms}}$ & $\mathbf{\$67.61/1\text{M}}$ & $\mathbf{0.9045}$ & $68\%$ GPU, $32\%$ CPU / $74.7\%$ GPU, $13.3\%$ BQ \\
+\textbf{P2: Energy-First} & $\mathbf{(0.1, 0.8, 0.1)}$ & $\mathbf{59.34\text{ ms}}$ & $\mathbf{0.812\text{ J}}$ & $\mathbf{42.10\% / 4.82\%}$ & $\mathbf{0.9142}$ & $\mathbf{1{,}188.40\text{ ms}}$ & $\mathbf{\$33.80/1\text{M}}$ & $\mathbf{0.9195}$ & $88\%$ GPU, $12\%$ Polars ($\mathbf{-41.2\%}$ J vs.\ P1) \\
+\textbf{P3: FinOps Cost-First} & $\mathbf{(0.2, 0.1, 0.7)}$ & $\mathbf{55.10\text{ ms}}$ & $\mathbf{1.365\text{ J}}$ & $\mathbf{35.40\% / 76.1\%}$ & $\mathbf{0.9012}$ & $\mathbf{1{,}264.50\text{ ms}}$ & $\mathbf{\$0.00/1\text{M}}$ & $\mathbf{0.9180}$ & $0\%$ BQ at SF100 (Saves $\mathbf{\$507.06/1\text{M}}$, $\mathcal{R}_C=0\%$) \\
+\textbf{P4: Balanced Knee} & $\mathbf{(0.5, 0.3, 0.2)}$ & $\mathbf{56.18\text{ ms}}$ & $\mathbf{0.945\text{ J}}$ & $\mathbf{37.15\% / 21.9\%}$ & $\mathbf{0.9210}$ & $\mathbf{1{,}196.20\text{ ms}}$ & $\mathbf{\$0.00/1\text{M}}$ & $\mathbf{0.9340}$ & \textbf{Max 3D HV}; $97.3\%$ weight-perturb stability \\
+\midrule
+\multicolumn{10}{@{}l}{\textbf{Part B: Hardware-Sensor NVML Telemetry vs.\ Exploratory TDP-Estimated Host+Device Energy ($^{\dagger}$TDP-Estimated CPU Energy Withdrawn from Main Headline Claims)}} \\
+\textbf{Subsystem / Scope} & \textbf{Sensor / Method} & \textbf{Sample Size} & \textbf{Idle Power} & \textbf{Active Power} & \textbf{Mean J/Query} & \textbf{Bland--Altman} & \textbf{95\% LoA} & \textbf{Concordance} & \textbf{Scope \& Interpretation} \\
+\midrule
+NVIDIA GPU (Node 1/4) & \texttt{pynvml} 50 Hz Hardware Sensor & $375 + 1{,}500$ & $8.10 / 9.65\text{ W}$ & $19.42 / 38.0\text{ W}$ & $0.644 / 0.875\text{ J}$ & $+0.0005\text{ J}$ & $[-0.036,+0.037]$ & $r=0.9981$ & \textbf{Primary Hardware-Sensor Energy Metric} \\
+Cloud RAPL/SMU/NVML & Linux \texttt{powercap} + AMD SMU + NVML & $1{,}500$ runs & $16.9 / 11.4\text{ W}$ & $42.5 / 26.8\text{ W}$ & $2.18\text{--}12.31\text{ J}$ & $+0.012\text{ J}$ & $[-0.14,+0.16]$ & $\rho=0.9960$ & \textbf{Direct Hardware Registers Across 3 Cloud Nodes} \\
+Exploratory Host+Dev$^{\dagger}$ & P2 vs.\ P1 / Polars / DuckDB ($E_{\text{sys}}$) & Uniform $19.3\text{W}$ & P2 Dev: $0.812\text{ J}$ & Host: $0.846\text{ J}$ & $E_{\text{sys}}$: $1.658\text{ J}$ & Dyn: $0.542\text{ J}$ & P1: $2.273\text{ J}$ & $\rho=0.9945$ & Exploratory System Estimate ($-27.1\%$ gross vs.\ P1) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{3.0pt}
+\caption{Independent third-party GPU engine validation using \texttt{NVIDIA RAPIDS cudf-polars 26.10.2} (\texttt{libcudf-cu12==26.10.2}, \texttt{cudf-streaming-cu12==26.10.2}) on Node~1 (RTX~2050 $4.0\text{ GB}$ VRAM) across Official TPC-H Q1--Q22 ($\text{SF}=1\text{ GB}$ and $\text{SF}=10\text{ GB}$) and Core 75Q ($\text{SF}=1\text{ GB}$).}\label{tab:supp_v11_cudf_polars}
+\begin{tabular}{@{}llrrrrrrl@{}}
+\toprule
+\textbf{Workload \& Scale} & \textbf{Routing Policy / Engine} & \textbf{Mean Exec (ms)} & \textbf{Mean Net (ms)} & \textbf{Exact Top-1} & \textbf{Mean Regret} & \textbf{P95 Regret} & \textbf{$\text{CVaR}_{10\%}$ Regret} & \textbf{Hardware Execution \& Crossover Notes} \\
+\midrule
+\textbf{Official TPC-H 22Q} & Always DuckDB CPU & $87.97$ & $87.97$ & $31.82\%$ & $46.97\%$ & $180.78\%$ & $221.40\%$ & Native C++ vectorized execution ($\text{EX}=1.000$) \\
+($\text{SF}=1\text{ GB}$, $6.0\text{M}$ rows) & Always Polars CPU & $77.17$ & $77.17$ & $50.00\%$ & $6.59\%$ & $29.10\%$ & $45.06\%$ & Fast on selective scans (\texttt{Q02}: $14.23\text{ ms}$) \\
+ & Always \texttt{RAPIDS cudf-polars} GPU & $137.86$ & $137.86$ & $18.18\%$ & $171.63\%$ & $646.38\%$ & $777.42\%$ & Wins heavy scans/joins (\texttt{Q01}: $208.6\text{ ms}$, \texttt{Q17}: $1.31\times$, \texttt{Q18}: $1.61\times$) \\
+ & \textbf{AST-Route + \texttt{RAPIDS cudf-polars}} & $\mathbf{70.59}$ & $\mathbf{74.74}$ & $\mathbf{95.45\%}$ & $\mathbf{1.32\%}$ & $\mathbf{0.00\%}$ & $\mathbf{14.53\%}$ & \textbf{Beats static \texttt{cudf-polars} ($1.95\times$) and Polars CPU ($1.09\times$)} \\
+ & Oracle Bound (Polars $\cup$ \texttt{cudf-polars}) & $69.81$ & $69.81$ & $100.0\%$ & $0.00\%$ & $0.00\%$ & $0.00\%$ & $22/22$ ($100\%$) native \texttt{libcudf}, zero CPU fallback \\
+\midrule
+\textbf{Official TPC-H 22Q} & Always DuckDB CPU & $789.86$ & $789.86$ & $77.27\%$ & $4.12\%$ & $18.40\%$ & $24.10\%$ & In-memory/spill C++ scan at $60\text{M}$ rows \\
+($\text{SF}=10\text{ GB}$, $60.0\text{M}$ rows) & Always Polars CPU (Streaming) & $1{,}548.87$ & $1{,}548.87$ & $90.91\%$ & $1.62\%$ & $9.92\%$ & $17.81\%$ & Out-of-core Rust Arrow streaming \\
+ & Always \texttt{RAPIDS cudf-polars} (Stream) & $2{,}012.58$ & $2{,}012.58$ & $9.09\%$ & $46.84\%$ & $163.11\%$ & $184.91\%$ & Out-of-core \texttt{cudf-streaming-cu12} over $4.0\text{ GB}$ VRAM (\texttt{Q04}, \texttt{Q07} wins) \\
+ & \textbf{AST-Route + \texttt{RAPIDS cudf-polars}} & $\mathbf{1{,}524.39}$ & $\mathbf{1{,}528.54}$ & $\mathbf{95.45\%}$ & $\mathbf{0.45\%}$ & $\mathbf{0.00\%}$ & $\mathbf{4.96\%}$ & \textbf{Zero OOM across $22/22$ queries; $\mathbf{0.00\%}$ P95 regret} \\
+\midrule
+\textbf{Core TPC-H 75Q} & Always \texttt{RAPIDS cudf-polars} GPU & $216.04$ & $216.04$ & $8.00\%$ & $596.32\%$ & $2{,}562.35\%$ & $2{,}894.10\%$ & Parquet-to-VRAM reader overhead on selective queries \\
+($\text{SF}=1\text{ GB}$, $25$ Seeds) & Custom PyTorch / CuPy GPU (Cold) & $56.96 / 58.96$ & $56.96 / 58.96$ & $49.3\% / 48.0\%$ & $74.3\% / 76.8\%$ & $257.3\% / 264.8\%$ & $325.2\% / 334.6\%$ & \textbf{Custom GPU pipeline is $3.79\times$ faster than \texttt{cudf-polars}} \\
+ & \textbf{AST-Route + \texttt{RAPIDS cudf-polars}} & $\mathbf{66.81}$ & $\mathbf{70.96}$ & $\mathbf{57.33\%}$ & $\mathbf{43.18\%}$ & $\mathbf{155.29\%}$ & $\mathbf{198.40\%}$ & \textbf{Compresses \texttt{cudf-polars} P95 regret by $16.50\times$ ($2{,}562\% \rightarrow 155\%$)} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{2.8pt}
+\caption{Direct paired head-to-head statistical tests of Co-Equal AST-Route ($8\%$ Nested-CV and $12\%$ Default Guards) against the strongest baselines under both $K=25$ Seed-Clustered Bootstrap and $G_{\text{core}}=10$ Template-Family Hierarchical Cluster / Wild Cluster Bootstrap ($10{,}000$ iterations, $N=75$, $\text{SF}=1\text{ GB}$).}\label{tab:supp_v11_strong_baselines_cluster}
+\begin{tabular}{@{}llrrrrrr@{}}
+\toprule
+\textbf{AST-Route Guard} & \textbf{Strong Baseline Opponent} & \textbf{Paired $\Delta T_{\text{net}}$ (ms) [95\% CI]} & \textbf{$p_{\text{NB}} / p_{\text{tpl}}$} & \textbf{Paired $\Delta\mathcal{R}_{\text{P95}}$ (pp) [95\% CI]} & \textbf{Paired $\Delta\text{CVaR}_{10\%}$ (pp) [95\% CI]} & \textbf{$G_{\text{core}}=10$ Wild $p$} & \textbf{Statistical Conclusion} \\
+\midrule
+\textbf{5b: Nested-CV ($8\%$)} & Always GPU ($56.96\text{ ms}$, $257.31\%$ P95) & $-1.59$ $[-8.94, +5.48]$ & $0.355 / 0.654$ & $\mathbf{-138.91}$ $[-231.0, -43.5]$ & $\mathbf{-190.98}$ $[-316.8, -62.4]$ & $\mathbf{p_{\text{tpl}}=0.0074}$ & Passes $\pm 5\text{ ms}$ TOST ($p=0.0442$) \& $2.17\times$ P95 cut \\
+\textbf{5c: Default ($12\%$)} & Always GPU ($56.96\text{ ms}$, $257.31\%$ P95) & $-2.04$ $[-9.89, +5.59]$ & $0.331 / 0.598$ & $\mathbf{-143.20}$ $[-236.5, -47.1]$ & $\mathbf{-194.72}$ $[-321.2, -66.2]$ & $\mathbf{p_{\text{tpl}}=0.0061}$ & Passes $+5\text{ ms}$ non-inf ($p=0.00067$) \& $2.25\times$ P95 cut \\
+\midrule
+\textbf{5b: Nested-CV ($8\%$)} & Ridge Linear Unguarded ($52.77\text{ ms}$, $196.81\%$ P95) & $+2.60$ $[-1.16, +7.26]$ & $0.795 / 0.254$ & $\mathbf{-78.41}$ $[-208.1, +8.4]$ & $\mathbf{-239.90}$ $[-598.4, -21.0]$ & $p_{\text{tpl}}=0.0562$ & Equivalent net speed; massive $\text{CVaR}_{10\%}$ tail protection \\
+\textbf{5c: Default ($12\%$)} & Ridge Linear Unguarded ($52.77\text{ ms}$, $196.81\%$ P95) & $+2.15$ $[-2.38, +7.47]$ & $0.829 / 0.422$ & $\mathbf{-82.70}$ $[-225.5, -2.8]$ & $\mathbf{-244.42}$ $[-605.3, -25.3]$ & $\mathbf{p_{\text{tpl}}=0.0438}$ & \textbf{Statistically significant P95 \& $\text{CVaR}_{10\%}$ tail cut} \\
+\midrule
+\textbf{5c: Default ($12\%$)} & Ridge Linear ($+12\%$ Guard, $55.49\text{ ms}$, $138.50\%$ P95) & $-0.57$ $[-5.76, +4.26]$ & $0.785 / 0.812$ & $\mathbf{-24.39}$ $[-112.4, +32.1]$ & $\mathbf{-136.38}$ $[-482.0, -4.2]$ & $p_{\text{CVaR}}=0.0410$ & Lower P95 ($-24.4\text{ pp}$) \& $\text{CVaR}_{10\%}$ ($-136.4\text{ pp}$) regret \\
+\textbf{5c: Default ($12\%$)} & Shallow Tree ($d=2, +12\%$, $56.55\text{ ms}$, $128.40\%$ P95) & $-1.63$ $[-7.60, +3.67]$ & $0.594 / 0.548$ & $\mathbf{-14.29}$ $[-98.5, +41.0]$ & $\mathbf{-173.01}$ $[-534.0, -8.5]$ & $p_{\text{CVaR}}=0.0385$ & Beats depth-2 tree in mean speed, P95, and $\text{CVaR}_{10\%}$ \\
+\textbf{5c: Default ($12\%$)} & Adapted \texttt{EXPLAIN}-DAG ($60.76\text{ ms}$, $119.86\%$ P95) & $\mathbf{-5.84}$ $[-6.26, -5.41]$ & $\mathbf{<0.0001}$ & $-5.75$ $[-18.4, +6.2]$ & $-4.49$ $[-22.1, +11.4]$ & $\mathbf{p_{\text{tpl}}<0.0001}$ & \textbf{Strictly faster net latency ($-5.84\text{ ms}$) by avoiding binder} \\
+\textbf{5c: Default ($12\%$)} & Native DuckDB \texttt{EXPLAIN} ($54.15\text{ ms}$, $119.86\%$ P95) & $+0.77$ $[+0.34, +1.20]$ & $0.0837$ & $-5.75$ $[-18.4, +6.2]$ & $-4.49$ $[-22.1, +11.4]$ & $p_{\text{NB}}=0.0837$ & Transparently competitive on single-dialect local DuckDB \\
+\textbf{5c: Default ($12\%$)} & Adapted Bao-Bandit ($61.74\text{ ms}$, $134.91\%$ P95) & $\mathbf{-6.82}$ $[-16.17, +1.47]$ & $0.0680$ & $\mathbf{-20.80}$ $[-104.2, +28.4]$ & $\mathbf{-46.80}$ $[-168.0, +14.2]$ & $p_{\text{Wil}}=0.0412$ & Faster net latency ($-6.82\text{ ms}$) \& lower P95 regret \\
+\bottomrule
+\end{tabular}
+\end{table}
+% === END V11 SUPPLEMENTARY TABLES S22-S25 ===
+
 \end{document}
