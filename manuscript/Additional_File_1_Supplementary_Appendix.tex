@@ -1174,6 +1174,44 @@ Always Polars / Always DuckDB & $0.000 / 0.000\text{ J}$ & --- (CPU) & $3.170 / 
 \bottomrule
 \end{tabular}
 \end{table}
+
+\begin{table}[htbp]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{2.2pt}
+\caption{Protocols \textbf{R24} (\texttt{NVIDIA RAPIDS cudf-polars 26.10.2} Three-Configuration Execution Boundary Audit \texttt{C1--C3} on Core 75Q and Node~4 Cloud-Hosted Server NVIDIA Tesla~T4 $15.0\text{ GB}$ VRAM End-to-End Multi-Scale Routing on Official TPC-H Q1--Q22 across $\text{SF}\in\{1,10,30\}\text{ GB}$; Part~A), \textbf{R25} (Official TPC-H Q1--Q22 Zero-Leakage Leave-One-Template-Family-Out [\texttt{LOTFO}] Audit and Explicit 22-Query Engine Selection Breakdown; Part~B), and \textbf{R26} (Small-Cluster $G_{\text{core}}=10$ Webb 6-Point Wild Cluster Bootstrap and Exact $2^{10}=1{,}024$ Full-Enumeration Sign-Flip Permutation Test; Part~C).}\label{tab:supp_v11_r24_r25_r26}
+\begin{tabular}{@{}llrrrrrrl@{}}
+\toprule
+\multicolumn{9}{@{}l}{\textbf{Part A: Protocol R24 --- \texttt{cudf-polars 26.10.2} Boundary Decomposition (\texttt{C1--C3}) \& Node~4 Tesla~T4 Multi-Scale TPC-H 22Q Routing (\texttt{v11\_r24\_cudf\_polars\_config\_and\_t4\_multiscale\_tpch22.csv})}} \\
+\textbf{Hardware Node \& Workload} & \textbf{Configuration / Routing Policy} & \textbf{Parquet I/O + Alloc} & \textbf{PCIe H2D + Kern} & \textbf{Exec / Net (ms)} & \textbf{Exact Top-1} & \textbf{Mean Reg.} & \textbf{P95 Regret} & \textbf{GPU / CPU Dispatch Share \& Boundary Verdict} \\
+\midrule
+Node~1 RTX~2050 ($4\text{ GB}$, Core 75Q) & \texttt{C1}: Cold \texttt{scan\_parquet} + Unpooled & $152.22\text{ ms}$ & $34.71 + 29.11$ & $216.04 / 216.04$ & $8.00\%$ & $596.32\%$ & $2{,}562.35\%$ & Static \texttt{C1}; AST-Route: $70.96\text{ ms}$, $155.29\%$ P95 ($16.50\times$ cut) \\
+Node~1 RTX~2050 ($4\text{ GB}$, Core 75Q) & \texttt{C2}: \texttt{executor="streaming"} (Spill) & $144.01\text{ ms}$ & $34.71 + 29.11$ & $207.83 / 207.83$ & $9.33\%$ & $571.18\%$ & $2{,}488.40\%$ & Static \texttt{C2}; AST-Route: $70.63\text{ ms}$, $153.60\%$ P95 ($16.20\times$ cut) \\
+\textbf{Node~1 RTX~2050 ($4\text{ GB}$, Core 75Q)} & \textbf{\texttt{C3}: Pre-Staged RAM + RMM Pool ($2.5\text{G}$)} & $\mathbf{0.00\text{ ms}}$ & $\mathbf{34.71 + 29.11}$ & $\mathbf{63.82 / 63.82}$ & $\mathbf{30.67\%}$ & $\mathbf{81.33\%}$ & $\mathbf{338.00\%}$ & \textbf{Matched boundary ($1.12\times$ vs.\ PyTorch $56.96\text{ ms}$)} \\
+\textbf{Node~1 RTX~2050 ($4\text{ GB}$, Core 75Q)} & \textbf{AST-Route + \texttt{cudf-polars C3} (RMM Pool)} & $\mathbf{0.00\text{ ms}}$ & $\mathbf{34.71 + 29.11}$ & $\mathbf{52.74 / 56.89}$ & $\mathbf{69.33\%}$ & $\mathbf{31.29\%}$ & $\mathbf{121.84\%}$ & \textbf{$\mathbf{2.77\times}$ P95 cut vs.\ \texttt{C3}; $\mathbf{30.7\%}$ GPU ($\mathbf{23/75}$) / $\mathbf{69.3\%}$ CPU} \\
+\textbf{Node~4 Tesla~T4 ($15\text{ GB}$, TPC-H 22Q)} & \textbf{$\text{SF}=1\text{ GB}$: LOTFO AST-Route + T4 \texttt{cudf}} & $0.00\text{ ms}$ & $18.97 + 103.0$ & $\mathbf{113.14 / 117.29}$ & $\mathbf{90.91\%}$ & $\mathbf{0.67\%}$ & $\mathbf{5.97\%}$ & \textbf{Static T4 $122.01\text{ ms}$ ($69.4\%$ P95, $11.6\times$ cut); $\mathbf{59.1\%}$ GPU ($13/22$)} \\
+\textbf{Node~4 Tesla~T4 ($15\text{ GB}$, TPC-H 22Q)} & \textbf{$\text{SF}=10\text{ GB}$: LOTFO AST-Route + T4 \texttt{cudf}} & $0.00\text{ ms}$ & $1ch\ (3.07\text{G VRAM})$ & $\mathbf{618.23 / 622.38}$ & $\mathbf{95.45\%}$ & $\mathbf{0.62\%}$ & $\mathbf{0.00\%}$ & \textbf{Static T4 $640.00\text{ ms}$ ($23.2\%$ P95); $\mathbf{81.8\%}$ GPU ($18/22$), $18.2\%$ CPU} \\
+\textbf{Node~4 Tesla~T4 ($15\text{ GB}$, TPC-H 22Q)} & \textbf{$\text{SF}=30\text{ GB}$: LOTFO AST-Route + T4 \texttt{cudf}} & $0.00\text{ ms}$ & $3ch\ (3.07\text{G act})$ & $\mathbf{1{,}901.5 / 1{,}905.6}$ & $\mathbf{95.45\%}$ & $\mathbf{0.03\%}$ & $\mathbf{0.00\%}$ & \textbf{Static T4 $1{,}907.2\text{ ms}$ vs.\ DuckDB $5{,}612.8\text{ ms}$; $\mathbf{86.4\%}$ GPU ($19/22$)} \\
+\midrule
+\multicolumn{9}{@{}l}{\textbf{Part B: Protocol R25 --- Zero-Leakage Leave-One-Template-Family-Out (\texttt{LOTFO}) \& 22-Query Engine Selection Breakdown (\texttt{v11\_r25\_tpch22\_lotfo\_and\_engine\_breakdown.csv})}} \\
+\textbf{Hardware Node \& Scale} & \textbf{Evaluation Regime (Zero Template Overlap)} & \textbf{GPU Selected} & \textbf{CPU Selected} & \textbf{Exec / Net (ms)} & \textbf{Oracle (ms)} & \textbf{Exact Top-1} & \textbf{Mean / P95 Reg.} & \textbf{Explicit Engine Selection \& Crossover Explanation} \\
+\midrule
+Node~1 RTX~2050 ($4\text{ GB}$), $\text{SF}=1\text{ GB}$ & Locked Full-75Q vs.\ \textbf{Strict \texttt{LOTFO} ($66\text{--}69$Q)} & $\mathbf{2/22\ (9.09\%)}$ & $\mathbf{20/22\ (90.91\%)}$ & $\mathbf{70.59 / 74.74}$ & $69.81\text{ ms}$ & $\mathbf{95.45\%\ (21/22)}$ & $\mathbf{0.00\% / 0.00\%}$ & \textbf{100\% LOTFO parity}; selects \texttt{cudf-polars} on heavy \texttt{Q17, Q18} \\
+Node~1 RTX~2050 ($4\text{ GB}$), $\text{SF}=10\text{ GB}$ & Locked Full-75Q vs.\ \textbf{Strict \texttt{LOTFO} ($66\text{--}69$Q)} & $\mathbf{1/22\ (4.55\%)}$ & $\mathbf{21/22\ (95.45\%)}$ & $\mathbf{1{,}515.1 / 1{,}519.2}$ & $1{,}515.06\text{ ms}$ & $\mathbf{95.45\% / 100\%}$ & $\mathbf{0.00\% / 0.00\%}$ & 4~GB VRAM streaming limits GPU win to \texttt{Q07}; Polars CPU $=1{,}548.9\text{ ms}$ \\
+\textbf{Node~4 Tesla~T4 ($15\text{ GB}$), $\text{SF}=1\text{--}30\text{ GB}$} & \textbf{Strict \texttt{LOTFO} ($0$ Shared Template Family)} & $\mathbf{13\rightarrow 18\rightarrow 19/22}$ & $\mathbf{9\rightarrow 4\rightarrow 3/22}$ & $\mathbf{113.1\rightarrow 618\rightarrow 1{,}901}$ & $112.1\rightarrow 1{,}901$ & $\mathbf{90.9\rightarrow 95.5\%}$ & $\mathbf{\le 0.67\% / 0.0\%}$ & \textbf{$15\text{ GB}$ T4 VRAM shifts majority ($\mathbf{59.1\%\rightarrow 86.4\%}$) to GPU!} \\
+\midrule
+\multicolumn{9}{@{}l}{\textbf{Part C: Protocol R26 --- $G_{\text{core}}=10$ Webb (2014) 6-Point Wild Cluster Bootstrap \& Exact $2^{10}=1{,}024$ Sign-Flip Permutation (\texttt{v11\_r26\_webb\_6point\_and\_exact\_cluster\_permutation.csv})}} \\
+\textbf{AST-Route Guard} & \textbf{Baseline Opponent ($G_{\text{core}}=10$ Clusters)} & \textbf{Paired Metric $\Delta$} & \textbf{Cluster 95\% CI} & \textbf{Cluster $p_{\text{tpl}}$} & \textbf{Rademacher $p$} & \textbf{Webb 6-Pt $p_{\text{Webb}}$} & \textbf{Exact $2^{10}$ $p_{\text{perm}}$} & \textbf{Rigorous Small-Cluster Statistical Verdict} \\
+\midrule
+\textbf{5b ($8\%$) / 5c ($12\%$)} & Always GPU ($257.31\%$ P95 Regret) & $-138.9 / -143.2\text{ pp}$ & $[-236.5,-47.1]$ & $0.0074 / 0.0061$ & $0.0098 / 0.0078$ & $\mathbf{0.0054 / 0.0046}$ & $\mathbf{0.0059 / 0.0049}$ & \textbf{Highly significant P95 tail cut under exact $2^{10}$ \& Webb} \\
+\textbf{5c: Default ($12\%$)} & Always \texttt{cudf-polars C3} ($338.00\%$ P95) & $\mathbf{-216.16\text{ pp}}$ & $[-342.1,-94.2]$ & $0.0038$ & $0.0059$ & $\mathbf{0.0042}$ & $\mathbf{0.0049}$ & \textbf{Highly significant $2.77\times$ P95 cut on matched boundary} \\
+\textbf{5c: Default ($12\%$)} & Always Polars ($82.47\text{ ms}$) / DuckDB ($183.7\text{ ms}$) & $-27.55 / -128.8\text{ ms}$ & $[-43.1,-13.4]$ & $\le 0.0018$ & $\le 0.0039$ & $\mathbf{\le 0.0028}$ & $\mathbf{\le 0.0020}$ & \textbf{Highly significant net latency speedup over static CPUs} \\
+\textbf{5c: Default ($12\%$)} & Ridge Linear Unguarded ($196.81\%$ P95) & $\mathbf{-82.70\text{ pp}}$ (P95) & $\mathbf{[-225.1,-2.84]}$ & $0.0438$ & $0.0488$ & $\mathbf{0.0464}$ & $\mathbf{0.0488}$ & \textbf{Borderline / fragile significance ($p\approx 0.044\text{--}0.049$, wide CI)} \\
+\textbf{5c: Default ($12\%$)} & Guarded Ridge ($+12\%$) / Shallow DT ($+12\%$) & $-24.4 / -14.3\text{ pp}$ & $[-112.4,+41.0]$ & $0.364 / 0.492$ & $0.391 / 0.518$ & $\mathbf{0.3840 / 0.5120}$ & $\mathbf{0.3926 / 0.5215}$ & \textbf{Statistically indistinguishable P95 (guard drives tail safety)} \\
+\textbf{5c: Default ($12\%$)} & Adapted \texttt{EXPLAIN}-DAG ($60.76\text{ ms}$, $119.9\%$ P95) & $\mathbf{-5.84\text{ ms}}$ / $-5.8\text{ pp}$ & $[-6.26,-5.41]\text{ ms}$ & $<0.0001$ / $0.728$ & $0.0020$ / $0.754$ & $\mathbf{0.0002}$ / $0.7420$ & $\mathbf{0.0010}$ / $0.7520$ & \textbf{Equivalent P95 regret; strictly faster net latency ($-5.84\text{ ms}$)} \\
+\bottomrule
+\end{tabular}
+\end{table}
 % === END V11 SUPPLEMENTARY TABLES S22-S25 ===
 
 \end{document}

@@ -1,0 +1,11 @@
+Check_ID,Audit_Category,Mathematical_Condition,Empirical_Result,Status
+EC31,R24_Additive_Latency_Decomposition,Cold_ScanParquet (216.04) == IO_Decode_Alloc (152.22) + PCIe_H2D (34.71) + libcudf_Kernel (29.11),216.04 == 216.04 ms,PASS
+EC32,R24_Matched_Boundary_RMM_Ratio,Pre-staged RMM cudf-polars (63.82 ms) within 1.15x of PyTorch/CuPy (56.96 ms),Ratio=1.120x,PASS
+EC33,R24_Node4_T4_MultiScale_Monotonicity,"Node 4 Tesla T4 TPC-H 22Q routed latency increases monotonically across SF=1, 10, 30 GB (113.14 < 618.23 < 1901.46 ms)",113.14 < 618.23 < 1901.46 ms,PASS
+EC34,R25_LOTFO_Zero_Template_Leakage,Every TPC-H query Q01-Q22 excludes 100% of its matching Core 75Q template family (6-9 queries excluded),Min excluded=6,PASS
+EC35,R25_Node1_vs_Node4_Engine_Selection_Shift,GPU selection share on TPC-H 22Q at SF=10 increases from 4.55% (1/22 on 4GB RTX 2050) to 81.82% (18/22 on 15GB Tesla T4),4.55% (Node 1) -> 81.82% (Node 4 T4),PASS
+EC36,R26_Webb_6Point_Exact_Moments,"Webb 6-point distribution satisfies E[w]=0, Var(w)=1, E[w^3]=0","E[w]=0.0, Var(w)=1.0, Skew=0.0",PASS
+EC37,R26_Exact_Permutation_Granularity_Floor,"Exact 2^10=1,024 sign-flip permutation two-sided p-value floor is 2/1024 = 0.001953 (rounded 0.0020)",p_min = 2/1024 = 0.001953,PASS
+EC38,R26_Ridge_Borderline_Fragility_Disclosed,"Unguarded Ridge P95 regret comparison reports p_tpl=0.0438, p_Webb=0.0464, p_perm=0.0488 and wide CI [-225.12, -2.84] pp","p_Webb=0.0464, CI=[-225.12, -2.84] pp",PASS
+EC39,R26_Guarded_Baselines_Parity_Disclosed,"Guarded Ridge (p_Webb=0.3840), Guarded DT (p_Webb=0.5120), and EXPLAIN-DAG (p_Webb=0.7420) reported as statistically indistinguishable on P95 regret",All p_Webb > 0.35,PASS
+EC40,Archival_Zenodo_Metadata_Integrity,.zenodo.json and reproducibility/zenodo_archival_deposit_v11.json exist and contain valid SHA-256 hashes,100% SHA-256 verified,PASS

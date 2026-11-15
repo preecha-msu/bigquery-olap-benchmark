@@ -70,6 +70,12 @@ audit_rules = [
     ("V11-24: Dual-Unit Polars p-Values (p_Holm,query=0.0011 & p_Holm,seed=0.0171)", r"p_\{\\text\{Holm,query\}\}=0\.0011", 2, "Abstract, Sec 4.3, Sec 5"),
     ("V11-25: Figure 1 Caption Updated to (V11) (Zero Legacy '(V10)' Caption)", r"Framework \(V10\):", 0, "Must be 0 occurrences"),
     ("V11-26: No Legacy Contradictory Numbers (51.12 / 6.70 / 103.32 / 44.89 ms R17) & No ??", r"51\.12|6\.70|103\.32|44\.89\\text\{ ms\}|\?\?", 0, "Must be 0 occurrences"),
+    ("V11-27: Protocol R24 cudf-polars C3 RMM-Pooled (63.82 ms, 2.77x cut) & Node 4 T4 22Q", r"63\.82.*2\.77\\times", 1, "Sec 1, Table 5, Table 6, Sec 4.3"),
+    ("V11-28: Protocol R25 Strict LOTFO Zero-Leakage & Engine Selection Breakdown (59.09%->86.36%)", r"LOTFO.*86\.36\\%", 1, "Sec 1, Sec 4.3, Supp Table S31"),
+    ("V11-29: Protocol R26 Webb 6-Point (p_Webb=0.0054 / 0.0464) & Exact 2^10 Permutation", r"0\.0464.*0\.0488", 1, "Abstract, Sec 1, Sec 4.3, Sec 4.4.1"),
+    ("V11-30: Zero 'not externally registered' & Formal .zenodo.json / v11.0.0-jbd-archival", r"not externally registered", 0, "Must be 0 occurrences"),
+    ("V11-31: Post-Hoc <=5ms Tolerance Removed from Headline (Zero 'to \\mathbf{85.33\\%}')", r"to \\mathbf\{85\.33\\%\}", 0, "Must be 0 occurrences"),
+    ("V11-32: Section Takeaway Callouts & EC01-EC40 (40/40 PASS) Documented", r"Section Takeaway:.*EC01--EC40", 1, "Sec 2, Sec 3, Declarations"),
 ]
 
 all_passed = True
