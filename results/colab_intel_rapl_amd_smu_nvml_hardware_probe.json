@@ -1,0 +1,43 @@
+{
+  "step1_intel_rapl_probe": {
+    "os_platform": "Linux-6.6.159+-x86_64-with-glibc2.39",
+    "cpu_vendor": "GenuineIntel",
+    "cpu_model": "Intel(R) Xeon(R) CPU @ 2.00GHz",
+    "logical_vcpus": 2,
+    "hypervisor": "KVM",
+    "intel_rapl_sysfs_domains": [],
+    "intel_rapl_energy_uj_readable": false,
+    "intel_msr_0x611_dev_nodes": 0,
+    "intel_msr_0x611_readable": false,
+    "perf_power_energy_pkg_exposed": false,
+    "kernel_perf_event_paranoid": "2",
+    "intel_rapl_status": "MASKED_BY_KVM_HYPERVISOR_PLATYPUS_CVE_2020_8694",
+    "colab_step1_json_sha256": "9678bedec76a3e67ac1d4576b56c9161defcb64181b523a85cf19d9c0691bf88",
+    "colab_step1_csv_sha256": "2bafb3472e9c41fc7549f747d7881f3dc4806c97b012ae6df675746e7730435e"
+  },
+  "step2_amd_smu_and_nvml_probe": {
+    "os_platform": "Linux-6.6.159+-x86_64-with-glibc2.39",
+    "cpu_vendor": "GenuineIntel",
+    "cpu_model": "Intel(R) Xeon(R) CPU @ 2.00GHz",
+    "hypervisor": "KVM",
+    "amd_energy_driver_nodes": [],
+    "hwmon_devices_detected": [],
+    "amd_smu_hwmon_readable": false,
+    "amd_msr_0xC001029A_readable": false,
+    "kernel_modinfo_check": [
+      "modinfo: ERROR: Module amd_energy not found.",
+      "modinfo: ERROR: Module k10temp not found."
+    ],
+    "nvidia_nvml_hardware_sensor_active": true,
+    "nvidia_gpu_model": "Tesla T4",
+    "nvidia_gpu_idle_power_w": 9.651,
+    "amd_smu_status": "MASKED_BY_KVM_HYPERVISOR_CVE_2020_12912_PLATYPUS_OR_NON_AMD_HOST",
+    "colab_step2_json_sha256": "a7735c2afe32acbfe2f17c7ab004c5b4e0503ae002d91128cf6dd5b93411c1dd",
+    "colab_step2_csv_sha256": "594f674db5f318a9205724e83087cb6c60a4e0b6f8fe83b48310a4b8be17286e"
+  },
+  "step3_50rep_5tier_1500run_nvml_audit": {
+    "colab_raw_1500run_csv_sha256": "f316fd9fd1b3a7767fb36d2272fb3f515ae6c8a33b299d22ed4ff2ccd4afa04c",
+    "colab_summary_csv_sha256": "314db90d5616a8dc2d42791ab40623af573d4cae1c82fe130531cb456d8cd77a",
+    "colab_bundle_zip_sha256": "fbe43039ab3dbd6969df6c91c5d233c8e0315d89c14019b11cac218e0258665c"
+  }
+}
