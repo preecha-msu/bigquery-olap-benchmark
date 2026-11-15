@@ -1,0 +1,11 @@
+Edge_Case_ID,Check_Name,Status,Details
+EC41,Zero_Legacy_0044_in_R19_and_Roadmaps,PASS,Zero occurrences of legacy p=0.0044 across R19 CSV and all Revision Roadmaps
+EC42,CSCI_Zero_Conditional_MI_and_R2_Unity,PASS,"I(CSCI;Y|D..C)=0.0 bits, R^2=1.0"
+EC43,Grouped_Block_Permutation_Manifold_Preservation,PASS,"Grouped block perm regret=68.42% (+33.44 pp, p=0.0002)"
+EC44,Identical_Fold_M3_vs_M2_Splits_and_Regret,PASS,"Splits: 6.84 -> 4.91 (-28.22%), Regret: -9.22 pp"
+EC45,Prospective_70Q_NonTPC_Enterprise_Accounting,PASS,"67/70 = 95.71% Exact Top-1, Mean Exec = 58.72 ms, Mean Net = 62.87 ms"
+EC46,R21_Cross_Hardware_Transfer_Matrix_Recovery,PASS,"All 8 directional pairs evaluated across m=0, m=5, and N=75 (24 rows; m=5 calibration speedup >= 13.8x)"
+EC47,R22_Dynamic_Workload_Zero_Guarded_OOM,PASS,0.00% guarded OOM across all 25 non-stationary drift and burst concurrency phases
+EC48,R23_Three_Scope_Energy_Rank_Concordance,PASS,"Verified 8 policy rows across Scope 1 (Measured NVML), Scope 2 (Estimated CPU/Comp), Scope 3 (DC Shunt)"
+EC49,Dual_Unit_Polars_pValue_Consistency,PASS,"Both query-level (N=75, p_Holm,query=0.0011) and seed-cluster (K=25, p_Holm,seed=0.0171) tests pass alpha=0.05"
+EC50,TOST_8pct_vs_12pct_CI_Inclusion_Identity,PASS,"8% CI [-4.79,+1.61] in [-5,+5]; 12% CI [-5.23,+1.15] outside [-5,+5] but inside [-6,+6]"

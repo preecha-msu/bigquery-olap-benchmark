@@ -75,7 +75,13 @@ audit_rules = [
     ("V11-29: Protocol R26 Webb 6-Point (p_Webb=0.0054 / 0.0464) & Exact 2^10 Permutation", r"0\.0464.*0\.0488", 1, "Abstract, Sec 1, Sec 4.3, Sec 4.4.1"),
     ("V11-30: Zero 'not externally registered' & Formal .zenodo.json / v11.0.0-jbd-archival", r"not externally registered", 0, "Must be 0 occurrences"),
     ("V11-31: Post-Hoc <=5ms Tolerance Removed from Headline (Zero 'to \\mathbf{85.33\\%}')", r"to \\mathbf\{85\.33\\%\}", 0, "Must be 0 occurrences"),
-    ("V11-32: Section Takeaway Callouts & EC01-EC40 (40/40 PASS) Documented", r"Section Takeaway:.*EC01--EC40", 1, "Sec 2, Sec 3, Declarations"),
+    ("V11-32: Section Takeaway Callouts & EC01-EC50 (50/50 PASS) Documented", r"Section Takeaway:.*EC01--EC50", 1, "Sec 2, Sec 3, Declarations"),
+    ("V11-33: Zero Legacy R9 CSCI Perm Numbers (0.0044 / +8.86 pp)", r"0\.0044|\+8\.86\\text\{ pp\}", 0, "Must be 0 occurrences"),
+    ("V11-34: Zero 'whole-system' Energy Phrasing Across Entire V11.tex", r"(?i)whole-system", 0, "Must be 0 occurrences"),
+    ("V11-35: Main-Text Table tab:v11_r23_r22_energy_and_dynamic_sla (R23 & R22)", r"tab:v11_r23_r22_energy_and_dynamic_sla", 1, "Sec 4.4.2 Main Table"),
+    ("V11-36: Main-Text Table tab:v11_r21_cross_hardware_transfer_main (R21 Matrix)", r"tab:v11_r21_cross_hardware_transfer_main", 1, "Sec 4.7.2 Main Table"),
+    ("V11-37: Main-Text Table 11 Part D (70Q Blinded R17+R20 Enterprise Validation)", r"Part D: Blinded Independent Multi-Domain Non-TPC Enterprise Validation", 1, "Sec 4.8 Main Table 11"),
+    ("V11-38: Main-Text Table 7 Exp D (R19/R13 CSCI) & Fig 8 fig_v11_4node_multiscale.pdf", r"Exp D: R19 \\& R13 CSCI.*fig_v11_4node_multiscale_sf1_10_30_100\.pdf", 1, "Table 7 & Fig 8"),
 ]
 
 all_passed = True

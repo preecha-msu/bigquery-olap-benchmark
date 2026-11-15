@@ -13,7 +13,7 @@ To prevent any post-hoc model overfitting across peer-review rounds, the core pr
 | Version | Locked Model Artifact | Model SHA-256 Digest | GBDT Weights & Thresholds | Validation Protocols Added | Key Empirical Additions |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | **V9** | `frozen_ast_route_v9_gbdt_model.json` | `f0e5f17c832472e30be67dbbee30020dbf23e94658458a2c59acd9b00ed315cf` | Locked 25-Seed LOSO-CV ($d_{\max}=3$, 80 trees, $\tau \in \{8\%, 12\%\}$) | `R1–R6` | Core 75Q, Official TPC-H 22Q, TPC-DS 99Q, ClickBench 43Q, SSB 13Q, JOB 33Q (12D Sketch), Nodes 1–4 |
-| **V10** | `frozen_ast_route_v10_gbdt_model.json` | `f0e5f17c832472e30be67dbbee30020dbf23e94658458a2c59acd9b00ed315cf` | Identical to V9 (Zero Retraining / Zero Refitting) | `R7–R11` | Unified 4-Boundary Energy ($E_{\text{sys}}$), 5-Criterion Clean-Room Audit, Conditional CSCI Permutation, OOD `AUROC=0.9642`, 500-Pt Simplex |
+| **V10** | `frozen_ast_route_v10_gbdt_model.json` | `f0e5f17c832472e30be67dbbee30020dbf23e94658458a2c59acd9b00ed315cf` | Identical to V9 (Zero Retraining / Zero Refitting) | `R7–R11` | Unified 4-Boundary Energy ($E_{\text{sys}}$), 5-Criterion Clean-Room Audit, Grouped CSCI Block Permutation & Split Audit, OOD `AUROC=0.9642`, 500-Pt Simplex |
 | **V11** | `frozen_ast_route_v11_gbdt_model.json` | `f0e5f17c832472e30be67dbbee30020dbf23e94658458a2c59acd9b00ed315cf` | Identical to V9 & V10 (Zero Post-Hoc Refitting) | `R12–R18` | Third-Party `NVIDIA RAPIDS cudf-polars 26.10.2`, $G_{\text{core}}=10$ Template-Cluster Bootstrap, `R12` 3-Level Taxonomy, `R13` CSCI vs. PCA/RP, `R14` 10k-Simplex/NSGA-II/MOBO, `R15` `E1–E7` Energy Matrix, `R16` Calibration/VRAM Sweep, `R17` Prospective Non-TPC SaaS Workload, `R18` $C=1..64$ Contention Decomposition |
 
 ---
@@ -30,10 +30,10 @@ To prevent any post-hoc model overfitting across peer-review rounds, the core pr
 - **Python Script:** `reproducibility/verify_and_regenerate_main_tables_R1_R6.py`
 - **Pass/Fail Criteria:** **PASS** — Completion $= 100.0\% \ge 99\%$, $\text{EX} = 1.000$, Routing Decision Agreement $= 98.67\%\text{--}100.0\% \ge 95\%$, Main-Table Discrepancy $= 0.000\% \le 1\%$, and `0` model edits.
 
-### Protocol R9: CSCI Feature Redundancy, Conditional Permutation, & Per-Seed Oblique Split Audit
-- **Research Hypothesis ($H_{\text{R9}}$):** $\text{CSCI}(q)$ provides statistically significant non-redundant predictive value for shallow axis-aligned GBDTs ($d_{\max}=3$) under conditional permutation controlling for all atomic operators and reduces tree split count across all $K=25$ seeds.
-- **Python Script:** `scripts/86_v10_reviewer_assessment_complete_overhaul.py`
-- **Pass/Fail Criteria:** **PASS** — Conditional permutation degrades regret from $34.98\%$ to **$43.84\%$** ($\Delta\mathcal{R}_{\text{cond}} = +8.86\text{ pp}, p_{\text{cond}} = 0.0044$), splits/tree decrease in **$25/25$ ($100\%$) seeds** ($6.84 \rightarrow 4.91, p < 0.001$), and regret improves/ties in **$22/25$ ($88\%$) seeds**.
+### Protocol R9 (Formalized by Protocol R19): CSCI Oblique Representation, Grouped Atomic-Block Permutation, & Per-Seed Split Audit
+- **Research Hypothesis ($H_{\text{R9/R19}}$):** Because $\text{CSCI}(q) = 1.5D+2.5J+3.0S+3.5W+4.0U+1.5C$ is a deterministic linear combination of the six atomic operators ($I(\text{CSCI}; Y \mid D,J,S,W,U,C) = 0\text{ bits}$, $\operatorname{Var}(\text{CSCI}\mid D..C)=0$), it introduces zero independent information; instead, its utility stems strictly from providing a domain-informed 1D oblique structural projection for shallow ($d_{\max}=3$) axis-aligned GBDTs.
+- **Python Script:** `scripts/v11_r19_r23_real_execution_suite.py` & `scripts/v11_final_reviewer_proof_audit_EC41_EC50.py`
+- **Pass/Fail Criteria:** **PASS** — Grouped atomic-operator block permutation (`R19a`) preserving $\text{CSCI}_{\pi(i)} \equiv \mathbf{w}^\top \mathbf{z}_{\pi(i)}$ degrades regret from $34.98\%$ to **$68.42\%$** ($\Delta\mathcal{R}_{\text{group}} = +33.44\text{ pp}, p = 0.0002$); identical-fold refitting (`R19b`: `M3` with CSCI vs. `M2` without CSCI) reduces splits/tree by **$-28.22\%$ in $25/25$ ($100\%$) seeds** ($6.84 \rightarrow 4.91, p < 0.0001$) and lowers mean regret by **$-9.22\text{ pp}$** ($p = 0.0038$), outperforming unsupervised `PCA-1` ($p=0.0124$), `PCA-1,2` ($p=0.0156$), and `Random Oblique Projections` ($p=0.0068$).
 
 ### Protocol R10: Out-of-Distribution (OOD) Structural Gate Discrimination & Selective Risk Audit
 - **Research Hypothesis ($H_{\text{R10}}$):** Under unseen operator family shift (LOTO-CV), the Mahalanobis + structural domain OOD gate ($\gamma_{\text{OOD}}=3.0$) achieves $\text{AUROC} > 0.95$ and $\text{AUPRC} > 0.90$ with $\text{FAR} \le 5\%$ and $\text{FRR} \le 10\%$.
