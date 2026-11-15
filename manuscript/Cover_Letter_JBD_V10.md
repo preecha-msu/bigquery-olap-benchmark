@@ -59,6 +59,30 @@ In accordance with *Journal of Big Data* submission guidelines, we respectfully 
 4. **Prof. Anastasia Ailamaki** (EPFL, Switzerland) — Expert in hardware-conscious CPU/GPU analytical query processing (HetExchange) and memory-wall orchestration.
 5. **Prof. Samuel Madden** (MIT CSAIL, USA) — Expert in columnar analytical systems, polystore query routing (BigDAWG), and learned database components.
 
+
+### 3.1 Concrete Suggested Reviewers (Database Systems, Learned Query Optimization, & GPU OLAP)
+1. **Prof. Ryan Marcus** (University of Pennsylvania, USA) — Expert in learned query optimizers (Neo, Bao) and bandits for query plan steering.
+2. **Prof. Carsten Binnig** (TU Darmstadt, Germany) — Expert in zero-shot cost models for analytical databases and GPU-accelerated DBMS.
+3. **Prof. Hannes Mühleisen** (CWI Amsterdam & DuckDB Labs, Netherlands) — Co-creator of DuckDB; expert in vectorized in-process OLAP and out-of-core execution.
+4. **Prof. Anastasia Ailamaki** (EPFL, Switzerland) — Expert in hardware-conscious CPU/GPU analytical query processing (HetExchange) and memory-wall orchestration.
+5. **Prof. Samuel Madden** (MIT CSAIL, USA) — Expert in columnar analytical systems, polystore query routing (BigDAWG), and learned database components.
+
+
+### 3.1 Concrete Suggested Reviewers (Database Systems, Learned Query Optimization, & GPU OLAP)
+1. **Prof. Ryan Marcus** (University of Pennsylvania, USA) — Expert in learned query optimizers (Neo, Bao) and bandits for query plan steering.
+2. **Prof. Carsten Binnig** (TU Darmstadt, Germany) — Expert in zero-shot cost models for analytical databases and GPU-accelerated DBMS.
+3. **Prof. Hannes Mühleisen** (CWI Amsterdam & DuckDB Labs, Netherlands) — Co-creator of DuckDB; expert in vectorized in-process OLAP and out-of-core execution.
+4. **Prof. Anastasia Ailamaki** (EPFL, Switzerland) — Expert in hardware-conscious CPU/GPU analytical query processing (HetExchange) and memory-wall orchestration.
+5. **Prof. Samuel Madden** (MIT CSAIL, USA) — Expert in columnar analytical systems, polystore query routing (BigDAWG), and learned database components.
+
+
+### 3.1 Concrete Suggested Reviewers (Database Systems, Learned Query Optimization, & GPU OLAP)
+1. **Prof. Ryan Marcus** (University of Pennsylvania, USA) — Expert in learned query optimizers (Neo, Bao) and bandits for query plan steering.
+2. **Prof. Carsten Binnig** (TU Darmstadt, Germany) — Expert in zero-shot cost models for analytical databases and GPU-accelerated DBMS.
+3. **Prof. Hannes Mühleisen** (CWI Amsterdam & DuckDB Labs, Netherlands) — Co-creator of DuckDB; expert in vectorized in-process OLAP and out-of-core execution.
+4. **Prof. Anastasia Ailamaki** (EPFL, Switzerland) — Expert in hardware-conscious CPU/GPU analytical query processing (HetExchange) and memory-wall orchestration.
+5. **Prof. Samuel Madden** (MIT CSAIL, USA) — Expert in columnar analytical systems, polystore query routing (BigDAWG), and learned database components.
+
 ### 4. Pre-Emptive Resolution of Anticipated Reviewer Concerns (6-Point Summary)
 | Reviewer Dimension | How Addressed in Manuscript V10 |
 | :--- | :--- |

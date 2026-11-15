@@ -1,0 +1,15 @@
+Protocol,Entity,Device_Energy_J,Host_Assist_DRAM_J,Total_System_Gross_J,Total_System_Dynamic_J,Throughput_per_Watt_MB_per_J,Notes
+R7_Energy_Boundary,Always_DuckDB_CPU,6.397,3.012,9.409,6.745,21.55,CPU package 6.397J + DRAM/VRM/NVMe 3.012J; 19.30W uniform system idle subtracted
+R7_Energy_Boundary,Always_Polars_Arrow,3.17,1.352,4.522,3.324,44.85,CPU package 3.170J + DRAM/VRM 1.352J; 44.85 MB/J system efficiency
+R7_Energy_Boundary,Always_DataFusion_SQL,3.393,1.579,4.972,3.574,40.79,CPU package 3.393J + DRAM/VRM 1.579J
+R7_Energy_Boundary,Always_GPU_RTX2050_Cold,0.644,0.936,1.58,0.481,128.35,Measured NVML 0.644J (540 MB/J device) + Host DMA/CPU assist 0.936J = 1.580J E_sys
+R7_Energy_Boundary,External_CuPy_v14_2_GPU,0.668,0.968,1.636,0.498,123.96,CuPy v14.2.0 CUDA 12 Columnar GPU (0.668J NVML + 0.968J Host DMA = 1.636J E_sys)
+R7_Energy_Boundary,Server_Tesla_T4_15GB_SF1,0.875,0.46,1.335,0.684,151.91,"Node 4 Server NVIDIA Tesla T4 15GB VRAM (9.65W NVML idle, 0.875J device, 1.335J E_sys)"
+R7_Energy_Boundary,AST_Route_Policy_P1_Speed,1.381,0.892,2.273,1.182,89.22,68% GPU / 32% CPU mix: 1.381J device + 0.892J host assist = 2.273J E_sys (1.182J dynamic)
+R7_Energy_Boundary,AST_Route_Policy_P2_Green,0.812,0.846,1.658,0.542,122.32,"88% GPU / 12% CPU mix: saves -41.2% device, -27.1% gross E_sys, -54.1% dynamic E_sys vs P1 (p<0.001)"
+R8_Repro_Audit,CleanRoom_5Criteria_Summary,100.0,100.0,98.67,0.0,1.97,"C1 Completion=100% (>=99%), C2 EX=100%, C3 Decision Agreement=98.67% (74/75, >=95%), C4 Table Diff=0.000% (<=1%), C5 Cross-run CV=1.97%"
+R9_CSCI_Defense,Conditional_Permutation_CSCI,34.98,43.84,8.86,0.0044,100.0,"Permuting CSCI within operator strata degrades regret 34.98%->43.84% (+8.86pp, p=0.0044); splits reduced in 25/25 (100%) seeds, regret improved/tied in 22/25 (88%) seeds"
+R10_OOD_Gate,Mahalanobis_Structural_OOD,2.0,5.33,0.9642,0.9418,76.18,"FAR=2.00%, FRR=5.33%, Mahalanobis AUROC=0.9642 (Combined=0.9840), AUPRC=0.9418, AURC=28.14%, LOTO-CV 85.42ms->76.18ms (41.80% regret, p=0.0312)"
+R11_Pareto_Simplex,Dirichlet_500Pt_Plus_100Grid,0.0,0.9184,0.921,0.934,97.33,"500 random Dirichlet weights + 100-pt grid: DSR=0.00% (0/500 dominated), mean HV=0.9184+-0.0042, max HV=0.9210 (SF1) / 0.9340 (SF100); Pareto-efficient among evaluated policy configurations"
+Jackknife_K25,Leave_One_Seed_Out_Influence,-2.48,-1.12,0.084,0.0024,100.0,"All 25/25 jackknife subsets (K-1=24 seeds): dT in [-2.48,-1.12]ms, Cook D_max=0.084<0.160, 25/25 pass non-inferiority (p<=0.0024), +-6ms TOST (p<=0.031), and P95 regret compression (p<=0.016)"
+TPCDS_99Q_NearOpt,Official_TPCDS_99Q_SF002,64.65,79.8,88.89,93.94,84.85,"Official TPC-DS 99Q: Exact Top-1=64.65% (64/99 All-6) / 84.85% (84/99 SQL-5), <=5% Near-Opt=79.80% (79/99), <=10% Near-Opt=88.89% (88/99), <=5ms Tol=93.94% (93/99), Mean Regret=3.23% (0.96ms)"
