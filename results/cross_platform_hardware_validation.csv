@@ -1,0 +1,6 @@
+Hardware_Platform_Profile,CPU_Threads,Memory_Budget,DuckDB_Mean_ms,Polars_Arrow_Mean_ms,AST_Route_or_GPU_ms,Speedup_and_VRAM_Notes
+"Platform A: Edge/Container (2-Threads, 4GB RAM, No GPU)",2,4GB,248.99,248.74,234.5,1.06x (SF=1 75Q Mean)
+"Platform B: Mid-Range Node (4-Threads, 8GB RAM, No GPU)",4,8GB,175.0,177.28,162.44,1.44x vs. Plat. A
+"Platform C: Workstation + Consumer GPU (8T, 16GB RAM, RTX 2050 4GB VRAM)",8,16GB / 4GB VRAM,183.74,82.47,54.92,"3.35x @ SF=1 (5.49x Multi-Scale, 4 Chunks @ SF=10)"
+"Platform D: Cloud Server + Data-Center GPU (Tesla T4 15.0GB VRAM, SF=1GB)",2,12.7GB / 15GB VRAM,439.13,514.34,23.02,"19.07x Cold (4.05ms Warm, 1 Chunk)"
+"Platform E: Cloud Server + Data-Center GPU (Tesla T4 15.0GB VRAM, SF=10GB)",2,12.7GB / 15GB VRAM,5274.87,8293.88,461.71,"11.42x Cold (37.16ms Warm, 1 Chunk)"

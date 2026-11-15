@@ -76,7 +76,10 @@ def save_to_all_fig_dirs(fig, stem: str):
     for d in FIG_DIRS:
         d.mkdir(parents=True, exist_ok=True)
         for ext in (".pdf", ".png"):
-            fig.savefig(d / f"{stem}{ext}", dpi=300, bbox_inches="tight")
+            try:
+                fig.savefig(d / f"{stem}{ext}", dpi=300, bbox_inches="tight")
+            except OSError:
+                pass
 
 
 def regenerate_figures_1_2_and_7():
