@@ -1,8 +1,4 @@
-﻿Set-Location "E:\TeachPree\Research_Academic_Services\bigquery-olap-benchmark"
-New-Item -ItemType Directory -Force -Path ".\scripts", ".\results", ".\manuscript\figures", ".\figures" | Out-Null
-
-@'
-#!/usr/bin/env python3
+﻿#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 r"""
 scripts/step5_sync_4node_multiscale_to_V10.py
@@ -39,13 +35,11 @@ def sha256_file(path: Path) -> str:
 
 
 def build_and_verify_4node_master_csv() -> tuple[pd.DataFrame, dict]:
-    # 1. โหลดผลจริงของ Node 1 จากดิสก์เครื่องหลัก
     n1_csv = RES_DIR / "multiscale_gpu_vram_and_arrow_streaming_sf1_10_30_100.csv"
     if not n1_csv.exists():
         raise FileNotFoundError(f"ไม่พบไฟล์ผลรันของ Node 1: {n1_csv}")
     df_n1 = pd.read_csv(n1_csv)
 
-    # 2. บันทึกตารางผลรันจริงจาก Node 2 (LAPTOP-LTL5PC7P / PREECHA-IT 22T)
     n2_rows = [
         ("Node2_PREECHA-IT_22T", 1, 6001215, "DuckDB_Columnar_C++", "In-Memory_Vectorized", 42.92, 0.219, 0.0, 0, 0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, "41ba056fcf213207f9236ccd"),
         ("Node2_PREECHA-IT_22T", 1, 6001215, "Polars_Lazy_Streaming_Rust", "In-Memory_Arrow", 116.00, 0.623, 0.0, 0, 0, 0.0, 0.0, 0.0, 0.0, 5.677e-16, 1.0, "41ba056fcf213207f9236ccd"),
@@ -61,7 +55,6 @@ def build_and_verify_4node_master_csv() -> tuple[pd.DataFrame, dict]:
         ("Node2_PREECHA-IT_22T", 100, 600037902, "Apache_DataFusion_Rust", "Partitioned_Batch_Stream", 5125.18, 2.571, 0.0, 0, 0, 0.0, 0.0, 0.0, 0.0, 3.999e-15, 1.0, "d8499b44f363e7952ea281f0"),
     ]
 
-    # 3. บันทึกตารางผลรันจริงจาก Node 3 (MacBook Air M1 ARM64 8GB Unified RAM)
     n3_rows = [
         ("Node3_Pannapats-MacBook-Air.local_ARM64_8T", 1, 6001215, "DuckDB_Columnar_C++", "In-Memory_Vectorized", 36.76, 0.292, 0.0, 0, 0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, "7cedfe4bd07945f1da4136bc"),
         ("Node3_Pannapats-MacBook-Air.local_ARM64_8T", 1, 6001215, "Polars_Lazy_Streaming_Rust", "In-Memory_Arrow", 86.88, 0.557, 0.0, 0, 0, 0.0, 0.0, 0.0, 0.0, 2.413e-15, 1.0, "7cedfe4bd07945f1da4136bc"),
@@ -77,7 +70,6 @@ def build_and_verify_4node_master_csv() -> tuple[pd.DataFrame, dict]:
         ("Node3_Pannapats-MacBook-Air.local_ARM64_8T", 100, 600037902, "Apache_DataFusion_Rust", "Partitioned_Batch_Stream", 5207.31, 2.527, 0.0, 0, 0, 0.0, 0.0, 0.0, 0.0, 5.071e-14, 1.0, "7f34b8f5d0b82326de144e3d"),
     ]
 
-    # 4. บันทึกตารางผลรันจริงจาก Node 4 (Google Colab Tesla T4 15.0GB VRAM)
     n4_rows = [
         ("Node4_Colab_Tesla_T4", 1, 6001215, "DuckDB_Columnar_C++", "In-Memory_Vectorized", 220.29, 0.801, 0.0, 0, 0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, "41ba056fcf213207f9236ccd"),
         ("Node4_Colab_Tesla_T4", 1, 6001215, "Polars_Lazy_Streaming_Rust", "In-Memory_Arrow", 711.86, 0.868, 0.0, 0, 0, 0.0, 0.0, 0.0, 0.0, 3.832e-14, 1.0, "41ba056fcf213207f9236ccd"),
@@ -113,6 +105,7 @@ def build_and_verify_4node_master_csv() -> tuple[pd.DataFrame, dict]:
     df_n3 = pd.DataFrame(n3_rows, columns=cols)
     df_n4 = pd.DataFrame(n4_rows, columns=cols)
 
+    RES_DIR.mkdir(parents=True, exist_ok=True)
     df_n2.to_csv(RES_DIR / "node2_laptop16c_multiscale_sf1_10_30_100.csv", index=False, encoding="utf-8")
     df_n3.to_csv(RES_DIR / "node3_macbook_m1_multiscale_sf1_10_30_100.csv", index=False, encoding="utf-8")
     df_n4.to_csv(RES_DIR / "cloud_server_tesla_t4_sf1_10_30_100_summary.csv", index=False, encoding="utf-8")
@@ -200,16 +193,20 @@ def generate_v10_4node_figure_jpg(df_master: pd.DataFrame) -> list[Path]:
     )
     fig.tight_layout(rect=[0, 0, 1, 0.95])
 
-    fname_jpg = "fig_v10_4node_multiscale_sf1_10_30_100.jpg"
-    saved_paths = []
+    stem = "fig_v10_4node_multiscale_sf1_10_30_100"
+    saved_jpgs = []
     for target_dir in [MS_DIR, MS_FIG_DIR, ROOT_FIG_DIR]:
         target_dir.mkdir(parents=True, exist_ok=True)
-        out_jpg = target_dir / fname_jpg
-        fig.savefig(out_jpg, format="jpg", dpi=300, pil_kwargs={"quality": 95})
-        saved_paths.append(out_jpg)
+        out_jpg = target_dir / f"{stem}.jpg"
+        try:
+            fig.savefig(out_jpg, format="jpg", dpi=300, pil_kwargs={"quality": 95})
+        except TypeError:
+            fig.savefig(out_jpg, format="jpg", dpi=300)
+        fig.savefig(target_dir / f"{stem}.pdf", format="pdf", dpi=300)
+        saved_jpgs.append(out_jpg)
 
     plt.close(fig)
-    return saved_paths
+    return saved_jpgs
 
 
 def build_v10_latex_block(df_master: pd.DataFrame, hashes: dict, img_prefix: str) -> str:
@@ -305,7 +302,6 @@ def update_and_compile_v10_tex(df_master: pd.DataFrame, hashes: dict) -> Path:
 
     orig_tex = v10_ms.read_text(encoding="utf-8")
 
-    # ตรวจสอบรูปแบบ prefix ของ \includegraphics ที่ใช้อยู่ใน V10.tex (เช่น "figures/" หรือ flat "")
     existing_imgs = re.findall(r"\\includegraphics(?:\[[^\]]*\])?\{([^}]+)\}", orig_tex)
     uses_fig_subdir = any(x.startswith("figures/") for x in existing_imgs)
     img_prefix = "figures/" if uses_fig_subdir else ""
@@ -319,7 +315,6 @@ def update_and_compile_v10_tex(df_master: pd.DataFrame, hashes: dict) -> Path:
     if pattern.search(orig_tex):
         updated_tex = pattern.sub(lambda _: new_block, orig_tex)
     else:
-        # แทรกก่อน Section Discussion / Limitations / Conclusion หรือก่อน \bibliographystyle / \begin{thebibliography} / \end{document}
         anchor_patterns = [
             r"\\section\{Discussion",
             r"\\section\{Limitations",
@@ -343,21 +338,21 @@ def update_and_compile_v10_tex(df_master: pd.DataFrame, hashes: dict) -> Path:
 
     v10_ms.write_text(updated_tex, encoding="utf-8")
 
-    # คอมไพล์ PDF ด้วย pdflatex 2 รอบ (+ bibtex หากใช้ไฟล์ .bib ภายนอก) พร้อมระบบ Auto-Rollback หากผิดพลาด
     try:
-        for pass_i in (1, 2):
+        for pass_i in (1, 2, 3):
             res = subprocess.run(
                 ["pdflatex", "-interaction=nonstopmode", "-halt-on-error", v10_ms.name],
                 cwd=str(MS_DIR),
                 capture_output=True,
                 text=True,
+                encoding="utf-8",
+                errors="replace",
             )
             if res.returncode != 0:
                 tail = "\n".join(res.stdout.splitlines()[-30:])
                 raise RuntimeError(f"pdflatex pass {pass_i} failed:\n{tail}")
             if pass_i == 1 and r"\bibliography{" in updated_tex and (MS_DIR / "bigquery_olap_benchmark_V10.aux").exists():
                 subprocess.run(["bibtex", "bigquery_olap_benchmark_V10"], cwd=str(MS_DIR), capture_output=True, text=True)
-                subprocess.run(["pdflatex", "-interaction=nonstopmode", "-halt-on-error", v10_ms.name], cwd=str(MS_DIR), capture_output=True, text=True)
     except Exception:
         v10_ms.write_text(orig_tex, encoding="utf-8")
         raise
@@ -370,7 +365,10 @@ def update_and_compile_v10_tex(df_master: pd.DataFrame, hashes: dict) -> Path:
 
     v10_pdf = MS_DIR / "bigquery_olap_benchmark_V10.pdf"
     shutil.copy2(v10_ms, v10_root)
-    shutil.copy2(v10_pdf, ROOT / "bigquery_olap_benchmark_V10.pdf")
+    try:
+        shutil.copy2(v10_pdf, ROOT / "bigquery_olap_benchmark_V10.pdf")
+    except PermissionError:
+        print("  [INFO] ข้ามการคัดลอก bigquery_olap_benchmark_V10.pdf ที่เปิดค้างไว้ในระดับ Root (ไฟล์ใน manuscript/ อัปเดตสำเร็จแล้ว)")
     return v10_ms
 
 
@@ -378,7 +376,6 @@ def rebuild_and_audit_v10_zips(v10_ms: Path) -> list[Path]:
     tex_txt = v10_ms.read_text(encoding="utf-8")
     img_refs = sorted(set(re.findall(r"\\includegraphics(?:\[[^\]]*\])?\{([^}]+)\}", tex_txt)))
 
-    # ตรวจสอบว่ารูปภาพทุกไฟล์ใน V10.tex มีอยู่จริงครบ 100%
     resolved_imgs: list[tuple[str, Path]] = []
     for ref in img_refs:
         candidates = [
@@ -388,20 +385,22 @@ def rebuild_and_audit_v10_zips(v10_ms: Path) -> list[Path]:
             ROOT_FIG_DIR / Path(ref).name,
             MS_DIR / Path(ref).name,
         ]
-        # หากใน .tex ไม่ได้ใส่นามสกุล ให้เช็ค .jpg, .pdf, .png ตามลำดับ
         if not Path(ref).suffix:
             for ext in (".jpg", ".pdf", ".png"):
-                candidates.extend([MS_DIR / (ref + ext), MS_FIG_DIR / (Path(ref).name + ext), ROOT_FIG_DIR / (Path(ref).name + ext)])
+                candidates.extend([
+                    MS_DIR / (ref + ext),
+                    MS_FIG_DIR / (Path(ref).name + ext),
+                    ROOT_FIG_DIR / (Path(ref).name + ext),
+                ])
         found = next((c for c in candidates if c.exists() and c.is_file()), None)
         if found is None:
             raise FileNotFoundError(f"ไม่พบไฟล์รูปภาพที่อ้างอิงใน V10.tex: {ref}")
         resolved_imgs.append((ref, found))
 
-    # 1. สร้าง Journal_of_Big_Data_Snapp_Submission_Flat10.zip (Flat Snapp Submission Structure)
     flat10_zip = ROOT / "Journal_of_Big_Data_Snapp_Submission_Flat10.zip"
     flat_tex = re.sub(
         r"(\\includegraphics(?:\[[^\]]*\])?\{)(?:figures/|manuscript/figures/)([^}]+\})",
-        r"\1\2",
+        lambda m: m.group(1) + m.group(2),
         tex_txt,
     )
     flat_tex_tmp = MS_DIR / "_flat_v10_tmp.tex"
@@ -427,7 +426,6 @@ def rebuild_and_audit_v10_zips(v10_ms: Path) -> list[Path]:
     flat_tex_tmp.unlink(missing_ok=True)
     built_zips = [flat10_zip]
 
-    # 2. อัปเดตไฟล์ Overleaf / Project ZIP รุ่น V10 อื่นๆ ที่มีอยู่ในเครื่องให้ตรงกัน 100%
     other_v10_zips = sorted(set(
         [p for p in list(ROOT.glob("*10*.zip")) + list(MS_DIR.glob("*10*.zip")) if p.resolve() != flat10_zip.resolve()]
     ))
@@ -476,19 +474,18 @@ def main() -> None:
 
     v10_ms = update_and_compile_v10_tex(df_master, hashes)
     v10_pdf = MS_DIR / "bigquery_olap_benchmark_V10.pdf"
-    print(f"[3/4] อัปเดตและคอมไพล์ V10 สำเร็จ:")
+    print("[3/4] อัปเดตและคอมไพล์ V10 สำเร็จ:")
     print(f"      - {v10_ms.relative_to(ROOT)} (SHA-256: {sha256_file(v10_ms)[:24]}...)")
     print(f"      - {v10_pdf.relative_to(ROOT)} (SHA-256: {sha256_file(v10_pdf)[:24]}...)")
 
     zips = rebuild_and_audit_v10_zips(v10_ms)
-    print(f"[4/4] อัปเดตและตรวจสอบแพ็กเกจ .zip รุ่น V10 ครบถ้วน:")
+    print("[4/4] อัปเดตและตรวจสอบแพ็กเกจ .zip รุ่น V10 ครบถ้วน:")
     for zp in zips:
         with zipfile.ZipFile(zp, "r") as zf:
             n_all = len(zf.namelist())
             n_jpg = sum(1 for x in zf.namelist() if x.lower().endswith((".jpg", ".jpeg")))
         print(f"      - {zp.relative_to(ROOT)} ({zp.stat().st_size:,} bytes | {n_all} files | {n_jpg} .jpg) SHA-256={sha256_file(zp)[:20]}...")
 
-    # รันสคริปต์ verify_zero_contradiction_V10.py ต่อทันทีหากมีอยู่ในโปรเจกต์
     v10_verifier = ROOT / "scripts" / "verify_zero_contradiction_V10.py"
     if v10_verifier.exists():
         print("\n[AUDIT] กำลังรัน scripts/verify_zero_contradiction_V10.py ...")
@@ -501,4 +498,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-'@ | Set-Content -Path "E:\TeachPree\Research_Academic_Services\bigquery-olap-benchmark\scripts\step5_sync_4node_multiscale_to_V10.py" -Encoding UTF8

@@ -1,0 +1,13 @@
+Hardware_Node,Scale_Factor_GB,Lineitem_Rows,Engine,Execution_Mode,Latency_ms,Peak_Host_RAM_GB,Peak_GPU_VRAM_GB,VRAM_Chunks,Naive_FullLoad_OOM,PCIe_H2D_ms,GPU_Warm_Kernel_ms,Phi_PCIe_Pct,GPU_Energy_J,Max_FP64_Rel_Error,EX_Equivalence,Parquet_SHA256
+Node3_Pannapats-MacBook-Air.local_ARM64_8T,1,6001215,DuckDB_Columnar_C++,In-Memory_Vectorized,36.76,0.292,0.0,0,0,0.0,0.0,0.0,0.0,0.0,1.0,7cedfe4bd07945f1da4136bc
+Node3_Pannapats-MacBook-Air.local_ARM64_8T,1,6001215,Polars_Lazy_Streaming_Rust,In-Memory_Arrow,86.88,0.557,0.0,0,0,0.0,0.0,0.0,0.0,2.413e-15,1.0,7cedfe4bd07945f1da4136bc
+Node3_Pannapats-MacBook-Air.local_ARM64_8T,1,6001215,Apache_DataFusion_Rust,In-Memory_Arrow,64.78,0.61,0.0,0,0,0.0,0.0,0.0,0.0,2.271e-15,1.0,7cedfe4bd07945f1da4136bc
+Node3_Pannapats-MacBook-Air.local_ARM64_8T,10,59986052,DuckDB_Columnar_C++,Out-of-Core_Morsel_Spill_3.5GBCap,442.63,0.998,0.0,0,0,0.0,0.0,0.0,0.0,0.0,1.0,d0ebd2baae927a1fc6478a26
+Node3_Pannapats-MacBook-Air.local_ARM64_8T,10,59986052,Polars_Lazy_Streaming_Rust,Out-of-Core_Streaming,390.41,1.771,0.0,0,0,0.0,0.0,0.0,0.0,2.636e-14,1.0,d0ebd2baae927a1fc6478a26
+Node3_Pannapats-MacBook-Air.local_ARM64_8T,10,59986052,Apache_DataFusion_Rust,Partitioned_Batch_Stream,415.41,1.64,0.0,0,0,0.0,0.0,0.0,0.0,2.636e-14,1.0,d0ebd2baae927a1fc6478a26
+Node3_Pannapats-MacBook-Air.local_ARM64_8T,30,179998372,DuckDB_Columnar_C++,Out-of-Core_Morsel_Spill_3.5GBCap,1224.76,0.843,0.0,0,0,0.0,0.0,0.0,0.0,0.0,1.0,ea8dc56fae0632c9e76f61f1
+Node3_Pannapats-MacBook-Air.local_ARM64_8T,30,179998372,Polars_Lazy_Streaming_Rust,Out-of-Core_Streaming,1416.74,2.306,0.0,0,0,0.0,0.0,0.0,0.0,4.135e-14,1.0,ea8dc56fae0632c9e76f61f1
+Node3_Pannapats-MacBook-Air.local_ARM64_8T,30,179998372,Apache_DataFusion_Rust,Partitioned_Batch_Stream,1282.12,2.098,0.0,0,0,0.0,0.0,0.0,0.0,4.09e-14,1.0,ea8dc56fae0632c9e76f61f1
+Node3_Pannapats-MacBook-Air.local_ARM64_8T,100,600037902,DuckDB_Columnar_C++,Out-of-Core_Morsel_Spill_3.5GBCap,4292.58,0.832,0.0,0,0,0.0,0.0,0.0,0.0,0.0,1.0,7f34b8f5d0b82326de144e3d
+Node3_Pannapats-MacBook-Air.local_ARM64_8T,100,600037902,Polars_Lazy_Streaming_Rust,Out-of-Core_Streaming,5134.2,2.794,0.0,0,0,0.0,0.0,0.0,0.0,5.126e-14,1.0,7f34b8f5d0b82326de144e3d
+Node3_Pannapats-MacBook-Air.local_ARM64_8T,100,600037902,Apache_DataFusion_Rust,Partitioned_Batch_Stream,5207.31,2.527,0.0,0,0,0.0,0.0,0.0,0.0,5.071e-14,1.0,7f34b8f5d0b82326de144e3d
