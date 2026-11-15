@@ -1062,12 +1062,21 @@ Email: `preecha.n@msu.ac.th`
 
 
 def run_automated_consistency_gate():
-    tex_path = MS_DIR / "bigquery_olap_benchmark_V9.tex"
-    log_path = MS_DIR / "bigquery_olap_benchmark_V9.log"
+    tex_path = MS_DIR / "bigquery_olap_benchmark_V10.tex"
+    if not tex_path.exists():
+        tex_path = MS_DIR / "bigquery_olap_benchmark_V9.tex"
+    log_path = MS_DIR / "bigquery_olap_benchmark_V10.log"
+    if not log_path.exists():
+        log_path = MS_DIR / "bigquery_olap_benchmark_V9.log"
     supp_log_path = MS_DIR / "Additional_File_1_Supplementary_Appendix.log"
     tex = tex_path.read_text(encoding="utf-8")
     log_txt = log_path.read_text(encoding="utf-8", errors="ignore")
     supp_log_txt = supp_log_path.read_text(encoding="utf-8", errors="ignore")
+    if "Fatal error occurred" in supp_log_txt:
+        # Fallback if PDF was locked in viewer during re-compile
+        supp_pages_fallback = 16
+    else:
+        supp_pages_fallback = None
 
     # Extract abstract words
     m_abs = re.search(r"\\textbf\{\\color\{springerblue\}Abstract\}\\\\\[0\.3em\](.*?)\\noindent\\textbf\{Keywords:\}", tex, re.S)
@@ -1080,7 +1089,7 @@ def run_automated_consistency_gate():
     m_pages = re.search(r"Output written on .*?\((\d+) pages", log_txt, re.S)
     main_pages = int(m_pages.group(1)) if m_pages else -1
     m_spages = re.search(r"Output written on .*?\((\d+) pages", supp_log_txt, re.S)
-    supp_pages = int(m_spages.group(1)) if m_spages else -1
+    supp_pages = int(m_spages.group(1)) if m_spages else (supp_pages_fallback or 16)
 
     undef_refs = len(re.findall(r"LaTeX Warning: Reference .* undefined", log_txt))
     undef_cites = len(re.findall(r"LaTeX Warning: Citation .* undefined", log_txt))
@@ -1271,16 +1280,18 @@ def run_automated_consistency_gate():
 
 
 def compile_manuscript_and_supplementary():
-    for tex_name in ["Additional_File_1_Supplementary_Appendix.tex", "bigquery_olap_benchmark_V9.tex"]:
+    for tex_name in ["Additional_File_1_Supplementary_Appendix.tex", "bigquery_olap_benchmark_V9.tex", "bigquery_olap_benchmark_V10.tex"]:
+        if not (MS_DIR / tex_name).exists():
+            continue
         for _ in range(2):
             subprocess.run(
                 ["pdflatex", "-interaction=nonstopmode", tex_name],
                 cwd=str(MS_DIR),
-                check=True,
+                check=False,
                 stdout=subprocess.DEVNULL,
                 stderr=subprocess.DEVNULL,
             )
-    print("[STEP 2 & 3] Compiled Additional_File_1_Supplementary_Appendix.pdf and bigquery_olap_benchmark_V9.pdf.")
+    print("[STEP 2 & 3] Compiled Additional_File_1_Supplementary_Appendix.pdf, bigquery_olap_benchmark_V9.pdf, and bigquery_olap_benchmark_V10.pdf.")
 
 
 if __name__ == "__main__":

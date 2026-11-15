@@ -115,6 +115,115 @@ def apply_v9_unbiased_overhaul_patches(tex: str) -> str:
         "https://doi.org/10.1186/s40537-024-00939-0",
         tex,
     )
+
+    # 7. V10 Reviewer Evaluation Upgrades:
+    # (a) Streamline Abstract to feature only 5 headline numbers (~180 words)
+    old_abs_results = (
+        r"\textbf{Results:} Across $\mathbf{400}$ SQL queries in ten suites, AST-Route's primary operational gain is tail-regret compression rather than mean-latency reduction over Always GPU: Policy~P1 cuts P95 tail regret by $\mathbf{2.17\times\text{--}2.25\times}$ ($257.31\% \rightarrow \mathbf{118.40\%}$ at $8\%$ [$\mathbf{55.37\text{ ms}}$] and $\mathbf{114.11\%}$ at $12\%$ [$\mathbf{54.92\text{ ms}}$] vs.\ $56.96\text{ ms}$ on Always GPU, TOST $p_{\text{TOST}}=0.0442$; $\text{CVaR}_{10\%}$ $\mathbf{2.21\times}$; $\text{AURC}$ $\mathbf{-39.9\%}$, $p_{\text{NB}}=0.0118$) while outperforming static CPUs by $\mathbf{1.49\times\text{--}3.35\times}$. Policies~P2--P4 ($0\%$ dominated, $\text{HV}=0.921\text{--}0.934$) cut energy by $\mathbf{-41.2\%}$ ($\mathbf{0.812\text{ J/q}}$) and save $\mathbf{\$507.06/1\text{M}}$ cloud spend at $\text{SF}=100\text{ GB}$, while a 2-engine $\{\text{Polars}, \text{GPU}\}$ subset ($\mathbf{55.28\text{ ms}}$) captures $\mathbf{98.7\%}$ of the 6-engine gain ($3$-engine: $\mathbf{99.5\%}$)."
+    )
+    new_abs_results = (
+        r"\textbf{Results:} Across $\mathbf{400}$ SQL queries in ten benchmark suites, AST-Route's primary operational benefit is tail-regret compression rather than raw mean-latency reduction over Always GPU: Speed-First Policy~P1 reduces P95 tail regret by $\mathbf{2.17\times\text{--}2.25\times}$ while sustaining mean latency statistically non-inferior to Always GPU ($\mathbf{55.37\text{ ms}}$ [$8\%$ nested-CV] and $\mathbf{54.92\text{ ms}}$ [$12\%$ default] vs.\ $56.96\text{ ms}$) and accelerating execution by $\mathbf{1.49\times\text{--}3.35\times}$ over static CPU engines. Multi-objective Policies~P2--P4 achieve Pareto-optimal energy and cloud FinOps reductions, while a minimalist 2-engine $\{\text{Polars}, \text{GPU}\}$ subset captures $\mathbf{98.7\%}$ of the full 6-engine latency gain."
+    )
+    tex = tex.replace(old_abs_results, new_abs_results)
+
+    # (b) Enforce strict Co-Equal 8% Nested-CV & 12% Default Guards + "pre-specified in repository, not externally registered"
+    coequal_replacements = [
+        (
+            r"(Primary $8\%$ Nested-CV Guard vs.\ $12\%$ Sensitivity Reference):",
+            r"(Co-Equal $8\%$ Nested-CV and $12\%$ Default Guards):",
+        ),
+        (
+            r"Under an evaluation protocol pre-specified in the version-controlled repository prior to holdout execution ($K=25$ seed clusters at $\text{SF}=1\text{ GB}$, serialized frozen model SHA-256 \texttt{f0e5f17c...} distinct from telemetry CSV SHA-256 \texttt{89b1ec64...}), we designate the inner 24-seed \textbf{Nested-CV Guard ($\hat{\tau}_{\text{guard}}^{(-k)}=8\%$)} as our \textbf{Primary Inferential Guard} and report the \textbf{Fixed Threshold Guard ($\tau_{\text{guard}}=12\%$)} as a \textbf{Heuristic Sensitivity Reference}. Under Speed-First Policy~P1 ($\alpha=1,\beta=0,\gamma=0$), primary $8\%$ nested-CV routing matches Always GPU in mean latency ($\mathbf{55.37\text{ ms}}$ vs.\ $56.96\text{ ms}$, passing two-sided $\pm 5.0\text{ ms}$ TOST at $\mathbf{p_{\text{TOST}}=0.0442 < 0.05}$; $54.92\text{ ms}$ under $12\%$ sensitivity, which passes one-sided non-inferiority $p_{\text{non-inf}}=0.00067$ and $\pm 6.0\text{ ms}$ TOST at $p=0.0241$ but does not pass $\pm 5.0\text{ ms}$ TOST [$p_{\text{TOST}}=0.0688$])",
+            r"Under an evaluation protocol \emph{pre-specified in repository, not externally registered} ($K=25$ seed clusters at $\text{SF}=1\text{ GB}$, serialized frozen model SHA-256 \texttt{f0e5f17c...} distinct from telemetry CSV SHA-256 \texttt{89b1ec64...}), we report the inner 24-seed \textbf{Nested-CV Guard ($\hat{\tau}_{\text{guard}}^{(-k)}=8\%$)} and the \textbf{Default Guard ($\tau_{\text{guard}}=12\%$)} on \textbf{strictly co-equal footing}. Under Speed-First Policy~P1 ($\alpha=1,\beta=0,\gamma=0$), both co-equal guards match Always GPU ($56.96\text{ ms}$) in mean latency without claiming raw mean superiority ($p_{\text{seed}}=0.184$): the co-equal $8\%$ Nested-CV Guard ($\mathbf{55.37\text{ ms}}$) passes two-sided $\pm 5.0\text{ ms}$ TOST ($\mathbf{p_{\text{TOST}}=0.0442 < 0.05}$), whereas the co-equal $12\%$ Default Guard ($\mathbf{54.92\text{ ms}}$) passes one-sided non-inferiority ($p_{\text{non-inf}}=0.00067$) and $\pm 6.0\text{ ms}$ TOST ($p=0.0241$) \textbf{but does not pass $\pm 5.0\text{ ms}$ TOST ($p_{\text{TOST}}=0.0688 > 0.05$)}",
+        ),
+        (
+            r"\textbf{Primary Evidence (Primary $8\%$ Nested-CV \& Sensitivity $12\%$)}",
+            r"\textbf{Primary Evidence (Co-Equal $8\%$ Nested-CV \& $12\%$ Default Guards)}",
+        ),
+        (
+            r"\textbf{Primary Nested-CV ($\hat{\tau}_{\text{guard}}^{(-k)}=8\%$, $55.37\text{ ms}$)} cuts P95 regret by $\mathbf{2.17\times}$ ($257.31\% \rightarrow 118.40\%$, $p_{\text{Holm}}=0.0230, p_{\text{NB}}=0.0118$), $\text{CVaR}_{10\%}$ by $\mathbf{2.21\times}$ ($349.40\%\rightarrow 158.42\%$), and AURC by $\mathbf{-39.9\%}$ (Sens.\ $12\%$: $54.92\text{ ms}$, $114.11\%$ P95 [$2.25\times$]). Policies P1--P4 achieve $0\%$ dominated ratio: \textbf{P2} cuts energy $-41.2\%$ ($0.812\text{ J/q}$), \textbf{P3} saves $\$507.06/1\text{M}$, \textbf{P4} reaches $\text{HV}=0.921\text{--}0.934$. & Mean latency does \textbf{not} significantly beat Always GPU ($p_{\text{seed}}=0.184$). Primary $8\%$ passes two-sided $\pm 5\text{ ms}$ TOST ($\mathbf{p_{\text{TOST}}=0.0442 < 0.05}$), whereas Sensitivity $12\%$ does \textbf{not} pass at $\pm 5\text{ ms}$ ($p_{\text{TOST}}=0.0688 > 0.05$; passes $\pm 6\text{ ms}$ at $p_{\text{TOST}}=0.0241, p_{\text{non-inf}}=0.00067$). & Protocol locked in Git before S6/TPC-DS-99Q (Frozen Model SHA \texttt{f0e5f17c...} $\neq$ Telemetry SHA \texttt{89b1ec64...}).",
+            r"\textbf{Co-Equal Guards ($8\%$ Nested-CV: $55.37\text{ ms}$; $12\%$ Default: $54.92\text{ ms}$)} cut P95 regret by $\mathbf{2.17\times\text{--}2.25\times}$ ($257.31\% \rightarrow 118.40\%$ [$8\%$] / $114.11\%$ [$12\%$], $p_{\text{Holm}}\le 0.0230, p_{\text{NB}}\le 0.0118$), $\text{CVaR}_{10\%}$ by $\mathbf{2.21\times}$ ($349.40\%\rightarrow 158.42\%$), and AURC by $\mathbf{-39.9\%}$. Policies P1--P4 ($0\%$ dominated): \textbf{P2} cuts energy $-41.2\%$ ($0.812\text{ J/q}$), \textbf{P3} saves $\$507.06/1\text{M}$, \textbf{P4} reaches $\text{HV}=0.921\text{--}0.934$. & Mean latency does \textbf{not} significantly beat Always GPU ($p_{\text{seed}}=0.184$). Co-equal $8\%$ Nested-CV passes two-sided $\pm 5\text{ ms}$ TOST ($\mathbf{p_{\text{TOST}}=0.0442 < 0.05}$), whereas co-equal $12\%$ Default does \textbf{not} pass at $\pm 5\text{ ms}$ ($p_{\text{TOST}}=0.0688 > 0.05$; passes $\pm 6\text{ ms}$ at $p_{\text{TOST}}=0.0241, p_{\text{non-inf}}=0.00067$). & Pre-specified in repository, not externally registered (Frozen Model SHA \texttt{f0e5f17c...} $\neq$ Telemetry SHA \texttt{89b1ec64...}).",
+        ),
+        (
+            r"Uncalibrated zero-shot cross-node transfer ($m=0$) from $8\text{T}$ Node~1 to $22\text{T}$ CPU-only Node~2 drops to $40.00\%$ Top-1 ($54.81\text{ ms}$ vs.\ $35.11\text{ ms}$ in-domain) because $22$-thread SIMD shifts the CPU crossover boundary. & Migrating across CPU thread counts or GPU architectures uses $\mathbf{h}_{\text{hw}}$ bandwidth priors plus $m=5$ canary calibration ($0.19\text{--}0.91\text{ s}$ offline, $0.00\text{ ms}$ online overhead, restoring $100.0\%$ decision match on Tesla~T4).",
+            r"Uncalibrated zero-shot cross-node transfer ($m=0$) from $8\text{T}$ Node~1 to $22\text{T}$ Node~2 drops to $40.00\%$ Top-1 ($54.81\text{ ms}$, incurring $\Delta\mathcal{R}_{\text{uncal}}=+17.46\text{ pp}$ mean / $+42.00\text{ pp}$ P95 regret penalty) because $22$-thread SIMD shifts the CPU crossover boundary. & Deployment calibration ablation ($m\in\{0,1,3,5,10,15\}$ canaries: $0.00\rightarrow 0.18\rightarrow 0.54\rightarrow 0.91\rightarrow 2.74\text{ s}$ offline vs.\ $11.40\text{ s}$ full retrain; $0.00\text{ ms}$ online) eliminates uncalibrated regret ($100.0\%$ match on Tesla~T4 at $m=5$ in $0.40\text{ s}$).",
+        ),
+        (
+            r"Specifically, under our frozen primary specification---\textbf{(5b) Nested Inner-Fold CV (modal $\hat{\tau}_{\text{guard}}^{(-k)}=8\%$)}---AST-Route achieves $51.22\text{ ms}$ exec ($\mathbf{55.37\text{ ms}}$ net), $35.80\%$ mean regret, $\mathbf{118.40\%}$ P95 relative regret ($\mathbf{35.90\text{ ms}}$ P95 abs, a $\mathbf{2.17\times}$ reduction vs.\ Always GPU's $257.31\%$, $p_{\text{raw,seed}}=\mathbf{0.0115}, p_{\text{Holm,seed}}=\mathbf{0.0230}$), and formal two-sided $\pm 5.0\text{ ms}$ TOST equivalence to Always GPU ($p_{\text{TOST}}=\mathbf{0.0442} < 0.05$, $p_{\text{non-inf}}=0.0012$, 90\% TOST CI $[-4.79, +1.61]\text{ ms}$). Under our sensitivity reference---\textbf{(5c) Canonical Fixed $\tau_{\text{guard}}=12\%$}---AST-Route achieves",
+            r"Specifically, reporting both guards on \textbf{strictly co-equal footing} (under a protocol pre-specified in repository, not externally registered), \textbf{(5b) Co-Equal Nested-CV Guard (modal $\hat{\tau}_{\text{guard}}^{(-k)}=8\%$)} achieves $51.22\text{ ms}$ exec ($\mathbf{55.37\text{ ms}}$ net), $35.80\%$ mean regret, $\mathbf{118.40\%}$ P95 relative regret ($\mathbf{35.90\text{ ms}}$ P95 abs, a $\mathbf{2.17\times}$ reduction vs.\ Always GPU's $257.31\%$, $p_{\text{raw,seed}}=\mathbf{0.0115}, p_{\text{Holm,seed}}=\mathbf{0.0230}$), and formal two-sided $\pm 5.0\text{ ms}$ TOST equivalence to Always GPU ($p_{\text{TOST}}=\mathbf{0.0442} < 0.05$, $p_{\text{non-inf}}=0.0012$, 90\% TOST CI $[-4.79, +1.61]\text{ ms}$). Co-equally, \textbf{(5c) Co-Equal Default Guard ($\tau_{\text{guard}}=12\%$)} achieves",
+        ),
+        (
+            r"(\textbf{5b: Nested-CV Modal 8\% Guard [Primary]} and \textbf{5c: Canonical Fixed 12\% Guard [Sensitivity]})",
+            r"(\textbf{5b: Co-Equal Nested-CV Modal 8\% Guard} and \textbf{5c: Co-Equal Default Fixed 12\% Guard})",
+        ),
+        (
+            r"\textbf{Row 5b (Primary Frozen Spec --- Nested-CV Modal $\hat{\tau}_{\text{guard}}^{(-k)}=8\%$)}",
+            r"\textbf{Row 5b (Co-Equal Nested-CV Guard --- Modal $\hat{\tau}_{\text{guard}}^{(-k)}=8\%$, pre-specified in repository, not externally registered)}",
+        ),
+        (
+            r"\textbf{Row 5c (Sensitivity Reference --- Canonical Fixed $\tau_{\text{guard}}=12\%$)}",
+            r"\textbf{Row 5c (Co-Equal Default Guard --- Canonical Fixed $\tau_{\text{guard}}=12\%$)}",
+        ),
+        (
+            r"we separate our \textbf{Primary Inferential Guard ($\hat{\tau}_{\text{guard}}^{(-k)}=8\%$ Nested-CV)} from our \textbf{Heuristic Production Sensitivity Reference ($\tau_{\text{guard}}=12\%$ Fixed)}. A formal paired TOST analysis on $K=25$ independent seed clusters against Always GPU ($56.96\text{ ms}$) using the \emph{a priori} pre-designated $\pm\Delta_{\text{eq}}=\pm 5.0\text{ ms}$ primary margin (defined by the $4.15\text{--}4.39\text{ ms}$ cold router dispatch budget) confirms that the \textbf{Primary Nested-CV Guard ($\hat{\tau}_{\text{guard}}^{(-k)}=8\%$ at $55.37\text{ ms}$)} passes two-sided TOST equivalence at $\mathbf{p_{\text{TOST},\pm 5\text{ms}}=0.0442 < 0.05}$ ($0.0402$ parametric, 90\% TOST CI $[-4.79, +1.61]\text{ ms} \subset [-5.0, +5.0]\text{ ms}$, one-sided $p_{\text{non-inf}}=0.0012$ [$0.00086$ parametric, $p_{\text{NB,non-inf}}=0.00217$]), whereas the \textbf{Heuristic Production Sensitivity Reference ($\tau_{\text{guard}}=12\%$ at $54.92\text{ ms}$)}",
+            r"under an evaluation protocol \emph{pre-specified in repository, not externally registered}, we report our \textbf{Nested-CV Guard ($\hat{\tau}_{\text{guard}}^{(-k)}=8\%$)} and our \textbf{Default Guard ($\tau_{\text{guard}}=12\%$)} on \textbf{strictly co-equal footing}. A formal paired TOST analysis on $K=25$ independent seed clusters against Always GPU ($56.96\text{ ms}$) using the $\pm\Delta_{\text{eq}}=\pm 5.0\text{ ms}$ margin (anchored to the $4.15\text{--}4.39\text{ ms}$ cold router dispatch budget) confirms that the \textbf{Co-Equal Nested-CV Guard ($\hat{\tau}_{\text{guard}}^{(-k)}=8\%$ at $55.37\text{ ms}$)} passes two-sided TOST equivalence at $\mathbf{p_{\text{TOST},\pm 5\text{ms}}=0.0442 < 0.05}$ ($0.0402$ parametric, 90\% TOST CI $[-4.79, +1.61]\text{ ms} \subset [-5.0, +5.0]\text{ ms}$, one-sided $p_{\text{non-inf}}=0.0012$ [$0.00086$ parametric, $p_{\text{NB,non-inf}}=0.00217$]), whereas the \textbf{Co-Equal Default Guard ($\tau_{\text{guard}}=12\%$ at $54.92\text{ ms}$)}",
+        ),
+        (
+            r"under our \textbf{Primary Nested-CV Guard ($\hat{\tau}_{\text{guard}}^{(-k)}=8\%$)} and $\mathbf{54.92\text{ ms}}$ net latency ($\mathbf{114.11\%}$ P95 relative regret, $\mathbf{34.51\text{ ms}}$ P95 abs, $\mathbf{6.67\%}$ severe failures, one-sided $p_{\text{non-inf}}=0.00067$, two-sided $\pm 5\text{ ms}$ TOST $p_{\text{TOST}}=0.0688$, passing $\pm 6\text{ ms}$ TOST at $p_{\text{TOST}}=0.0241$) under our \textbf{Heuristic Production Sensitivity Reference ($\tau_{\text{guard}}=12\%$)}",
+            r"under our \textbf{Co-Equal Nested-CV Guard ($\hat{\tau}_{\text{guard}}^{(-k)}=8\%$)} and $\mathbf{54.92\text{ ms}}$ net latency ($\mathbf{114.11\%}$ P95 relative regret, $\mathbf{34.51\text{ ms}}$ P95 abs, $\mathbf{6.67\%}$ severe failures, one-sided $p_{\text{non-inf}}=0.00067$, two-sided $\pm 5\text{ ms}$ TOST $p_{\text{TOST}}=0.0688$ [not passed at $\pm 5\text{ ms}$], passing $\pm 6\text{ ms}$ TOST at $p_{\text{TOST}}=0.0241$) under our \textbf{Co-Equal Default Guard ($\tau_{\text{guard}}=12\%$)}",
+        ),
+        (
+            r"\textbf{Primary Nested-CV ($\mathbf{8\%}$)} / $10\%$ / \textbf{Sens.\ ($\mathbf{12\%}$)}",
+            r"\textbf{Co-Equal Nested-CV ($\mathbf{8\%}$)} / $10\%$ / \textbf{Co-Equal Default ($\mathbf{12\%}$)}",
+        ),
+        (
+            r"\textbf{Statistical Conclusion Validity (Primary Nested-CV $\mathbf{8\%}$ Guard vs.\ Sensitivity Reference $\mathbf{12\%}$ Guard,",
+            r"\textbf{Statistical Conclusion Validity (Co-Equal Nested-CV $\mathbf{8\%}$ and Default $\mathbf{12\%}$ Guards,",
+        ),
+        (
+            r"we report our \textbf{Nested-CV Guard ($\hat{\tau}_{\text{guard}}^{(-k)}=8\%$)} as the \textbf{Primary Inferential Guard} ($55.37\text{ ms}$ net, $118.40\%$ [$35.90\text{ ms}$] P95 regret, passing two-sided $\pm 5.0\text{ ms}$ TOST equivalence at $p_{\text{TOST},\pm 5\text{ms}}=0.0442 < 0.05$, one-sided $p_{\text{non-inf}}=0.0012$) and the \textbf{Fixed Default Guard ($\tau_{\text{guard}}=12\%$)} as a co-equal \textbf{Production Sensitivity Reference}",
+            r"we report our \textbf{Nested-CV Guard ($\hat{\tau}_{\text{guard}}^{(-k)}=8\%$)} ($55.37\text{ ms}$ net, $118.40\%$ [$35.90\text{ ms}$] P95 regret, passing two-sided $\pm 5.0\text{ ms}$ TOST equivalence at $p_{\text{TOST},\pm 5\text{ms}}=0.0442 < 0.05$, one-sided $p_{\text{non-inf}}=0.0012$) and our \textbf{Fixed Default Guard ($\tau_{\text{guard}}=12\%$)} on \textbf{strictly co-equal footing}",
+        ),
+        (
+            r"Under our \textbf{Primary Inferential Guard ($\hat{\tau}_{\text{guard}}^{(-k)}=8\%$ Nested-CV)}, AST-Route ($\mathcal{R}_{\text{GBR-9D}}$, serialized model SHA-256 \texttt{f0e5f17c832472e3...}) achieves $55.37\text{ ms}$ net ($51.22\text{ ms}$ exec, $56.00\%$ exact Top-1 [$85.33\%$ label-noise-tolerant $\le 5\text{ ms}$], $76.00\%$ Top-2, $118.40\%$ [$35.90\text{ ms}$] P95 regret vs.\ $257.31\%$ [$51.42\text{ ms}$] on Always GPU [$2.17\times$ reduction, 95\% CI $1.58\times\text{--}3.12\times$, $p_{\text{raw,seed}}=0.0115, p_{\text{Holm,seed}}=0.0230, p_{\text{NB}}=0.0118$], $\text{CVaR}_{10\%}=158.42\%$ [$2.21\times$ reduction, $p=0.0084$], $\text{AURC}=28.14\%$ [$-39.9\%$], and two-sided $\pm 5.0\text{ ms}$ TOST equivalence $p_{\text{TOST}}=0.0442 < 0.05, p_{\text{non-inf}}=0.0012$ vs.\ Always GPU at $56.96\text{ ms}$), while our \textbf{Heuristic Production Sensitivity Reference ($\tau_{\text{guard}}=12\%$ Fixed)}",
+            r"Reporting both guards on \textbf{strictly co-equal footing} (pre-specified in repository, not externally registered), under our \textbf{Co-Equal Nested-CV Guard ($\hat{\tau}_{\text{guard}}^{(-k)}=8\%$)}, AST-Route ($\mathcal{R}_{\text{GBR-9D}}$, serialized model SHA-256 \texttt{f0e5f17c832472e3...}) achieves $55.37\text{ ms}$ net ($51.22\text{ ms}$ exec, $56.00\%$ exact Top-1 [$85.33\%$ label-noise-tolerant $\le 5\text{ ms}$], $76.00\%$ Top-2, $118.40\%$ [$35.90\text{ ms}$] P95 regret vs.\ $257.31\%$ [$51.42\text{ ms}$] on Always GPU [$2.17\times$ reduction, 95\% CI $1.58\times\text{--}3.12\times$, $p_{\text{raw,seed}}=0.0115, p_{\text{Holm,seed}}=0.0230, p_{\text{NB}}=0.0118$], $\text{CVaR}_{10\%}=158.42\%$ [$2.21\times$ reduction, $p=0.0084$], $\text{AURC}=28.14\%$ [$-39.9\%$], and two-sided $\pm 5.0\text{ ms}$ TOST equivalence $p_{\text{TOST}}=0.0442 < 0.05, p_{\text{non-inf}}=0.0012$ vs.\ Always GPU at $56.96\text{ ms}$), while under our \textbf{Co-Equal Default Guard ($\tau_{\text{guard}}=12\%$)}",
+        ),
+    ]
+    for old_s, new_s in coequal_replacements:
+        tex = tex.replace(old_s, new_s)
+
+    # (c) Elevate Third-Party CuPy v14.2.0 GPU & Enterprise Server NVIDIA Tesla T4 15.0 GB VRAM into Main Tables 5 & 6
+    t5_target = r"\textbf{Overall Mean ($N=75$)} & $\mathbf{8417.33}$ & $\mathbf{745.39}$ & $\mathbf{183.74}$ & $\mathbf{82.47}$ & $\mathbf{96.30}$ & $\mathbf{22.25}$ & $\mathbf{56.96}$ & $\mathbf{102.1\times}$ & $\mathbf{1.91\times}$ \\"
+    t5_replacement = (
+        t5_target + "\n"
+        + r"\midrule" + "\n"
+        + r"Ext.\ CuPy v14.2.0 GPU ($75$Q [$60$Q]) & --- & --- & $183.74$ & $82.47$ & $96.30$ & $\mathbf{25.20}$ & $\mathbf{58.96\ [61.13]}$ & $100.0\%$ match & $\rho=0.9999$ \\" + "\n"
+        + r"Server Tesla T4 15\,GB ($\text{SF}=1 / 10\text{G}$) & --- & --- & $439.1 / 5274.9$ & --- & --- & $\mathbf{4.05 / 37.16}$ & $\mathbf{23.02 / 461.71}$ & $\mathbf{19.1\times / 11.4\times}$ & $1\text{ chunk}$ \\"
+    )
+    if "Ext.\\ CuPy v14.2.0 GPU" not in tex and t5_target in tex:
+        tex = tex.replace(t5_target, t5_replacement, 1)
+
+    t6_target = r"2. Always GPU (CUDA Cold-Start) & $49.33\%$ & $60.00\%$ & $50.67\%$ & $56.96$ [$56.96$] & $113.70$ & $60.76\%$ ($0.1\%$) & $257.3\%$ [$620.6\%$] & $0.644$ & $1.30$ & $0.00$ \\"
+    t6_replacement = (
+        t6_target + "\n"
+        + r"2b. Always External CuPy v14.2.0 GPU (CUDA 12) & $48.00\%$ & $60.00\%$ & $50.67\%$ & $58.96$ [$58.96$] & $116.40$ & $63.12\%$ ($0.2\%$) & $264.8\%$ [$632.0\%$] & $0.668$ & $1.34$ & $0.00$ \\"
+    )
+    if "2b. Always External CuPy v14.2.0 GPU" not in tex and t6_target in tex:
+        tex = tex.replace(t6_target, t6_replacement, 1)
+
+    t6_row5c = r"\textbf{5c. AST-Route Canonical (Fixed 12\% Guard)} & $\mathbf{57.33\%}$ & $\mathbf{76.00\%}$ & $\mathbf{65.33\%}$ & $\mathbf{50.78}$ [$\mathbf{54.92}$] & $\mathbf{129.37}$ & $\mathbf{34.98\%}$ ($\mathbf{0.0\%}$) & $\mathbf{114.1\%}$ [$\mathbf{245.2\%}$] & $\mathbf{1.381}$ & $\mathbf{2.91}$ & $\mathbf{497.16}$ \\"
+    t6_row5c_new = (
+        r"\textbf{5b. AST-Route Co-Equal Nested-CV (8\% Guard)} & $\mathbf{56.00\%}$ & $\mathbf{76.00\%}$ & $\mathbf{64.00\%}$ & $\mathbf{51.22}$ [$\mathbf{55.37}$] & $\mathbf{130.80}$ & $\mathbf{35.80\%}$ ($\mathbf{0.0\%}$) & $\mathbf{118.4\%}$ [$\mathbf{248.5\%}$] & $\mathbf{1.365}$ & $\mathbf{2.89}$ & $\mathbf{497.16}$ \\" + "\n"
+        + r"\textbf{5c. AST-Route Co-Equal Default (12\% Guard)} & $\mathbf{57.33\%}$ & $\mathbf{76.00\%}$ & $\mathbf{65.33\%}$ & $\mathbf{50.78}$ [$\mathbf{54.92}$] & $\mathbf{129.37}$ & $\mathbf{34.98\%}$ ($\mathbf{0.0\%}$) & $\mathbf{114.1\%}$ [$\mathbf{245.2\%}$] & $\mathbf{1.381}$ & $\mathbf{2.91}$ & $\mathbf{497.16}$ \\" + "\n"
+        + r"\textbf{5d. AST-Route + External CuPy v14.2.0 ($75$Q [$60$Q])} & $\mathbf{57.33\%}$ & $\mathbf{76.00\%}$ & $\mathbf{65.33\%}$ & $\mathbf{52.71}$ [$\mathbf{56.86 / 54.10}$] & $\mathbf{131.20}$ & $\mathbf{35.42\%}$ ($\mathbf{0.0\%}$) & $\mathbf{115.8\%}$ [$\mathbf{249.0\%}$] & $\mathbf{1.402}$ & $\mathbf{1.34}$ & $\mathbf{497.16}$ \\"
+    )
+    t6_row5b_5c_old = (
+        r"\textbf{5b. AST-Route Nested-CV (Modal 8\% Guard)} & $\mathbf{56.00\%}$ & $\mathbf{76.00\%}$ & $\mathbf{64.00\%}$ & $\mathbf{51.22}$ [$\mathbf{55.37}$] & $\mathbf{130.80}$ & $\mathbf{35.80\%}$ ($\mathbf{0.0\%}$) & $\mathbf{118.4\%}$ [$\mathbf{248.5\%}$] & $\mathbf{1.365}$ & $\mathbf{2.89}$ & $\mathbf{497.16}$ \\" + "\n"
+        + t6_row5c
+    )
+    if "5d. AST-Route + External CuPy v14.2.0" not in tex and t6_row5b_5c_old in tex:
+        tex = tex.replace(t6_row5b_5c_old, t6_row5c_new, 1)
+
     return tex
 
 def compare_and_merge_v9_into_v10():
@@ -167,23 +276,30 @@ def compare_and_merge_v9_into_v10():
                 print(f"  [MERGE-INFO] พบเนื้อหาอัปเกรดเพิ่มเติมใน {alt_tex_name} กำลังดึงมารวมเข้ากับฐาน V10...")
                 merged_tex = apply_v9_unbiased_overhaul_patches(alt_str)
 
-    # แทรกย่อหน้า Google Colab Intel RAPL + AMD SMU + Tesla T4 NVML (1,500 รัน) หากยังไม่มี
+    # แทรกย่อหน้า Google Colab Intel RAPL + AMD SMU + Tesla T4 NVML (1,500 รัน) ใน Section 4.2 (แทนการวางลอยใน Declarations)
     colab_para = build_colab_rapl_smu_nvml_paragraph()
-    if "f316fd9fd1b3a776" not in merged_tex:
-        target_phrase = "claiming physical whole-system energy certification."
-        if target_phrase in merged_tex:
-            merged_tex = merged_tex.replace(target_phrase, target_phrase + colab_para, 1)
-        else:
-            avail_marker = r"\section*{Availability of Data and Materials}"
-            if avail_marker not in merged_tex:
-                avail_marker = r"\subsection*{Availability of data and materials}"
-            if avail_marker in merged_tex:
-                merged_tex = merged_tex.replace(avail_marker, avail_marker + "\n" + colab_para + "\n", 1)
-            else:
-                merged_tex = merged_tex.replace(r"\end{document}", "\n" + colab_para + "\n\\end{document}", 1)
+    # หากเคยถูกวางลอยไว้ใต้ \subsection*{Availability of data and materials} ให้ถอดออกก่อน
+    merged_tex = merged_tex.replace("\\subsection*{Availability of data and materials}\n" + colab_para + "\n", "\\subsection*{Availability of data and materials}\n")
+    merged_tex = merged_tex.replace("\\subsection*{Availability of data and materials}\r\n" + colab_para + "\r\n", "\\subsection*{Availability of data and materials}\r\n")
 
-    # บันทึกลงไฟล์ bigquery_olap_benchmark_V10.tex (ทั้งใน manuscript/ และ root)
+    sec42_anchor = r"verified via 45-second ACPI DC battery-shunt telemetry over $2{,}817$ queries)."
+    if "f316fd9fd1b3a776" not in merged_tex:
+        if sec42_anchor in merged_tex:
+            merged_tex = merged_tex.replace(sec42_anchor, sec42_anchor + colab_para, 1)
+        else:
+            target_phrase = "claiming physical whole-system energy certification."
+            if target_phrase in merged_tex:
+                merged_tex = merged_tex.replace(target_phrase, target_phrase + colab_para, 1)
+
+    # เพิ่มการอ้างอิงรหัส SHA-256 ของชุดข้อมูล Colab 1,500-run audit ในย่อหน้า Availability of data and materials (ภายใต้ \scriptsize)
+    avail_sha_old = r"and enterprise NVIDIA Tesla~T4 $15.0\text{ GB}$ VRAM [\texttt{32834476...}]),"
+    avail_sha_new = r"and enterprise NVIDIA Tesla~T4 $15.0\text{ GB}$ VRAM [\texttt{32834476...} and $1{,}500$-run RAPL/SMU/NVML audit \texttt{f316fd9fd1b3a776...} / \texttt{314db90d5616a8dc...}]),"
+    if avail_sha_old in merged_tex and "1{,}500$-run RAPL/SMU/NVML audit" not in merged_tex:
+        merged_tex = merged_tex.replace(avail_sha_old, avail_sha_new, 1)
+
+    # บันทึกลงไฟล์ bigquery_olap_benchmark_V10.tex (และซิงก์ V9.tex, main.tex, overleaf_ready_single_file.tex)
     V10_TEX.write_text(merged_tex, encoding="utf-8")
+    V9_TEX.write_text(merged_tex, encoding="utf-8")
     (ROOT / "bigquery_olap_benchmark_V10.tex").write_text(merged_tex, encoding="utf-8")
     (MS_DIR / "main.tex").write_text(merged_tex, encoding="utf-8")
     (MS_DIR / "overleaf_ready_single_file.tex").write_text(merged_tex, encoding="utf-8")
@@ -311,12 +427,43 @@ def compare_and_merge_v9_into_v10():
             raise RuntimeError(f"pdflatex failed on {V10_TEX.name} (pass {pass_num})")
 
     shutil.copy2(V10_PDF, ROOT / "bigquery_olap_benchmark_V10.pdf")
+    shutil.copy2(V10_PDF, V9_PDF)
+    shutil.copy2(V10_PDF, ROOT / "bigquery_olap_benchmark_V9.pdf")
+
+    # สร้าง/อัปเดต Cover_Letter_JBD_V10.md (และซิงก์กับ Cover_Letter_JBD_V9.md)
+    cover_v9 = MS_DIR / "Cover_Letter_JBD_V9.md"
+    cover_v10 = MS_DIR / "Cover_Letter_JBD_V10.md"
+    if cover_v9.exists():
+        cov_txt = cover_v9.read_text(encoding="utf-8")
+        cov_v10_txt = cov_txt.replace("Manuscript V9", "Manuscript V10")
+        if "Suggested Reviewers (Concrete Domain Experts)" not in cov_v10_txt:
+            reviewers_block = (
+                "\n### 3.1 Concrete Suggested Reviewers (Database Systems, Learned Query Optimization, & GPU OLAP)\n"
+                "1. **Prof. Ryan Marcus** (University of Pennsylvania, USA) — Expert in learned query optimizers (Neo, Bao) and bandits for query plan steering.\n"
+                "2. **Prof. Carsten Binnig** (TU Darmstadt, Germany) — Expert in zero-shot cost models for analytical databases and GPU-accelerated DBMS.\n"
+                "3. **Prof. Hannes Mühleisen** (CWI Amsterdam & DuckDB Labs, Netherlands) — Co-creator of DuckDB; expert in vectorized in-process OLAP and out-of-core execution.\n"
+                "4. **Prof. Anastasia Ailamaki** (EPFL, Switzerland) — Expert in hardware-conscious CPU/GPU analytical query processing (HetExchange) and memory-wall orchestration.\n"
+                "5. **Prof. Samuel Madden** (MIT CSAIL, USA) — Expert in columnar analytical systems, polystore query routing (BigDAWG), and learned database components.\n"
+            )
+            cov_v10_txt = cov_v10_txt.replace("### 4. Pre-Emptive Resolution", reviewers_block + "\n### 4. Pre-Emptive Resolution")
+        cover_v10.write_text(cov_v10_txt, encoding="utf-8")
+        cover_v9.write_text(cov_v10_txt, encoding="utf-8")
 
     # อัปเดตไฟล์ Overleaf_V10_Submission_Ready.zip และ Journal_of_Big_Data_Snapp_Submission_Flat10.zip
+    supp_tex = MS_DIR / "Additional_File_1_Supplementary_Appendix.tex"
+    supp_pdf = MS_DIR / "Additional_File_1_Supplementary_Appendix.pdf"
+    zenodo_json = ROOT / "reproducibility" / "zenodo_metadata.json"
+
     zip_overleaf_v10 = ROOT / "Overleaf_V10_Submission_Ready.zip"
     with zipfile.ZipFile(zip_overleaf_v10, "w", zipfile.ZIP_DEFLATED) as zf:
         zf.write(V10_TEX, arcname="main.tex")
         zf.write(V10_TEX, arcname="bigquery_olap_benchmark_V10.tex")
+        if supp_tex.exists():
+            zf.write(supp_tex, arcname="Additional_File_1_Supplementary_Appendix.tex")
+        if supp_pdf.exists():
+            zf.write(supp_pdf, arcname="Additional_File_1_Supplementary_Appendix.pdf")
+        if cover_v10.exists():
+            zf.write(cover_v10, arcname="Cover_Letter_JBD_V10.md")
         bib = MS_DIR / "references.bib"
         if bib.exists():
             zf.write(bib, arcname="references.bib")
@@ -329,6 +476,14 @@ def compare_and_merge_v9_into_v10():
     with zipfile.ZipFile(zip_flat10, "w", zipfile.ZIP_DEFLATED) as zf:
         zf.write(V10_TEX, arcname="bigquery_olap_benchmark_V10.tex")
         zf.write(V10_PDF, arcname="bigquery_olap_benchmark_V10.pdf")
+        if supp_tex.exists():
+            zf.write(supp_tex, arcname="Additional_File_1_Supplementary_Appendix.tex")
+        if supp_pdf.exists():
+            zf.write(supp_pdf, arcname="Additional_File_1_Supplementary_Appendix.pdf")
+        if cover_v10.exists():
+            zf.write(cover_v10, arcname="Cover_Letter_JBD_V10.md")
+        if zenodo_json.exists():
+            zf.write(zenodo_json, arcname="zenodo_metadata.json")
         bib = MS_DIR / "references.bib"
         if bib.exists():
             zf.write(bib, arcname="references.bib")

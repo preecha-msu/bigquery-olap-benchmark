@@ -35,8 +35,32 @@ To guarantee independent reproducibility, our package includes a one-command ver
 
 In accordance with *Journal of Big Data* submission guidelines, we respectfully suggest reviewers with expertise in: (1) **Learned Query Optimization & Cost Estimation** (e.g., researchers working on zero-shot cost models, contextual-bandit plan steering, and conformal risk control), (2) **Heterogeneous CPU–GPU Analytical Databases** (e.g., researchers working on Apache Arrow, DuckDB/Sirius, and PCIe interconnect modeling), and (3) **Serverless Cloud Data Warehouses & Hybrid FinOps Orchestration**.
 
+
+### 3.1 Concrete Suggested Reviewers (Database Systems, Learned Query Optimization, & GPU OLAP)
+1. **Prof. Ryan Marcus** (University of Pennsylvania, USA) — Expert in learned query optimizers (Neo, Bao) and bandits for query plan steering.
+2. **Prof. Carsten Binnig** (TU Darmstadt, Germany) — Expert in zero-shot cost models for analytical databases and GPU-accelerated DBMS.
+3. **Prof. Hannes Mühleisen** (CWI Amsterdam & DuckDB Labs, Netherlands) — Co-creator of DuckDB; expert in vectorized in-process OLAP and out-of-core execution.
+4. **Prof. Anastasia Ailamaki** (EPFL, Switzerland) — Expert in hardware-conscious CPU/GPU analytical query processing (HetExchange) and memory-wall orchestration.
+5. **Prof. Samuel Madden** (MIT CSAIL, USA) — Expert in columnar analytical systems, polystore query routing (BigDAWG), and learned database components.
+
+
+### 3.1 Concrete Suggested Reviewers (Database Systems, Learned Query Optimization, & GPU OLAP)
+1. **Prof. Ryan Marcus** (University of Pennsylvania, USA) — Expert in learned query optimizers (Neo, Bao) and bandits for query plan steering.
+2. **Prof. Carsten Binnig** (TU Darmstadt, Germany) — Expert in zero-shot cost models for analytical databases and GPU-accelerated DBMS.
+3. **Prof. Hannes Mühleisen** (CWI Amsterdam & DuckDB Labs, Netherlands) — Co-creator of DuckDB; expert in vectorized in-process OLAP and out-of-core execution.
+4. **Prof. Anastasia Ailamaki** (EPFL, Switzerland) — Expert in hardware-conscious CPU/GPU analytical query processing (HetExchange) and memory-wall orchestration.
+5. **Prof. Samuel Madden** (MIT CSAIL, USA) — Expert in columnar analytical systems, polystore query routing (BigDAWG), and learned database components.
+
+
+### 3.1 Concrete Suggested Reviewers (Database Systems, Learned Query Optimization, & GPU OLAP)
+1. **Prof. Ryan Marcus** (University of Pennsylvania, USA) — Expert in learned query optimizers (Neo, Bao) and bandits for query plan steering.
+2. **Prof. Carsten Binnig** (TU Darmstadt, Germany) — Expert in zero-shot cost models for analytical databases and GPU-accelerated DBMS.
+3. **Prof. Hannes Mühleisen** (CWI Amsterdam & DuckDB Labs, Netherlands) — Co-creator of DuckDB; expert in vectorized in-process OLAP and out-of-core execution.
+4. **Prof. Anastasia Ailamaki** (EPFL, Switzerland) — Expert in hardware-conscious CPU/GPU analytical query processing (HetExchange) and memory-wall orchestration.
+5. **Prof. Samuel Madden** (MIT CSAIL, USA) — Expert in columnar analytical systems, polystore query routing (BigDAWG), and learned database components.
+
 ### 4. Pre-Emptive Resolution of Anticipated Reviewer Concerns (6-Point Summary)
-| Reviewer Dimension | How Addressed in Manuscript V9 |
+| Reviewer Dimension | How Addressed in Manuscript V10 |
 | :--- | :--- |
 | **1. Frozen Primary Analysis Specification (No "Garden of Forking Paths")** | The Abstract and Headline Claims report strictly our **leak-free Nested-CV specification ($\hat{\tau}_{\text{guard}}^{(-k)}=8\%$ inner-fold modal guard: $55.37\text{ ms}$ net, $118.40\%$ P95 regret [$2.17\times$ reduction], two-sided $\pm 5.0\text{ ms}$ TOST $p_{\text{TOST}}=0.0442$)**, while Fixed Canonical $\tau_{\text{guard}}=12\%$ ($54.92\text{ ms}$, $114.11\%$ P95, one-sided $p_{\text{non-inf}}=0.00067$, two-sided $\pm 5.0\text{ ms}$ TOST $p=0.069$) is isolated as a secondary sensitivity reference. |
 | **2. "Equivalence to Always GPU" Framed as No-Mean-Penalty Constraint + Explicit Null Results** | TOST mean equivalence ($55.37$ vs. $56.96\text{ ms}$) is framed strictly as a **no-mean-penalty constraint** accompanying primary tail-regret compression ($257.31\% \rightarrow 118.40\%$), and Table 1 includes an explicit **Negative & Null Results** column (e.g., 9D zero-shot JOB $21.21\%$ Top-1 / $6.75\text{ ms}$ equals static Always Polars; uncalibrated zero-shot $8\rightarrow 22$ thread transfer trails Polars until 5-seed calibration). |
