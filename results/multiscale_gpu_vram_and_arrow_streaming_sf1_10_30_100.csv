@@ -1,0 +1,17 @@
+Hardware_Node,Scale_Factor_GB,Lineitem_Rows,Engine,Execution_Mode,Latency_ms,Peak_Host_RAM_GB,Peak_GPU_VRAM_GB,VRAM_Chunks,Naive_FullLoad_OOM,PCIe_H2D_ms,GPU_Warm_Kernel_ms,Phi_PCIe_Pct,Max_FP64_Rel_Error,EX_Equivalence,Parquet_SHA256
+Node1_PREECHA-IT-MSU,1,6001215,DuckDB_Columnar_C++,In-Memory_Vectorized,56.1,0.503,0.0,0,0,0.0,0.0,0.0,0.0,1.0,41ba056fcf213207f9236ccd
+Node1_PREECHA-IT-MSU,1,6001215,Polars_Lazy_Streaming_Rust,In-Memory_Arrow,125.75,0.814,0.0,0,0,0.0,0.0,0.0,4.967e-15,1.0,41ba056fcf213207f9236ccd
+Node1_PREECHA-IT-MSU,1,6001215,Apache_DataFusion_Rust,In-Memory_Arrow,155.31,0.917,0.0,0,0,0.0,0.0,0.0,5.251e-15,1.0,41ba056fcf213207f9236ccd
+Node1_PREECHA-IT-MSU,1,6001215,PyTorch_CUDA_RTX2050_4.0GB,In-VRAM_SinglePass,44.22,2.96,0.253,1,0,30.32,13.9,68.57,5.109e-15,1.0,41ba056fcf213207f9236ccd
+Node1_PREECHA-IT-MSU,10,59986052,DuckDB_Columnar_C++,In-Memory_Vectorized,317.65,2.734,0.0,0,0,0.0,0.0,0.0,0.0,1.0,08ffc1e09ab6eaa391856205
+Node1_PREECHA-IT-MSU,10,59986052,Polars_Lazy_Streaming_Rust,In-Memory_Arrow,490.02,3.611,0.0,0,0,0.0,0.0,0.0,7.954e-16,1.0,08ffc1e09ab6eaa391856205
+Node1_PREECHA-IT-MSU,10,59986052,Apache_DataFusion_Rust,In-Memory_Arrow,380.77,3.808,0.0,0,0,0.0,0.0,0.0,7.954e-16,1.0,08ffc1e09ab6eaa391856205
+Node1_PREECHA-IT-MSU,10,59986052,PyTorch_CUDA_RTX2050_4.0GB,Batched_PCIe_Stream_4Chunks,274.18,4.288,0.63,4,1,210.17,64.01,76.65,6.818e-16,1.0,08ffc1e09ab6eaa391856205
+Node1_PREECHA-IT-MSU,30,179998372,DuckDB_Columnar_C++,Out-of-Core_Morsel_Spill,3578.44,3.143,0.0,0,0,0.0,0.0,0.0,0.0,1.0,bfc2b2216ccdd45a49e824d4
+Node1_PREECHA-IT-MSU,30,179998372,Polars_Lazy_Streaming_Rust,Out-of-Core_Streaming,1464.3,4.252,0.0,0,0,0.0,0.0,0.0,2.772e-14,1.0,bfc2b2216ccdd45a49e824d4
+Node1_PREECHA-IT-MSU,30,179998372,Apache_DataFusion_Rust,Partitioned_Batch_Stream,1125.6,4.304,0.0,0,0,0.0,0.0,0.0,2.712e-14,1.0,bfc2b2216ccdd45a49e824d4
+Node1_PREECHA-IT-MSU,30,179998372,PyTorch_CUDA_RTX2050_4.0GB,Batched_PCIe_Stream_12Chunks,1262.74,3.669,0.63,12,1,902.13,360.61,71.44,2.757e-14,1.0,bfc2b2216ccdd45a49e824d4
+Node1_PREECHA-IT-MSU,100,600037902,DuckDB_Columnar_C++,Out-of-Core_Morsel_Spill,9882.64,3.457,0.0,0,0,0.0,0.0,0.0,0.0,1.0,b076cfc00a81e3568a61fa86
+Node1_PREECHA-IT-MSU,100,600037902,Polars_Lazy_Streaming_Rust,Out-of-Core_Streaming,4985.34,4.391,0.0,0,0,0.0,0.0,0.0,3.763e-14,1.0,b076cfc00a81e3568a61fa86
+Node1_PREECHA-IT-MSU,100,600037902,Apache_DataFusion_Rust,Partitioned_Batch_Stream,4036.88,4.597,0.0,0,0,0.0,0.0,0.0,3.781e-14,1.0,b076cfc00a81e3568a61fa86
+Node1_PREECHA-IT-MSU,100,600037902,PyTorch_CUDA_RTX2050_4.0GB,Batched_PCIe_Stream_40Chunks,4668.36,3.613,0.637,40,1,3569.68,1098.68,76.47,3.726e-14,1.0,b076cfc00a81e3568a61fa86
