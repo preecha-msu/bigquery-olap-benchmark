@@ -1,0 +1,7 @@
+{
+  "gpu_name": "NVIDIA Tesla T4",
+  "vram_gb": 15.0,
+  "driver_version": "580.82.07",
+  "cuda_version": "13.0",
+  "original_colab_sha256": "32834476276f942b4d3863afdca7240fa856b46834fdd08c27e062806c6460c1"
+}

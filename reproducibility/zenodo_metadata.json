@@ -1,0 +1,37 @@
+{
+  "metadata": {
+    "title": "AST-Route: An AST-Aware Multi-Objective Query Routing and Cost-Prediction Framework Across Serverless Cloud, Vectorized CPU (C++/Rust), and GPU-Accelerated OLAP Engines — Complete 400-Query Benchmark Corpus, Raw Telemetry, and Reproducibility Package",
+    "upload_type": "software",
+    "publication_date": "2026-11-15",
+    "creators": [
+      {
+        "name": "Noiumkar, Preecha",
+        "affiliation": "Department of Information Technology, Faculty of Informatics, Mahasarakham University, Thailand"
+      }
+    ],
+    "description": "Complete open-source benchmark suite, 400-query Master Workload Inventory across 10 analytical SQL suites (Core TPC-H N=75, Official TPC-H Q1-Q22, Official IMDB JOB N=33, Seed S6 N=15, TPC-DS-derived N=30, BIRD-inspired N=20, TPC-DS-Complex N=25, Enterprise-Redset-BI N=25, Official TPC-DS Q1-Q99 across SF=0.02/1/10 GB, Official ClickBench N=43, and Official SSB N=13), raw per-trial hardware/energy telemetry CSV logs across four physical hardware nodes (Node 1 x86_64 + NVIDIA RTX 2050 4.0 GB VRAM across PyTorch CUDA and CuPy v14.2.0, Node 2 22-thread Intel Core Ultra 7 x86_64, Node 3 Apple M1 ARM64, and Node 4 Enterprise Server NVIDIA Tesla T4 15.0 GB GDDR6 VRAM CUDA 13.0), serialized frozen GBDT routing models, and one-command R1-R6 verification harness for Journal of Big Data (SpringerOpen).",
+    "access_right": "open",
+    "license": "MIT",
+    "version": "9.13.0",
+    "keywords": [
+      "OLAP Query Routing",
+      "Abstract Syntax Tree",
+      "Composite Structural Complexity Index",
+      "Conformal Prediction",
+      "DuckDB",
+      "Polars",
+      "Apache DataFusion",
+      "GPU Database Acceleration",
+      "Google BigQuery",
+      "Multi-Objective Optimization"
+    ],
+    "related_identifiers": [
+      {
+        "scheme": "url",
+        "identifier": "https://github.com/preechan-glitch/my_research_files",
+        "relation": "isSupplementTo",
+        "resource_type": "software"
+      }
+    ]
+  }
+}

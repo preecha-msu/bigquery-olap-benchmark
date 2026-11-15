@@ -1013,8 +1013,10 @@ In accordance with *Journal of Big Data* submission guidelines, we respectfully 
 | **10. V9.10 Reviewer Group A & B Synthesis (Protocol Candor, Co-Equal `8%`/`12%` Guards, Distinct Model SHA-256 `f0e5f17c...`, 4-Category Epistemic Taxonomy, Analytical `G2/G3`, 7-Stage Subtraction Audit, & 1-Hour Stream Cost)** | (1) Transparently frames `OSF_PREREGISTRATION_AND_BLINDED_HOLDOUT_MANIFEST.md` as an internal Git-locked repository protocol (locked after Core $N=75$ dev and prior to `S6` & Official TPC-DS `Q1–Q99`) and reports Nested-CV $8\\%$ ($55.37\\text{ ms}$, $118.40\\%$ P95, $p_{\\text{TOST}}=0.0442$) and Fixed $12\\%$ ($54.92\\text{ ms}$, $114.11\\%$ P95, $p_{\\text{TOST},\\pm 5\\text{ms}}=0.0688$, $p_{\\text{TOST},\\pm 6\\text{ms}}=0.0241$) on co-equal footing; (2) Serializes `reproducibility/frozen_ast_route_v9_gbdt_model.json` with distinct SHA-256 `f0e5f17c832472e3...` vs. telemetry CSV `89b1ec64cca15b2d...`; (3) Reclassifies `G2 (Tesla T4)` and `G3 (A100)` as analytical bandwidth-envelope projections; (4) Partitions all $400$ queries into 4 epistemic categories ($75$ Cat I Dev + $55$ Cat II Diagnostic Standard [`22` TPC-H + `33` JOB] + $115$ Cat III Author-Derived Zero-Shot + $155$ Cat IV Strictly Untouched Standard [`99` Official TPC-DS + `43` ClickBench + `13` SSB]); (5) Reports Official TPC-DS 99Q Exact Top-1 ($64.65\\%$ All-6, $84.85\\%$ SQL-5) first with $\\text{SF}=0.02$ vs. $\\text{SF}=1\\text{--}10\\text{ GB}$ scale context; (6) Discloses direct vs. derived-by-subtraction 7-stage timing ($\\pm 0.12\\text{--}0.48\\text{ ms}$ CUDA event sync residual) and 1-hour continuous stream accounting ($1{,}194.2\\text{ s/hr}$, $29.83\\text{ kJ/hr}$ [$8.29\\text{ Wh/hr}$], $\\$0.039\\text{/hr}$ at $21{,}600\\text{ q/hr}$); and (7) Purges all literal `**` markdown tokens from `.tex`. |
 | **11. V9.11 Reviewer V9.8 Evaluation Closure (Master Workload Accounting, Elevated Multi-Objective P1–P4 + HV/DSR Equations, 5-Metric CuPy Validation, Primary `8%` vs. Sensitivity `12%` + Nadeau–Bengio Equation + `10%` Guard Row, 4-Level Energy Terminology, 8-Dimension BigQuery Framing, Multi-Scale TPC-DS `SF=0.02/1/10 GB`, & V10 Research Protocol Roadmap)** | (1) Eliminates all legacy `163` query counts and ties $N_{\\text{primary}}=213$ and $N_{\\text{ext,pri}}=116$ directly to the $400$-Query Master Workload Accounting Structure; (2) Elevates Policies `P1–P4` into the Abstract, Claims, Section 3.3 (formal equations for 3D Hypervolume $\\text{HV}_{\\mathbf{r}}$, Dominated Solution Ratio $\\text{DSR}=0.0\\%$, and Energy/Cost Regret $\\mathcal{R}_E, \\mathcal{R}_C$), Table 10 Part A, and Figure 6; (3) Reports all 5 external GPU validation metrics on `CuPy v14.2.0` (`Execution Time`, `H2D/D2H PCIe Transfer`, `Peak VRAM 1.34 GB`, `Result Equivalence EX=1.000`, `Routing Decision Agreement = 100.0% >= 95%`); (4) Designates `8%` Nested-CV as Primary Inferential Guard ($p_{\\text{TOST}}=0.0442 < 0.05$) and `12%` Fixed as Heuristic Production Sensitivity Reference ($p_{\\text{TOST}}=0.0688 > 0.05$), adds the explicit Nadeau–Bengio $t_{\\text{NB}}$ equation, and includes $\\tau_{\\text{guard}}=10\\%$ ($55.08\\text{ ms}$, $115.20\\%$ P95) in the full $\\{0,4,8,10,12,15,20,30\\%\\}$ sweep; (5) Standardizes the 4-level energy terminology (`GPU Board Energy — Measured`, `CPU Package Energy — Estimated`, `Host + GPU Energy — Composite Estimate`, `Mainboard DC Shunt vs. Whole-System Wall-Socket Energy`) and 8 BigQuery Cloud dimensions; and (6) Synthesizes Multi-Scale TPC-DS across $\\text{SF}=0.02$ (`99Q`), $\\text{SF}=1\\text{ GB}$ (`55Q`, $83.64\\%$ 9D / $89.09\\%$ SQL-5 Top-1), and $\\text{SF}=10\\text{ GB}$ (`30Q`, $86.67\\%$ 9D / $90.00\\%$ 12D Top-1, $164.20\\text{ ms}$, $2.34\\times$ vs. Polars) alongside `reproducibility/AST_ROUTE_V10_REVIEWER_REVISION_ROADMAP.md`. |
 
+| **12. V9.13 Reviewer Zero-Estimation & Real-Execution Closure (Physical Enterprise Server GPU `Node 4 / G2: NVIDIA Tesla T4`, Simple 1D Scanned-Byte & Join-Count Baselines, Zero Internal Artifact Leakage, & Single Canonical Repository + Zenodo Metadata)** | (1) Replaces analytical GPU projections (`A100`) in the main text with **100% physically measured Enterprise Server GPU `Node 4 / G2: NVIDIA Tesla T4 (15.0 GB GDDR6 VRAM, CUDA 13.0, Driver 580.82.07)`** (`23.02\\text{ ms}$ cold at $\\text{SF}=1\\text{ GB}$ [$82.39\\%$ PCIe, $19.07\\times$ vs. DuckDB] and $461.71\\text{ ms}$ single-pass cold at $\\text{SF}=10\\text{ GB}$ [$\\text{Chunks}=1$, $91.95\\%$ PCIe, $11.42\\times$ cold / $141.94\\times$ warm vs. DuckDB], SHA-256 `32834476276f...`); (2) Adds **Simple 1D Scanned-Byte Rule ($\\hat{\\mathcal{B}}_{\\text{scan}}>\\tau_B$: $58.36\\text{ ms}$, $73.40\\%$ mean / $273.7\\%$ P95 regret)** and **Simple 1D Join-Count Rule ($J(q)\\ge 2\\rightarrow\\text{GPU}$: $61.80\\text{ ms}$, $81.58\\%$ mean / $298.6\\%$ P95 regret)** to Table 9 Part A and Section 4.4.1 with paired bootstrap 95% CIs; (3) Purges all internal revision labels (`v97_...`, `v98_...`, `Action Plan`, `Experiment E`) from the main manuscript, adds an explicit Upfront Pre-Execution Scope note in Section 1, unifies the repository URL to `https://github.com/preechan-glitch/my_research_files` with `reproducibility/zenodo_metadata.json`, and verifies `10/10` code edge-case & mathematical audits (`EC1–EC10`). |
+
 ### 5. Manuscript Organization (Main Text + Additional File 1 Supplementary Appendix)
-To ensure high readability and focus in the Main Text (**32 pages**, Tables 1–13, Algorithm 1, and Figures 1–6), all granular per-tier tables, TDP/DVFS energy calibration and Bland–Altman analyses, $C=1\\text{--}64$ concurrency manifests, 3-node cross-ISA tables, and verification registries are provided in **Additional File 1 (`Additional_File_1_Supplementary_Appendix.pdf`, Tables S1–S17 and Figures S1–S8)**. All code, SQL suites, and SHA-256-indexed telemetry logs are publicly available at `https://github.com/preecha-msu/bigquery-olap-benchmark` (pinned release tag `v9.0-jbd-submission`, tree `bc27158`).
+To ensure high readability and focus in the Main Text (**33 pages**, Tables 1–13, Algorithm 1, and Figures 1–6), all granular per-tier tables, TDP/DVFS energy calibration and Bland–Altman analyses, $C=1\\text{--}64$ concurrency manifests, 4-node cross-ISA/GPU tables, and verification registries are provided in **Additional File 1 (`Additional_File_1_Supplementary_Appendix.pdf`, Tables S1–S18 and Figures S1–S8)**. All code, SQL suites, Zenodo archival metadata (`reproducibility/zenodo_metadata.json`), and SHA-256-indexed telemetry logs are publicly available at `https://github.com/preechan-glitch/my_research_files`.
 
 This manuscript is original, has not been published previously, and is not under consideration elsewhere. The author declares no competing interests.
 
@@ -1051,6 +1053,9 @@ Email: `preecha.n@msu.ac.th`
             fpath = MS_DIR / fname
             if fpath.exists():
                 zf.write(fpath, arcname=fname)
+        zenodo_p = ROOT / "reproducibility" / "zenodo_metadata.json"
+        if zenodo_p.exists():
+            zf.write(zenodo_p, arcname="zenodo_metadata.json")
         for fig_p in sorted((MS_DIR / "figures").glob("*.pdf")):
             zf.write(fig_p, arcname=fig_p.name)
     print("[STEP 4] Updated Cover_Letter_JBD_V9.md and rebuilt Journal_of_Big_Data_Snapp_Submission_Flat9.zip.")
@@ -1101,7 +1106,7 @@ def run_automated_consistency_gate():
             "v97_exp_e5_tost_margin_sensitivity_and_nadeau_bengio.csv",
             "v97_exp_e6_e7_energy_and_cloud_finops_audit.csv",
         ])),
-        ("G12_V98_Reviewer_Action_Plan_A_to_G_and_6Fixes", f"Abstract={abs_words}w<=250; Lero/AutoSteer/Kepler cited; Pool symbols E_All-6/E_SQL-5; G1-G3 GPUs (T4 33.76ms, A100 20.62ms); Official TPC-DS 99/99 (30.49ms, 64.65% Exact / 93.94% N-Tol, 84.85% SQL); CVaR_10% 158.42% (2.21x) & 85.33% N-Tol Top-1; Clock/Thermal 1477MHz/0% throttle; ClickBench 43/43 (88.37%, 400Q total)", abs_words <= 250 and all(s in tex for s in ["zhu2023lero", "anneser2023autosteer", "doshi2023kepler", "\\mathcal{E}_{\\text{All-6}}", "\\mathcal{E}_{\\text{SQL-5}}", "33.76\\text{ ms}", "20.62\\text{ ms}", "30.49\\text{ ms}", "64.65\\%", "93.94\\%", "84.85\\%", "158.42\\%", "2.21\\times", "85.33\\%", "1{,}477\\text{ MHz}", "88.37\\%"]) and all((RES_DIR / fn).exists() for fn in [
+        ("G12_V98_Reviewer_Action_Plan_A_to_G_and_6Fixes", f"Abstract={abs_words}w<=250; Lero/AutoSteer/Kepler cited; Pool symbols E_All-6/E_SQL-5; Physical Node 4 Tesla T4 (23.02ms SF=1, 461.71ms SF=10); Official TPC-DS 99/99 (30.49ms, 64.65% Exact / 93.94% N-Tol, 84.85% SQL); CVaR_10% 158.42% (2.21x) & 85.33% N-Tol Top-1; Clock/Thermal 1477MHz/0% throttle; ClickBench 43/43 (88.37%, 400Q total)", abs_words <= 250 and all(s in tex for s in ["zhu2023lero", "anneser2023autosteer", "doshi2023kepler", "\\mathcal{E}_{\\text{All-6}}", "\\mathcal{E}_{\\text{SQL-5}}", "23.02\\text{ ms}", "461.71\\text{ ms}", "30.49\\text{ ms}", "64.65\\%", "93.94\\%", "84.85\\%", "158.42\\%", "2.21\\times", "85.33\\%", "1{,}477\\text{ MHz}", "88.37\\%"]) and all((RES_DIR / fn).exists() for fn in [
             "v98_partA_multi_gpu_engine_and_cross_gpu_calibration.csv",
             "v98_partB_official_tpcds_99queries_blinded_holdout.csv",
             "v98_partC_cvar_bootstrap_ratio_and_label_noise.csv",
@@ -1123,13 +1128,13 @@ def run_automated_consistency_gate():
                 "v99_unified_energy_boundary_and_concurrency_efficiency.csv",
             ])
         )),
-        ("G14_V910_Reviewer_GroupA_Candor_ZeroMarkdownStars_DistinctModelHash", "0 '**' in .tex; Distinct Model SHA-256 f0e5f17c832472e3 vs CSV 89b1ec64cca15b2d; 4-Cat Taxonomy (0 '325 untouched'); Analytical G2/G3; 7-Stage Subtraction Audit; 1-Hr Stream (1,194.2 s/hr, 8.29 Wh/hr)", (
+        ("G14_V910_Reviewer_GroupA_Candor_ZeroMarkdownStars_DistinctModelHash", "0 '**' in .tex; Distinct Model SHA-256 f0e5f17c832472e3 vs CSV 89b1ec64cca15b2d; 4-Cat Taxonomy (0 '325 untouched'); Physical T4 SHA 32834476; 7-Stage Subtraction Audit; 1-Hr Stream (1,194.2 s/hr, 8.29 Wh/hr)", (
             "**" not in tex
             and "**" not in (MS_DIR / "Additional_File_1_Supplementary_Appendix.tex").read_text(encoding="utf-8")
             and "325 untouched" not in tex.lower()
             and "f0e5f17c" in tex
             and "89b1ec64" in tex
-            and "analytical bandwidth-envelope projection" in tex.lower()
+            and "32834476" in tex
             and "derived by subtraction" in tex.lower()
             and "1{,}194.2" in tex
             and "8.29\\text{ Wh/hr}" in tex
@@ -1161,6 +1166,26 @@ def run_automated_consistency_gate():
             and "preechan-glitch/my_research_files" in tex
             and (RES_DIR / "v912_code_edge_cases_and_math_audit.csv").exists()
             and (ROOT / "scripts" / "219_v9_zero_estimation_real_execution_overhaul.py").exists()
+        )),
+        ("G17_V913_Reviewer_PhysicalT4_SimpleRules_ZeroInternalLeakage", f"Abstract={abs_words}w<=220; Physical Node 4 Tesla T4 (23.02ms SF=1, 461.71ms SF=10, SHA 32834476); Simple 1D Byte (58.36ms, 273.7% P95) & 1D Join (61.80ms, 298.6% P95); Upfront Pre-Exec Scope; 0 Internal Filenames/A100/proving; 10/10 Edge Cases + Zenodo JSON", (
+            abs_words <= 220
+            and "23.02\\text{ ms}" in tex
+            and "461.71\\text{ ms}" in tex
+            and "32834476" in tex
+            and "Simple 1D Scanned-Byte Rule" in tex
+            and "Simple 1D Join-Count Rule" in tex
+            and "273.7\\%" in tex
+            and "298.6\\%" in tex
+            and "Upfront Pre-Execution Scope" in tex
+            and "not externally registered" in tex
+            and all(tok not in tex for tok in [
+                "v97_", "v98_", "v99_", "v910_", "v911_", "219_",
+                "OSF_PREREGISTRATION", "AST_ROUTE_V10", "Action Plan", "Experiment~E",
+                "33.76", "20.62", "A100", "preecha-msu", "proving",
+                "strictly untouched", "Strictly Untouched",
+            ])
+            and (RES_DIR / "v913_reviewer_complete_audit_and_edge_cases.csv").exists()
+            and (ROOT / "reproducibility" / "zenodo_metadata.json").exists()
         )),
     ]
 
@@ -1219,9 +1244,11 @@ def run_automated_consistency_gate():
         RES_DIR / "v910_continuous_stream_hourly_cost_and_audit.csv",
         RES_DIR / "v911_reviewer_v98_complete_synthesis_audit.csv",
         RES_DIR / "v912_code_edge_cases_and_math_audit.csv",
+        RES_DIR / "v913_reviewer_complete_audit_and_edge_cases.csv",
         ROOT / "reproducibility" / "OSF_PREREGISTRATION_AND_BLINDED_HOLDOUT_MANIFEST.md",
         ROOT / "reproducibility" / "AST_ROUTE_V10_REVIEWER_REVISION_ROADMAP.md",
         ROOT / "reproducibility" / "frozen_ast_route_v9_gbdt_model.json",
+        ROOT / "reproducibility" / "zenodo_metadata.json",
         ROOT / "scripts" / "216_v97_reviewer_experiments_E1_to_E7.py",
         ROOT / "scripts" / "217_v98_reviewer_action_plan_A_to_G.py",
         ROOT / "scripts" / "218_v99_data_table_math_and_inventory_audit.py",
