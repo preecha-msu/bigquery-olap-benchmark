@@ -82,6 +82,13 @@ audit_rules = [
     ("V11-36: Main-Text Table tab:v11_r21_cross_hardware_transfer_main (R21 Matrix)", r"tab:v11_r21_cross_hardware_transfer_main", 1, "Sec 4.7.2 Main Table"),
     ("V11-37: Main-Text Table 11 Part D (70Q Blinded R17+R20 Enterprise Validation)", r"Part D: Blinded Independent Multi-Domain Non-TPC Enterprise Validation", 1, "Sec 4.8 Main Table 11"),
     ("V11-38: Main-Text Table 7 Exp D (R19/R13 CSCI) & Fig 8 fig_v11_4node_multiscale.pdf", r"Exp D: R19 \\& R13 CSCI.*fig_v11_4node_multiscale_sf1_10_30_100\.pdf", 1, "Table 7 & Fig 8"),
+    ("V11-39: Protocol R27a Five Simple Heuristic Rules (H1-H5, 2.60x-3.63x P95 cut)", r"Protocol~R27a.*307\.55\\%.*413\.69\\%", 1, "Sec 1, Table 6, Sec 4.3, Supp Table S32"),
+    ("V11-40: Protocol R27b 50 Third-Party Public Real-World SQL Queries (SDSS + NYC TLC, 90.00%)", r"Protocol~R27b.*SDSS.*90\.00\\%", 1, "Abstract, Sec 1, Table 11, Sec 4.8, Supp Table S32"),
+    ("V11-41: Protocol R28 Break-Even & When-to-Use Decision Table (tab:when_to_use_breakeven)", r"Protocol~R28.*tab:when_to_use_breakeven", 1, "Sec 1, Sec 5, Supp Table S33"),
+    ("V11-42: Reframed 3 Realistic Contributions (Contribution 1-3)", r"Contribution 1 ---.*Contribution 2 ---.*Contribution 3 ---", 1, "Sec 1 Contributions"),
+    ("V11-43: Candid Borderline Attribution vs. Unguarded Ridge (Zero 'outperforming Unguarded Ridge')", r"outperforming Unguarded Ridge", 0, "Must be 0 occurrences"),
+    ("V11-44: Candid Distinction of 70 Author-Constructed Enterprise vs. 50 Public SQL Queries", r"author-constructed schema-blinded.*Third-Party Public Real-World SQL", 1, "Sec 1 & Sec 4.8"),
+    ("V11-45: Archival Deposit Manifests (CITATION.cff, SHA256SUMS.txt) & EC51-EC60 (60/60 PASS)", r"CITATION\.cff.*SHA256SUMS\.txt.*EC51--EC60", 1, "Sec 1 & Declarations"),
 ]
 
 all_passed = True

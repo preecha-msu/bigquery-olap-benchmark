@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "If you use this benchmark suite, pre-execution SQL router, or experimental artifacts, please cite it as below."
+title: "AST-Route: Tail-Safe Pre-Execution SQL Routing Across Heterogeneous CPU and GPU OLAP Engines"
+version: "1.0.0-jbd-archival"
+date-released: "2026-11-16"
+authors:
+  - family-names: "Chumchuen"
+    given-names: "Preecha"
+    affiliation: " Thaksin University"
+repository-code: "https://github.com/preechan-glitch/my_research_files"
+keywords:
+  - "hybrid CPU-GPU query routing"
+  - "OLAP benchmark"
+  - "conformal prediction"
+  - "tail-latency regret"
+  - "DuckDB"
+  - "Polars"
+  - "RAPIDS cudf-polars"
+license: "MIT"

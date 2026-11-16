@@ -1214,4 +1214,53 @@ Node~1 RTX~2050 ($4\text{ GB}$), $\text{SF}=10\text{ GB}$ & Locked Full-75Q vs.\
 \end{table}
 % === END V11 SUPPLEMENTARY TABLES S22-S25 ===
 
+% === BEGIN V11 SUPPLEMENTARY TABLES S32-S33 ===
+\phantomsection\label{sec:router_eval}\label{sec:cost_qerror}\label{sec:multiscale_eval}
+\begin{table}[htbp]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{2.2pt}
+\caption{Protocols \textbf{R27a} (Direct Head-to-Head Benchmark Against Five Simple Domain Heuristic Rules \texttt{H1--H5} on Core 75Q at $\text{SF}=1\text{ GB}$ Across $K=25$ Seeds and $G_{\text{core}}=10$ Template Clusters; Part~A) and \textbf{R27b} (Independent Third-Party Public Real-World SQL Log \& Civic Open-Data Validation Across $N=50$ Queries: $25$ \textbf{Sloan Digital Sky Survey [SDSS] SkyServer DR16 Public SQL Log Queries} and $25$ \textbf{NYC Taxi \& Limousine Commission [NYC TLC] Public Analytical Queries}, Evaluated Zero-Shot with Locked Frozen Model \texttt{f0e5f17c832472e3}; Part~B).}\label{tab:supp_v11_r27a_r27b_heuristics_public_sql}
+\begin{tabular}{@{}llrrrrrrl@{}}
+\toprule
+\multicolumn{9}{@{}l}{\textbf{Part A: Protocol R27a --- Simple Heuristic Rules (\texttt{H1--H5}) vs.\ Guarded AST-Route on Core 75Q (\texttt{v11\_r27a\_simple\_heuristic\_rules\_comparison.csv})}} \\
+\textbf{Rule / Routing Policy} & \textbf{Pre-Execution Rule Definition} & \textbf{Router $\tau$} & \textbf{Exact T1 / T2} & \textbf{Exec / Net (ms)} & \textbf{Mean Reg.} & \textbf{P95 Regret} & \textbf{Severe $>100\%$} & \textbf{Webb $p_{\text{Webb}}$ / Exact $2^{10}$ $p_{\text{perm}}$ \& Failure Mode} \\
+\midrule
+\textbf{H1: Static Byte Rule} & $V_{\text{scan}}\ge 64\text{ MB}\rightarrow\text{GPU}$, else Polars & $0.08\text{ ms}$ & $42.67 / 64.00\%$ & $60.29 / 60.37$ & $79.96\%$ & $353.89\%$ & $18.67\%$ ($14/75$) & $p_{\text{Webb}}=0.0084, p_{\text{perm}}=0.0098$; offloads L1 scans to PCIe \\
+\textbf{H2: CV-Tuned Byte Rule} & In-fold $V_{\text{scan}}\ge\theta^{*(-k)}\rightarrow\text{GPU}$, else Polars & $0.08\text{ ms}$ & $45.33 / 65.33\%$ & $56.66 / 56.74$ & $69.36\%$ & $307.55\%$ & $16.00\%$ ($12/75$) & $p_{\text{Webb}}=0.0112, p_{\text{perm}}=0.0137$; misses low-byte L4/L5 GPU wins \\
+\textbf{H3: Operator Rule} & $(J=0\wedge W=0)\rightarrow\text{Polars}$, else GPU & $0.42\text{ ms}$ & $46.67 / 62.67\%$ & $69.32 / 69.74$ & $66.33\%$ & $413.69\%$ & $17.33\%$ ($13/75$) & $p_{\text{Webb}}=0.0062, p_{\text{perm}}=0.0059$; routes selective V1 joins to GPU \\
+\textbf{H4: 2-Cond.\ Byte+Join} & $(V_{\text{scan}}\ge 64\text{M}\wedge\hat{\sigma}\ge 0.10\wedge J\le 1)\rightarrow\text{GPU}$ & $0.45\text{ ms}$ & $38.67 / 64.00\%$ & $62.42 / 62.87$ & $106.27\%$ & $353.89\%$ & $22.67\%$ ($17/75$) & $p_{\text{Webb}}=0.0148, p_{\text{perm}}=0.0156$; rigid box misses oblique crossover \\
+\textbf{H5: Depth-1 Stump} & Single-split decision stump on $\mathbf{x}_q\in\mathbb{R}^9$ & $0.12\text{ ms}$ & $46.67 / 65.33\%$ & $63.91 / 64.03$ & $68.18\%$ & $325.58\%$ & $17.33\%$ ($13/75$) & $p_{\text{Webb}}=0.0124, p_{\text{perm}}=0.0137$; 1 split cannot separate 5 tiers \\
+\textbf{AST-Route (8\% Nested-CV)} & \textbf{9D GBDT + Mondrian + 8\% Guard} & $\mathbf{4.15 / 0.67}$ & $\mathbf{56.00 / 76.00\%}$ & $\mathbf{51.22 / 55.37}$ & $\mathbf{35.80\%}$ & $\mathbf{118.40\%}$ & $\mathbf{8.00\%}$ ($\mathbf{6/75}$) & \textbf{$\mathbf{2.60\times\text{--}3.49\times}$ lower P95 regret vs.\ \texttt{H1--H5} ($p_{\text{Webb}}\le 0.0148$)} \\
+\textbf{AST-Route (12\% Default)} & \textbf{9D GBDT + Mondrian + 12\% Guard} & $\mathbf{4.15 / 0.67}$ & $\mathbf{57.33 / 76.00\%}$ & $\mathbf{50.78 / 54.92}$ & $\mathbf{34.98\%}$ & $\mathbf{114.11\%}$ & $\mathbf{6.67\%}$ ($\mathbf{5/75}$) & \textbf{$\mathbf{2.70\times\text{--}3.63\times}$ lower P95 regret vs.\ \texttt{H1--H5} ($p_{\text{Webb}}\le 0.0148$)} \\
+\midrule
+\multicolumn{9}{@{}l}{\textbf{Part B: Protocol R27b --- 50 Third-Party Public Real-World SQL Queries: SDSS SkyServer DR16 ($N=25$) \& NYC TLC ($N=25$) (\texttt{v11\_r27b\_public\_sdss\_nyctlc\_real\_sql\_50q.csv})}} \\
+\textbf{Public Real-World Suite} & \textbf{Public Corpus Origin \& Schema} & \textbf{Queries ($N$)} & \textbf{Exact T1 / T2} & \textbf{Exec / O2 / O1} & \textbf{Oracle (ms)} & \textbf{Mean / P95 Reg.} & \textbf{Always GPU P95} & \textbf{Static Engine Latencies \& Real-World Routing Verdict} \\
+\midrule
+\textbf{1. SDSS SkyServer DR16} & Public Sloan SkyServer SQL Log (4 tables) & $25$ (\texttt{SDSS\_01..25}) & $\mathbf{96.00 / 100.0\%}$ & $\mathbf{7.04 / 7.71 / 11.19}$ & $7.02\text{ ms}$ & $\mathbf{0.11\% / 0.00\%}$ & $1{,}160.31\%$ & DuckDB $8.62\text{ ms}$, Polars $9.14\text{ ms}$, DF $12.84\text{ ms}$, GPU $33.12\text{ ms}$ \\
+\textbf{2. Public NYC TLC Trips} & NYC TLC Yellow Taxi Open Data (4 tables) & $25$ (\texttt{TLC\_01..25}) & $\mathbf{84.00 / 100.0\%}$ & $\mathbf{5.57 / 6.24 / 9.72}$ & $5.48\text{ ms}$ & $\mathbf{1.23\% / 9.82\%}$ & $1{,}100.87\%$ & DuckDB $6.84\text{ ms}$, Polars $7.12\text{ ms}$, DF $10.42\text{ ms}$, GPU $21.49\text{ ms}$ \\
+\textbf{Combined Public SQL Pool} & \textbf{2 Third-Party Public Corpora (8 tables)} & $\mathbf{N=50}$ & $\mathbf{90.00 / 100.0\%}$ & $\mathbf{6.31 / 6.98 / 10.45}$ & $\mathbf{6.25\text{ ms}}$ & $\mathbf{0.67\% / 4.91\%}$ & $\mathbf{1{,}130.59\%}$ & \textbf{$45/50$ Top-1, $50/50$ Top-2; avoids $21.5\text{--}33.1\text{ ms}$ GPU PCIe stalls} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{2.3pt}
+\caption{Protocol \textbf{R28} Router Overhead Break-Even Condition ($\Delta T_{\text{exec}}(q) > \tau_{\text{route}}$ Across Cold \texttt{O1} $=4.15\text{ ms}$, Warm \texttt{O2} $=0.67\text{ ms}$, and 1D Gate \texttt{O3} $=0.08\text{ ms}$) and Five-Regime Practitioner Decision Matrix: \emph{When to Use vs.\ When Not to Use AST-Route} (\texttt{results/v11\_r28\_router\_breakeven\_and\_regime\_boundary.csv}).}\label{tab:supp_v11_r28_breakeven_regimes}
+\begin{tabular}{@{}llrrrrl@{}}
+\toprule
+\textbf{Regime ID \& Workload Scale} & \textbf{Hardware \& Query Runtime Envelope} & \textbf{$\tau_{\text{route}}$ (O1/O2/O3)} & \textbf{Mean $\Delta T_{\text{exec}}$} & \textbf{Net Saving (O1 / O2)} & \textbf{P95 Regret Cut} & \textbf{Operational Recommendation (When to Use vs.\ When Not to Use)} \\
+\midrule
+\textbf{R1: Sub-10ms Ultra-Short} & In-RAM point/lookup queries ($T_{\text{exec}}<10\text{ ms}$, JOB/NYC) & $4.15 / 0.67 / 0.08\text{ ms}$ & $+1.21\text{ ms}$ & $-2.94 / +0.54\text{ ms}$ & $1{,}130\%\rightarrow 4.9\%$ & \textbf{DO NOT use Cold O1 ($4.15\text{ ms}$)}; use Static Polars/DuckDB or O2/O3 cache \\
+\textbf{R2: Homogeneous Single-Eng.} & Pure CPU-only scan pool or uncontended Server T4 mean & $4.15 / 0.67 / 0.08\text{ ms}$ & $+1.85\text{ ms}$ & $-2.30 / +1.18\text{ ms}$ & $69.4\%\rightarrow 0.0\%$ & \textbf{Optional for mean latency}; use AST-Route only if P95 tail/OOM guard needed \\
+\textbf{R3: Mixed OLAP + 4GB GPU} & Moderate-to-heavy mixed SQL ($T_{\text{exec}}\in[25,250]\text{ ms}$, Core 75Q) & $4.15 / 0.67 / 0.08\text{ ms}$ & $+6.18\text{ ms}$ vs.\ GPU & $+2.04 / +5.51\text{ ms}$ & $\mathbf{257.3\%\rightarrow 114.1\%}$ & \textbf{PRIMARY USE CASE}: cuts P95 regret $2.17\text{--}2.77\times$ \& beats CPU $1.50\text{--}3.35\times$ \\
+\textbf{R4: Multi-Scale Spill ($\ge 10\text{GB}$)} & Out-of-VRAM GPU streaming \& DRAM spill ($\text{SF}=10\text{--}100\text{ GB}$) & $4.15 / 0.67 / 0.08\text{ ms}$ & $+474.3\text{ ms}$ ($\text{SF}10$) & $+470.2 / +473.6\text{ ms}$ & $\mathbf{318.4\%\rightarrow 18.2\%}$ & \textbf{HIGHEST ABSOLUTE GAIN}: prevents $3.3\text{ GB}$ NVMe spill \& GPU VRAM OOM \\
+\textbf{R5: Modern PCIe Gen4/Gen5} & Analytical bus scaling $B_{\text{bus}}\in[5.69, 64.0]\text{ GB/s}$ ($\Phi_{\text{PCIe}}$) & $4.15 / 0.67 / 0.08\text{ ms}$ & $\Phi_{\text{PCIe}}: 34.7\%\rightarrow 4.5\%$ & Crossover shifts $3.2\times$ & Guard auto-adapts & \textbf{Analytical Scope}: $m=5$ canary calibration ($0.21\text{ s}$) adapts guard to new bus \\
+\bottomrule
+\end{tabular}
+\end{table}
+% === END V11 SUPPLEMENTARY TABLES S32-S33 ===
+
 \end{document}
