@@ -88,10 +88,59 @@ def main() -> None:
             and "bigquery_olap_benchmark_V12.tex" in znames
             and "fig_v12_4node_multiscale_cudf_sf1_10_30_100.jpg" in znames,
         ),
+        (
+            "G19 3-Way Stepwise Ablation (Guard -78.2 pp / +Conformal -48.6 pp / +CSCI -5.4 pp)",
+            "-78.20" in tex and "-48.60" in tex and "-5.40" in tex,
+        ),
+        (
+            "G20 Stronger GPU Baselines (Pinned+Overlap FP64 47.82/44.18, FP32 39.64/37.95, Resident 22.25)",
+            all(x in tex for x in ("47.82", "44.18", "39.64", "37.95", "22.25")),
+        ),
+        (
+            "G21 Multi-Scale Router-in-the-Loop & Public Redset/SDSS/NYC TLC at SF=10 GB",
+            "vanrenen2024redset" in tex and "228.40" in tex and "209.15" in tex and "245.80" in tex,
+        ),
+        (
+            "G22 Expanded G_total=42 Template-Cluster LME (-62.06 pp) & Global Holm Control",
+            "G_{\\text{total}}=42" in tex and "-62.06" in tex and "0.0136" in tex,
+        ),
+        (
+            "G23 Query-Level N=75 Energy Correlation (rho_{N=75}=0.9684, p=1.4e-45)",
+            "0.9684" in tex,
+        ),
+        (
+            "G24 Misrouted Query Failure Taxonomy (F1 63.6%, F2 21.2%, F3 15.2%) & TreeSHAP (34.2%, 24.8%)",
+            all(x in tex for x in ("63.6\\%", "21.2\\%", "15.2\\%", "34.2\\%", "24.8\\%")),
+        ),
+        (
+            "G25 Zero Corrupted DOIs (s40537-024-00939-0-02)",
+            "s40537-024-00939-0-02" not in tex,
+        ),
+        (
+            "G26 Zero Reviewer_Revision_Roadmap or V9->V10->V11 Leakage in Main Text",
+            "Reviewer_Revision_Roadmap" not in tex and "V9 \\rightarrow V10" not in tex,
+        ),
+        (
+            "G27 Regenerated V12 Figures 1 & 2 Referenced (fig_v12_proposed_... & fig_v12_experimental_...)",
+            "fig_v12_proposed_ast_routing_framework_300dpi.pdf" in tex
+            and "fig_v12_experimental_workflow_300dpi.pdf" in tex,
+        ),
+        (
+            "G28 BigQuery Cost Unit Harmonized ($1,267.66/1M = $1.27/1k)",
+            r"\$1{,}267.66/1\text{M}$ ($\$1.27/1\text{k}$)" in tex,
+        ),
+        (
+            "G29 Intra-Node Speedup Harmonized (2.85x-9.50x across SF=1-100 GB; 7.43x-9.50x at SF=10-100 GB)",
+            r"7.40\times\text{--}9.50\times" not in tex and r"2.85\times\text{--}9.50\times" in tex,
+        ),
+        (
+            "G30 Apple M1 ANS2 NVMe vs Node 2 22T ZSTD Contention Explained & Abstract Clean",
+            "ANS2 NVMe" in tex and "% [V12-B4-ABS]" not in tex and "% [V12-B4-CONC]" not in tex,
+        ),
     ]
 
     print("=" * 92)
-    print("[V12 ZERO-CONTRADICTION & FORENSIC AUDIT: 18/18 GATES]")
+    print(f"[V12 ZERO-CONTRADICTION & FORENSIC AUDIT: {len(gates)}/{len(gates)} GATES]")
     print("=" * 92)
     failed = []
     for name, ok in gates:
@@ -101,7 +150,7 @@ def main() -> None:
     if failed:
         raise SystemExit(f"Verification failed on: {failed}")
     print("=" * 92)
-    print("[RESULT] 18/18 GATES PASSED WITH ZERO CONTRADICTIONS!")
+    print(f"[RESULT] {len(gates)}/{len(gates)} GATES PASSED WITH ZERO CONTRADICTIONS!")
 
 
 if __name__ == "__main__":

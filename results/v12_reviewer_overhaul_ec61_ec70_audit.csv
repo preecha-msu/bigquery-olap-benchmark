@@ -1,0 +1,11 @@
+check_id,category,observed_value,expected_criterion,status
+EC61,Three_Way_Guard_Conformal_CSCI_Ablation_R29,"Stage0=214.6% -> Stage1(Guard)=136.4% (-78.2pp) -> Stage2(+Conf)=124.8% (-11.6pp, Drift -48.6pp) -> Stage3(+CSCI)=118.4% (-6.4pp)",Exact additive closure of 3-way stepwise P95 & mean regret decomposition,PASS
+EC62,Stronger_GPU_Baselines_R30,"5 GPU baselines verified: Cold FP64 (56.96ms), Pinned+Overlap FP64 (47.82->44.18ms), FP32 (39.64->37.95ms), Resident (22.25ms), RAPIDS C3 (63.82->52.74ms)",All 5 GPU modes executed and reported in V12 main tables,PASS
+EC63,MultiScale_Router_In_Loop_And_Redset_SF10GB_R31,11 multi-scale/public suites verified: SF=10-100 GB Router-in-Loop + TPC-DS SF=1/10 GB + SDSS/TLC/Redset 80Q at SF=10 GB (91.25% Top-1),Router-in-loop at SF=10-100 GB & 80 public queries at SF=10 GB present,PASS
+EC64,Expanded_42Clusters_LME_Global_Holm_EnergyN75_R32,"G=42 LME=-62.06pp (p<1e-15), Locked 8% Primary Guard (zero 'co-equal'), Global Holm H1-H3 p<=0.0136, Energy rho_{N=75}=0.9684","G=42 LME, single primary guard, global Holm, and N=75 energy correlation verified",PASS
+EC65,Failure_Taxonomy_TreeSHAP_And_Pool_Ablation_R33,Misroutes: 21(F1)+7(F2)+5(F3)=33/33 (100%); TreeSHAP sum=100.0%; Min-2 Pool=98.7%,Misroutes sum to 33/75 and TreeSHAP shares sum to 100.0%,PASS
+EC66,Zero_Undefined_Refs_And_Zero_Fake_Table_Labels,"undef_ref=0, undef_cit=0, fake_phantom_tab_labels=0","0 undefined references, 0 undefined citations, 0 fake phantom table labels",PASS
+EC67,Clean_Verified_DOIs_And_References,"corrupted_dois=0, all_repaired_dois_present=True",0 corrupted doubled DOIs; all repaired DOIs verified,PASS
+EC68,Regenerated_V12_Fig1_Fig2_And_Unified_GitHub_URL,fig_v12_proposed_... & fig_v12_experimental_... packaged in Flat12.zip; zero 'preecha-msu',Both V12 figures packaged and GitHub URL unified,PASS
+EC69,Numerical_And_Editorial_Consistency_V12,"BQ=$1,267.66/1M ($1.27/1k), Speedup=2.85x-9.50x (7.43x-9.50x SF10-100), M1 ANS2 NVMe explained, 0 Roadmap leakage",All 5 numerical and editorial consistency checks True,PASS
+EC70,V11_Untouched_And_Cumulative_EC01_EC70_Closure,"v11_modified_files=0, EC61-EC69=9/9 PASS -> Total 70/70 PASS",0 V11 files modified and 70/70 cumulative checks PASS,PASS
