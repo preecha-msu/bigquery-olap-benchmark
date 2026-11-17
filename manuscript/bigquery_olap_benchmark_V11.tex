@@ -726,6 +726,52 @@ Furthermore, \textbf{Protocol~R28} (\texttt{results/v11\_r28\_router\_breakeven\
 \label{fig:v10_fournode_multiscale}
 \end{figure*}
 
+
+% === BEGIN V11 FOUR-NODE CUDF MULTISCALE SF1-10-30-100 ===
+\subsection*{Four-Node Multi-Scale and Native Columnar GPU (\texttt{RAPIDS cuDF} \& \texttt{cudf-polars}) Validation ($\text{SF}=1, 10, 30, 100\text{ GB}$)}
+To ensure complete multi-scale coverage across all hardware tiers and directly benchmark our PyTorch CUDA relational tensor engine against production C++/CUDA columnar GPU engines, we executed the canonical TPC-H \texttt{lineitem} scan-filter-aggregation workload across $\text{SF} \in \{1, 10, 30, 100\}\text{ GB}$ ($6.00 \times 10^{6}$ to $6.00 \times 10^{8}$ rows; $64$ real-execution runs, zero estimation) across four distinct hardware nodes, incorporating NVIDIA \texttt{RAPIDS cuDF} (\texttt{libcudf}~v26.06.00) and the Polars GPU engine (\texttt{cudf-polars}, Polars~v1.35.2) on the server-grade NVIDIA Tesla~T4 ($14.56\text{ GB}$ usable GDDR6 VRAM; Table~\ref{tab:v11_fournode_multiscale_cudf} and Fig.~\ref{fig:v11_fournode_multiscale_cudf}). Four empirical conclusions emerge: (i) \emph{PyTorch Tensor vs.\ Native \texttt{libcudf} Parity}: on Tesla~T4, \texttt{RAPIDS cuDF} achieves the lowest latency at $\text{SF}=1\text{ GB}$ ($112.76\text{ ms}$, $3.43\text{ J}$) via direct GPU-accelerated ZSTD Parquet decoding, while at $\text{SF}=10\text{ GB}$ ($1$ chunk, single-pass in-VRAM) and $\text{SF}=30\text{ GB}$ ($3$ chunks) our PyTorch CUDA tensor engine ($311.07\text{ ms}$ and $1028.13\text{ ms}$) tracks native \texttt{RAPIDS cuDF} ($322.37\text{ ms}$ and $1001.71\text{ ms}$) within $2.6\%\text{--}3.5\%$, confirming that our relational tensor primitives introduce no artificial GPU bias; (ii) \emph{Optimizer-Controlled CPU vs.\ GPU Isolation}: evaluating identical Polars LazyFrame plans on CPU (\texttt{engine="streaming"}) versus GPU (\texttt{cudf-polars}) yields end-to-end GPU speedups of $2.85\times$ ($249.93$ vs.\ $711.86\text{ ms}$ at $\text{SF}=1\text{ GB}$), $8.18\times$ ($453.99$ vs.\ $3715.44\text{ ms}$ at $\text{SF}=10\text{ GB}$), $9.50\times$ ($1318.63$ vs.\ $12521.13\text{ ms}$ at $\text{SF}=30\text{ GB}$), and $7.43\times$ ($5279.66$ vs.\ $39252.64\text{ ms}$ at $\text{SF}=100\text{ GB}$); (iii) \emph{Many-Core x86\_64 vs.\ Unified-Memory ARM64 Scaling}: at $\text{SF}=100\text{ GB}$, 22-thread Polars streaming on Node~2 reaches $4266.59\text{ ms}$ ($3.75\times$ faster than disk-spilling DuckDB at $16005.55\text{ ms}$), while Apple~M1 ARM64 ($8\text{ GB}$ unified RAM with a $3.5\text{ GB}$ spill guard, Node~3) completes $\text{SF}=100\text{ GB}$ in $4292.58\text{ ms}$ with zero OOM failures; and (iv) \emph{Strict Numerical Equivalence}: all $64/64$ runs satisfy $\text{EX}=1.000$ ($\epsilon_{\text{rel}} \le 3.52 \times 10^{-13} < 10^{-9}$; Tesla~T4 \texttt{cuDF} SHA-256: \texttt{49241012d9172a76...}, V11 master SHA-256: \texttt{ac641d59626b7bea...}).
+
+\begin{table*}[htbp]
+\centering\scriptsize\setlength{\tabcolsep}{2.9pt}
+\caption{V11 four-node cross-hardware, cross-ISA, and native GPU (\texttt{RAPIDS cuDF} \& \texttt{cudf-polars}) multi-scale execution matrix across $\text{SF} \in \{1, 10, 30, 100\}\text{ GB}$ ($64/64$ real-execution runs, $\text{EX}=1.000$, maximum FP64 relative error $\le 3.52 \times 10^{-13} < 10^{-9}$).}
+\label{tab:v11_fournode_multiscale_cudf}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}llrrrrrrl@{}}
+\toprule
+\textbf{Hardware Node} & \textbf{Scale} & \textbf{DuckDB} & \textbf{Polars CPU} & \textbf{DataFusion} & \textbf{PyTorch CUDA} & \textbf{RAPIDS cuDF} & \textbf{cudf-polars} & \textbf{Chunks / Memory / GPU Energy} \\
+\midrule
+Node 1: x86\_64 (8T) + RTX 2050 (4GB) & $\text{SF}=1$ GB & $56.10$ & $125.75$ & $155.31$ & $44.22$ & --- & --- & $1\times$ chunk, $0.25$ GB VRAM \\
+ & $\text{SF}=10$ GB & $317.65$ & $490.02$ & $380.77$ & $274.18$ & --- & --- & $4\times$ chunk, $0.63$ GB VRAM \\
+ & $\text{SF}=30$ GB & $3578.44$ & $1464.30$ & $1125.60$ & $1262.74$ & --- & --- & $12\times$ chunk, $0.63$ GB VRAM \\
+ & $\text{SF}=100$ GB & $9882.64$ & $4985.34$ & $4036.88$ & $4668.36$ & --- & --- & $40\times$ chunk, $0.64$ GB VRAM \\
+\midrule
+Node 2: x86\_64 High-Core (16C/22T) & $\text{SF}=1$ GB & $42.92$ & $116.00$ & $152.25$ & --- & --- & --- & 22T CPU, Peak RAM $\le 0.68$ GB \\
+ & $\text{SF}=10$ GB & $622.69$ & $405.35$ & $405.52$ & --- & --- & --- & 22T CPU, Peak RAM $\le 2.05$ GB \\
+ & $\text{SF}=30$ GB & $3981.26$ & $1246.20$ & $1335.05$ & --- & --- & --- & 22T CPU, Peak RAM $\le 1.76$ GB \\
+ & $\text{SF}=100$ GB & $16005.55$ & $4266.59$ & $5125.18$ & --- & --- & --- & 22T CPU, Peak RAM $\le 2.57$ GB \\
+\midrule
+Node 3: Apple M1 ARM64 (8T, 8GB RAM) & $\text{SF}=1$ GB & $36.76$ & $86.88$ & $64.78$ & --- & --- & --- & ARM64 3.5GB cap, RAM $\le 0.61$ GB \\
+ & $\text{SF}=10$ GB & $442.63$ & $390.41$ & $415.41$ & --- & --- & --- & ARM64 3.5GB cap, RAM $\le 1.77$ GB \\
+ & $\text{SF}=30$ GB & $1224.76$ & $1416.74$ & $1282.12$ & --- & --- & --- & ARM64 3.5GB cap, RAM $\le 2.31$ GB \\
+ & $\text{SF}=100$ GB & $4292.58$ & $5134.20$ & $5207.31$ & --- & --- & --- & ARM64 3.5GB cap, RAM $\le 2.79$ GB \\
+\midrule
+Node 4: Cloud Server Tesla T4 (15GB) & $\text{SF}=1$ GB & $220.29$ & $711.86$ & $575.46$ & $177.83$ & $112.76$ & $249.93$ & $1\times$ chunk, cuDF $3.42$ J / pl-GPU $6.71$ J \\
+ & $\text{SF}=10$ GB & $2104.61$ & $3715.44$ & $5214.13$ & $311.07$ & $322.37$ & $453.99$ & $1\times$ chunk, cuDF $11.43$ J / pl-GPU $16.66$ J \\
+ & $\text{SF}=30$ GB & $7639.31$ & $12521.13$ & $10787.65$ & $1028.13$ & $1001.71$ & $1318.63$ & $3\times$ chunk, cuDF $36.64$ J / pl-GPU $48.98$ J \\
+ & $\text{SF}=100$ GB & $27206.95$ & $39252.64$ & $30606.57$ & $3166.38$ & $3674.43$ & $5279.66$ & $10\times$ chunk, cuDF $143.97$ J / pl-GPU $191.83$ J \\
+\bottomrule
+\end{tabular}%
+}
+\end{table*}
+
+\begin{figure*}[htbp]
+\centering
+\includegraphics[width=0.94\textwidth]{figures/fig_v11_4node_multiscale_cudf_sf1_10_30_100.jpg}
+\caption{V11 four-node multi-scale execution latency ($\text{SF}=1, 10, 30, 100\text{ GB}$, log scale) across Node~1 (x86\_64 + RTX 2050 4GB), Node~2 (x86\_64 16C/22T), Node~3 (Apple M1 ARM64 8GB), and Node~4 (Cloud Tesla T4 15GB comparing PyTorch CUDA, \texttt{RAPIDS cuDF}, and \texttt{cudf-polars}).}
+\label{fig:v11_fournode_multiscale_cudf}
+\end{figure*}
+% === END V11 FOUR-NODE CUDF MULTISCALE SF1-10-30-100 ===
+
 \section{Conclusion}
 \enlargethispage{1.5\baselineskip}
 \vspace{-3pt}
