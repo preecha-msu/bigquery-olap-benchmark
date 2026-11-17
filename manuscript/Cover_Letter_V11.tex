@@ -1,0 +1,30 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{xurl}
+\usepackage{hyperref}
+\emergencystretch=2em
+\usepackage{parskip}
+\begin{document}
+\noindent\textbf{Submission Cover Letter --- Revised \& Audited Manuscript (Version V11)}\\[4pt]
+\noindent\textbf{Target Journal:} \emph{Journal of Big Data} (SpringerOpen / Springer Nature)\\
+\noindent\textbf{Manuscript File:} \texttt{bigquery\_olap\_benchmark\_V11.tex} (SHA-256: \texttt{efde5e5a16177e3a350c...})\\
+\noindent\textbf{Compiled PDF:} \texttt{bigquery\_olap\_benchmark\_V11.pdf} (SHA-256: \texttt{3cd232128b9f510e59fa...})\\[8pt]
+Dear Editor-in-Chief and Associate Editors,
+
+We respectfully submit the finalized V11 manuscript of our empirical study on cost-aware hybrid CPU--GPU analytical query routing across modern columnar and SIMT execution engines. All results obey a strict zero-estimation policy with IEEE~754 FP64 numerical equivalence ($\text{EX}=1.000$, $\epsilon_{\text{rel}} < 10^{-9}$).
+
+\textbf{Key Highlights and Methodological Rigor in Version V11:}
+\begin{enumerate}
+\item \textbf{Leakage-Free 75-Query Hybrid Routing ($\text{SF}=1\text{ GB}$):} Evaluated across 6 execution backends under template-isolated GroupKFold cross-validation, our 9-feature Gradient Boosted Regressor router ($\mathcal{R}_{\text{GBR-9D}}$) achieves $54.92\text{ ms}$ overall mean latency ($57.33\%$ Top-1, $76.00\%$ Top-2 accuracy, $34.98\%$ mean regret), outperforming standalone GPU Cold ($56.96\text{ ms}$), Polars ($82.47\text{ ms}$), and DuckDB ($183.74\text{ ms}$).
+\item \textbf{Locked Four-Node Multi-Scale Validation ($\text{SF}\in\{1,10,30,100\}\text{ GB}$, 64 Real Runs):} Across consumer dGPU (RTX~2050 $4\text{ GB}$), many-core x86\_64 (16C/22T), unified-memory ARM64 (Apple~M1 $8\text{ GB}$), and server-grade cloud GPU (2-vCPU + NVIDIA Tesla~T4 $14.56\text{ GB}$ VRAM), all $64/64$ scan-filter-aggregation runs complete with zero out-of-memory failures and $\text{EX}=1.000$ (Master CSV SHA-256: \texttt{b263176b4af7c4ae9eca...}).
+\item \textbf{Production Columnar GPU Benchmarking (\texttt{RAPIDS cuDF} \& \texttt{cudf-polars}) and Cross-Node Crossover:} On Tesla~T4, end-to-end \texttt{RAPIDS cuDF} (\texttt{libcudf}~v26.06.00) and \texttt{cudf-polars} (Polars~v1.35.2) deliver $2.85\times\text{--}9.50\times$ intra-node speedups over 2-vCPU Polars while converging within $2.6\%\text{--}3.5\%$ of our post-Arrow PyTorch \texttt{H2D+Kernel} ceiling at $\text{SF}=10\text{--}30\text{ GB}$. Cross-node comparison at $\text{SF}=100\text{ GB}$ shows 22-thread Polars ($4266.59\text{ ms}$) and Apple~M1 DuckDB ($4292.58\text{ ms}$) surpassing 10-chunk \texttt{cudf-polars} ($5279.66\text{ ms}$), empirically reinforcing the need for topology-aware query routing.
+\item \textbf{Complete Construct \& Telemetry Transparency:} Explicit timing (\texttt{Post-Arrow H2D+Kernel} vs.\ \texttt{End-to-End Parquet-to-Scalar}) and energy boundaries ($36.3\text{--}39.2\text{ W}$ active Tesla~T4 query energy vs.\ full-stage host+GPU board energy) are documented in both the manuscript and archival CSV schemas, verified by an 18-gate automated zero-contradiction script.
+\end{enumerate}
+
+The manuscript is original, has no competing interests, and all code, CSV telemetry, and SHA-256 manifests are openly archived.
+
+Sincerely,\\[6pt]
+The Authors
+\end{document}

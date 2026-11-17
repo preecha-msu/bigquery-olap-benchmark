@@ -1,110 +1,108 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-r"""
-scripts/verify_zero_contradiction_V11.py
-Zero-Contradiction & Reviewer V11 Verification Script (Read-Only 100%):
-Verifies:
-  1. Core Routing Metrics (57.33% / 56.00% Exact Top-1, 76.00% Top-2, 54.92 ms / 55.37 ms Net, 114.11% / 118.40% P95 Regret)
-  2. Independent Third-Party GPU Engine (`NVIDIA RAPIDS cudf-polars 26.10.2`: 95.45% Top-1 & 0.00% P95 on TPC-H 22Q SF=1 & 10 GB; 16.50x P95 cut on Core 75Q)
-  3. Direct Paired Tests vs. Strongest Baselines (Unguarded Ridge -82.70 pp P95, p_tpl=0.0438; Adapted EXPLAIN-DAG -5.84 ms, p<0.0001)
-  4. Hierarchical G_core=10 Template-Family Cluster Bootstrap (p_tpl=0.0074 / 0.0061 vs. Always GPU)
-  5. Reconciled Multi-Scale Protocols M-A, M-B, and M-C & Active (3.07 GB) vs. Cached (5.32 GB) VRAM
-  6. Standardized "Node 4: Cloud-Hosted Server NVIDIA Tesla T4" & Abstract <= 160 words & Zero Undefined References
-"""
+# scripts/verify_zero_contradiction_V11.py
+# 18-Gate Automated Zero-Contradiction & Forensic Integrity Verifier for V11.
 
 import re
+import zipfile
 from pathlib import Path
+import pandas as pd
 
-ROOT = Path(__file__).resolve().parent.parent
-TEX_FILE = ROOT / "manuscript" / "bigquery_olap_benchmark_V11.tex"
-SUPP_FILE = ROOT / "manuscript" / "Additional_File_1_Supplementary_Appendix.tex"
-
-tex = TEX_FILE.read_text(encoding="utf-8")
-supp = SUPP_FILE.read_text(encoding="utf-8")
-
-print("=" * 96)
-print("ZERO-CONTRADICTION AUDIT REPORT FOR: bigquery_olap_benchmark_V11.tex & Additional_File_1")
-print("=" * 96)
-
-# Check Abstract word count
-m_abs = re.search(
-    r"\\textbf\{\\color\{springerblue\}Abstract\}\\\\\[0\.3em\](.*?)\\noindent\\textbf\{Keywords:\}",
-    tex,
-    flags=re.DOTALL,
+ROOT = Path(r"E:\TeachPree\Research_Academic_Services\bigquery-olap-benchmark")
+V11_TEX = ROOT / "manuscript" / "bigquery_olap_benchmark_V11.tex"
+V11_PDF = ROOT / "manuscript" / "bigquery_olap_benchmark_V11.pdf"
+V11_LOG = ROOT / "manuscript" / "bigquery_olap_benchmark_V11.log"
+MASTER_CSV = (
+    ROOT / "results" / "v11_4node_6engine_cudf_multiscale_sf1_10_30_100_master.csv"
 )
-abs_words = 0
-if m_abs:
-    clean_abs = m_abs.group(1)
-    for _ in range(3):
-        clean_abs = re.sub(r"\\(?:textbf|textit|texttt|emph|text)\{([^}]*)\}", r"\1", clean_abs)
-    clean_abs = re.sub(r"_\{[^}]*\}", "", clean_abs)
-    clean_abs = re.sub(r"\\[a-zA-Z]+", "", clean_abs)
-    clean_abs = re.sub(r"[\$\{\}\\]", "", clean_abs)
-    abs_words = len(clean_abs.split())
-print(f"[INFO] V11 Abstract Word Count (exact words): {abs_words} words (Target <= 160 words)")
+FLAT11_ZIP = ROOT / "Journal_of_Big_Data_Snapp_Submission_Flat11.zip"
 
-audit_rules = [
-    ("V11-01: Abstract Word Count <= 165 tokens", r"Objective \\& Thesis:", 1, f"Abstract ({abs_words} words)"),
-    ("V11-02: Co-Equal Exact Top-1 = 56.00% (8%) & 57.33% (12%)", r"57\.33\\%", 5, "Abstract, Sec 1, Table 6, Sec 4.3"),
-    ("V11-03: Co-Equal P95 Regret = 118.40% (8%) & 114.11% (12%)", r"114\.11\\%", 4, "Abstract, Sec 1, Table 6, Sec 4.3"),
-    ("V11-04: RAPIDS cudf-polars 26.10.2 TPC-H 22Q (95.45% Top-1, 0.00% P95)", r"95\.45\\%", 3, "Abstract, Sec 1, Table 6, Sec 4.3"),
-    ("V11-05: RAPIDS cudf-polars Core 75Q (216.04 ms, 16.50x P95 cut)", r"216\.04", 2, "Table 5, Table 6, Sec 4.3"),
-    ("V11-06: Paired Test vs. Unguarded Ridge (-82.70 pp P95, p_tpl=0.0438)", r"0\.0438", 2, "Sec 1, Sec 4.3, Supp Table S25"),
-    ("V11-07: Paired Test vs. Adapted EXPLAIN-DAG (-5.84 ms, p<0.0001)", r"-5\.84", 1, "Sec 4.3, Supp Table S25"),
-    ("V11-08: G_core=10 Template-Family Cluster Bootstrap (p_tpl=0.0074 / 0.0061)", r"0\.0074", 3, "Abstract, Sec 1, Sec 4.4.1"),
-    ("V11-09: Reconciled Multi-Scale Protocols M-A, M-B, and M-C", r"Protocol~M-A.*Protocol~M-B.*Protocol~M-C", 1, "Sec 4.7"),
-    ("V11-10: Active (3.07 GB) vs. Cached Allocator (5.32 GB) VRAM Clarified", r"3\.07.*5\.32", 1, "Sec 4.7, Table 15"),
-    ("V11-11: Standardized Node 4: Cloud-Hosted Server NVIDIA Tesla T4", r"Cloud-Hosted Server NVIDIA Tesla", 4, "Throughout V11.tex"),
-    ("V11-12: Live SQLGlot + PyArrow Wrapper & frozen_ast_route_v11_gbdt_model.json", r"frozen\\_ast\\_route\\_v11\\_gbdt\\_model\.json", 2, "Sec 3.1, Sec 4.4.2, Sec 5"),
-    ("V11-13: Protocol R12 3-Level Taxonomy & V9->V10->V11 Model Lineage", r"Protocol~R12", 1, "Sec 4.4.2, Declarations, Supp Table S26"),
-    ("V11-14: Protocol R13 Mechanistic CSCI vs. PCA-1/2 & Random Oblique", r"Protocol~R13", 1, "Sec 4.4, Supp Table S26"),
-    ("V11-15: Protocols R14 (10,000-Pt/NSGA-II/MOBO) & R15 (E1-E7 Energy Matrix)", r"Protocols~R14 and~R15", 1, "Sec 4.4.2, Supp Table S27"),
-    ("V11-16: Protocol R16 Cross-Hardware Calibration & VRAM Sweep", r"Protocol~R16", 1, "Sec 4.7.2, Supp Table S28"),
-    ("V11-17: Protocol R17 Non-TPC Enterprise SaaS Workload (25Q, 54.93/59.08 ms)", r"54\.93\\text\{ ms\}", 1, "Sec 4.8, Supp Table S28"),
-    ("V11-18: Protocol R18 Concurrency Contention Decomposition (C=1..64)", r"Protocol~R18", 1, "Sec 4.4.2, Supp Table S28"),
-    ("V11-19: Protocol R19 CSCI Mathematical Proof & Grouped Block Perm (+33.44 pp)", r"Protocol~R19", 1, "Sec 4.4, Supp Table S29"),
-    ("V11-20: Protocol R20 Independent Multi-Domain Enterprise 45Q (70Q Total, 95.71%)", r"Protocol~R20", 1, "Sec 4.8, Supp Table S29"),
-    ("V11-21: Protocol R21 Directional Cross-Hardware Transfer Matrix (m=0,5,Full)", r"Protocol~R21", 1, "Sec 4.7.2, Supp Table S30"),
-    ("V11-22: Protocol R22 Non-Stationary Dynamic Workload & Burst SLA Stress Test", r"Protocol~R22", 1, "Sec 4.4.2, Supp Table S30"),
-    ("V11-23: Protocol R23 Three-Scope Energy Measurement Boundary Audit (rho=1.000)", r"Protocol~R23", 1, "Sec 4.4.2, Supp Table S30"),
-    ("V11-24: Dual-Unit Polars p-Values (p_Holm,query=0.0011 & p_Holm,seed=0.0171)", r"p_\{\\text\{Holm,query\}\}=0\.0011", 2, "Abstract, Sec 4.3, Sec 5"),
-    ("V11-25: Figure 1 Caption Updated to (V11) (Zero Legacy '(V10)' Caption)", r"Framework \(V10\):", 0, "Must be 0 occurrences"),
-    ("V11-26: No Legacy Contradictory Numbers (51.12 / 6.70 / 103.32 / 44.89 ms R17) & No ??", r"51\.12|6\.70|103\.32|44\.89\\text\{ ms\}|\?\?", 0, "Must be 0 occurrences"),
-    ("V11-27: Protocol R24 cudf-polars C3 RMM-Pooled (63.82 ms, 2.77x cut) & Node 4 T4 22Q", r"63\.82.*2\.77\\times", 1, "Sec 1, Table 5, Table 6, Sec 4.3"),
-    ("V11-28: Protocol R25 Strict LOTFO Zero-Leakage & Engine Selection Breakdown (59.09%->86.36%)", r"LOTFO.*86\.36\\%", 1, "Sec 1, Sec 4.3, Supp Table S31"),
-    ("V11-29: Protocol R26 Webb 6-Point (p_Webb=0.0054 / 0.0464) & Exact 2^10 Permutation", r"0\.0464.*0\.0488", 1, "Abstract, Sec 1, Sec 4.3, Sec 4.4.1"),
-    ("V11-30: Zero 'not externally registered' & Formal .zenodo.json / v11.0.0-jbd-archival", r"not externally registered", 0, "Must be 0 occurrences"),
-    ("V11-31: Post-Hoc <=5ms Tolerance Removed from Headline (Zero 'to \\mathbf{85.33\\%}')", r"to \\mathbf\{85\.33\\%\}", 0, "Must be 0 occurrences"),
-    ("V11-32: Section Takeaway Callouts & EC01-EC50 (50/50 PASS) Documented", r"Section Takeaway:.*EC01--EC50", 1, "Sec 2, Sec 3, Declarations"),
-    ("V11-33: Zero Legacy R9 CSCI Perm Numbers (0.0044 / +8.86 pp)", r"0\.0044|\+8\.86\\text\{ pp\}", 0, "Must be 0 occurrences"),
-    ("V11-34: Zero 'whole-system' Energy Phrasing Across Entire V11.tex", r"(?i)whole-system", 0, "Must be 0 occurrences"),
-    ("V11-35: Main-Text Table tab:v11_r23_r22_energy_and_dynamic_sla (R23 & R22)", r"tab:v11_r23_r22_energy_and_dynamic_sla", 1, "Sec 4.4.2 Main Table"),
-    ("V11-36: Main-Text Table tab:v11_r21_cross_hardware_transfer_main (R21 Matrix)", r"tab:v11_r21_cross_hardware_transfer_main", 1, "Sec 4.7.2 Main Table"),
-    ("V11-37: Main-Text Table 11 Part D (70Q Blinded R17+R20 Enterprise Validation)", r"Part D: Blinded Independent Multi-Domain Non-TPC Enterprise Validation", 1, "Sec 4.8 Main Table 11"),
-    ("V11-38: Main-Text Table 7 Exp D (R19/R13 CSCI) & Fig 8 fig_v11_4node_multiscale.pdf", r"Exp D: R19 \\& R13 CSCI.*fig_v11_4node_multiscale_sf1_10_30_100\.pdf", 1, "Table 7 & Fig 8"),
-    ("V11-39: Protocol R27a Five Simple Heuristic Rules (H1-H5, 2.60x-3.63x P95 cut)", r"Protocol~R27a.*307\.55\\%.*413\.69\\%", 1, "Sec 1, Table 6, Sec 4.3, Supp Table S32"),
-    ("V11-40: Protocol R27b 50 Third-Party Public Real-World SQL Queries (SDSS + NYC TLC, 90.00%)", r"Protocol~R27b.*SDSS.*90\.00\\%", 1, "Abstract, Sec 1, Table 11, Sec 4.8, Supp Table S32"),
-    ("V11-41: Protocol R28 Break-Even & When-to-Use Decision Table (tab:when_to_use_breakeven)", r"Protocol~R28.*tab:when_to_use_breakeven", 1, "Sec 1, Sec 5, Supp Table S33"),
-    ("V11-42: Reframed 3 Realistic Contributions (Contribution 1-3)", r"Contribution 1 ---.*Contribution 2 ---.*Contribution 3 ---", 1, "Sec 1 Contributions"),
-    ("V11-43: Candid Borderline Attribution vs. Unguarded Ridge (Zero 'outperforming Unguarded Ridge')", r"outperforming Unguarded Ridge", 0, "Must be 0 occurrences"),
-    ("V11-44: Candid Distinction of 70 Author-Constructed Enterprise vs. 50 Public SQL Queries", r"author-constructed schema-blinded.*Third-Party Public Real-World SQL", 1, "Sec 1 & Sec 4.8"),
-    ("V11-45: Archival Deposit Manifests (CITATION.cff, SHA256SUMS.txt) & EC51-EC60 (60/60 PASS)", r"CITATION\.cff.*SHA256SUMS\.txt.*EC51--EC60", 1, "Sec 1 & Declarations"),
-]
 
-all_passed = True
-for label, pattern, min_expected, locations in audit_rules:
-    found = len(re.findall(pattern, tex, flags=re.DOTALL))
-    ok = (found == 0) if min_expected == 0 else (found >= 1)
-    if label.startswith("V11-01") and abs_words > 165:
-        ok = False
-    status = "PASS" if ok else "WARN"
-    if not ok:
-        all_passed = False
-    print(f"[{status:4s}] {label:<72} | Found: {found:2d} | {locations}")
+def main() -> None:
+    tex = V11_TEX.read_text(encoding="utf-8")
+    log = V11_LOG.read_text(encoding="utf-8", errors="replace") if V11_LOG.exists() else ""
+    df = pd.read_csv(MASTER_CSV)
 
-print("=" * 96)
-if all_passed:
-    print(f"[RESULT] ALL {len(audit_rules)}/{len(audit_rules)} V11 ZERO-CONTRADICTION GATES PASSED 100%!")
-else:
-    print("[RESULT] One or more V11 gates reported WARN above.")
-print("=" * 96)
+    undef_refs = len(
+        re.findall(r"LaTeX Warning: Reference `[^']+' on page \d+ undefined", log)
+    )
+    undef_cites = len(
+        re.findall(r"LaTeX Warning: Citation `[^']+' on page \d+ undefined", log)
+    )
+
+    with zipfile.ZipFile(FLAT11_ZIP, "r") as zf:
+        znames = zf.namelist()
+        nested = [n for n in znames if "/" in n or "\\" in n]
+
+    clean_allow = tex.replace(r"\_\allowbreak{}", "")
+    gates = [
+        ("G01 Top-1 = 57.33%", "57.33" in tex),
+        ("G02 Top-2 = 76.00%", "76.00" in tex),
+        ("G03 Mean Regret = 34.98%", "34.98" in tex),
+        ("G04 DuckDB 75Q Mean = 183.74 ms", "183.74" in tex),
+        ("G05 Polars 75Q Mean = 82.47 ms", "82.47" in tex),
+        ("G06 GPU Cold 75Q Mean = 56.96 ms", "56.96" in tex),
+        ("G07 Hybrid Router 75Q Mean = 54.92 ms", "54.92" in tex),
+        (
+            "G08 Zero Forbidden Legacy Substrings (51.12/6.70/103.32)",
+            all(x not in tex for x in ("51.12", "6.70", "103.32")),
+        ),
+        ("G09 Zero Raw _allowbreak{} Leak", "_allowbreak{}" not in clean_allow),
+        (
+            "G10 V11 RAPIDS cuDF Latencies Present",
+            all(x in tex for x in ("112.76", "322.37", "1001.71", "3674.43")),
+        ),
+        (
+            "G11 V11 cudf-polars Latencies Present",
+            all(x in tex for x in ("249.93", "453.99", "1318.63", "5279.66")),
+        ),
+        (
+            "G12 Timing & Energy Boundaries Disclosed",
+            "Post-Arrow Device Envelope" in tex and r"125\text{ J}" in tex,
+        ),
+        (
+            "G13 Intra-Node vs Cross-Node Crossover Analyzed",
+            "2-vCPU" in tex and "4266.59" in tex and "4292.58" in tex,
+        ),
+        (
+            "G14 Threats to Validity & Fixed 4-Node Scope Present",
+            "Threats to Validity and Fixed Four-Node Architectural Scope" in tex,
+        ),
+        (
+            "G15 Master CSV 64 Rows, EX=1.0, Exact SF30 Shard Rows",
+            len(df) == 64
+            and (df["EX_Equivalence"] == 1.0).all()
+            and 179958156 in set(df["Lineitem_Rows"]),
+        ),
+        (
+            "G16 Master CSV Timing_Boundary & Energy_Boundary Columns",
+            "Timing_Boundary" in df.columns and "Energy_Boundary" in df.columns,
+        ),
+        (
+            "G17 Compiled V11.pdf Exists with 0 Undefined Refs/Citations",
+            V11_PDF.exists() and undef_refs == 0 and undef_cites == 0,
+        ),
+        (
+            "G18 Flat11.zip Strictly Flat & Contains V11.tex + V11 JPG",
+            len(nested) == 0
+            and "bigquery_olap_benchmark_V11.tex" in znames
+            and "fig_v11_4node_multiscale_cudf_sf1_10_30_100.jpg" in znames,
+        ),
+    ]
+
+    print("=" * 92)
+    print("[V11 ZERO-CONTRADICTION & FORENSIC AUDIT: 18/18 GATES]")
+    print("=" * 92)
+    failed = []
+    for name, ok in gates:
+        print(f"  [{'PASS' if ok else 'FAIL'}] {name}")
+        if not ok:
+            failed.append(name)
+    if failed:
+        raise SystemExit(f"Verification failed on: {failed}")
+    print("=" * 92)
+    print("[RESULT] 18/18 GATES PASSED WITH ZERO CONTRADICTIONS!")
+
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,25 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{booktabs}
+\usepackage{xurl}
+\usepackage{hyperref}
+\emergencystretch=2em
+\usepackage{parskip}
+\begin{document}
+\section*{Point-by-Point Technical Audit \& Reviewer Defense Summary (V11)}
+\noindent\textbf{Manuscript:} \texttt{bigquery\_olap\_benchmark\_V11.tex} \quad|\quad \textbf{Master CSV SHA-256:} \texttt{b263176b4af7c4ae9eca...}
+
+\subsection*{1. Resolution of GPU Timing \& Energy Telemetry Boundaries (Node 4 Tesla T4)}
+\textbf{Potential Reviewer Question:} \emph{How do PyTorch CUDA latencies and energy values compare against native C++/CUDA engines (\texttt{RAPIDS cuDF} and \texttt{cudf-polars}) on Tesla T4?}\\
+\textbf{Resolution in V11:} The V11 multi-scale table and archival CSV columns \texttt{Timing\_Boundary} and \texttt{Energy\_Boundary} explicitly separate (a) \emph{End-to-End GPU Parquet-to-Scalar} execution in \texttt{RAPIDS cuDF} ($112.76$, $322.37$, $1001.71$, $3674.43\text{ ms}$; active GPU energy $3.43\text{--}143.97\text{ J}$, $P_{\text{mean}}=30.4\text{--}39.2\text{ W} \le 70\text{ W}$ T4 TDP) and \texttt{cudf-polars} ($249.93\text{--}5279.66\text{ ms}$; $6.71\text{--}191.83\text{ J}$) from (b) \emph{Post-Arrow \texttt{PCIe H2D + SIMT Kernel}} execution in PyTorch CUDA ($177.83$, $311.07$, $1028.13$, $3166.38\text{ ms}$, where active \texttt{H2D+Kernel} GPU energy at $\text{SF}=100\text{ GB}$ is $\approx 125\text{ J}$, while CSV full-stage board energy $1312.14\text{ J}$ spans $\sim 31\text{--}33\text{ s}$ of host PyArrow ZSTD decoding plus GPU execution).
+
+\subsection*{2. Resolution of Cloud Host vCPU Asymmetry \& Cross-Node Crossover}
+\textbf{Potential Reviewer Question:} \emph{Does the 2-vCPU cloud VM on Node 4 inflate GPU speedups?}\\
+\textbf{Resolution in V11:} We report both intra-node and cross-node comparisons side-by-side. While \texttt{cudf-polars} achieves $2.85\times\text{--}9.50\times$ intra-node speedups over 2-vCPU Polars on Node~4, cross-node comparison at $\text{SF}=100\text{ GB}$ explicitly highlights that 22-thread x86\_64 Polars on Node~2 ($4266.59\text{ ms}$) and 8-core Apple~M1 DuckDB on Node~3 ($4292.58\text{ ms}$) outperform 10-chunk \texttt{cudf-polars} ($5279.66\text{ ms}$) by $1.22\times\text{--}1.24\times$ and narrow \texttt{RAPIDS cuDF}'s lead ($3674.43\text{ ms}$) to $1.16\times\text{--}1.17\times$. This directly substantiates our central thesis that hardware topology governs engine dominance.
+
+\subsection*{3. Justification of the Locked Four-Node Hardware Matrix \& Workload Scope}
+\textbf{Potential Reviewer Question:} \emph{Why are four hardware nodes sufficient, and how do the 75-query suite and $\text{SF}=1\text{--}100\text{ GB}$ runs relate?}\\
+\textbf{Resolution in V11:} The newly added \emph{Threats to Validity and Fixed Four-Node Architectural Scope} subsection formalizes (i) why our four orthogonal nodes (consumer $4\text{ GB}$ dGPU, 22T x86\_64 CPU, $8\text{ GB}$ unified-memory ARM64, and $15\text{ GB}$ server GPU) cover the four primary single-host/cloud memory hierarchies without requiring additional hardware, (ii) that $\mathcal{R}_{\text{GBR-9D}}$ is trained and cross-validated on the 75-query multi-operator suite at $\text{SF}=1\text{ GB}$ on Node~1, while the 64-run multi-scale matrix isolates scan-filter-aggregation (\texttt{lineitem}) up to $6.00\times 10^{8}$ rows, and (iii) exact forensic restoration of the $179{,}958{,}156$ vs.\ $179{,}998{,}372$ ($0.022\%$ delta) shard row counts at Node~4 $\text{SF}=30\text{ GB}$, each validated at $\text{EX}=1.000$.
+\end{document}
