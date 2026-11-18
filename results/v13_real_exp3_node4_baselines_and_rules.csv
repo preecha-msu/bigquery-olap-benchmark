@@ -1,0 +1,16 @@
+Dataset_Scope,Policy,Specification,N_Real_Runs,Top1_Exact_Pct,Mean_Latency_ms,Mean_Regret_Pct,P95_Regret_Pct
+colab_tesla_t4_sf1_sf10_telemetry.csv (N=24 real T4 runs),Always-CPU (Best 2-vCPU Host Engine),100% host 2-vCPU execution,24,0.0,2735.52,18136.78,72243.03
+colab_tesla_t4_sf1_sf10_telemetry.csv (N=24 real T4 runs),Always-GPU (Best Tesla T4 Engine),100% Tesla T4 GPU execution,24,100.0,15.0,0.0,0.0
+colab_tesla_t4_sf1_sf10_telemetry.csv (N=24 real T4 runs),Rule H1 (Scan-Byte Threshold),"GPU iff estimated scan in [64 MB, 12 GB]",24,83.33,46.15,207.67,1393.27
+colab_tesla_t4_sf1_sf10_telemetry.csv (N=24 real T4 runs),Rule H2 (Join-Count Cutoff),GPU iff join count J(q) <= 1,24,100.0,15.0,0.0,0.0
+colab_tesla_t4_sf1_sf10_telemetry.csv (N=24 real T4 runs),Rule H3 (Selectivity Horizon Cutoff),GPU iff zone-map selectivity >= 0.10,24,66.67,409.9,2632.64,16217.77
+colab_tesla_t4_sf1_sf10_telemetry.csv (N=24 real T4 runs),Rule H4 (Operator-Class Mapping),GPU for scan/agg/win without correlated/string ops,24,75.0,635.74,4138.25,22392.17
+colab_tesla_t4_sf1_sf10_telemetry.csv (N=24 real T4 runs),Rule H5 (Composite Byte + Syntax Rule),GPU iff scan >= 64 MB AND S(q)=0 AND LIKE=0,24,62.5,660.07,4300.47,22392.17
+colab_tesla_t4_sf1_sf10_telemetry.csv (N=24 real T4 runs),Ridge + 8% PCIe Margin Guard,LOO-CV Ridge cost model + 8% margin guard,24,100.0,15.0,0.0,0.0
+colab_tesla_t4_sf1_sf10_telemetry.csv (N=24 real T4 runs),AST-Route (GBR + 8% PCIe Margin Guard),LOO-CV AST-Route GBR + 8% margin guard,24,100.0,15.0,0.0,0.0
+"v12_4node_6engine_cudf_multiscale_sf1_10_30_100_master.csv (Node 4, 4 SFs: 1/10/30/100 GB)",Node4 Static: Apache_DataFusion_Rust,"Single-engine static execution across SF=1,10,30,100 GB (n=1/cell)",4,0.0,11795.95,957.52,1486.3
+"v12_4node_6engine_cudf_multiscale_sf1_10_30_100_master.csv (Node 4, 4 SFs: 1/10/30/100 GB)",Node4 Static: DuckDB_Columnar_C++,"Single-engine static execution across SF=1,10,30,100 GB (n=1/cell)",4,0.0,9292.79,523.45,744.75
+"v12_4node_6engine_cudf_multiscale_sf1_10_30_100_master.csv (Node 4, 4 SFs: 1/10/30/100 GB)",Node4 Static: Polars_GPU_cuDF_Engine,"Single-engine static execution across SF=1,10,30,100 GB (n=1/cell)",4,0.0,1825.55,66.49,113.41
+"v12_4node_6engine_cudf_multiscale_sf1_10_30_100_master.csv (Node 4, 4 SFs: 1/10/30/100 GB)",Node4 Static: Polars_Lazy_Streaming_Rust,"Single-engine static execution across SF=1,10,30,100 GB (n=1/cell)",4,0.0,14050.27,978.84,1148.43
+"v12_4node_6engine_cudf_multiscale_sf1_10_30_100_master.csv (Node 4, 4 SFs: 1/10/30/100 GB)",Node4 Static: PyTorch_CUDA_T4_15GB,"Single-engine static execution across SF=1,10,30,100 GB (n=1/cell)",4,50.0,1170.85,15.09,49.45
+"v12_4node_6engine_cudf_multiscale_sf1_10_30_100_master.csv (Node 4, 4 SFs: 1/10/30/100 GB)",Node4 Static: RAPIDS_cuDF_Native_GPU,"Single-engine static execution across SF=1,10,30,100 GB (n=1/cell)",4,50.0,1277.82,4.92,14.18

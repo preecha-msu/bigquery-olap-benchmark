@@ -1,0 +1,5 @@
+Date,Commit,Stage,Protocol
+2026-11-13,a9bd52f,V1--V9 Initial Exploration,"75-query factorial suite, fixed 12% PCIe margin guard (P2), TOST +-5 ms primary endpoint"
+2026-11-16,e07a6a3,V11 Multi-Scale & Native cuDF,Added 4-node 64-cell single-pass (n=1) scaling matrix (SF=1--100 GB) with RAPIDS cuDF & cudf-polars
+2026-11-17,1b3da12,V12 Post-Hoc Harmonization,Adopted inner-fold 8% guard (P1) and +10% non-inferiority hierarchy H1--H4 (TOST exploratory)
+2026-11-19,5aeae8a,V13 Zero-Estimation Forensic Seal,"Holdout random-slope REML + CR1 SE + 50k permutation, unified 3-tier SQL provenance, Node 4 baselines"

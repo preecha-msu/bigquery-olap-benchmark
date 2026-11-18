@@ -1,0 +1,4 @@
+Operation,Source,Trials_R,Median_us,IQR_us,P95_us
+SQLGlot AST + Cached Zone-Map Snapshot,data\raw_parquet\sf1_1gb\lineitem.parquet,50,829.55,41.6,1043.49
+SQLGlot AST + Cold Parquet Footer Read,data\raw_parquet\sf1_1gb\lineitem.parquet,50,1650.3,59.42,1935.85
+Live DuckDB EXPLAIN (FORMAT JSON) Physical Plan,data\raw_parquet\sf1_1gb\lineitem.parquet,50,2979.45,179.58,3370.64

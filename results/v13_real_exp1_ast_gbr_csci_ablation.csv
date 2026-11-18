@@ -1,0 +1,6 @@
+Model_Variant,Top1_Exact_Pct,All_75Q_Mean_ms,All_75Q_Mean_Regret_Pct,All_75Q_P95_Regret_Pct,Linear_L1_L2_Mean_Regret_Pct,NonLinear_L3_L5_Mean_Regret_Pct,NonLinear_L3_L5_P95_Regret_Pct
+"1. Ridge-8D (Point-Estimate, No Guard)",78.67,44.82,18.58,89.67,26.99,12.98,76.63
+2. Ridge-8D + 8% PCIe Guard (P1),77.33,46.88,22.07,133.81,26.7,18.98,79.26
+3. GBR-8D (No CSCI) + 8% PCIe Guard (P1),72.0,50.42,33.73,142.65,74.55,6.51,48.65
+4. AST-Route GBR-9D (With CSCI) + 8% PCIe Guard (P1),76.0,48.97,27.84,96.43,56.88,8.49,73.08
+"5. AST-Route Two-Engine {Polars, GPU} + 8% PCIe Guard",40.0,49.42,47.5,152.46,78.25,27.0,87.71

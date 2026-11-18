@@ -1,0 +1,3 @@
+N_Queries,K_Clusters,DF_Within,Beta1_REML_Pct,SE_REML_Pct,SE_CR1_Sandwich_Pct,Tau_Slope_SD_Pct,CR1_t,CR1_p,Cluster_Perm_p,Perm_Method,Bootstrap_95CI,Contrast,Router_P95_Pct,Baseline_P95_Pct
+68,38,30,-38.322,33.522,33.304,95.389,-1.151,0.25724,0.12496,MC_50000_PhipsonSmyth,"[-29.97%, -0.28%]",AST-Route vs. Best Static CPU (Polars) [External Holdout],97.05,644.62
+68,38,30,-56.551,44.583,42.475,252.548,-1.331,0.19121,0.19758,MC_50000_PhipsonSmyth,"[-145.75%, +21.43%]",AST-Route vs. Always GPU Cold [External Holdout],97.05,588.99
