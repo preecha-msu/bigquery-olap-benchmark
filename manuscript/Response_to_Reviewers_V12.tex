@@ -1,25 +1,32 @@
 \documentclass[11pt,a4paper]{article}
 \usepackage[T1]{fontenc}
-\usepackage[margin=1in]{geometry}
+\usepackage[margin=0.95in]{geometry}
 \usepackage{amsmath,amsfonts,amssymb}
 \usepackage{booktabs}
 \usepackage{xurl}
 \usepackage{hyperref}
-\emergencystretch=2em
 \usepackage{parskip}
+\emergencystretch=2em
 \begin{document}
-\section*{Point-by-Point Technical Audit \& Reviewer Defense Summary (V12)}
-\noindent\textbf{Manuscript:} \texttt{bigquery\_olap\_benchmark\_V12.tex} \quad|\quad \textbf{Master CSV SHA-256:} \texttt{b263176b4af7c4ae9eca...}
+\section*{Point-by-Point Response to Reviewer Assessment (Manuscript Version V12)}
+\noindent\textbf{Active Manuscript:} \texttt{bigquery\_olap\_benchmark\_V12.tex} (SHA-256: \texttt{66e7bdb3d4f82a213653...})\\
+\noindent\textbf{Methodological Policy:} Zero new hardware proliferation; full forensic, statistical, and provenance closure derived strictly from SHA-256-locked empirical logs and verified by 24 automated consistency gates.
 
-\subsection*{1. Resolution of GPU Timing \& Energy Telemetry Boundaries (Node 4 Tesla T4)}
-\textbf{Potential Reviewer Question:} \emph{How do PyTorch CUDA latencies and energy values compare against native C++/CUDA engines (\texttt{RAPIDS cuDF} and \texttt{cudf-polars}) on Tesla T4?}\\
-\textbf{Resolution in V12:} The V12 multi-scale table and archival CSV columns \texttt{Timing\_Boundary} and \texttt{Energy\_Boundary} explicitly separate (a) \emph{End-to-End GPU Parquet-to-Scalar} execution in \texttt{RAPIDS cuDF} ($112.76$, $322.37$, $1001.71$, $3674.43\text{ ms}$; active GPU energy $3.43\text{--}143.97\text{ J}$, $P_{\text{mean}}=30.4\text{--}39.2\text{ W} \le 70\text{ W}$ T4 TDP) and \texttt{cudf-polars} ($249.93\text{--}5279.66\text{ ms}$; $6.71\text{--}191.83\text{ J}$) from (b) \emph{Post-Arrow \texttt{PCIe H2D + SIMT Kernel}} execution in PyTorch CUDA ($177.83$, $311.07$, $1028.13$, $3166.38\text{ ms}$, where active \texttt{H2D+Kernel} GPU energy at $\text{SF}=100\text{ GB}$ is $\approx 125\text{ J}$, while CSV full-stage board energy $1312.14\text{ J}$ spans $\sim 31\text{--}33\text{ s}$ of host PyArrow ZSTD decoding plus GPU execution).
+\subsection*{Response to Issue 3.1: Evaluation Protocol Consistency (8\% Nested-CV vs.\ 12\% Fixed Guard)}
+\textbf{Action Taken:} Added Table~\texttt{tab:v12\_protocol\_registry} (\emph{Evaluation Protocol Registry}) and aligned Abstract, Introduction, Results, and Conclusion. \textbf{Protocol~P1} (inner-fold Nested-CV guard $=8\%$, $55.37\text{ ms}$ outer-fold mean latency, $118.40\%$ P95 regret) is designated as the sole unbiased Primary Endpoint, while \textbf{Protocol~P2} (fixed $12\%$ default guard, $54.92\text{ ms}$ mean, $114.11\%$ P95 regret) is explicitly labeled as Secondary Sensitivity. Outer-fold TOST and cluster CIs never reuse threshold-selection data.
 
-\subsection*{2. Resolution of Cloud Host vCPU Asymmetry \& Cross-Node Crossover}
-\textbf{Potential Reviewer Question:} \emph{Does the 2-vCPU cloud VM on Node 4 inflate GPU speedups?}\\
-\textbf{Resolution in V12:} We report both intra-node and cross-node comparisons side-by-side. While \texttt{cudf-polars} achieves $2.85\times\text{--}9.50\times$ intra-node speedups over 2-vCPU Polars on Node~4, cross-node comparison at $\text{SF}=100\text{ GB}$ explicitly highlights that 22-thread x86\_64 Polars on Node~2 ($4266.59\text{ ms}$) and 8-core Apple~M1 DuckDB on Node~3 ($4292.58\text{ ms}$) outperform 10-chunk \texttt{cudf-polars} ($5279.66\text{ ms}$) by $1.22\times\text{--}1.24\times$ and narrow \texttt{RAPIDS cuDF}'s lead ($3674.43\text{ ms}$) to $1.16\times\text{--}1.17\times$. This directly substantiates our central thesis that hardware topology governs engine dominance.
+\subsection*{Response to Issue 3.2 \& R1: Dataset Independence, Post-Hoc Risk \& Locked Replay}
+\textbf{Action Taken:} Table~\texttt{tab:v12\_data\_provenance} audits all four query categories ($75 + 55 + 115 + 155 = 400$ queries), disclosing diagnostic inspection on Category~II ($55$Q) and author-derived perturbations on Category~III ($115$Q), while certifying that Category~IV ($155$ untouched third-party queries) had zero involvement in 12D feature design, hyperparameter tuning, or engine-pool selection. Furthermore, \texttt{scripts/v12\_locked\_reexecution\_audit.py} verifies frozen CSV SHA-256 digests and deterministically reconstructs headline metrics with $0.00\%$ drift.
 
-\subsection*{3. Justification of the Locked Four-Node Hardware Matrix \& Workload Scope}
-\textbf{Potential Reviewer Question:} \emph{Why are four hardware nodes sufficient, and how do the 75-query suite and $\text{SF}=1\text{--}100\text{ GB}$ runs relate?}\\
-\textbf{Resolution in V12:} The newly added \emph{Threats to Validity and Fixed Four-Node Architectural Scope} subsection formalizes (i) why our four orthogonal nodes (consumer $4\text{ GB}$ dGPU, 22T x86\_64 CPU, $8\text{ GB}$ unified-memory ARM64, and $15\text{ GB}$ server GPU) cover the four primary single-host/cloud memory hierarchies without requiring additional hardware, (ii) that $\mathcal{R}_{\text{GBR-9D}}$ is trained and cross-validated on the 75-query multi-operator suite at $\text{SF}=1\text{ GB}$ on Node~1, while the 64-run multi-scale matrix isolates scan-filter-aggregation (\texttt{lineitem}) up to $6.00\times 10^{8}$ rows, and (iii) exact forensic restoration of the $179{,}958{,}156$ vs.\ $179{,}998{,}372$ ($0.022\%$ delta) shard row counts at Node~4 $\text{SF}=30\text{ GB}$, each validated at $\text{EX}=1.000$.
+\subsection*{Response to Issue 3.3 \& R3: CSCI Incremental Value \& Multicollinearity (VIF)}
+\textbf{Action Taken:} Table~\texttt{tab:v12\_csci\_stat\_energy} (Panel~A) separates raw 6-operator VIF ($\text{VIF}_{\max}=3.84$, mean $2.19$), raw operators plus exact linear $\text{CSCI}$ ($\text{VIF}=\infty$ in linear OLS), and post-Gram--Schmidt orthogonalized basis vectors ($\text{VIF}=1.00$). We explicitly state that $\text{VIF}=1.00$ applies \emph{only} to the orthogonalized basis and reframe $\text{CSCI}$ accurately as an \emph{oblique structural inductive bias} for depth-bounded, axis-aligned decision trees ($\rho_{\text{partial}}=0.2653$, $p=0.0233$, learned-weight $\cos\theta=0.9998$).
+
+\subsection*{Response to Issue 3.4 \& R4: Statistical Independence \& Cluster Bootstrap}
+\textbf{Action Taken:} Explicitly separated $N_{\text{cluster}}=25$ independent SQL template families from $75$ parametric queries and $375$ repeated timed trials ($75\times 5$). Primary inference uses $10{,}000$-resample template-cluster bootstrap ($95\%$ CI and paired effect sizes $d_{z}=0.68$, Cliff's $\delta=0.49$), while the $375$ trials are restricted strictly to intra-query repeatability ($<2.1\%$ jitter).
+
+\subsection*{Response to Issue 3.5: Sensor-Separated Energy Matrix \& Uncertainty Propagation}
+\textbf{Action Taken:} Table~\texttt{tab:v12\_csci\_stat\_energy} (Panel~B) separates \emph{Direct GPU Hardware Sensors} ($\pm 5.0\%$, $3.43\text{--}191.83\text{ J}$ active Tesla~T4 window) and \emph{Direct System ACPI DC Shunt} ($\pm 7.5\%$) from \emph{TDP-Calibrated CPU Package Estimates} ($\pm 20.0\%$), prohibiting direct joule-equivalence claims between estimated CPU power and hardware NVML sensors.
+
+\subsection*{Response to Issues 3.6, 3.7, R2, R5, R6 \& Manuscript Restructuring}
+\textbf{Action Taken:} (1) Reconciled $50\text{ public SQL (25 SDSS + 25 NYC TLC)} + 30\text{ Redset traces} = 80\text{ public/trace queries}$ across all sections, enforced by \texttt{results/v12\_canonical\_metrics\_registry.csv} and 24-gate script \texttt{verify\_zero\_contradiction\_V12.py}; (2) consolidated Section~1 into three focused contributions (\textbf{C1--C3}) and streamlined the Abstract; and (3) added explicit disclosures of all six study limitations (locked 4-node hardware scope, author-derived subsets, linear CSCI projection, estimated CPU energy, single BigQuery cloud target, and node-specific router training scope).
 \end{document}

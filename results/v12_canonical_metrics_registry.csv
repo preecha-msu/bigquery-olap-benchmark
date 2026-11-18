@@ -1,0 +1,24 @@
+Category,Metric_Key,Canonical_Value,Provenance_Note
+Protocol_P1_Primary_NestedCV,Guard_Threshold_Pct,8.0,Inner-fold Nested-CV selected (zero outer-fold leakage)
+Protocol_P1_Primary_NestedCV,Mean_Latency_75Q_ms,55.37,Outer-fold unbiased primary latency
+Protocol_P1_Primary_NestedCV,P95_Regret_75Q_Pct,118.40,Primary tail-risk endpoint (25 template clusters)
+Protocol_P2_Secondary_FixedGuard,Guard_Threshold_Pct,12.0,Fixed engineering default sensitivity configuration
+Protocol_P2_Secondary_FixedGuard,Mean_Latency_75Q_ms,54.92,6-engine canonical routing benchmark mean
+Protocol_P2_Secondary_FixedGuard,P95_Regret_75Q_Pct,114.11,Fixed-guard tail-risk sensitivity endpoint
+Canonical_75Q_Baselines,Top1_Accuracy_Pct,57.33,25-template GroupKFold / LOSO leakage-free
+Canonical_75Q_Baselines,Top2_Accuracy_Pct,76.00,Reflects sub-ms near-tie equivalence zone
+Canonical_75Q_Baselines,Mean_Regret_Pct,34.98,Relative to per-query oracle minimum
+Canonical_75Q_Baselines,GPU_Cold_Mean_ms,56.96,Includes PCIe H2D transfer
+Canonical_75Q_Baselines,Polars_Mean_ms,82.47,Rust Arrow lazy streaming
+Canonical_75Q_Baselines,DuckDB_Mean_ms,183.74,C++ morsel-driven vectorized
+Workload_Accounting,Category_I_Core_Dev_Queries,75,25 TPC-H/analytical templates x 3 seeds
+Workload_Accounting,Category_II_Diagnostic_Queries,55,Boundary stress & operator diagnostic suite
+Workload_Accounting,Category_III_Author_Derived,115,Schema/selectivity perturbation queries (disclosed non-third-party)
+Workload_Accounting,Category_IV_HeldOut_ThirdParty,155,75 Standard OLAP (TPC-DS/ClickBench/SSB) + 80 Public/Trace (25 SDSS + 25 NYC TLC + 30 Redset)
+Workload_Accounting,Public_RealWorld_SQL_Subset,50,25 SDSS SkyServer + 25 NYC TLC SQL queries
+Workload_Accounting,Redset_Serverless_Trace_Subset,30,30 Amazon Redshift (Redset) production trace queries
+Workload_Accounting,Combined_Public_And_Trace_Total,80,Exact sum: 50 (SDSS+NYC TLC) + 30 (Redset) = 80
+Statistical_Sampling_Units,Independent_Template_Clusters,25,Primary unit of independent cluster bootstrap
+Statistical_Sampling_Units,Distinct_Parametric_Queries,75,3 parametric seeds per template family
+Statistical_Sampling_Units,Total_Timed_Trials_Core,375,"75 queries x 5 timed repetitions (repeated measures, NOT independent)"
+MultiScale_Locked_4Node,Total_Real_Runs,64,"Nodes 1-4 across SF in {1, 10, 30, 100} GB, EX=1.000"

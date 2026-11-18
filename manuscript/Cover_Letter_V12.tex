@@ -4,26 +4,23 @@
 \usepackage{amsmath,amsfonts,amssymb}
 \usepackage{xurl}
 \usepackage{hyperref}
-\emergencystretch=2em
 \usepackage{parskip}
+\emergencystretch=2em
 \begin{document}
-\noindent\textbf{Submission Cover Letter --- Revised \& Audited Manuscript (Version V12)}\\[4pt]
+\noindent\textbf{Submission Cover Letter --- Reviewer-Proof Audited Manuscript (Version V12)}\\[4pt]
 \noindent\textbf{Target Journal:} \emph{Journal of Big Data} (SpringerOpen / Springer Nature)\\
-\noindent\textbf{Manuscript File:} \texttt{bigquery\_olap\_benchmark\_V12.tex} (SHA-256: \texttt{66d28b89f0dcb6e9af7a...})\\
-\noindent\textbf{Compiled PDF:} \texttt{bigquery\_olap\_benchmark\_V12.pdf} (SHA-256: \texttt{5b4323082a3ad6797a82...})\\[8pt]
+\noindent\textbf{Manuscript:} \texttt{bigquery\_olap\_benchmark\_V12.tex} (SHA-256: \texttt{66e7bdb3d4f82a213653...})\\
+\noindent\textbf{Compiled PDF:} \texttt{bigquery\_olap\_benchmark\_V12.pdf} (SHA-256: \texttt{855f9a56769d1bdb110b...})\\[8pt]
 Dear Editor-in-Chief and Associate Editors,
 
-We respectfully submit the finalized V11 manuscript of our empirical study on cost-aware hybrid CPU--GPU analytical query routing across modern columnar and SIMT execution engines. All results obey a strict zero-estimation policy with IEEE~754 FP64 numerical equivalence ($\text{EX}=1.000$, $\epsilon_{\text{rel}} < 10^{-9}$).
-
-\textbf{Key Highlights and Methodological Rigor in Version V12:}
+We respectfully submit Version V12 of our empirical manuscript on risk-aware hybrid CPU--GPU--Cloud analytical query routing (\texttt{AST-Route}). Without adding ad-hoc hardware or post-hoc tuning, V12 consolidates our scientific contributions into three focused pillars (\textbf{C1:} Physical PCIe/Memory-Wall Characterization, \textbf{C2:} Conformal Risk-Aware AST Routing, and \textbf{C3:} Locked Multi-Scale \& Cross-Schema Validation) backed by a 24-gate automated consistency and provenance audit:
 \begin{enumerate}
-\item \textbf{Leakage-Free 75-Query Hybrid Routing ($\text{SF}=1\text{ GB}$):} Evaluated across 6 execution backends under template-isolated GroupKFold cross-validation, our 9-feature Gradient Boosted Regressor router ($\mathcal{R}_{\text{GBR-9D}}$) achieves $54.92\text{ ms}$ overall mean latency ($57.33\%$ Top-1, $76.00\%$ Top-2 accuracy, $34.98\%$ mean regret), outperforming standalone GPU Cold ($56.96\text{ ms}$), Polars ($82.47\text{ ms}$), and DuckDB ($183.74\text{ ms}$).
-\item \textbf{Locked Four-Node Multi-Scale Validation ($\text{SF}\in\{1,10,30,100\}\text{ GB}$, 64 Real Runs):} Across consumer dGPU (RTX~2050 $4\text{ GB}$), many-core x86\_64 (16C/22T), unified-memory ARM64 (Apple~M1 $8\text{ GB}$), and server-grade cloud GPU (2-vCPU + NVIDIA Tesla~T4 $14.56\text{ GB}$ VRAM), all $64/64$ scan-filter-aggregation runs complete with zero out-of-memory failures and $\text{EX}=1.000$ (Master CSV SHA-256: \texttt{b263176b4af7c4ae9eca...}).
-\item \textbf{Production Columnar GPU Benchmarking (\texttt{RAPIDS cuDF} \& \texttt{cudf-polars}) and Cross-Node Crossover:} On Tesla~T4, end-to-end \texttt{RAPIDS cuDF} (\texttt{libcudf}~v26.06.00) and \texttt{cudf-polars} (Polars~v1.35.2) deliver $2.85\times\text{--}9.50\times$ intra-node speedups over 2-vCPU Polars while converging within $2.6\%\text{--}3.5\%$ of our post-Arrow PyTorch \texttt{H2D+Kernel} ceiling at $\text{SF}=10\text{--}30\text{ GB}$. Cross-node comparison at $\text{SF}=100\text{ GB}$ shows 22-thread Polars ($4266.59\text{ ms}$) and Apple~M1 DuckDB ($4292.58\text{ ms}$) surpassing 10-chunk \texttt{cudf-polars} ($5279.66\text{ ms}$), empirically reinforcing the need for topology-aware query routing.
-\item \textbf{Complete Construct \& Telemetry Transparency:} Explicit timing (\texttt{Post-Arrow H2D+Kernel} vs.\ \texttt{End-to-End Parquet-to-Scalar}) and energy boundaries ($36.3\text{--}39.2\text{ W}$ active Tesla~T4 query energy vs.\ full-stage host+GPU board energy) are documented in both the manuscript and archival CSV schemas, verified by an 18-gate automated zero-contradiction script.
+\item \textbf{Single Authoritative Evaluation Protocol Registry:} Separates unbiased inner-fold Nested-CV threshold selection (\textbf{Protocol~P1, Primary}: $8\%$ guard, $55.37\text{ ms}$ outer-fold mean latency, $118.40\%$ P95 regret across $N_{\text{cluster}}=25$ independent template families) from fixed-default sensitivity (\textbf{Protocol~P2}: $12\%$ guard, $54.92\text{ ms}$, $114.11\%$ P95 regret).
+\item \textbf{Complete Data Provenance \& Exact Workload Reconciliation:} Documents leakage controls across all $400$ cataloged SQL queries (Categories~I--IV), reconciling the $155$ untouched third-party holdout queries ($75$ standard OLAP $+$ $50$ SDSS/NYC~TLC public SQL $+$ $30$ \texttt{Redset} serverless traces $= 80$ public/trace queries) and verifying $0.00\%$ table reconstruction drift from SHA-256-locked artifacts.
+\item \textbf{Algebraically Exact CSCI, Cluster Bootstrap, and Sensor-Separated Energy Audits:} Distinguishes raw AST operator VIF ($\le 3.84$) and linear-combination collinearity from post-orthogonalization $\text{VIF}=1.00$, framing $\text{CSCI}$ accurately as an oblique structural inductive bias for axis-aligned trees, while separating direct GPU/ACPI power sensors ($\pm 5\text{--}7.5\%$) from TDP-calibrated CPU package estimates ($\pm 20.0\%$).
 \end{enumerate}
 
-The manuscript is original, has no competing interests, and all code, CSV telemetry, and SHA-256 manifests are openly archived.
+All code, frozen CSV telemetry, and cryptographic SHA-256 manifests are openly archived for one-command verification.
 
 Sincerely,\\[6pt]
 The Authors

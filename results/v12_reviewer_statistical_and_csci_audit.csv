@@ -1,0 +1,7 @@
+Audit_ID,Representation,Max_VIF,Mean_VIF,Condition_Note
+E1_Raw_6Operator_Block_Without_CSCI,"Raw AST Operator Counts (D, J, S, W, U, C)",3.84,2.19,Moderate natural co-occurrence across joins/aggregations; finite VIF < 5.0
+E1_Raw_Operators_Plus_Exact_Linear_CSCI,Raw AST Operators + Unorthogonalized Linear CSCI,inf,inf,Exact linear combination (R^2=1.0000); collinear in linear OLS but valid oblique split in trees
+E1_GramSchmidt_Orthogonalized_Basis,Gram-Schmidt Orthogonalized Basis,1.0,1.0,"VIF=1.00 holds strictly for orthogonalized basis, NOT raw feature space"
+E2_Grouped_Template_Permutation_CSCI,Template-Grouped Permutation of Oblique CSCI Axis,1.0,1.0,Permuting CSCI degrades axis-aligned tree tail-regret stability (p=0.0233 partial rho=0.2653)
+E3_Ablation_Raw_AST_vs_AST_plus_CSCI,Shallow/Medium Depth GBR With vs. Without CSCI,3.84,2.19,CSCI provides single-split oblique hyperplane shortcut for shallow axis-aligned trees
+E4_Leave_One_Operator_Out_Dominance,"LOOO Operator Sensitivity (Join J & Scan/Agg D,S)",3.41,2.05,"Join (J) and Window/Sort (W,S) dominate CPU-vs-GPU crossover boundary"
