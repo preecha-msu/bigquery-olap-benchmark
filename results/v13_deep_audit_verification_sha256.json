@@ -24,15 +24,15 @@
     "G12_ClickBench_Native_Transpiled_Split": true
   },
   "build": {
-    "pages": 25,
+    "pages": 24,
     "undef_refs": 0,
     "undef_cites": 0
   },
   "artifacts_sha256": {
-    "bigquery_olap_benchmark_V13.tex": "ba0379328c0d2d8f141a0eb39e924f83f6d763dc672cbcd02b34c4871669fde4",
-    "bigquery_olap_benchmark_V13.pdf": "689c59bf915bcacd6bd0961fa03e5fda2ec3fd3797332cf328f1ff7b9eba3d13",
+    "bigquery_olap_benchmark_V13.tex": "6bed062f487f764e77b032f1e2431fbf2da3b35338ad89eafcaa608a2aa3c4c4",
+    "bigquery_olap_benchmark_V13.pdf": "82e739a18f16fa7191da48cd86eb7cfe8b77886d116cbc1ddbebb03c7ca52195",
     "v13_verified_macros.tex": "8c4582c99e2e14ec3181327c55791290dd070c4e0d7e800134d0dd56d295cc8e",
-    "Journal_of_Big_Data_Snapp_Submission_Flat13.zip": "89415eb08e12dd77c63015ec59ec96e7b0fb42ce1f4fe00a7fb74a466d959bc6"
+    "Journal_of_Big_Data_Snapp_Submission_Flat13.zip": "e36c59054e8fa0aa348813c0afe9a2332c8a87e4ba2482ef810e1c4c32f44b43"
   },
   "csv_sha256": {
     "abstract_4themes_and_operator_bound_audit.csv": "ca06e002b9a29da897515a3fe88fb0a22267048c29a2f82a9f9d1cbc94e39572",
@@ -399,5 +399,26 @@
     "G13_Abstract_Under_300_Words": true,
     "G14_No_Duplicate_Abstract_Generalizes": true,
     "G15_Prospective_3Suite_Table_Present": true
+  },
+  "gates_19": {
+    "G01_No_Holdout_0018": true,
+    "G02_No_Duplicate_Abstract_L133": true,
+    "G03_No_LME_Beta_6206": true,
+    "G04_No_LME_Z_Scores": true,
+    "G05_No_Broken_Dollar_Holdout": true,
+    "G06_VIF_384_Reconciled_L150": true,
+    "G07_Dialect_Agnostic_EXPLAIN_Note": true,
+    "G08_Locked_Single_Shot_Label": true,
+    "G09_Table13_Cold_n1_Annotated": true,
+    "G10_Table14_Warm_R5_Annotated": true,
+    "G11_No_Raw_Markdown_In_URL": true,
+    "G12_Mahalanobis_OOD_Col_In_3Suite_Table": true,
+    "G13_No_Corrupted_LaTeX_Artifacts": true,
+    "G14_Single_Official_GitHub_URL": true,
+    "G15_No_Nested_URL": true,
+    "G16_ClickBench_20_Native_23_Transpiled": true,
+    "G17_No_Table16_100pct_Router_Claim": true,
+    "G18_Prospective_3Suite_Table_Present": true,
+    "G19_All_Tables_Preserved": true
   }
 }
