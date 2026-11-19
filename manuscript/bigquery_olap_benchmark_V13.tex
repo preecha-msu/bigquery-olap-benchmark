@@ -1068,6 +1068,30 @@ $\text{SF}=10$~GB & DuckDB (C++ Vectorized) & $2037.48$ & $616.03$ & $30.23\%$ &
 \end{table*}
 % === END GROUP B NODE4 TESLA T4 R5 ===
 
+% === BEGIN GROUP B MULTISCALE ROUTER MATRIX ===
+\paragraph{Multi-Scale AST-Route Decision Matrix ($\text{SF}=1\text{--}100$~GB).}
+Table~\ref{tab:v13_groupB_multiscale_router} evaluates the scale-aware \texttt{AST-Route} dispatcher across $\text{SF}\in\{1,10,30,100\}\text{ GB}$ (CSV SHA-256: \texttt{0dc718d5d8bb3508...}). By combining AST operator structure with dataset-scale and VRAM-headroom thresholds, \texttt{AST-Route} matches the empirical oracle at all four scales ($100.0\%$ routing accuracy), avoiding worst-case engine regressions by $12.18\times$ to $19.37\times$.
+
+\begin{table*}[!t]
+\centering
+\caption{Multi-scale \texttt{AST-Route} routing accuracy and worst-case avoidance across $\text{SF}\in\{1,10,30,100\}$~GB.}
+\label{tab:v13_groupB_multiscale_router}
+\scriptsize
+\setlength{\tabcolsep}{3.2pt}
+\renewcommand{\arraystretch}{1.10}
+\begin{tabular}{@{}llrlrlrrr@{}}
+\toprule
+\textbf{Scale} & \textbf{Oracle Best} & \textbf{Best (ms)} & \textbf{Worst Baseline} & \textbf{Worst (ms)} & \textbf{AST-Route Pick} & \textbf{Pick (ms)} & \textbf{vs.\ Worst} & \textbf{Acc.} \\
+\midrule
+$\text{SF}=1$~GB & DuckDB (C++) & $36.76$ & Polars Streaming (Rust) & $711.86$ & DuckDB (C++) & $36.76$ & $19.37\times$ & $100.0\%$ \\
+$\text{SF}=10$~GB & PyTorch CUDA (RTX 2050) & $274.18$ & DataFusion (Rust) & $5214.13$ & PyTorch CUDA (RTX 2050) & $274.18$ & $19.02\times$ & $100.0\%$ \\
+$\text{SF}=30$~GB & PyTorch CUDA (Tesla T4) & $1028.13$ & Polars Streaming (Rust) & $12521.13$ & PyTorch CUDA (Tesla T4) & $1028.13$ & $12.18\times$ & $100.0\%$ \\
+$\text{SF}=100$~GB & PyTorch CUDA (Tesla T4) & $3166.38$ & Polars Streaming (Rust) & $39252.64$ & PyTorch CUDA (Tesla T4) & $3166.38$ & $12.40\times$ & $100.0\%$ \\
+\bottomrule
+\end{tabular}
+\end{table*}
+% === END GROUP B MULTISCALE ROUTER MATRIX ===
+
 \section{Conclusion}
 \enlargethispage{1.5\baselineskip}
 \vspace{-3pt}
