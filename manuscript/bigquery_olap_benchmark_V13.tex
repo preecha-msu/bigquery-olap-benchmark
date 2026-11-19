@@ -121,10 +121,10 @@
 \begin{quote}
 \small\sffamily
 \textbf{\color{springerblue}Abstract}\\[0.3em]
-\textbf{Background:} Hybrid analytical query dispatch across in-process CPU engines (DuckDB, Polars, DataFusion), discrete local GPUs, and serverless cloud warehouses (Google BigQuery) suffers from severe tail-latency regressions whenever small or selective queries incur PCIe host-to-device transfer or cloud orchestration overheads.
-\textbf{Methods:} We evaluate a pre-execution dispatch framework combining zero-compile SQL Abstract Syntax Tree (AST) parsing and Parquet footer metadata sketching ($\sim 172\,\mu\text{s}$) with a post-hoc harmonized PCIe margin guard across a 400-query benchmark (75 factorial TPC-H development queries across $K=25$ seed clusters, 55 cross-schema calibration queries, 115 public/trace-profiled queries including 30 author-synthesized \texttt{Redset-Synth} queries, and 155 standard holdout queries comprising 99 TPC-DS, 43 ClickBench [20 native SQL + 23 dialect-transpiled], and 13 SSB) across four hardware nodes.
-\textbf{Results:} Three-way ablation shows that PCIe margin guarding drives 81.3\% of P95 tail-regret reduction, while a compact two-engine portfolio (\{Polars, GPU\}) retains 98.7\% of full five-engine utility; AST/GBR/CSCI provide lightweight overhead reduction rather than primary accuracy gains. On the 75-query development suite (25-seed LOSO-CV), P95 regret drops from 257.31\% (Always GPU) and 358.40\% (Always Polars) to 114.11\% (mean $54.92\text{ ms}$ vs.\ $56.96\text{ ms}$ Always GPU). On external holdout clusters ($K=38$), tail-regret reduction is directional but not statistically significant (cluster permutation $p = 0.125$ vs.\ CPU, $p = 0.198$ vs.\ GPU). Crucially, on out-of-distribution prospective holdouts (\texttt{Seed S7/DSB/JCC-H}), zero-shot accuracy drops to 12.0\% Top-1 (83.98\% mean regret, 346.0\% P95 regret), trailing Always Polars (66.75\% mean regret).
-\textbf{Conclusions:} Tail-safe hybrid OLAP routing is governed primarily by transfer-margin abstention and compact engine pools, but requires schema-local calibration before deployment on skewed or out-of-distribution workloads.
+\textbf{Background:} Hybrid analytical query dispatch across in-process CPU engines (DuckDB, Polars, DataFusion, SQLite), local GPUs, and serverless cloud warehouses (Google BigQuery) suffers severe tail-latency regressions when small or selective queries incur PCIe transfer or cloud orchestration overheads.
+\textbf{Methods:} We evaluate a pre-execution dispatch framework combining engine-agnostic SQL AST parsing and Parquet footer metadata sketching ($172\,\mu\text{s}$ cached; $4.15\text{ ms}$ cold parse+sketch) with a post-hoc harmonized PCIe margin guard across a 400-query benchmark spanning four hardware nodes (75 TPC-H development queries across $K=25$ seeds, 55 cross-schema calibration queries, 115 extended/public-trace queries, and 155 standard holdout queries including 99 TPC-DS, 43 ClickBench [20 native SQL + 23 dialect-transpiled], and 13 SSB; plus 30 author-synthesized \texttt{Redset-Synth} telemetry queries audited separately).
+\textbf{Results:} Three-way ablation shows that PCIe margin guarding drives 81.3\% of P95 tail-regret reduction, while a two-engine portfolio (\{Polars, GPU\}) retains 98.7\% of full six-engine utility; AST/GBR/CSCI enable cross-dialect dispatch without engine-specific planner lock-in (though native DuckDB \texttt{EXPLAIN-DAG} is faster at $1.41\text{ ms}$ on single-dialect queries). On development LOSO-CV ($N=75$), P95 regret drops from 257.31\% (Always GPU) and 358.40\% (Always Polars) to 114.11\%. On external holdout clusters ($K=38$), tail-regret reduction is directional but not statistically significant (cluster permutation $p = 0.125$ vs.\ CPU, $p = 0.198$ vs.\ GPU). On out-of-distribution prospective holdouts (\texttt{Seed S7/DSB/JCC-H}, $n=25$), zero-shot accuracy drops to 12.0\% Top-1 (83.98\% mean regret, 346.0\% P95 regret), trailing Always Polars (66.75\% mean regret).
+\textbf{Conclusions:} Tail-safe hybrid OLAP dispatch is governed primarily by transfer-margin abstention and compact engine pools, and requires schema-local calibration before deployment on skewed or out-of-distribution workloads.
 
 \noindent\textbf{Keywords:} Cross-engine query routing; Tail-regret control; Abstention guards; Heterogeneous OLAP systems; Apache Arrow and GPU analytics; Pre-execution metadata
 \end{quote}
@@ -565,7 +565,7 @@ where $\bar{d}$ and $s_d^2$ denote the sample mean and variance of seed-cluster 
 \textbf{Protocol \& Scope / Phase / Transfer Pair} & \textbf{Telemetry / Shift / Calibration Mode} & \textbf{Metric 1} & \textbf{Metric 2} & \textbf{Metric 3} & \textbf{Metric 4} & \textbf{Audit Verdict \& Statistical / Systems Proof} \\
 \midrule
 \multicolumn{7}{@{}l}{\textbf{Part A: Three-Scope Energy Telemetry Boundary ($N=75$ Query-Level Spearman $\rho_{N=75}=0.9684, p=1.4\times 10^{-45}$) \& $G_{\text{total}}=42$ Cluster LME Inference}} \\
-\textbf{LME Model ($G_{\text{total}}=42$, $N=312$Q)} & REML MixedLM ($\text{Regret}\sim\text{Policy}+(1|\text{Family})$) & $\mathbf{-62.06\text{ pp}}$ ($\text{SE}=1.08$) & $95\%\text{ CI }[-64.2,-59.9]$ & $p_{\text{perm}} = 0.125$ & $\mathbf{p < 10^{-15}}$ & \textbf{42 template families; Global Holm $H_1\text{--}H_3$ $p_{\text{Holm}}\le 0.0136$} \\
+\textbf{LME Model ($G_{\text{total}}=42$, $N=312$Q)} & REML MixedLM ($\text{Regret}\sim\text{Policy}+(1|\text{Family})$) & $\mathbf{-62.06\text{ pp}}$ ($\text{SE}=1.08$) & $95\%\text{ CI }[-64.2,-59.9]$ & $p_{\text{perm}} = 0.125$ & $\mathbf{p_{\text{perm}} = 0.125 \text{ (cluster-level)}}$ & \textbf{42 template families; Global Holm $H_1\text{--}H_3$ $p_{\text{Holm}}\le 0.0136$} \\
 \textbf{Scope 1: Direct Device Sensor (Primary)} & Hardware NVML $250\text{ Hz}$ / Cloud RAPL & $0.644\text{ J/q}$ (N1 GPU) & $0.875\text{ J/q}$ (N4 T4) & $0.000\text{ J}$ (CPU-only) & $\text{CV}=1.24\%$ & \textbf{100\% physical sensor; governs primary claims} \\
 \textbf{Scope 2: Host+GPU Composite (Secondary)} & NVML GPU $+$ Calibrated Host CPU Model & $2.273\text{ J/q}$ (P1 Speed) & $\mathbf{1.658\text{ J/q}}$ (P2 En.) & $3.180\text{ J/q}$ (Polars) & $-27.1\%$ (P2 vs P1) & \textbf{Calibrated against 50-rep RAPL ($\text{MAPE}=2.28\%$)} \\
 \textbf{Scope 3: Wall/Shunt Envelope ($2{,}817$Q)} & Mainboard ACPI DC Battery Shunt & $2.584\text{ J/q}$ (P1 Speed) & $\mathbf{1.892\text{ J/q}}$ (P2 En.) & $3.620\text{ J/q}$ (Polars) & $\mathbf{\rho_{N=75}=0.9684}$ & \textbf{Query-level $t(73)=33.18, p=1.4\times 10^{-45}$ ($95\%\text{ CI }[0.95,0.98]$)} \\
@@ -827,7 +827,7 @@ Furthermore, \textbf{Protocol~R28} (\texttt{results/v11\_r28\_router\_breakeven\
 
 \begin{table*}[htbp]
 \centering\scriptsize\setlength{\tabcolsep}{3.1pt}
-\caption{V12 Evaluation Protocol Evolution Registry documenting historical V1--V9 and tightened V10--V12 Nested-CV protocols (not OSF-preregistered).}
+\caption{V13 Evaluation Protocol Evolution Registry documenting historical V1--V9 and tightened V10--V12 Nested-CV protocols (not OSF-preregistered).}
 \label{tab:v12_protocol_registry}
 \resizebox{\textwidth}{!}{%
 \begin{tabular}{@{}lllllll@{}}
@@ -884,7 +884,7 @@ Furthermore, \textbf{Protocol~R28} (\texttt{results/v11\_r28\_router\_breakeven\
 
 \begin{table*}[htbp]
 \centering\scriptsize\setlength{\tabcolsep}{3.1pt}
-\caption{V12 CSCI Incremental Value \& Multicollinearity Audit (Panel~A) and Sensor-Separated Energy Provenance \& Uncertainty Matrix (Panel~B).}
+\caption{V13 CSCI Incremental Value \& Multicollinearity Audit (Panel~A) and Sensor-Separated Energy Provenance \& Uncertainty Matrix (Panel~B).}
 \label{tab:v12_csci_stat_energy}
 \resizebox{\textwidth}{!}{%
 \begin{tabular}{@{}llllll@{}}
@@ -921,7 +921,7 @@ Table~\ref{tab:v12_fournode_multiscale_cudf} and Fig.~\ref{fig:v12_fournode_mult
 
 \begin{table*}[htbp]
 \centering\scriptsize\setlength{\tabcolsep}{2.7pt}
-\caption{V12 four-node physical scan-filter-aggregation matrix across $\text{SF} \in \{1, 10, 30, 100\}\text{ GB}$ ($64$ single-pass $n=1$ node--scale--engine cells, $\text{EX}=1.000$).}
+\caption{V13 four-node physical scan-filter-aggregation matrix across $\text{SF} \in \{1, 10, 30, 100\}\text{ GB}$ ($64$ single-pass $n=1$ node--scale--engine cells, $\text{EX}=1.000$).}
 \label{tab:v12_fournode_multiscale_cudf}
 \resizebox{\textwidth}{!}{%
 \begin{tabular}{@{}llrrrrrrl@{}}
@@ -956,7 +956,7 @@ Node 4: Cloud VM (2 vCPU) + T4 (15GB)$^{\mathrm{d}}$ & $\text{SF}=1$ GB & $220.2
 \begin{figure*}[htbp]
 \centering
 \includegraphics[width=0.94\textwidth]{figures/fig_v12_4node_multiscale_cudf_sf1_10_30_100.jpg}
-\caption{V12 four-node single-pass ($n=1$) multi-scale latency ($\text{SF}=1\text{--}100\text{ GB}$, log scale) showing CPU victories over chunked GPU at $\text{SF}=100\text{ GB}$.}
+\caption{V13 four-node single-pass ($n=1$) multi-scale latency ($\text{SF}=1\text{--}100\text{ GB}$, log scale) showing CPU victories over chunked GPU at $\text{SF}=100\text{ GB}$.}
 \label{fig:v12_fournode_multiscale_cudf}
 \end{figure*}
 % === END V12 FOUR-NODE CUDF MULTISCALE SF1-10-30-100 ===
@@ -972,7 +972,7 @@ Node 4: Cloud VM (2 vCPU) + T4 (15GB)$^{\mathrm{d}}$ & $\text{SF}=1$ GB & $220.2
 
 
 % === BEGIN GROUP B STEP B2 PROSPECTIVE HOLDOUT EVIDENCE ===
-\paragraph{Prospective Pre-Registration Lock and Single-Shot Holdout Evaluation (Seed S7, DSB, and JCC-H).}
+\paragraph{Post-Hoc Frozen-Model Prospective Lock (SHA-256) and Single-Shot Holdout Evaluation (Seed S7, DSB, and JCC-H).}
 To validate zero-shot generalization without post-hoc retuning, we locked $25$ pristine prospective queries---$15$ new Seed~S7 queries (\texttt{L1--L5} $\times$ \texttt{V1--V3}), $5$ DSB grouped-\texttt{HAVING} analytical queries, and $5$ JCC-H Zipfian-skewed ($s=1.5$) join queries---under SHA-256 lock \texttt{2a8acab722a25bb41c095dcb...} and executed a single-shot real-execution pass across DuckDB, Polars, Apache DataFusion, and CUDA GPU (\texttt{EX}$=1.000$ across $25/25$ queries, FP64 relative error $<10^{-9}$). With frozen Cat~I weights and bounded $8\%$ PCIe guarding, \texttt{AST-Route} attained $12.00\%$ Top-1 match, $34.34\text{ ms}$ mean total latency (including live AST routing overhead), $83.98\%$ mean regret, and $346.21\%$ P95 regret (compared against $186.74\%$ Always DuckDB, $66.75\%$ Always Polars, and $632.72\%$ Always GPU Cold; log \texttt{v13\_groupB\_prospective\_holdout\_jcc\_h\_results.csv}, SHA-256: \texttt{53b3e00a2d9f7193...}).
 % === END GROUP B STEP B2 PROSPECTIVE HOLDOUT EVIDENCE ===
 
@@ -1104,7 +1104,26 @@ $\text{SF}=100$~GB & PyTorch CUDA (Tesla T4) & $3166.38$ & Polars Streaming (Rus
 
 
 
-\paragraph{Prospective Out-of-Distribution Holdout Failure Analysis (\texttt{Seed S7 / DSB / JCC-H}).} To test strict zero-shot transfer beyond our development distribution, we evaluated the frozen router once on 25 prospective out-of-distribution queries (\texttt{Seed S7}, \texttt{DSB} subset, and \texttt{JCC-H} Zipfian skew joins). Zero-shot dispatch degraded sharply to $12.0\%$ Top-1 accuracy, $83.98\%$ mean regret, and $346.0\%$ P95 regret—underperforming both Always Polars ($66.75\%$ mean regret) and Always DuckDB ($186.74\%$ P95 regret). Root-cause inspection shows that skewed join fan-outs and non-TPC-H predicate distributions shift intermediate cardinalities outside the training support of the 9D GBR model, causing systematic misrouting to DataFusion. Accordingly, our findings establish that transfer-margin guarding requires lightweight schema-local calibration before deployment on previously unseen skewed workloads.
+\paragraph{Prospective Out-of-Distribution Holdout Failure Analysis (\texttt{Seed S7 / DSB / JCC-H}).} To test strict zero-shot transfer beyond our development distribution, we evaluated the frozen router once on 25 prospective out-of-distribution queries (\texttt{Seed S7}, \texttt{DSB} subset, and \texttt{JCC-H} Zipfian skew joins). Zero-shot dispatch degraded sharply to $12.0\%$ Top-1 accuracy, $83.98\%$ mean regret, and $346.0\%$ P95 regret—underperforming both Always Polars ($66.75\%$ mean regret) and Always DuckDB ($186.74\%$ P95 regret). Root-cause inspection shows that skewed join fan-outs and non-TPC-H predicate distributions shift intermediate cardinalities outside the training support of the 9D GBR model, causing systematic misrouting to DataFusion. Accordingly, our findings establish that transfer-margin guarding requires lightweight schema-local calibration before deployment on previously unseen skewed workloads. Table~\ref{tab:prospective_3suite_failure} reports the empirical per-suite breakdown across all three prospective groups.
+
+\begin{table}[!htbp]
+\centering
+\caption{Empirical per-suite failure breakdown of the frozen zero-shot router on the 25-query prospective out-of-distribution suite (\texttt{Seed\_S7}, \texttt{DSB\_Subset}, and \texttt{JCC\_H\_Skew}; SHA-256 lock \texttt{2a8acab7...}).}
+\label{tab:prospective_3suite_failure}
+\scriptsize
+\begin{tabular}{@{}lccccc@{}}
+\toprule
+\textbf{Prospective Suite} & \textbf{$n$} & \textbf{Top-1} & \textbf{Mean Regret} & \textbf{P95 Regret} & \textbf{Routed to DataFusion} \\
+\midrule
+\texttt{Seed\_S7} & 15 & 6.7\% & 114.19\% & 421.08\% & 66.7\% \\
+\texttt{DSB\_Subset} & 5 & 40.0\% & 26.22\% & 52.22\% & 80.0\% \\
+\texttt{JCC\_H\_Skew} & 5 & 0.0\% & 51.12\% & 92.17\% & 100.0\% \\
+\midrule
+\textbf{Overall Prospective} & \textbf{25} & \textbf{12.0\%} & \textbf{83.98\%} & \textbf{346.21\%} & \textbf{76.0\%} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 
 \section{Conclusion}
 \enlargethispage{1.5\baselineskip}

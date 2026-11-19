@@ -24,15 +24,15 @@
     "G12_ClickBench_Native_Transpiled_Split": true
   },
   "build": {
-    "pages": 24,
+    "pages": 25,
     "undef_refs": 0,
     "undef_cites": 0
   },
   "artifacts_sha256": {
-    "bigquery_olap_benchmark_V13.tex": "3e9bb44fb566e39abe1dee2631af8618912bff10c27088c08af69324d616c75d",
-    "bigquery_olap_benchmark_V13.pdf": "a521338f33a75710ff503f0a7a9b787dc639ff53916dedefd2768bc84c8391f4",
+    "bigquery_olap_benchmark_V13.tex": "ba0379328c0d2d8f141a0eb39e924f83f6d763dc672cbcd02b34c4871669fde4",
+    "bigquery_olap_benchmark_V13.pdf": "689c59bf915bcacd6bd0961fa03e5fda2ec3fd3797332cf328f1ff7b9eba3d13",
     "v13_verified_macros.tex": "8c4582c99e2e14ec3181327c55791290dd070c4e0d7e800134d0dd56d295cc8e",
-    "Journal_of_Big_Data_Snapp_Submission_Flat13.zip": "e305a40b1c2d9c256e44ab49f1d4817111975583fe0f3b22df0409346401bfa6"
+    "Journal_of_Big_Data_Snapp_Submission_Flat13.zip": "89415eb08e12dd77c63015ec59ec96e7b0fb42ce1f4fe00a7fb74a466d959bc6"
   },
   "csv_sha256": {
     "abstract_4themes_and_operator_bound_audit.csv": "ca06e002b9a29da897515a3fe88fb0a22267048c29a2f82a9f9d1cbc94e39572",
@@ -355,5 +355,49 @@
     "v9_sec3_5_tpcds_30queries_per_query_telemetry.csv": "2f540802d5da18e5f5a3987d28debd2682aaef95d5871cd97b10993d444a77d8",
     "v9_vs_v10_comparison_checklist.csv": "fb2f93ea26261f4778f02febd164346fdc575066a695c1ec59bfa40967141aba",
     "zero_discrepancy_v2_tex_audit_log.csv": "9ef365b8eb01bef1d3df3b6f437e8d112e58624a7fbb1d11818d46063ebe3701"
+  },
+  "abstract_words": 277,
+  "prospective_3suite": {
+    "source_csv": "v13_groupB_prospective_holdout_jcc_h_results.csv",
+    "suites": {
+      "Seed_S7": {
+        "n": 15,
+        "top1_pct": 6.67,
+        "mean_regret_pct": 114.19,
+        "p95_regret_pct": 421.08,
+        "datafusion_dispatch_pct": 66.67
+      },
+      "DSB_Subset": {
+        "n": 5,
+        "top1_pct": 40.0,
+        "mean_regret_pct": 26.22,
+        "p95_regret_pct": 52.22,
+        "datafusion_dispatch_pct": 80.0
+      },
+      "JCC_H_Skew": {
+        "n": 5,
+        "top1_pct": 0.0,
+        "mean_regret_pct": 51.12,
+        "p95_regret_pct": 92.17,
+        "datafusion_dispatch_pct": 100.0
+      }
+    }
+  },
+  "gates_15": {
+    "G01_No_Holdout_0018_Contradiction": true,
+    "G02_Holdout_p0125_Present": true,
+    "G03_Single_Structured_Abstract": true,
+    "G04_Prospective_S7_DSB_JCCH_In_Main_Results": true,
+    "G05_No_Conflicting_LME_Z_Or_p1e15": true,
+    "G06_No_False_OSF_Or_PreReg_Lock": true,
+    "G07_No_Corrupted_LaTeX_Artifacts": true,
+    "G08_Single_Official_GitHub_URL": true,
+    "G09_No_Nested_URL_Recursion": true,
+    "G10_No_Raw_Markdown_Links": true,
+    "G11_No_Table16_100pct_Router_Claim": true,
+    "G12_ClickBench_Native_Transpiled_Split": true,
+    "G13_Abstract_Under_300_Words": true,
+    "G14_No_Duplicate_Abstract_Generalizes": true,
+    "G15_Prospective_3Suite_Table_Present": true
   }
 }
