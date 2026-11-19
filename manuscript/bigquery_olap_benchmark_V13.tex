@@ -959,6 +959,13 @@ Node 4: Cloud VM (2 vCPU) + T4 (15GB)$^{\mathrm{d}}$ & $\text{SF}=1$ GB & $220.2
 % [/V12-B1-LIM]
 
 
+
+
+% === BEGIN GROUP B STEP B2 PROSPECTIVE HOLDOUT EVIDENCE ===
+\paragraph{Prospective Pre-Registration Lock and Single-Shot Holdout Evaluation (Seed S7, DSB, and JCC-H).}
+To validate zero-shot generalization without post-hoc retuning, we locked $25$ pristine prospective queries---$15$ new Seed~S7 queries (\texttt{L1--L5} $\times$ \texttt{V1--V3}), $5$ DSB grouped-\texttt{HAVING} analytical queries, and $5$ JCC-H Zipfian-skewed ($s=1.5$) join queries---under SHA-256 lock \texttt{2a8acab722a25bb41c095dcb...} and executed a single-shot real-execution pass across DuckDB, Polars, Apache DataFusion, and CUDA GPU (\texttt{EX}$=1.000$ across $25/25$ queries, FP64 relative error $<10^{-9}$). With frozen Cat~I weights and bounded $8\%$ PCIe guarding, \texttt{AST-Route} attained $12.00\%$ Top-1 match, $34.34\text{ ms}$ mean total latency (including live AST routing overhead), $83.98\%$ mean regret, and $346.21\%$ P95 regret (compared against $186.74\%$ Always DuckDB, $66.75\%$ Always Polars, and $632.72\%$ Always GPU Cold; log \texttt{v13\_groupB\_prospective\_holdout\_jcc\_h\_results.csv}, SHA-256: \texttt{53b3e00a2d9f7193...}).
+% === END GROUP B STEP B2 PROSPECTIVE HOLDOUT EVIDENCE ===
+
 \section{Conclusion}
 \enlargethispage{1.5\baselineskip}
 \vspace{-3pt}
