@@ -1,0 +1,8 @@
+services:
+  ast_route_replicator:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ast-route-v13-replicator:latest
+    volumes:
+      - ./replication_output:/app/output

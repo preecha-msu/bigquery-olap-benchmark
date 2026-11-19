@@ -1,0 +1,34 @@
+{
+  "protocol": "AST-Route V13 Independent Docker Replication Receipt",
+  "timestamp_utc": "2026-11-19T21:09:07.296026+00:00",
+  "host_environment": {
+    "os": "Windows-11-10.0.26200-SP0",
+    "arch": "AMD64",
+    "python": "3.13.9",
+    "logical_cpus": 12,
+    "ram_gb": 63.71,
+    "in_docker": false
+  },
+  "engine_versions": {
+    "duckdb": "2.0.0",
+    "polars": "2.1.0",
+    "datafusion": "55.0.0",
+    "sqlglot": "30.24.0"
+  },
+  "verification": {
+    "scale_factor_gb": 1.0,
+    "repetitions_r": 3,
+    "queries_verified": 15,
+    "ex_multiset_match_rate": 1.0,
+    "max_fp64_rel_error": 4.549018654838303e-12,
+    "median_ast_parse_us": 486.6,
+    "duckdb_mean_ms": 22.722,
+    "polars_mean_ms": 15.257,
+    "datafusion_mean_ms": 32.819,
+    "l4_window_polars_mean_ms": 20.886,
+    "l4_window_duckdb_mean_ms": 53.574,
+    "l4_window_datafusion_mean_ms": 100.893,
+    "l4_window_polars_beats_datafusion": true
+  },
+  "results_csv_sha256": "9f8ae7b748c10c76409e6790ec03592aea730ffd73928c8989d542ecf43ce1ce"
+}

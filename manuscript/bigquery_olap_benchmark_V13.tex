@@ -966,6 +966,13 @@ Node 4: Cloud VM (2 vCPU) + T4 (15GB)$^{\mathrm{d}}$ & $\text{SF}=1$ GB & $220.2
 To validate zero-shot generalization without post-hoc retuning, we locked $25$ pristine prospective queries---$15$ new Seed~S7 queries (\texttt{L1--L5} $\times$ \texttt{V1--V3}), $5$ DSB grouped-\texttt{HAVING} analytical queries, and $5$ JCC-H Zipfian-skewed ($s=1.5$) join queries---under SHA-256 lock \texttt{2a8acab722a25bb41c095dcb...} and executed a single-shot real-execution pass across DuckDB, Polars, Apache DataFusion, and CUDA GPU (\texttt{EX}$=1.000$ across $25/25$ queries, FP64 relative error $<10^{-9}$). With frozen Cat~I weights and bounded $8\%$ PCIe guarding, \texttt{AST-Route} attained $12.00\%$ Top-1 match, $34.34\text{ ms}$ mean total latency (including live AST routing overhead), $83.98\%$ mean regret, and $346.21\%$ P95 regret (compared against $186.74\%$ Always DuckDB, $66.75\%$ Always Polars, and $632.72\%$ Always GPU Cold; log \texttt{v13\_groupB\_prospective\_holdout\_jcc\_h\_results.csv}, SHA-256: \texttt{53b3e00a2d9f7193...}).
 % === END GROUP B STEP B2 PROSPECTIVE HOLDOUT EVIDENCE ===
 
+
+
+% === BEGIN GROUP B STEP B4 DOCKER REPLICATION ===
+\paragraph{Containerized Independent Replication Protocol.}
+To enable single-command external verification on independent x86\_64 or ARM64 hosts without downloading multi-gigabyte archives, we package a pinned Docker replication kit (\texttt{docker\_replication/Dockerfile}, SHA-256: \texttt{e1e823a7f971f3cc...}; \texttt{run\_independent\_replication.py}, SHA-256: \texttt{9067ce1b2ed29301...}; invoked via \texttt{docker compose up --build}) that automatically provisions canonical TPC-H $\text{SF}=1\text{ GB}$ Parquet tables via DuckDB \texttt{dbgen}, executes the $15$-query stratified \texttt{L1--L5} suite ($R=3$), verifies \texttt{EX}$=1.000$ ($\epsilon_{\text{rel}} < 10^{-9}$), and emits a hardware-stamped receipt (\texttt{independent\_replication\_receipt.json}) for third-party attestation. Pre-release harness self-verification on the host workstation (\texttt{SF}$=1.0\text{ GB}$, $R=3$, CSV SHA-256: \texttt{9f8ae7b748c10c76...}) confirmed \texttt{EX}$=1.000$ ($\max\epsilon_{\text{rel}}=4.55e-12$), $486.6\text{ }\mu\text{s}$ median AST parse latency, and reproduction of the Tier~L4 window crossover (Polars $20.89\text{ ms}$ vs.\ DuckDB $53.57\text{ ms}$ and DataFusion $100.89\text{ ms}$).
+% === END GROUP B STEP B4 DOCKER REPLICATION ===
+
 \section{Conclusion}
 \enlargethispage{1.5\baselineskip}
 \vspace{-3pt}
