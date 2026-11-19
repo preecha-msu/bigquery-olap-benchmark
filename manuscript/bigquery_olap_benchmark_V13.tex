@@ -1033,6 +1033,41 @@ $\text{SF}=100$~GB & DuckDB (C++ Vectorized) & $3296.61$ & $253.70$ & $7.70\%$ &
 \end{table*}
 % === END GROUP B NODE1 R5 AND SDSS FUNNEL ===
 
+% === BEGIN GROUP B NODE4 TESLA T4 R5 ===
+\paragraph{Cloud Server GPU Repeated Audit ($R=5$, 6 Engines Including RAPIDS \texttt{cuDF} and \texttt{cudf-polars}).}
+Table~\ref{tab:v13_groupB_node4_t4_r5} extends the $R=5$ repeated audit to Node~4 (2~vCPU, $13$~GB RAM, NVIDIA Tesla T4 with $14.56$~GB VRAM, CSV SHA-256: \texttt{a959fc1c86228376...}), evaluating native GPU Parquet engines (\texttt{RAPIDS cuDF} and \texttt{cudf-polars}) alongside CPU baselines ($\text{EX}=1.000$ across all repetitions). At $\text{SF}=10\text{ GB}$, \texttt{cudf-polars} attains $231.85\text{ ms}$ ($6.32\times$ faster than CPU Polars at $1466.03\text{ ms}$ and $8.79\times$ faster than DuckDB at $2037.48\text{ ms}$), while native \texttt{RAPIDS cuDF} achieves $453.36\text{ ms}$ with low variance ($\text{CV}=3.84\%$ vs.\ $29.05\%\text{--}30.23\%$ on shared-vCPU DuckDB/DataFusion). Because Node~4 is still constrained to 2~vCPUs, we preserve the 8--16~vCPU cloud harness (\texttt{scripts/v13\_b1\_cloud\_gpu\_8to16vcpu\_r5.py}) for dedicated multi-core host-isolation replication.
+
+\begin{table*}[!t]
+\centering
+\caption{Node~4 (2~vCPU, NVIDIA Tesla T4 $14.56$~GB VRAM) repeated $R=5$ six-engine audit ($\text{SF}\in\{1,10\}$~GB, $\text{EX}=1.000$, exact Student-$t$ $95\%$ CI, $df=4$).}
+\label{tab:v13_groupB_node4_t4_r5}
+\scriptsize
+\setlength{\tabcolsep}{4.0pt}
+\renewcommand{\arraystretch}{1.10}
+\begin{tabular}{@{}llrrrr@{}}
+\toprule
+\textbf{Scale} & \textbf{Engine / Execution Boundary} & \textbf{Mean (ms)} & \textbf{SD (ms)} & \textbf{CV (\%)} & \textbf{Exact $t_{0.975,4}$ 95\% CI (ms)} \\
+\midrule
+$\text{SF}=1$~GB & DuckDB (C++ Vectorized) & $275.37$ & $83.63$ & $30.37\%$ & $[171.53,\ 379.21]$ \\
+ & Polars Streaming (Rust CPU) & $197.28$ & $68.07$ & $34.50\%$ & $[112.76,\ 281.81]$ \\
+ & Apache DataFusion (Rust CPU) & $204.99$ & $62.10$ & $30.29\%$ & $[127.88,\ 282.09]$ \\
+ & PyTorch CUDA (Post-Arrow) & $43.96$ & $2.15$ & $4.89\%$ & $[41.29,\ 46.63]$ \\
+ & PyTorch CUDA (Full ZSTD E2E) & $387.12$ & $64.33$ & $16.62\%$ & $[307.24,\ 466.99]$ \\
+ & RAPIDS cuDF (Native GPU Parquet) & $88.17$ & $12.56$ & $14.25\%$ & $[72.57,\ 103.77]$ \\
+ & Polars GPU (\texttt{cudf-polars}) & $97.00$ & $14.18$ & $14.62\%$ & $[79.39,\ 114.61]$ \\
+\midrule
+$\text{SF}=10$~GB & DuckDB (C++ Vectorized) & $2037.48$ & $616.03$ & $30.23\%$ & $[1272.58,\ 2802.38]$ \\
+ & Polars Streaming (Rust CPU) & $1466.03$ & $72.45$ & $4.94\%$ & $[1376.08,\ 1555.98]$ \\
+ & Apache DataFusion (Rust CPU) & $1789.42$ & $519.80$ & $29.05\%$ & $[1144.00,\ 2434.83]$ \\
+ & PyTorch CUDA (Post-Arrow) & $413.70$ & $10.59$ & $2.56\%$ & $[400.54,\ 426.86]$ \\
+ & PyTorch CUDA (Full ZSTD E2E) & $3464.71$ & $331.12$ & $9.56\%$ & $[3053.57,\ 3875.84]$ \\
+ & RAPIDS cuDF (Native GPU Parquet) & $453.36$ & $17.43$ & $3.84\%$ & $[431.72,\ 475.01]$ \\
+ & Polars GPU (\texttt{cudf-polars}) & $231.85$ & $25.12$ & $10.84\%$ & $[200.66,\ 263.05]$ \\
+\bottomrule
+\end{tabular}
+\end{table*}
+% === END GROUP B NODE4 TESLA T4 R5 ===
+
 \section{Conclusion}
 \enlargethispage{1.5\baselineskip}
 \vspace{-3pt}
