@@ -973,6 +973,66 @@ To validate zero-shot generalization without post-hoc retuning, we locked $25$ p
 To enable single-command external verification on independent x86\_64 or ARM64 hosts without downloading multi-gigabyte archives, we package a pinned Docker replication kit (\texttt{docker\_replication/Dockerfile}, SHA-256: \texttt{e1e823a7f971f3cc...}; \texttt{run\_independent\_replication.py}, SHA-256: \texttt{9067ce1b2ed29301...}; invoked via \texttt{docker compose up --build}) that automatically provisions canonical TPC-H $\text{SF}=1\text{ GB}$ Parquet tables via DuckDB \texttt{dbgen}, executes the $15$-query stratified \texttt{L1--L5} suite ($R=3$), verifies \texttt{EX}$=1.000$ ($\epsilon_{\text{rel}} < 10^{-9}$), and emits a hardware-stamped receipt (\texttt{independent\_replication\_receipt.json}) for third-party attestation. Pre-release harness self-verification on the host workstation (\texttt{SF}$=1.0\text{ GB}$, $R=3$, CSV SHA-256: \texttt{9f8ae7b748c10c76...}) confirmed \texttt{EX}$=1.000$ ($\max\epsilon_{\text{rel}}=4.55e-12$), $486.6\text{ }\mu\text{s}$ median AST parse latency, and reproduction of the Tier~L4 window crossover (Polars $20.89\text{ ms}$ vs.\ DuckDB $53.57\text{ ms}$ and DataFusion $100.89\text{ ms}$).
 % === END GROUP B STEP B4 DOCKER REPLICATION ===
 
+
+
+% === BEGIN GROUP B NODE1 R5 AND SDSS FUNNEL ===
+\subsection{Repeated Multi-Scale Variance Audit ($R=5$) and SDSS SkyServer Attrition Funnel}
+\label{subsec:v13_groupB_r5_sdss}
+To strengthen the single-pass ($n=1$) scaling matrix with per-cell variance bounds, Table~\ref{tab:v13_groupB_r5_and_sdss} (Panel~A) reports $R=5$ independent timed repetitions (after $1$ untimed warmup, $\text{EX}=1.000$ across all $100$ timed runs) on Node~1 across $\text{SF}\in\{1,10,30,100\}\text{ GB}$ with exact Student-$t$ $95\%$ confidence intervals ($df=4$, $t_{0.975,4}=2.776$; CSV SHA-256: \texttt{3e1bd7ac51565a41...}). While \texttt{PyTorch CUDA (Post-Arrow)} leads at $\text{SF}=1\text{ GB}$ ($34.46\text{ ms}$, $\text{CV}=1.96\%$), out-of-core CPU \texttt{DuckDB} overtakes both post-Arrow GPU and full ZSTD-to-GPU execution from $\text{SF}=10\text{ GB}$ ($290.24\text{ ms}$, $\text{CV}=1.52\%$) through $\text{SF}=100\text{ GB}$ ($3296.61\text{ ms}$ vs.\ $3682.14\text{ ms}$ post-Arrow GPU and $28348.57\text{ ms}$ full ZSTD-to-GPU across $41$ chunks). Panel~B documents the transparent attrition funnel from $142$ raw SDSS DR16 SkyServer log queries down to the $25$ ANSI-executable analytical queries (CSV SHA-256: \texttt{e6328c9b7fc7608f...}).
+
+\begin{table*}[!t]
+\centering
+\caption{Node~1 repeated multi-scale execution ($R=5$, $\text{CV}\%$, exact Student-$t$ $95\%$ CI, $df=4$) and SDSS SkyServer query attrition funnel.}
+\label{tab:v13_groupB_r5_and_sdss}
+\scriptsize
+\setlength{\tabcolsep}{4.0pt}
+\renewcommand{\arraystretch}{1.10}
+\begin{tabular}{@{}llrrrr@{}}
+\toprule
+\multicolumn{6}{@{}l}{\textbf{Panel A: Node~1 Repeated Multi-Scale Audit ($R=5$ Runs/Cell, $\text{EX}=1.000$, Exact Student-$t$ $95\%$ CI)}} \\
+\textbf{Scale} & \textbf{Engine / Execution Boundary} & \textbf{Mean (ms)} & \textbf{SD (ms)} & \textbf{CV (\%)} & \textbf{Exact $t_{0.975,4}$ 95\% CI (ms)} \\
+\midrule
+$\text{SF}=1$~GB & DuckDB (C++ Vectorized) & $51.78$ & $2.86$ & $5.52\%$ & $[48.23,\ 55.33]$ \\
+ & Polars Streaming (Rust) & $42.59$ & $5.24$ & $12.31\%$ & $[36.08,\ 49.10]$ \\
+ & Apache DataFusion (Rust) & $41.87$ & $4.95$ & $11.82\%$ & $[35.72,\ 48.01]$ \\
+ & PyTorch CUDA (Post-Arrow) & $34.46$ & $0.68$ & $1.96\%$ & $[33.62,\ 35.30]$ \\
+ & PyTorch CUDA (Full ZSTD E2E) & $255.69$ & $7.62$ & $2.98\%$ & $[246.22,\ 265.15]$ \\
+\midrule
+$\text{SF}=10$~GB & DuckDB (C++ Vectorized) & $290.24$ & $4.41$ & $1.52\%$ & $[284.77,\ 295.72]$ \\
+ & Polars Streaming (Rust) & $413.72$ & $5.13$ & $1.24\%$ & $[407.35,\ 420.09]$ \\
+ & Apache DataFusion (Rust) & $369.70$ & $6.88$ & $1.86\%$ & $[361.16,\ 378.25]$ \\
+ & PyTorch CUDA (Post-Arrow) & $531.63$ & $49.34$ & $9.28\%$ & $[470.36,\ 592.89]$ \\
+ & PyTorch CUDA (Full ZSTD E2E) & $2783.14$ & $83.35$ & $2.99\%$ & $[2679.66,\ 2886.63]$ \\
+\midrule
+$\text{SF}=30$~GB & DuckDB (C++ Vectorized) & $850.32$ & $15.50$ & $1.82\%$ & $[831.07,\ 869.56]$ \\
+ & Polars Streaming (Rust) & $1163.62$ & $15.60$ & $1.34\%$ & $[1144.25,\ 1182.99]$ \\
+ & Apache DataFusion (Rust) & $1138.59$ & $14.55$ & $1.28\%$ & $[1120.53,\ 1156.66]$ \\
+ & PyTorch CUDA (Post-Arrow) & $1286.43$ & $114.88$ & $8.93\%$ & $[1143.79,\ 1429.06]$ \\
+ & PyTorch CUDA (Full ZSTD E2E) & $8062.31$ & $86.64$ & $1.07\%$ & $[7954.73,\ 8169.88]$ \\
+\midrule
+$\text{SF}=100$~GB & DuckDB (C++ Vectorized) & $3296.61$ & $253.70$ & $7.70\%$ & $[2981.60,\ 3611.63]$ \\
+ & Polars Streaming (Rust) & $5357.62$ & $740.87$ & $13.83\%$ & $[4437.71,\ 6277.54]$ \\
+ & Apache DataFusion (Rust) & $5683.00$ & $1253.52$ & $22.06\%$ & $[4126.56,\ 7239.45]$ \\
+ & PyTorch CUDA (Post-Arrow) & $3682.14$ & $219.10$ & $5.95\%$ & $[3410.09,\ 3954.19]$ \\
+ & PyTorch CUDA (Full ZSTD E2E) & $28348.57$ & $3887.86$ & $13.71\%$ & $[23521.15,\ 33175.99]$ \\
+\bottomrule
+\end{tabular}
+
+\vspace{4pt}
+\begin{tabular}{@{}p{3.8cm}cp{11.6cm}@{}}
+\toprule
+\multicolumn{3}{@{}l}{\textbf{Panel B: SDSS DR16 SkyServer SQL Log Attrition Funnel ($142 \to 25$ Verified Analytical Queries)}} \\
+\textbf{Filtering Stage} & \textbf{Remaining $N$} & \textbf{Explicit Pruning Criteria \& Exclusion Rationale} \\
+\midrule
+1. Raw Log Extraction & $142$ & Raw queries pulled directly from public SDSS DR16 SkyServer sample query repository and log traces. \\
+2. Syntax Dialect Parsing & $118$ & Dropped 24 queries utilizing proprietary T-SQL constructs (e.g., sp\_executesql, table hints WITH (NOLOCK), proprietary geography types). \\
+3. Schema Mapping \& Aliasing & $94$ & Dropped 24 queries referencing proprietary multi-database links (BestSpec, FieldCore) not present in local PhotoObjAll Parquet schema. \\
+4. Analytical Completeness & $25$ & Selected 25 representative analytical queries spanning spatial cone searches, multi-band magnitude aggregates, and color-index histograms. \\
+\bottomrule
+\end{tabular}
+\end{table*}
+% === END GROUP B NODE1 R5 AND SDSS FUNNEL ===
+
 \section{Conclusion}
 \enlargethispage{1.5\baselineskip}
 \vspace{-3pt}

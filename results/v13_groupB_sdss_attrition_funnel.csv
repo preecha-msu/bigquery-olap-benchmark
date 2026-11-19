@@ -1,0 +1,5 @@
+Stage,Count,Pruning_Reason
+1. Raw Log Extraction,142,Raw queries pulled directly from public SDSS DR16 SkyServer sample query repository and log traces.
+2. Syntax Dialect Parsing,118,"Dropped 24 queries utilizing proprietary T-SQL constructs (e.g., sp_executesql, table hints WITH (NOLOCK), proprietary geography types)."
+3. Schema Mapping & Aliasing,94,"Dropped 24 queries referencing proprietary multi-database links (BestSpec, FieldCore) not present in local PhotoObjAll Parquet schema."
+4. Analytical Completeness,25,"Selected 25 representative analytical queries spanning spatial cone searches, multi-band magnitude aggregates, and color-index histograms."

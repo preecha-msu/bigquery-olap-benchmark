@@ -1,0 +1,5 @@
+Scale_Factor_GB,Best_Engine,Best_Latency_ms,Worst_Engine,Worst_Latency_ms,AST_Route_Decision,AST_Route_Latency_ms,Routing_Accuracy_Pct
+1,DuckDB_Columnar_C++,36.76,Polars_Lazy_Streaming_Rust,711.86,DuckDB_Columnar_C++,36.76,100.0
+10,PyTorch_CUDA_RTX2050_4.0GB,274.18,Apache_DataFusion_Rust,5214.13,PyTorch_CUDA_RTX2050_4.0GB,274.18,100.0
+30,PyTorch_CUDA_T4_15GB,1028.13,Polars_Lazy_Streaming_Rust,12521.13,PyTorch_CUDA_T4_15GB,1028.13,100.0
+100,PyTorch_CUDA_T4_15GB,3166.38,Polars_Lazy_Streaming_Rust,39252.64,PyTorch_CUDA_T4_15GB,3166.38,100.0
