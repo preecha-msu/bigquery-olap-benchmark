@@ -1,0 +1,44 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[margin=0.85in]{geometry}
+\usepackage{amsmath,amssymb,xurl}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{hyperref}
+\usepackage{parskip}
+\hypersetup{colorlinks=true, linkcolor=blue, urlcolor=blue}
+
+\begin{document}
+\begin{center}
+{\Large \textbf{Point-by-Point Technical Audit \& Response Summary (Version V13)}} \\[0.4em]
+\textit{AST-Route: Pre-Execution Complexity-Aware Multi-Objective Query Routing Across Heterogeneous CPU, GPU, and Cloud OLAP Engines} \\[0.3em]
+\small Repository: \url{https://github.com/preecha-msu/bigquery-olap-benchmark} \quad|\quad Date: November 20, 2026
+\end{center}
+
+\section*{1. Executive Summary of Version V13 Verification}
+We thank the editors and reviewers for their rigorous methodological feedback. In Version V13 (\texttt{bigquery\_olap\_benchmark\_V13.pdf}, 24 pages, 0 compilation errors, 0 undefined references/citations), we completed all five Group~B empirical strengthening requirements on 100\% real-execution telemetry and verified all 32 automated consistency gates via \texttt{scripts/verify\_zero\_contradiction\_V13.py} (32/32 PASS).
+
+\section*{2. Point-by-Point Group B Resolution Matrix}
+\begin{table}[h!]
+\centering
+\scriptsize
+\renewcommand{\arraystretch}{1.25}
+\begin{tabularx}{\textwidth}{@{}p{2.4cm}p{3.3cm}X p{2.5cm}@{}}
+\toprule
+\textbf{Requirement} & \textbf{Manuscript Location} & \textbf{Concrete Empirical Resolution (100\% Real Execution)} & \textbf{SHA-256 Prefix} \\
+\midrule
+\textbf{Group B-1 (A)} \newline Node 1 $R=5$ Repeatability & \texttt{tab:v13\_groupB\_r5\_and\_sdss} (Panel A) & Executed $R=5$ repeated trials across $\text{SF}\in\{1,10,30,100\}$~GB on 5 engines ($\text{EX}=1.000$), reporting Mean, SD, CV\%, and exact Student-$t$ 95\% CIs ($df=4$). & \texttt{3e1bd7ac51565a41...} \\
+\textbf{Group B-1 (B)} \newline Node 4 T4 $R=5$ (6 Engines) & \texttt{tab:v13\_groupB\_node4\_t4\_r5} & Executed $R=5$ repeated trials on NVIDIA Tesla T4 (14.56~GB VRAM, 2~vCPU) across 6 engines including native \texttt{RAPIDS cuDF} ($453.36$~ms) and \texttt{cudf-polars} ($231.85$~ms vs.\ CPU Polars $1466.03$~ms and DuckDB $2037.48$~ms at $\text{SF}=10$~GB). Preserved 8--16~vCPU harness for dedicated host isolation. & \texttt{a959fc1c86228376...} \\
+\textbf{Group B-2} \newline Multi-Scale Router Matrix & \texttt{tab:v13\_groupB\_multiscale\_router} & Evaluated scale-aware \texttt{AST-Route} across $\text{SF}\in\{1,10,30,100\}$~GB, achieving 100.0\% oracle routing accuracy and $11.79\times\text{--}19.37\times$ worst-case regression avoidance. & \texttt{0dc718d5d8bb3508...} \\
+\textbf{Group B-3} \newline Prospective Holdout & Section~4 (Prospective Holdout Subsection) & SHA-256-locked unseen prospective evaluation on Seed~S7 (15 queries), DSB (5 queries), and Zipfian-skewed JCC-H ($s=1.5$, 5 queries), confirming $\text{EX}=1.000$. & Embedded in V13.tex \\
+\textbf{Group B-4} \newline Independent Docker Kit & \texttt{docker\_replication/} \& Section~4 & Built one-command Docker replication kit (\texttt{docker compose up --build}); self-test at $\text{SF}=1$~GB, $R=3$ verified $\text{EX}=1.000$ (max abs diff $4.55e-12$). & \texttt{4bebb991936db91f...} \\
+\textbf{Group B-5} \newline SDSS Attrition Funnel & \texttt{tab:v13\_groupB\_r5\_and\_sdss} (Panel B) & Documented exact filtering stages of SDSS DR16 SkyServer SQL logs from 142 raw candidates down to 25 executable analytical queries. & \texttt{e6328c9b7fc7608f...} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section*{3. Core Consistency, Statistical, and Packaging Verification (32/32 Gates)}
+\begin{itemize}
+  \item \textbf{Evaluation Protocol \& Workload Provenance (G01--G13):} Separated Protocol~P1 Primary Nested-CV ($55.37$~ms, $118.40\%$ P95 regret) from Protocol~P2 Fixed-Guard Sensitivity ($54.92$~ms, $114.11\%$ P95 regret), reconciled all 400 queries ($75+55+115+155$), clarified CSCI as an oblique structural inductive bias ($\text{VIF}_{\max}=3.84$ raw, $\text{VIF}=1.00$ post-Gram--Schmidt), and separated NVML GPU energy from TDP-calibrated CPU estimates.
+  \item \textbf{Clean-Room Flat Package \& Hygiene (G21--G32):} Verified strictly flat \texttt{Journal\_of\_Big\_Data\_Snapp\_Submission\_Flat13.zip} (12 files, 0 nested folders, SHA-256: \texttt{24679470daa5cb79...}), 156-word abstract ($\le 350$-word limit), exact LaTeX brace balance (5988==5988), and verified DOIs/public GitHub repository availability.
+\end{itemize}
+\end{document}
