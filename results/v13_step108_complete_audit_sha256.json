@@ -1,0 +1,45 @@
+{
+  "regenerated_v13_figures_sha256": {
+    "fig_v12_proposed_ast_routing_framework_300dpi.pdf": "fd83096ccd736d254881b0d0f02790c0cf4acf759cb2c0d4465695b69e5c72db",
+    "fig_v12_proposed_ast_routing_framework_300dpi.jpg": "bdf776794870a6d018a6bd86019dce09f352d77f74f636b1cacf5aa46459037f",
+    "fig_v12_experimental_workflow_300dpi.pdf": "1fdee9fbf91fced3b55e65feeb1a20eb509aef99cf37b4cf626d4c239be4b11d",
+    "fig_v12_experimental_workflow_300dpi.jpg": "fc844cbb67027dbcb17bf26a51b45662fc0336bbca70ebc7a96029f330415393"
+  },
+  "gates_25": {
+    "G01_No_Holdout_0018": true,
+    "G02_Single_Structured_Abstract": true,
+    "G03_No_LME_Beta_6206": true,
+    "G04_No_LME_Z_Scores": true,
+    "G05_No_Mixed_Effects_Heading_In_Conclusion": true,
+    "G06_Fig1_Fig2_Clean_V13_No_LME_No_OldURL": true,
+    "G07_S7_L1_Basin_Trap_Explained_Empirically": true,
+    "G08_SmallN_Reported_As_kn_Counts": true,
+    "G09_Cluster_TOST_Equivalence_Reported": true,
+    "G10_SF100_R5_DuckDB_vs_DataFusion_Honest": true,
+    "G11_Table6_Cold_761x_And_Warm_289x_CoReported": true,
+    "G12_Table11_Redset_Synth_Disclosed": true,
+    "G13_400_To_480_Query_Crosswalk_Explicit": true,
+    "G14_VIF_384_Reconciled": true,
+    "G15_Dialect_Agnostic_EXPLAIN_Note": true,
+    "G16_Locked_Single_Shot_Label": true,
+    "G17_Table13_Cold_n1_Annotated": true,
+    "G18_Table14_Warm_R5_Annotated": true,
+    "G19_No_URL_Whitespace_Glitch": true,
+    "G20_Single_Official_GitHub_URL": true,
+    "G21_No_Nested_URL": true,
+    "G22_No_Corrupted_LaTeX_Artifacts": true,
+    "G23_ClickBench_20_Native_23_Transpiled": true,
+    "G24_No_Table16_100pct_Router_Claim": true,
+    "G25_All_18_Tables_Preserved": true
+  },
+  "build": {
+    "pages": 25,
+    "undef_refs": 0,
+    "undef_cites": 0
+  },
+  "artifacts_sha256": {
+    "bigquery_olap_benchmark_V13.tex": "c9e2e04ccf37992ead2d1ea0ddec828273e4ab0ee8e980f58b414b0e5039dada",
+    "bigquery_olap_benchmark_V13.pdf": "695aab781313f59025caec9cfc279c739d70ecdf7fbf62d43104dcf7b1f0ae53",
+    "Journal_of_Big_Data_Snapp_Submission_Flat13.zip": "29f882b2144426057828719e2f883a307a00a39b6e6f1036bad282d132af64f3"
+  }
+}

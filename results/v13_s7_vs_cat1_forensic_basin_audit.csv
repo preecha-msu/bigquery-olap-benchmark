@@ -1,0 +1,4 @@
+Suite,k_top1,n,k_df,mean_regret_pct,p95_regret_pct,polars_med_ms,datafusion_med_ms
+Seed_S7,1,15,10,114.19,421.08,11.19,11.26
+DSB_Subset,2,5,4,26.22,52.22,14.5,16.17
+JCC_H_Skew,0,5,5,51.12,92.17,24.81,30.13

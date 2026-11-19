@@ -1,0 +1,2 @@
+K_clusters,B_bootstrap,delta_eq_margin_pp,ast_route_p95_pct,ridge_guard_p95_pct,obs_delta_p95_pp,ci90_delta_p95_pp,ci95_delta_p95_pp,p_tost_25pp,conclusion
+25,10000,25.0,142.65,197.21,-54.57,"[-145.25, 73.93]","[-170.46, 137.97]",0.4297,Equivalence inconclusive at +-25 pp (wide finite-cluster CI)
