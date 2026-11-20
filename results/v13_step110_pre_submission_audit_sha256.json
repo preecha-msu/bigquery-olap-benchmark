@@ -1,0 +1,42 @@
+{
+  "gates_28": {
+    "G01_No_Holdout_0018": true,
+    "G02_No_Table16_100pct_Accuracy_Overclaim": true,
+    "G03_No_Public_Redset_Fleet_Trace_Overclaim": true,
+    "G04_No_Conclusion_Redset_RealWorld_Overclaim": true,
+    "G05_SF100_Cold_vs_R5_Warm_Reconciled": true,
+    "G06_No_Table3_Footnote_PreReg_Claim": true,
+    "G07_No_Sec441_LME_Header_Remnant": true,
+    "G08_No_Table5_PartA_LME_Header_Remnant": true,
+    "G09_No_Sec5_50Public_DoubleCount": true,
+    "G10_No_Table12_V12_Label": true,
+    "G11_Table17_Note_0_of_25_Fixed": true,
+    "G12_Availability_Broken_ry_o1_Fixed": true,
+    "G13_Single_Structured_Abstract": true,
+    "G14_No_LME_Z_Scores": true,
+    "G15_No_Mixed_Effects_Heading_In_Conclusion": true,
+    "G16_S7_L1_Basin_Trap_Explained": true,
+    "G17_SmallN_Reported_As_kn_Counts": true,
+    "G18_Cluster_TOST_Equivalence_Reported": true,
+    "G19_VIF_384_Reconciled": true,
+    "G20_Dialect_Agnostic_EXPLAIN_Note": true,
+    "G21_Locked_Single_Shot_Label": true,
+    "G22_Table13_Cold_n1_Annotated": true,
+    "G23_Table14_Warm_R5_Annotated": true,
+    "G24_Single_Official_GitHub_URL": true,
+    "G25_No_Nested_URL": true,
+    "G26_No_Corrupted_LaTeX_Artifacts": true,
+    "G27_ClickBench_20_Native_23_Transpiled": true,
+    "G28_All_Tables_Preserved": true
+  },
+  "build": {
+    "pages": 26,
+    "undef_refs": 0,
+    "undef_cites": 0
+  },
+  "artifacts_sha256": {
+    "bigquery_olap_benchmark_V13.tex": "06b768a6ba39884c8caf49733d9bf74900ffb984400ffb7c8e9568024db47f2f",
+    "bigquery_olap_benchmark_V13.pdf": "5173f552e4d6d3e478944c2d3430977ef8290fb8970beea0695b0b3161daadd7",
+    "Journal_of_Big_Data_Snapp_Submission_Flat13.zip": "bd5f5ccf4f7547eaa29f2ef011870498baef99c696fbc975e063ad5a9c18c3b6"
+  }
+}
