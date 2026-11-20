@@ -1,73 +1,15 @@
 {
-  "title": "AST-Route V11: Tail-Risk-Aware Pre-Execution SQL Routing Across Heterogeneous CPU, GPU, and Cloud OLAP Engines (Reproducibility Archive & Frozen Model Weights)",
+  "title": "AST-Route: Tail-Safe CPU-GPU-Cloud OLAP Dispatch via PCIe Margin Guarding and Zero-Compile SQL Metadata",
+  "version": "13.0.0",
   "upload_type": "software",
-  "publication_date": "2026-11-16",
-  "version": "v11.0.0-jbd-archival",
-  "license": "MIT",
-  "keywords": [
-    "Hybrid OLAP",
-    "SQL Query Routing",
-    "Abstract Syntax Tree",
-    "Split Conformal Prediction",
-    "Tail-Latency Regret",
-    "DuckDB",
-    "Polars",
-    "DataFusion",
-    "RAPIDS cudf-polars",
-    "Google BigQuery"
-  ],
-  "related_identifiers": [
+  "publication_date": "2026-11-20",
+  "creators": [
     {
-      "identifier": "https://github.com/preechan-glitch/my_research_files/tree/v11.0.0-jbd-archival",
-      "relation": "isSupplementTo",
-      "scheme": "url"
+      "name": "Noiumkar, Preecha",
+      "affiliation": "Mahasarakham University, Thailand"
     }
   ],
-  "frozen_model_sha256": "f0e5f17c832472e30be67dbbee30020dbf23e94658458a2c59acd9b00ed315cf",
-  "artifact_manifest": {
-    "reproducibility/frozen_ast_route_v11_gbdt_model.json": {
-      "size_bytes": 2465,
-      "sha256": "f0e5f17c832472e30be67dbbee30020dbf23e94658458a2c59acd9b00ed315cf"
-    },
-    "results/merged_75queries_all_engines_sf1.csv": {
-      "size_bytes": 22216,
-      "sha256": "5eb9a13b43a164f5f11bbee91a774372446182487cab251cc1048f540574d0e3"
-    },
-    "results/v11_cudf_polars_independent_gpu_benchmark.csv": {
-      "size_bytes": 2177,
-      "sha256": "aeee14131117af4e8f3d4ee0fd6c3828c9fd10deb5f22b197b76e081c0c0fcce"
-    },
-    "results/v11_r19_csci_permutation_audit_and_grouped_ablation.csv": {
-      "size_bytes": 4653,
-      "sha256": "0ee06fcfcf8dfef09acf8ca6d609a2faf6281c3355d8c4c65967f21267622018"
-    },
-    "results/v11_r20_independent_multidomain_enterprise_45q.csv": {
-      "size_bytes": 8543,
-      "sha256": "6bdd9199ba92a8299f4d2fbf51e2df6345a8c48b35b4f38464b940b6820d50b5"
-    },
-    "results/v11_r21_cross_hardware_transfer_matrix.csv": {
-      "size_bytes": 3136,
-      "sha256": "ecc4961f734013addd3aa634592d42e74bfb19e4f9a084dacf860a51fd12b3ca"
-    },
-    "results/v11_r22_dynamic_workload_sla_stress_test.csv": {
-      "size_bytes": 3904,
-      "sha256": "b57653913e49adf2daade259d5dddfa5b4331933b215f6af8291e9e56aae4ad2"
-    },
-    "results/v11_r23_energy_measurement_boundary_audit.csv": {
-      "size_bytes": 1596,
-      "sha256": "e97cb00b48c91a32d065a1c03b3df8be1d812413432c9f9b5794dfe8fa6d4727"
-    },
-    "results/v11_r24_cudf_polars_config_and_t4_multiscale_tpch22.csv": {
-      "size_bytes": 2415,
-      "sha256": "880684e75bdbea0830569ad518d0bc2c52c7877f70aaae39a94e46881586b9a8"
-    },
-    "results/v11_r25_tpch22_lotfo_and_engine_breakdown.csv": {
-      "size_bytes": 3906,
-      "sha256": "e40a59f21125d225e6c9b0ed73a7fb0411983444f876b6315f619bdc8fe06da1"
-    },
-    "results/v11_r26_webb_6point_and_exact_cluster_permutation.csv": {
-      "size_bytes": 3080,
-      "sha256": "b553738d31e4b5c9848978d53a00971ccef7c2a499eab997ca12874ab0a57356"
-    }
-  }
+  "description": "Official open-source benchmark suite, frozen pre-execution GBDT routing model, 495-query row-level SQL registry (400 primary across Categories I-IV + 25 prospective OOD + 70 enterprise stress), 4-node multi-scale telemetry logs (SF = 1, 10, 30, 100 GB), and Docker replication kit accompanying the V13 manuscript submitted to Journal of Big Data.",
+  "access_right": "open",
+  "license": "MIT"
 }

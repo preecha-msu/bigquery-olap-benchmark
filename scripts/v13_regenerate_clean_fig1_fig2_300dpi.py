@@ -11,7 +11,7 @@ Figure 2 (`fig_v12_experimental_workflow_300dpi.pdf/.jpg`) exclusively for V12
 Fixes Reviewer issues:
   1. Removes legacy "163 queries" text; displays exact V12 corpus:
      400 Benchmark Queries (Cat I-IV) + 80 Public SQL/Trace Queries
-     (25 SDSS DR16 + 25 NYC TLC + 30 Amazon Redset at SF=10 GB) + 70 Stress Queries.
+     (25 SDSS DR16 + 25 NYC TLC + 30 Redset-Synth (Author-Synth.) at SF=10 GB) + 70 Stress Queries.
   2. Unifies GitHub repository URL to `https://github.com/preecha-msu/bigquery-olap-benchmark`
      (removes legacy `preecha-msu/bigquery-olap-benchmark`).
   3. Shows the 3-Way Tail-Safety Decomposition (Threshold Guard -> +Mondrian Conformal
@@ -187,8 +187,8 @@ def generate_fig2_v12() -> None:
             "• 400 Benchmark Queries (Cat I-IV): 75 Core,\n"
             "  22 TPC-H, 33 JOB, 99 Official TPC-DS (SF=1 & 10G),\n"
             "  43 ClickBench, 13 SSB, 115 Zero-Shot Derived\n"
-            "• 80 Public Real-World & Trace Queries (SF=10 GB):\n"
-            "  25 SDSS DR16 + 25 NYC TLC + 30 Amazon Redset\n"
+            "• 80 Cat. III Adapted & Redset-Synth (SF=10 GB):\n"
+            "  25 SDSS DR16 + 25 NYC TLC + 30 Redset-Synth (Author-Synth.)\n"
             "• 70 Author-Constructed Schema-Blinded Queries",
             "#eef6fc", "#006699",
         ),
@@ -233,7 +233,7 @@ def generate_fig2_v12() -> None:
             "Phase 5: Multi-Scale Router-in-the-Loop",
             "• Router-in-the-Loop at SF = 10, 30, 100 GB (R31):\n"
             "  Node 1: 182.4 ms (SF10), 448.7 ms (SF30),\n"
-            "  1,142.8 ms (SF100, 7.61x vs DuckDB)\n"
+            "  1,142.8 ms (SF100, 7.61x cold / 2.89x warm)\n"
             "  Node 4 Tesla T4: 622.4 ms (SF10, 0.0% P95),\n"
             "  1,905.6 ms (SF30, 0.0% P95)\n"
             "• Break-Even (R28): Use O2/O3 or CPU for <10 ms\n"

@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-set -euo pipefail
-python scripts/208_v9_section3_1_benchmark_fairness_protocol.py
-python scripts/209_v9_section3_2_multiscale_sf100_audit_and_reconciliation.py
-python scripts/210_v9_section3_3_manuscript_consistency_audit.py
-python scripts/211_v9_section3_4_csci_generalizability_and_M1_M4_audit.py
-python scripts/212_v9_section3_5_tpcds_and_bird_external_validation.py
-python scripts/213_v9_roadmap_v86_00_to_v86_09_master_closure.py

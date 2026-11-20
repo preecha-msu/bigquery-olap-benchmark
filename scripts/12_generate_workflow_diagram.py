@@ -58,7 +58,7 @@ def build_workflow_diagram(root: Path):
     # หัวเรื่องบนสุดของแผนภาพ
     ax.text(
         0.5, 0.975,
-        "End-to-End Experimental Workflow: AST-Driven Multi-Paradigm OLAP Benchmarking (75 Queries, 6 Engines)",
+        "End-to-End Experimental Workflow: AST-Driven Multi-Paradigm OLAP Benchmarking (163 Total Queries, 6 Engines)",
         ha="center", va="center", fontsize=12.5, fontweight="bold", color="#0F172A"
     )
 

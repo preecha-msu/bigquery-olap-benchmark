@@ -18,7 +18,7 @@ Step 1 of V6_Claude Complete Closure (100% Real Execution, Zero Estimation):
      log10(1 + B_proj)) across real multi-scale telemetry logs (SF=1, 10, 30, 100).
   4. Recomputes exact Table 2, Table 3, Table 4, Table 10, and Table 13C metrics
      directly from raw CSVs and exports results/v6_canonical_truth_bundle.json.
-  5. Regenerates 300-DPI vector Figures 1 and 2 so legacy "$1.47/1M" and
+  5. Regenerates 300-DPI vector Figures 1 and 2 so legacy "$1,441.61/1M" and
      "Green Perf" labels inside diagram boxes are completely eliminated.
 ================================================================================
 """
@@ -588,7 +588,7 @@ def compute_exact_cross_table_truth(full_df: pd.DataFrame) -> dict:
 
 
 # ==============================================================================
-# 4. Regenerate 300-DPI Vector Figures 1 & 2 (Removing "$1.47/1M" & "Green Perf")
+# 4. Regenerate 300-DPI Vector Figures 1 & 2 (Removing "$1,441.61/1M" & "Green Perf")
 # ==============================================================================
 def draw_box(ax, x, y, w, h, title, lines, header_col, body_col="#F8FAFC"):
     box = mpatches.FancyBboxPatch(
@@ -608,7 +608,7 @@ def draw_box(ax, x, y, w, h, title, lines, header_col, body_col="#F8FAFC"):
 
 
 def regenerate_figures_1_and_2(truth: dict, cpu_only_ms: float) -> list[str]:
-    print("\n=== [4/5] Regenerating 300-DPI Vector Figures 1 & 2 (Zero Legacy '$1.47/1M' or 'Green Perf') ===")
+    print("\n=== [4/5] Regenerating 300-DPI Vector Figures 1 & 2 (Zero Legacy '$1,441.61/1M' or 'Green Perf') ===")
     sav_v1 = truth["t3_rows"]["V1"]["sav_sf1"]
     updated = []
 

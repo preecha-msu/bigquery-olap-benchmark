@@ -173,7 +173,7 @@ def generate_figure1_framework():
             "• Cold: 56.96 ms | Warm: 22.26 ms",
             "• L1 PCIe Bottleneck: Phi = 55.5%",
             "• Energy: 0.65 J Cold / 0.25 J Warm",
-            "• Green Perf: 1942.8 MB/J Warm",
+            "• Energy Eff.: 1942.8 MB/J Warm",
             "• Routed: 60% L3, 100% L4, 80% L5"
         ]),
         (0.755, "Candidate 4: Google BigQuery", "#1E40AF", "#EFF6FF", "#1E3A8A", [
@@ -181,7 +181,7 @@ def generate_figure1_framework():
             "• Capacitor Storage + Slot Elasticity",
             "• Clustered Mean: 745.39 ms",
             "• Slot Multiplier: M_slot = 6.37x",
-            "• V1 I/O Pruning: 78.4% ($1.47/1M)",
+            "• V1 I/O Pruning: 78.4% ($1,441.61/1M)",
             "• Elastic Out-of-Core Fallback"
         ])
     ]
@@ -215,7 +215,7 @@ def generate_figure2_workflow():
 
     ax.text(
         0.50, 0.972,
-        "End-to-End Experimental Validation Workflow: AST-Route Testbed (75 Queries, 6 Engines)",
+        "End-to-End Experimental Validation Workflow: AST-Route Testbed (163 Total Queries, 6 Engines)",
         ha="center", va="center", fontsize=12.0, fontweight="bold", color="#0F172A"
     )
 
@@ -272,7 +272,7 @@ def generate_figure2_workflow():
             "• Cache Strictly Disabled",
             "• Clustered Mean: 745.39 ms",
             "• 95% CI: [515.6, 1026.5] ms",
-            "• V1 I/O Pruning: 78.4% ($1.47/1M)"
+            "• V1 I/O Pruning: 78.4% ($1,441.61/1M)"
         ]),
         (0.51, "Paradigm 3: Vectorized CPU", "#0F766E", "#F0FDFA", "#115E59", [
             "• 1) DuckDB (C++): 183.74 ms",
@@ -487,7 +487,7 @@ def generate_figure6_six_software():
     save_both(fig, "fig_six_software_comparison_sf1_300dpi.pdf")
 
 # =================================================================================================
-# FIGURE 7: Hardware Resource & Green OLAP Energy Efficiency (Styled Identically to Figure 3!)
+# FIGURE 7: Hardware Resource & Energy-Aware Scan Efficiency Energy Efficiency (Styled Identically to Figure 3!)
 # =================================================================================================
 def generate_figure7_hardware_energy():
     set_academic_serif_style()
