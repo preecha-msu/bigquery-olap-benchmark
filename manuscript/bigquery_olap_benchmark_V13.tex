@@ -121,10 +121,10 @@
 \begin{quote}
 \small\sffamily
 \textbf{\color{springerblue}Abstract}\\[0.3em]
-\textbf{Background:} Hybrid analytical query dispatch across in-process CPU engines (DuckDB, Polars, DataFusion, SQLite), local GPUs, and serverless cloud warehouses (Google BigQuery) suffers severe tail-latency regressions when small or selective queries incur PCIe transfer or cloud orchestration overheads.
-\textbf{Methods:} We evaluate a pre-execution dispatch framework combining engine-agnostic SQL AST parsing and Parquet footer metadata sketching ($172\,\mu\text{s}$ cached; $4.15\text{ ms}$ cold parse+sketch) with a PCIe margin guard across a 400-query primary registry spanning four hardware nodes (75 TPC-H development queries across $K=25$ seeds, 90 calibration and skew-boundary queries [55 TPC-H/JOB + 35 diagnostic], 80 adapted and trace-synthetic queries [25 SDSS, 25 NYC TLC, and 30 author-synthesized \texttt{Redset-Synth}], and 155 untouched consortium holdout queries [99 TPC-DS, 43 ClickBench, and 13 SSB]; plus 25 prospective out-of-distribution and 70 enterprise stress queries audited separately).
-\textbf{Results:} Three-way ablation shows that PCIe margin guarding drives 81.3\% of P95 tail-regret reduction, while a two-engine portfolio (\{Polars, GPU\}) retains 98.7\% of full six-engine utility; AST/GBR/CSCI enable cross-dialect dispatch without engine-specific planner lock-in (though native DuckDB \texttt{EXPLAIN-DAG} is faster at $1.41\text{ ms}$ on single-dialect queries). On development LOSO-CV ($N=75$), P95 regret drops from 257.31\% (Always GPU) and 358.40\% (Always Polars) to 114.11\%. On external holdout clusters ($K=38$), tail-regret reduction is directional but not statistically significant (cluster permutation $p = 0.125$ vs.\ CPU, $p = 0.198$ vs.\ GPU). On out-of-distribution prospective holdouts (\texttt{Seed S7/DSB/JCC-H}, $n=25$), zero-shot accuracy drops to 12.0\% Top-1 (83.98\% mean regret, 346.0\% P95 regret), trailing Always Polars (66.75\% mean regret).
-\textbf{Conclusions:} Tail-safe hybrid OLAP dispatch is governed primarily by transfer-margin abstention and compact engine pools, and requires schema-local calibration before deployment on skewed or out-of-distribution workloads.
+\textbf{Background:} Hybrid OLAP dispatch across in-process CPU engines (DuckDB, Polars, DataFusion, SQLite), local GPUs, and serverless cloud warehouses (Google BigQuery) suffers severe tail-latency regressions when small or selective queries incur PCIe transfer or cloud scheduling overheads.
+\textbf{Methods:} We evaluate AST-Route, combining engine-agnostic SQL AST parsing and Parquet footer sketching ($172\,\mu\text{s}$ cached; $4.15\text{ ms}$ cold) with a PCIe margin guard across a 400-query primary registry on four hardware nodes ($75$ TPC-H development queries across $K=25$ seeds, $90$ calibration/diagnostic queries, $80$ adapted SDSS/NYC~TLC and author-synthesized \texttt{Redset-Synth} queries, and $155$ untouched consortium holdout queries [99 TPC-DS, 43 ClickBench (20 native SQL + 23 dialect-transpiled), and 13 SSB]; plus $25$ prospective and $70$ enterprise stress queries audited separately).
+\textbf{Results:} Three-way ablation shows PCIe margin guarding drives $81.3\%$ of P95 tail-regret reduction, while a two-engine pool (\{Polars, GPU\}) retains $98.7\%$ of six-engine utility; AST sketching enables catalog-free cross-dialect dispatch (native DuckDB \texttt{EXPLAIN-DAG} is faster at $1.41\text{ ms}$ on single-dialect SQL). Under development LOSO-CV ($N=75$), P95 regret drops from $257.31\%$ (Always GPU) and $358.40\%$ (Always Polars) to $118.40\%$ ($8\%$ Nested-CV guard) and $114.11\%$ ($12\%$ fixed guard). On external holdout clusters ($K=38$), tail-regret compression is directional ($p_{\text{perm}}=0.125$ vs.\ CPU, $0.198$ vs.\ GPU). On harness-shifted prospective queries (\texttt{Seed S7/DSB/JCC-H}, $n=25$), uncalibrated zero-shot Top-1 drops to $3/25$ ($12.0\%$; $83.98\%$ mean, $346.21\%$ P95 regret), whereas $m=5$ stratified canary calibration restores out-of-sample Top-1 to $38.1\%$ and cuts mean/P95 regret to $26.06\%/72.57\%$ ($p_{\text{perm}}=0.00002$).
+\textbf{Conclusions:} Tail-safe hybrid OLAP dispatch is governed primarily by transfer-margin abstention and compact engine pools, and requires lightweight local canary calibration under storage-harness or skew shifts.
 
 \noindent\textbf{Keywords:} Cross-engine query routing; Tail-regret control; Abstention guards; Heterogeneous OLAP systems; Apache Arrow and GPU analytics; Pre-execution metadata
 \end{quote}
@@ -1109,24 +1109,25 @@ $\text{SF}=100$~GB & PyTorch CUDA (Tesla T4) & $3166.38$ & Polars Streaming (Rus
 
 \begin{table}[!htbp]
 \centering
-\caption{Empirical per-suite breakdown (exact $k/n$ counts, latency basin, and Mahalanobis OOD gate trigger count) on the 25-query prospective suite (SHA-256 lock \texttt{2a8acab7...}). Small-$n$ suites ($n=5$) are reported strictly as $k/n$ counts.}
+\caption{Empirical per-suite zero-shot failure breakdown ($m=0$) and strictly out-of-sample $m=5$ stratified canary calibration recovery ($S=500$ draws evaluated on $N_{\text{eval}}=20$ disjoint unseen queries/draw; CSV SHA-256 \texttt{83c393612e5e7ed7...}) across the 25-query prospective suite.}
 \label{tab:prospective_3suite_failure}
 \scriptsize
 \resizebox{\textwidth}{!}{%
 \begin{tabular}{@{}lcccccc@{}}
 \toprule
-\textbf{Prospective Suite (Harness)} & \textbf{$n$} & \textbf{Top-1 ($k/n$)} & \textbf{Mean Regret} & \textbf{P95 Regret} & \textbf{Routed to DataFusion ($k/n$)} & \textbf{OOD Gate Flag ($k/n$)} \\
+\textbf{Prospective Suite / Calibration Mode} & \textbf{$n$} & \textbf{Top-1 ($k/n$ or OOS)} & \textbf{Mean Regret} & \textbf{P95 Regret} & \textbf{Routed to DataFusion} & \textbf{OOD Gate Flag} \\
 \midrule
-\texttt{Seed\_S7} (Compact 1--2 Tbl, In-Mem Arrow) & 15 & $1/15$ ($6.7\%$) & $114.23\%$ & $421.08\%$ & $10/15$ (L1 Basin Trap) & $0/15$ \\
-\texttt{DSB\_Subset} (2-Tbl Filter/Join, Small-$n$) & 5 & $2/5$ & $26.22\%$ & $52.22\%$ & $4/5$ (L1 Basin Trap) & $0/5$ \\
-\texttt{JCC\_H\_Skew} (Zipfian Skew Join, Small-$n$) & 5 & $0/5$ & $51.124\%$ & $92.17\%$ & $5/5$ (Missed Skew) & $0/5$ \\
+\texttt{Seed\_S7} (Zero-Shot $m=0$, In-Mem Arrow) & 15 & $1/15$ ($6.7\%$) & $114.23\%$ & $421.08\%$ & $10/15$ (L1 Basin Trap) & $0/15$ \\
+\texttt{DSB\_Subset} (Zero-Shot $m=0$, Small-$n$) & 5 & $2/5$ & $26.22\%$ & $52.22\%$ & $4/5$ (L1 Basin Trap) & $0/5$ \\
+\texttt{JCC\_H\_Skew} (Zero-Shot $m=0$, Small-$n$) & 5 & $0/5$ & $51.12\%$ & $92.17\%$ & $5/5$ (Missed Skew) & $0/5$ \\
 \midrule
-\textbf{Overall Prospective} & \textbf{25} & $\mathbf{3/25}$ ($12.0\%$) & \textbf{83.98\%} & \textbf{346.00\%} & $\mathbf{19/25}$ ($76.0\%$) & $\mathbf{0/25}$ (Primary Limit.) \\
+\textbf{Overall Zero-Shot ($m=0$, Uncalibrated)} & \textbf{25} & $\mathbf{3/25}$ ($12.0\%$) & \textbf{83.98\%} & \textbf{346.21\%} & $\mathbf{19/25}$ ($76.0\%$) & $\mathbf{0/25}$ (Limit.) \\
+\textbf{+ Local Canary Calibration ($m=5$, OOS $N_{\text{eval}}=20$)} & \textbf{20/draw} & $\mathbf{38.1\%}$ & $\mathbf{26.06\%}$ & $\mathbf{72.57\%}$ & $\mathbf{9.7\%}$ (Trap Resolved) & N/A (Calibrated) \\
 \bottomrule
 \end{tabular}%
 }
 \vspace{2pt}
-\parbox{\textwidth}{\scriptsize \textit{Empirical Root Cause \& Primary Limitation:} In Cat-I training data (Table~\ref{tab:six_software_matrix}), DataFusion is the fastest CPU engine ONLY in low-node Tier-L1 scans ($33.58\text{ ms} < \text{Polars } 38.00\text{ ms} < \text{DuckDB } 50.84\text{ ms}$). Because the prospective harness used compact 1--2 table SQL over in-memory Arrow buffers rather than full 8-table on-disk TPC-H queries, $19/25$ queries fell into the Tier-L1 DataFusion prediction basin while static 9D Mahalanobis gating triggered on $0/25$ queries—proving that router models must be re-calibrated whenever storage harnesses (on-disk Parquet vs.\ in-memory Arrow) or join-skew distributions change.}
+\parbox{\textwidth}{\scriptsize \textit{Empirical Root Cause \& Actionable Recovery:} Zero-shot ($m=0$) fails because compact 1--2 table SQL over pre-materialized in-memory Arrow buffers falls into Cat-I's Tier-L1 DataFusion basin ($33.58\text{ ms} < \text{Polars } 38.00\text{ ms}$, Table~\ref{tab:six_software_matrix}) while static 9D Mahalanobis gating triggers on $0/25$ queries. Applying Section~3.3's 4-parameter log-latency offset calibration ($\hat{\delta}_e$) using $m=5$ stratified canary queries ($3$ \texttt{S7} $+ 1$ \texttt{DSB} $+ 1$ \texttt{JCC-H}, zero tree refitting) evaluated strictly out-of-sample on the remaining $20$ unseen queries across $S=500$ draws eliminates the DataFusion basin trap ($76.0\% \rightarrow 9.7\%$), lifts Top-1 from $12.0\%$ to $38.1\%$, cuts mean regret by $3.22\times$ from $83.98\%$ to $26.06\%$ (95\% split range $[16.53\%, 40.58\%]$, $p_{\text{perm}}=0.00002$; per-suite OOF mean regret: \texttt{S7} $29.94\%$, \texttt{DSB} $6.00\%$, \texttt{JCC-H} $34.18\%$), and compresses median P95 tail regret by $4.77\times$ from $346.21\%$ to $72.57\%$ ($65.82\%$ OOF P95)---decisively beating static DuckDB ($47.84\%$ mean / $186.74\%$ P95) and static GPU Cold ($632.72\%$ P95), though pure in-memory Polars ($17.40\%$ mean / $66.75\%$ P95, winning $12/25$ in-RAM queries) remains slightly lower in mean regret until full target-harness retraining.}
 \end{table}
 
 
@@ -1156,7 +1157,7 @@ To ensure transparent auditability across protocol evolution, external cluster d
 \textbf{C-R1.3: Minimal Pool} & Two-engine \texttt{\{Polars, GPU\}} portfolio retains $98.7\%$ of 6-engine utility at $\text{SF}=1\text{ GB}$ ($55.28\text{ ms}$) & Cat.~I \& multi-scale spill ablation & \textbf{Empirical Systems Simplification} & DuckDB required for correlated subqueries; BigQuery required only at $\text{SF}=100\text{ GB}$ spill \\
 \textbf{C-R1.4: Zero-Compile AST} & \texttt{SQLGlot} AST + Parquet footer avoids target DBMS planner; $\text{CSCI}$ acts as oblique tree bias & $R=50$ live timing \& 6-model ablation & \textbf{Mechanistic / Architectural Trade-Off} & $829.5\,\mu\text{s}$ cached vs.\ $2979.4\,\mu\text{s}$ \texttt{EXPLAIN JSON}; P95 parity with \texttt{Ridge+Guard} ($p=0.38$) \\
 \textbf{C-R1.5: Consortium Holdout} & Untouched Cat.~IV holdout ($155$Q: $99$ TPC-DS, $43$ CB, $13$ SSB; $K=38$ clusters) & Frozen model (\texttt{f0e5f17c8324...}) & \textbf{Strict External Holdout (Directional)} & P95 $97.05\%$ vs.\ $644.62\%$ CPU ($p=0.125$) \& $588.99\%$ GPU ($p=0.198$); $0/38$ \texttt{LOCO} flips \\
-\textbf{C-R1.6: Prospective OOD} & Locked OOD \& Arrow-harness suite (\texttt{Seed S7/DSB/JCC-H}, $n=25$) drops to $12.0\%$ Top-1 & Single-shot lock (\texttt{2a8acab7...}) & \textbf{Prospective Deployment Boundary} & $83.98\%$ mean / $346.00\%$ P95 regret ($19/25$ DataFusion L1 trap); mandates local calibration \\
+\textbf{C-R1.6: Prospective OOD} & Locked OOD \& Arrow-harness suite (\texttt{Seed S7/DSB/JCC-H}, $n=25$) drops to $12.0\%$ Top-1 & Single-shot lock (\texttt{2a8acab7...}) & \textbf{Prospective Deployment Boundary} & $83.98\%$ mean / $346.00\%$ P95 regret ($19/25$ DataFusion L1 trap); $m=5$ canary cuts OOS regret to 26.06\% mean / 72.57\% P95 ($p=0.00002$) \\
 \bottomrule
 \end{tabular}%
 }

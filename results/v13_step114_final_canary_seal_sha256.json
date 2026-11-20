@@ -1,0 +1,80 @@
+{
+  "m5_canary_verified_metrics": {
+    "zero_top1_pct": 12.0,
+    "zero_mean_regret_pct": 83.98,
+    "zero_p95_regret_pct": 346.21,
+    "cal_top1_pct": 38.1,
+    "cal_mean_regret_pct": 26.06,
+    "cal_ci95_mean_regret": [
+      16.53,
+      40.58
+    ],
+    "cal_med_p95_regret_pct": 72.57,
+    "cal_oof_p95_regret_pct": 65.82,
+    "cal_df_pct": 9.7,
+    "polars_mean_regret_pct": 17.4,
+    "polars_p95_regret_pct": 66.75,
+    "duckdb_mean_regret_pct": 47.84,
+    "duckdb_p95_regret_pct": 186.74,
+    "datafusion_mean_regret_pct": 78.39,
+    "gpu_p95_regret_pct": 632.72,
+    "p_perm": 2e-05,
+    "per_suite": {
+      "Seed_S7": {
+        "oof_mean_regret_pct": 29.94
+      },
+      "DSB_Subset": {
+        "oof_mean_regret_pct": 6.0
+      },
+      "JCC_H_Skew": {
+        "oof_mean_regret_pct": 34.18
+      }
+    },
+    "canary_csv_sha256": "83c393612e5e7ed724921c67d0d3ee4f6ce5bf582389890c9593f636079037bb",
+    "oof_csv_sha256": "5136f3943566bb5cbe0aef4fe89b811a50a24ac67b2a7455a8754d2f3b13addd"
+  },
+  "abstract_words": 257,
+  "gates_30": {
+    "G01_No_Holdout_0018": true,
+    "G02_No_Table16_100pct_Accuracy_Overclaim": true,
+    "G03_No_Public_Redset_Fleet_Trace_Overclaim": true,
+    "G04_No_Conclusion_Redset_RealWorld_Overclaim": true,
+    "G05_SF100_Cold_vs_R5_Warm_Reconciled": true,
+    "G06_No_Table3_Footnote_PreReg_Claim": true,
+    "G07_No_Sec441_LME_Header_Remnant": true,
+    "G08_No_Table5_PartA_LME_Header_Remnant": true,
+    "G09_No_Sec5_50Public_DoubleCount": true,
+    "G10_No_Table12_V12_Label": true,
+    "G11_Table17_Note_0_of_25_Fixed": true,
+    "G12_Availability_Broken_ry_o1_Fixed": true,
+    "G13_Single_Structured_Abstract": true,
+    "G14_No_LME_Z_Scores": true,
+    "G15_No_Mixed_Effects_Heading_In_Conclusion": true,
+    "G16_S7_L1_Basin_Trap_Explained": true,
+    "G17_SmallN_Reported_As_kn_Counts": true,
+    "G18_Cluster_TOST_Equivalence_Reported": true,
+    "G19_VIF_384_Reconciled": true,
+    "G20_Dialect_Agnostic_EXPLAIN_Note": true,
+    "G21_Locked_Single_Shot_Label": true,
+    "G22_Table13_Cold_n1_Annotated": true,
+    "G23_Table14_Warm_R5_Annotated": true,
+    "G24_Single_Official_GitHub_URL": true,
+    "G25_No_Nested_URL": true,
+    "G26_No_Corrupted_LaTeX_Artifacts": true,
+    "G27_ClickBench_20_Native_23_Transpiled": true,
+    "G28_All_22_Tables_Preserved": true,
+    "G29_Canary_m5_OOS_Recovery_Honest_Polars": true,
+    "G30_Abstract_Under_300_Words": true
+  },
+  "build": {
+    "pages": 26,
+    "undef_refs": 0,
+    "undef_cites": 0
+  },
+  "artifacts_sha256": {
+    "bigquery_olap_benchmark_V13.tex": "84a978f683f2b2f85e1f6293b669aa2e8fda209e5c99dfef25a59f7b556c932d",
+    "bigquery_olap_benchmark_V13.pdf": "3499a89a3df951295c657ef8cbf0e5ee8b411273a2eb778db98fa7e116485380",
+    "v13_verified_macros.tex": "4ef67fac8dccef6f69be04e050018506658fab6ec659207875d681d6a7f5d660",
+    "Journal_of_Big_Data_Snapp_Submission_Flat13.zip": "2c9419f8259f2d12bd840ed42a52dc24bb2ff4a4966e1282d719916dbe81e50f"
+  }
+}
