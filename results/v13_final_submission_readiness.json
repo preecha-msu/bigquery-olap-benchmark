@@ -1,0 +1,18 @@
+{
+  "status": "READY_FOR_JOURNAL_OF_BIG_DATA_SUBMISSION",
+  "companion_docs": {
+    "cover_pages": 2,
+    "response_pages": 1
+  },
+  "supplementary_pdfs": [
+    "Additional_File_1_Supplementary_Appendix.pdf",
+    "manuscript/Additional_File_1_Supplementary_Appendix.pdf"
+  ],
+  "sha256": {
+    "V13_tex": "84a978f683f2b2f85e1f6293b669aa2e8fda209e5c99dfef25a59f7b556c932d",
+    "V13_pdf": "3499a89a3df951295c657ef8cbf0e5ee8b411273a2eb778db98fa7e116485380",
+    "Flat13_zip": "2c9419f8259f2d12bd840ed42a52dc24bb2ff4a4966e1282d719916dbe81e50f",
+    "Cover_Letter_V13_pdf": "9e16852305b5dc99b231dd95a1c2fdda9a8af31787729d16c4eca27504b7fff9",
+    "Response_to_Reviewers_V13_pdf": "60dd4d325e03f1db46dc026c0c04db3e31f3b67d3aa4d85786f082baa24bd4b9"
+  }
+}

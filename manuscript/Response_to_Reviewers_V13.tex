@@ -1,0 +1,37 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[margin=2.0cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,xurl}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\hypersetup{colorlinks=true,urlcolor=blue}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\begin{document}
+{\Large\bfseries Point-by-Point Technical Verification \& Revision Summary (Edition V13)}\\[3pt]
+\textbf{Manuscript:} AST-Route: Tail-Safe CPU--GPU--Cloud OLAP Dispatch via PCIe Margin Guarding and Zero-Compile SQL Metadata\\
+\textbf{Canonical Repository:} \url{https://github.com/preecha-msu/bigquery-olap-benchmark} \quad|\quad \textbf{Flat13 Archive SHA-256:} \texttt{2c9419f8259f2d12...}
+\vspace{3pt}\hrule\vspace{6pt}
+All empirical revisions in Edition V13 strictly follow a \textbf{100\% Real-Execution / Zero-Estimation} protocol verified across 30 automated consistency gates.
+\begin{table}[!htbp]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.22}
+\begin{tabular}{@{}p{0.24\textwidth}p{0.72\textwidth}@{}}
+\toprule
+\textbf{Audit Dimension} & \textbf{Empirical Resolution \& Manuscript Location (V13)} \\
+\midrule
+\textbf{1. \texttt{Seed\_S7} Anomaly \& $m=5$ Canary Recovery} & Forensic feature/harness audit (§5.1, Table~17) proves zero data leakage in \texttt{S1--S6} (8-table on-disk TPC-H, $50\text{--}184\text{ ms}$). Prospective queries used compact 1--2 table SQL over pre-materialized in-memory Arrow buffers ($3.2\text{--}43.6\text{ ms}$), falling into Cat-I's Tier-L1 scan basin where DataFusion leads CPUs ($33.58\text{ ms} < \text{Polars } 38.00\text{ ms}$, Table~2), causing $19/25$ ($76.0\%$) DataFusion dispatches while static 9D Mahalanobis gating triggered on $0/25$ queries. Applying 4-parameter log-latency offset calibration ($m=5$ stratified canaries across $S=500$ out-of-sample draws on $N_{\text{eval}}=20$ unseen queries; CSV \texttt{83c393612e5e7ed7...}) cuts DataFusion routing to $9.7\%$, lifts Top-1 from $12.0\%$ to $38.1\%$, and reduces mean/P95 regret from $83.98\%/346.21\%$ to $26.06\%/72.57\%$ ($p_{\text{perm}}=0.00002$). \\
+\textbf{2. Small-$n$ Counts ($k/n$)} & Suites with $n=5$ (\texttt{DSB\_Subset}, \texttt{JCC\_H\_Skew}) are reported strictly as exact $k/n$ counts ($2/5$, $0/5$; overall zero-shot $3/25$) in Table~17. \\
+\textbf{3. $\text{SF}=100\text{ GB}$ Cold ($n=1$) vs.\ Warm ($R=5$) \& Speedup Base} & Tables~13--14 and §4.8/§5.1 explicitly annotate Cold ($n=1$) vs.\ Warm ($R=5$): under $R=5$ warm trials at $100\text{ GB}$, DuckDB ($3296.61\text{ ms}$) is the sole CPU faster than post-Arrow GPU ($3682.14\text{ ms}$) while DataFusion averages $5683.00\text{ ms}$, whereas all local CPUs beat full ZSTD-to-GPU execution ($28348.57\text{ ms}$). Table~6 co-reports BigQuery speedup against both cold ($7.61\times$) and warm ($2.89\times$) DuckDB baselines. \\
+\textbf{4. Cross-Node Table~16 \& Non-Preregistered Candor} & Removed the ``100.0\% routing accuracy'' overclaim from Table~16, reframing it as an illustrative 4-scale cross-node crossover envelope. Unified §4(iii), Table~3 footnote, Table~8 Panel~A, and Table~18 to disclose non-OSF-preregistered post-hoc Nested-CV ($8\%$) guard harmonization. \\
+\textbf{5. LME Retirement \& Cluster TOST Equivalence} & Retired all random-intercept LME $z$-scores from text, Conclusion, and regenerated V13 Figures~1--2 (300 DPI), relying strictly on external holdout cluster sign-flip permutation ($K=38$: $p_{\text{perm}}=0.125$ vs.\ CPU, $0.198$ vs.\ GPU). Added cluster-bootstrap TOST equivalence testing ($K=25$, $B=10{,}000$: $\Delta\text{P95}=-54.57\text{ pp}$, $p_{\text{TOST}}=0.430$ at $\pm 25\text{ pp}$) rather than claiming parity from $p>0.05$. \\
+\textbf{6. 495-Query Provenance \& \texttt{Redset-Synth} Disclosure} & Unified the 495-row SHA-256 registry (\texttt{v13\_master\_query\_registry\_row\_level.csv}): 400 primary queries ($\text{Cat.\ I}=75 + \text{Cat.\ II}=90 + \text{Cat.\ III}=80 + \text{Cat.\ IV}=155$ untouched consortium [99 TPC-DS, 43 ClickBench: 20 native + 23 transpiled, 13 SSB]) + 25 prospective + 70 stress, consistently labeling \texttt{Redset-Synth} (30Q) as author-synthesized from published telemetry distributions. \\
+\bottomrule
+\end{tabular}
+\end{table}
+\end{document}

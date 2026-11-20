@@ -1,0 +1,33 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=2.3cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,xurl}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\hypersetup{colorlinks=true,urlcolor=blue}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+\begin{document}
+{\large\bfseries Cover Letter --- Manuscript Submission to \textit{Journal of Big Data} (SpringerOpen)}\\[4pt]
+\textbf{Date:} November 20, 2026\\
+\textbf{Manuscript Title:} AST-Route: Tail-Safe CPU--GPU--Cloud OLAP Dispatch via PCIe Margin Guarding and Zero-Compile SQL Metadata\\
+\textbf{Author:} Preecha Noiumkar (Corresponding Author, \texttt{preecha.n@msu.ac.th})\\
+\textbf{Affiliation:} Department of Information Technology, Faculty of Informatics, Mahasarakham University, Maha Sarakham 44150, Thailand
+\vspace{4pt}\hrule\vspace{8pt}
+Dear Editor-in-Chief and Editorial Board of \textit{Journal of Big Data},
+Please find enclosed our original Research Article, \textbf{``AST-Route: Tail-Safe CPU--GPU--Cloud OLAP Dispatch via PCIe Margin Guarding and Zero-Compile SQL Metadata''} (Edition V13), for consideration in \textit{Journal of Big Data}. Modern hybrid analytical infrastructures span vectorized CPU engines (DuckDB, Polars, Apache DataFusion, SQLite~3), discrete CUDA GPUs (PyTorch CUDA, CuPy, NVIDIA RAPIDS \texttt{cuDF}/\texttt{cudf-polars}), and serverless cloud data warehouses (Google BigQuery). Committing heterogeneous SQL workloads to any single backend induces severe tail-latency stalls across PCIe interconnects, host RAM spill walls, or cloud orchestration floors.
+\textbf{Summary of Core Empirical Contributions \& Methodological Transparency:}
+\begin{itemize}[leftmargin=1.5em,itemsep=3pt]
+\item \textbf{PCIe Margin Guarding \& Minimal Two-Engine Sufficiency:} Across our 75-query TPC-H development suite ($K=25$ seed clusters, 25-fold LOSO-CV at $\text{SF}=1\text{ GB}$), three-way ablation demonstrates that inner-fold PCIe transfer-margin guarding drives $81.3\%$ of P95 tail-regret compression ($257.31\% \rightarrow 118.40\%$ under $8\%$ Nested-CV Protocol P1; $114.11\%$ under $12\%$ Fixed Protocol P2), while a minimal two-engine subset (\{Polars, GPU\}) retains $98.7\%$ of full six-engine utility.
+\item \textbf{Catalog-Free Cross-Dialect Dispatch:} Pre-execution \texttt{SQLGlot} AST profiling and Parquet row-group footer sketching ($172\,\mu\text{s}$ cached; $4.15\text{ ms}$ cold; $1.42\text{ MB}$ RAM) eliminate target-DBMS planner coupling across SQL dialects, while transparently reporting single-dialect DuckDB \texttt{EXPLAIN-DAG} latency ($1.41\text{ ms}$) and cluster-bootstrap TOST bounds ($\Delta\text{P95}=-54.57\text{ pp}$, $p_{\text{TOST}}=0.430$ vs.\ \texttt{Ridge+Guard}).
+\item \textbf{495-Query Row-Level Provenance \& Strict Holdout Inference:} Every SQL file is indexed with cryptographic SHA-256 digests (\texttt{e1947eddeafbb79b...}) separating 400 primary registry queries (including 155 untouched consortium holdouts: 99 Official TPC-DS, 43 ClickBench [20 native + 23 transpiled], and 13 SSB; directional cluster permutation $p_{\text{perm}}=0.125$ vs.\ CPU, $0.198$ vs.\ GPU) from 95 auxiliary queries.
+\item \textbf{Explicit Prospective Failure Boundary \& $m=5$ Canary Recovery:} We transparently report uncalibrated zero-shot degradation on 25 harness-shifted prospective queries (\texttt{Seed\_S7}, \texttt{DSB}, \texttt{JCC-H}: $3/25$ [$12.0\%$] Top-1, $83.98\%$ mean regret, $346.21\%$ P95 regret due to the Tier-L1 DataFusion basin trap), and empirically prove across $S=500$ strictly out-of-sample stratified draws ($N_{\text{eval}}=20$ unseen queries/draw; SHA-256 \texttt{83c393612e5e7ed7...}) that $m=5$ local canary offset calibration reduces DataFusion misrouting from $76.0\%$ to $9.7\%$, lifts Top-1 to $38.1\%$, and cuts mean/P95 regret to $26.06\%/72.57\%$ ($p_{\text{perm}}=0.00002$).
+\end{itemize}
+\textbf{Open Science \& Reproducibility:} All SQL workloads, frozen model weights, raw multi-node hardware/NVML energy CSV logs ($\text{SF}=1,10,30,100\text{ GB}$), \texttt{Additional File 1}, and a single-command Docker replication kit (\texttt{EX = 1.000}) are publicly available at \url{https://github.com/preecha-msu/bigquery-olap-benchmark} (Manuscript TeX SHA-256: \texttt{84a978f683f2b2f8...}; PDF SHA-256: \texttt{3499a89a3df95129...}; Flat13 Archive SHA-256: \texttt{2c9419f8259f2d12...}).
+This manuscript is original, has not been published previously, and is not under consideration elsewhere. The author declares no competing interests.
+\vspace{6pt}
+Sincerely,\\[10pt]
+\textbf{Preecha Noiumkar}\\Department of Information Technology, Faculty of Informatics\\Mahasarakham University, Thailand\\\texttt{preecha.n@msu.ac.th}
+\end{document}
