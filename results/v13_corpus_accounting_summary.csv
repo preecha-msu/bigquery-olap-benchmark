@@ -1,0 +1,10 @@
+Corpus_Partition,Epistemic_Category,Queries_N,Independent_Template_Clusters_K,Unique_Hashes,Training_Used,Strict_Holdout
+Auxiliary_Enterprise_Stress_70Q,Aux_Author_Enterprise_Stress_70Q,70,4,70,NO,"NO (Auxiliary Author Stress Suite, Excluded from 400Q Count)"
+Auxiliary_Prospective_OOD_25Q,Aux_Prospective_OOD_Boundary_25Q,25,3,25,NO,"YES (Auxiliary OOD Failure Boundary, Excluded from 400Q Count)"
+Primary_400Q_Benchmark,Cat_IIIa_Redset_Synthetic,30,6,30,NO,NO (Separated as Cat III Synthetic Trace)
+Primary_400Q_Benchmark,Cat_IIIb_SDSS_Adapted,25,5,25,NO,NO (Separated as Cat III Adapted/Author SQL)
+Primary_400Q_Benchmark,Cat_IIIc_NYCTLC_PublicSchema,25,5,25,NO,NO (Separated as Cat III Adapted/Author SQL)
+Primary_400Q_Benchmark,Cat_IIa_ThirdParty_Calibration,55,29,55,NO (0% in Frozen Cat-I Model),NO
+Primary_400Q_Benchmark,Cat_IIb_Boundary_Drift_Audit,35,7,35,NO,NO
+Primary_400Q_Benchmark,Cat_IV_Untouched_Standard_Holdout,155,29,155,NO,YES (Sole Canonical N=155 Untouched Holdout)
+Primary_400Q_Benchmark,Cat_I_Core_Development,75,25,75,YES (In 24/25 LOSO-CV Folds),NO

@@ -1,0 +1,7 @@
+Feature_Variant,Collinearity_VIF_Status,All75Q_Mean_Exec_ms,All75Q_Mean_Regret_Pct,All75Q_P95_Regret_Pct,Complex_L3_L5_Mean_Regret_Pct,Active_Splits_Per_Tree,Inductive_Bias_Interpretation
+1. Operator-Only Model (7D Raw AST),VIF_max = 3.84 (Finite),58.92,53.74,220.04,16.7,6.72,Lacks selectivity sigma_hat; high scan-volume ambiguity
+"2. Operator + CSCI (8D Syntax Only, No Selectivity)",VIF = inf in OLS (Linear Span),55.38,35.39,134.36,14.07,4.86 (-27.7% shallow),Oblique syntax cut without selectivity; misses V1 vs V3 crossover
+"3. Operator + Selectivity (8D Raw AST + sigma_hat, No CSCI)",VIF_max = 3.89 (Finite),49.97,32.49,123.97,9.76,6.95 (reg.) / 6.84 (unreg.),Strong baseline; requires axis-aligned staircase splits on L3-L5
+4. Operator + Selectivity + CSCI (9D AST-Route),VIF = inf in OLS; Tree-Safe,49.59,28.54,96.43,12.73,6.95 (reg.) / 4.91 (-28.2% unreg.),Structural inductive bias: lowers L3-L5 regret & aids cross-schema trees
+5. Gram-Schmidt Orthonormalized Basis (8D QR),VIF = 1.00 (Exact Orthonormal),53.5,42.59,182.47,33.31,6.45,Eliminates linear collinearity completely with comparable latency
+6. In-Fold Regularized Learned Weights (cos=0.9991),Regularized In-Fold Projection,49.59,28.54,96.43,12.73,4.94,Cosine similarity 0.9991 with pre-specified weights; +-20% pert. agreement = 97.6%

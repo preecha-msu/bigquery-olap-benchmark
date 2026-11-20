@@ -1,0 +1,7 @@
+Prediction_Noise_Level,Guarded_Selection_Agreement_Pct,Unguarded_Selection_Agreement_Pct,Guarded_Mean_Regret_Pct,Unguarded_Mean_Regret_Pct,Guarded_P95_Regret_Pct,Unguarded_P95_Regret_Pct,Guard_Activation_Rate_Pct,Guarded_Stressed_OOM_Rate_Pct,Unguarded_Stressed_OOM_Rate_Pct
++-0%,100.0,100.0,28.54,28.27,96.43,89.67,2.67,0.0,8.0
++-5%,98.81,98.34,28.35,28.14,94.81,90.24,2.24,0.0,8.12
++-10%,95.83,95.68,28.94,28.4,101.68,97.91,2.93,0.0,8.29
++-20%,88.37,89.96,30.82,29.67,110.67,107.79,3.18,0.0,7.93
++-30%,81.1,83.52,33.59,31.87,119.75,114.81,3.16,0.0,7.18
++-50%,69.96,72.31,43.25,39.41,179.95,157.64,2.61,0.0,6.27

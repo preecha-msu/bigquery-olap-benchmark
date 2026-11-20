@@ -170,8 +170,77 @@ def main() -> int:
     has_repo = "preecha-msu/bigquery-olap-benchmark" in clean_tex
     add("G32", (not bad_doi) and (not has_roq) and has_repo, f"DOI/Bib/Repo Hygiene (bad_doi={bad_doi}, has_roq={has_roq}, official_repo={has_repo})")
 
+    # --- G33-G42: V13 Reviewer Risk & Auditability Overhaul Gates (R1-R6 & 4.1) ---
+    import hashlib
+    import subprocess
+
+    def sha256_f(p: Path) -> str:
+        h = hashlib.sha256()
+        with p.open("rb") as f:
+            for ch in iter(lambda: f.read(1048576), b""):
+                h.update(ch)
+        return h.hexdigest()
+
+    r1_c = RES_DIR / "v13_r1_protocol_provenance_and_claim_classification.csv"
+    r1_f = RES_DIR / "v13_r1_foldwise_guard_comparison.csv"
+    add("G33", r1_c.exists() and r1_f.exists() and len(pd.read_csv(r1_f)) == 25 and ("tab:v13_claim_classification" in clean_tex),
+        "R1 Protocol Provenance, 25-Fold Guard CSV, & Claim Classification Table present")
+
+    r2_p = RES_DIR / "v13_r2_external_cluster_stability_loco_audit.csv"
+    add("G34", r2_p.exists() and len(pd.read_csv(r2_p)) == 4 and ("tab:v13_r2_cluster_loco" in clean_tex),
+        "R2 External Holdout Cluster Stability, LOCO Jackknife, & Weighting Sensitivity Table present")
+
+    r3_1 = RES_DIR / "v13_r3_1_routing_decision_agreement_matrix.csv"
+    r3_2 = RES_DIR / "v13_r3_2_decision_stability_under_prediction_noise.csv"
+    r32_ok = r3_1.exists() and r3_2.exists() and (pd.read_csv(r3_2)["Guarded_Stressed_OOM_Rate_Pct"].eq(0.0).all()) and ("tab:v13_r3_noise_and_zerocompile" in clean_tex)
+    add("G35", r32_ok, "R3.1-R3.2 Decision Agreement & Prediction-Noise Stability (0.0% Guarded OOM) present")
+
+    r3_3 = RES_DIR / "v13_r3_3_zero_compile_overhead_audit.csv"
+    r3_4 = RES_DIR / "v13_r3_4_csci_inductive_bias_isolation.csv"
+    no_causal_csci = "causally" not in clean_tex.lower()
+    add("G36", r3_3.exists() and r3_4.exists() and no_causal_csci,
+        f"R3.3-R3.4 Zero-Compile 3-Boundary Overhead & Non-Causal CSCI Isolation (no_causal={no_causal_csci})")
+
+    r4_p = RES_DIR / "v13_r4_cleanroom_reexecution_validation.csv"
+    add("G37", r4_p.exists() and len(pd.read_csv(r4_p)) == 7 and ("tab:v13_r4_r5_reexec_and_repeatability" in clean_tex),
+        "R4 Multi-Environment Re-Execution Validation Table (Env A vs Env B0-B3) present")
+
+    r5_p = RES_DIR / "v13_r5_multiscale_targeted_repeatability_audit.csv"
+    r5_ok = r5_p.exists() and (pd.read_csv(r5_p)["Pairwise_Trial_Sign_Stability_Pct"].eq(100.0).all())
+    add("G38", r5_ok, "R5 Multi-Scale Repeatability SNR CSV (100.0% Pairwise Crossover Sign Stability)")
+
+    reg_p = RES_DIR / "v13_master_query_registry_row_level.csv"
+    reg_ok = False
+    if reg_p.exists():
+        dreg = pd.read_csv(reg_p)
+        p400 = dreg[dreg["Corpus_Partition"] == "Primary_400Q_Benchmark"]
+        cats = p400["Epistemic_Category"].value_counts().to_dict()
+        c_i = cats.get("Cat_I_Core_Development", 0)
+        c_ii = cats.get("Cat_IIa_ThirdParty_Calibration", 0) + cats.get("Cat_IIb_Boundary_Drift_Audit", 0)
+        c_iii = cats.get("Cat_IIIa_Redset_Synthetic", 0) + cats.get("Cat_IIIb_SDSS_Adapted", 0) + cats.get("Cat_IIIc_NYCTLC_PublicSchema", 0)
+        c_iv = cats.get("Cat_IV_Untouched_Standard_Holdout", 0)
+        no_drift = ("480-query" not in clean_tex) and (not bool(re.search(r"55\s*\+\s*115", clean_tex)))
+        reg_ok = (len(dreg) == 495) and (dreg["Query_ID"].nunique() == 495) and (c_i, c_ii, c_iii, c_iv) == (75, 90, 80, 155) and no_drift
+    add("G39", reg_ok, "Point 4.1 Row-Level 495Q Master Registry (75+90+80+155=400 + 25 + 70) & Zero Corpus Drift")
+
+    ood_pres = all(k in clean_tex for k in (r"12.0\%", r"83.98\%", r"346.00\%", r"51.124\%")) and ("tab:prospective_3suite_failure" in clean_tex)
+    add("G40", ood_pres, "Prospective OOD Negative Result Preserved Unmodified (12.0% Top-1, 83.98% mean, 51.124% JCC-H)")
+
+    man_p = RES_DIR / "v13_r1_r6_audit_manifest_sha256.json"
+    man_ok = False
+    if man_p.exists():
+        man = json.loads(man_p.read_text(encoding="utf-8"))
+        man_ok = all((RES_DIR / fn).exists() and sha256_f(RES_DIR / fn) == meta["sha256"] for fn, meta in man.get("artifacts", {}).items())
+    add("G41", man_ok, "R1-R6 Audit Manifest SHA-256 Hashes Match All 11 CSV Artifacts Byte-for-Byte")
+
+    staged = subprocess.run(["git", "diff", "--cached", "--name-only"], cwd=str(ROOT), capture_output=True, text=True).stdout.splitlines()
+    v11_v12_staged = [ln for ln in staged if re.search(r"(V11|V12|Flat11|Flat12)", ln)]
+    builder_txt = (ROOT / "scripts" / "110_build_v13_reviewer_audit_edition.py").read_text(encoding="utf-8")
+    no_v12_write = ("bigquery_olap_benchmark_V12" not in builder_txt) and ("Flat12" not in builder_txt)
+    add("G42", len(v11_v12_staged) == 0 and no_v12_write, f"Strict Isolation Gate: Zero V11/V12 Files Staged or Written by V13 Scripts ({len(v11_v12_staged)} staged)")
+
     print("=" * 96)
-    print("V13 AUTOMATED ZERO-CONTRADICTION & GROUP B PROVENANCE AUDIT (32 GATES)")
+    print(f"V13 AUTOMATED ZERO-CONTRADICTION & REVIEWER AUDIT SUITE ({len(gates)} GATES)")
     print("=" * 96)
     passed = 0
     for gid, ok, desc in gates:

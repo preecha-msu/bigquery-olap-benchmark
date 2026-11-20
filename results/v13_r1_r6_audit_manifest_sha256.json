@@ -1,0 +1,51 @@
+{
+  "suite": "V13 Reviewer Risk & Auditability Suite (R1-R6 + Master Query Registry)",
+  "hardware_added": false,
+  "zero_estimation": true,
+  "artifacts": {
+    "v13_r1_protocol_provenance_and_claim_classification.csv": {
+      "rows": 6,
+      "sha256": "9083bb98e2f2e731e6727b8fd8f6f080266689e4a6a8eb3b5c6a105cf9e1dae2"
+    },
+    "v13_r1_foldwise_guard_comparison.csv": {
+      "rows": 25,
+      "sha256": "07fcffb58fee9599d30baa5f638ccf830141f4898d1637fc09126354615fbdb3"
+    },
+    "v13_r2_external_cluster_stability_loco_audit.csv": {
+      "rows": 4,
+      "sha256": "f311140223129f6222cc37f76a52969efaef6b9862e52a2d51e3776ceb6d5804"
+    },
+    "v13_r3_1_routing_decision_agreement_matrix.csv": {
+      "rows": 10,
+      "sha256": "5a9148aa52e832423f235f33001e1ff1c86a155f43e6fd67a132920d98b58dd7"
+    },
+    "v13_r3_2_decision_stability_under_prediction_noise.csv": {
+      "rows": 6,
+      "sha256": "62ee7f5fa66e61cf35c6b1f0cb275e07a87a5b1e53e2329125fc643c2229be2b"
+    },
+    "v13_r3_3_zero_compile_overhead_audit.csv": {
+      "rows": 6,
+      "sha256": "c8a2e8133021d4f9f423454bb0c47b87b66af4959dedea000aec229e4fce926c"
+    },
+    "v13_r3_4_csci_inductive_bias_isolation.csv": {
+      "rows": 6,
+      "sha256": "5565ccf5112fe6816d10c41f57470486db7b19b7216e2b8e72992ed84e03d2ef"
+    },
+    "v13_r4_cleanroom_reexecution_validation.csv": {
+      "rows": 7,
+      "sha256": "fc468edca05588b6474e928371191eb660920eb3cd76ee3b5c5b793f00fd1499"
+    },
+    "v13_r5_multiscale_targeted_repeatability_audit.csv": {
+      "rows": 7,
+      "sha256": "23323b5852e0bbb1be6b5fdd2048f44922ac265bd9e2c2254274c16e07a14635"
+    },
+    "v13_master_query_registry_row_level.csv": {
+      "rows": 495,
+      "sha256": "e1947eddeafbb79baa333ba12aaa02c48d5546d5f71ffd25f87590e0e6566d8f"
+    },
+    "v13_corpus_accounting_summary.csv": {
+      "rows": 9,
+      "sha256": "fcc64bcde297b9efac011a8b23aae8fe773acc759d621eb6530c43f95925a987"
+    }
+  }
+}

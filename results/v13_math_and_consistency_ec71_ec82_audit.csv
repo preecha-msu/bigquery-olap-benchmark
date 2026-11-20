@@ -1,0 +1,13 @@
+Check_ID,Mathematical_or_EdgeCase_Dimension,Status,Verified_Quantitative_Proof
+EC71,Exact Relative Regret Non-Negativity & Positivity of T_oracle,PASS,min(T_oracle)=6.667 ms > 0; min(regret)=0.0000% >= 0
+EC72,CVaR_10% Coherent Tail-Risk Monotonicity (CVaR_10% >= Mean Regret),PASS,All 10/10 policies satisfy CVaR_10% >= Mean Regret (AST-Route: 218.10% >= 28.54%)
+EC73,"Exact Student-t 95% CI (df=4, t=2.776445) Across All 20 Node-1 R=5 Cells",PASS,"t_0.975,4 = 2.776445; max |recomputed CI - summary CSV CI| = 0.00478 ms < 0.02 ms"
+EC74,Welch Two-Sample SNR & 25/25 Pairwise Trial Sign Stability,PASS,Node 1 SF=10 Welch SNR = 10.90 (CSV: 10.9); 7/7 regimes 100.0% sign stable
+EC75,Cluster Sign-Flip Permutation p-Value Bounds & Non-Overclaiming,PASS,"Strict K=38 holdout p_perm = 0.1231 (vs CPU), 0.1985 (vs GPU) in (0, 1]"
+EC76,LOCO Jackknife Exact Algebraic Identity (mean(LOCO_g) == grand_cluster_mean),PASS,|mean(LOCO) - grand_mean| = 0.00e+00 < 1e-12 across K=20 TPC-DS families
+EC77,Balanced Cluster-Weighted (1/25) == Query-Weighted (1/75) Exact Identity,PASS,Balanced Cat-I GPU mean: cluster=56.964517 ms vs query=56.964517 ms (|diff|=1.42e-14)
+EC78,"CSCI Eq.(2) Exact Linear Span (R^2=1.0 -> OLS VIF=inf), Raw Op VIF<5, & QR Orthonormality",PASS,Raw 6-Op VIF_max=1.86 < 5.0; R^2(CSCI_Eq2|Op6)=1.000000000000; ||Q^T Q - I||_F=1.85e-15
+EC79,"Prospective OOD Exact Arithmetic Mean (JCC-H=51.124%, Overall=83.98%, Top-1=3/25)",PASS,JCC-H sum=255.62/5 = 51.124%; Overall mean=83.98%; Top-1=3/25 (12.0%)
+EC80,Row-Level 495Q Registry SHA-256 Bijection (400 Primary [155 Holdout] + 25 OOD + 70 Stress),PASS,"Unique IDs/Hashes = 495/495; Primary=400 (Cat IV Holdout=155), Aux OOD=25, Aux Stress=70"
+EC81,"Split-Conformal Quantile Level ceil((n+1)(1-alpha))/n in [1-alpha, 1.0]",PASS,"For n_cal=72 (24 training seeds x 3), q_level = ceil(65.7)/72 = 66/72 = 0.916667 in [0.90, 1.00]"
+EC82,Compiled V13.pdf Clean Log & Flat13.zip Submission Archive Integrity,PASS,"V13.pdf pages=26, Undef Refs=0, Undef Cites=0, Flat13 files=13 (flat=True)"

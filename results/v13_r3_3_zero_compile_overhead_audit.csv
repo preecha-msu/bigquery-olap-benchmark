@@ -1,0 +1,7 @@
+Pipeline_Variant,Requires_Target_Catalog_Binder,Cross_Dialect_Support,Planning_or_Parse_Median_ms,Planning_or_Parse_P95_ms,Routing_Model_Inference_ms,Total_Cold_Start_Overhead_ms,Total_Warm_Cache_Overhead_ms,Net_75Q_Total_Latency_Warm_ms,Resident_Memory_MB
+1. Raw SQL AST Extraction Only (SQLGlot),NO (Zero-Compile),YES (20+ SQL Dialects),0.658,0.842,0.0,3.476,0.658,56.04,0.94
+2. AST + Cached Zone-Map Snapshot (Layer 1A+1B),NO (Parquet Footer Only),YES,0.83,1.043,0.082,1.732,0.912,46.96,1.14
+3. AST + Zone-Map + GBDT Cost/Conformal Router (AST-Route),NO (Zero-Compile),YES,0.83,1.043,0.497,4.145,1.327,50.91,1.42
+"4. Native DuckDB EXPLAIN (Text Plan, Single-Dialect)",YES (DuckDB Catalog Lock),NO (Fails on BigQuery/T-SQL),1.41,1.89,0.31,1.72,1.72,54.46,48.5
+5. Live DuckDB EXPLAIN (FORMAT JSON) Physical Operator Tree,YES (Full Optimizer + Binder),NO (Requires Transpilation),2.979,3.371,0.38,3.359,3.359,59.27,52.8
+6. Cross-Dialect Transpiled EXPLAIN-DAG Router (SQLGlot + DuckDB JSON + GBR),YES (Transpile + DuckDB Binder),PARTIAL (Breaks on UDF/UNNEST),4.47,5.47,0.38,4.85,4.85,60.76,54.2
