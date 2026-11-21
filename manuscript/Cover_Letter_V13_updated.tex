@@ -1,0 +1,43 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,xurl}
+\usepackage{hyperref}
+\setlength{\parskip}{0.6em}
+\setlength{\parindent}{0pt}
+\emergencystretch=2em
+\begin{document}
+November 21, 2026
+
+\textbf{Editors-in-Chief}\\
+\textit{Journal of Big Data} (SpringerOpen / Springer Nature)
+
+\textbf{Subject: Submission of Original Research Manuscript}
+
+Dear Editors-in-Chief,
+
+Please find enclosed our manuscript entitled \textbf{``\texttt{AST-Route}: Tail-Safe CPU--GPU--Cloud OLAP Dispatch via PCIe Margin Guarding and Zero-Compile SQL Metadata''} for consideration as an Original Research Article in the \textit{Journal of Big Data}.
+
+Modern analytical data architectures increasingly span vectorized in-memory CPU engines (DuckDB, Polars, Apache DataFusion), discrete and server-grade GPUs (PyTorch CUDA, CuPy, RAPIDS \texttt{cuDF} / \texttt{cudf-polars}), and serverless cloud warehouses (Google BigQuery). However, dispatching analytical SQL queries across these heterogeneous paradigms without physical plan compilation risks severe PCIe host-to-device transfer penalties on small scans and out-of-memory (OOM) failures on bounded-VRAM devices.
+
+In this study, we present \textbf{AST-Route}, a pre-execution multi-objective query routing and tail-regret control framework built on single-pass \texttt{SQLGlot} AST operator extraction, Parquet/DuckDB zone-map selectivity estimation, Mondrian conformal uncertainty intervals, and explicit PCIe abstention margin guarding:
+\begin{itemize}
+  \item \textbf{Tail-Safe Dispatch \& Ablation Proof:} Across 25-seed Leave-One-Seed-Out cross-validation ($N=75$ core TPC-H queries at $\mathrm{SF}=1\text{ GB}$) and multi-scale evaluations up to $\mathrm{SF}=100\text{ GB}$ across four physical hardware nodes, AST-Route reduces 95th-percentile (P95) tail regret by $2.17\times\text{--}2.25\times$ relative to unguarded GPU dispatch while maintaining $0.00\%$ GPU VRAM OOM failures and exact result equivalence ($\mathrm{EX}=1.000$).
+  \item \textbf{Broad Cross-Suite \& Prospective Out-of-Distribution Disclosure:} Evaluated across 495 distinct SQL files (400 primary registry queries across TPC-H, TPC-DS, ClickBench, SSB, IMDB JOB, SDSS SkyServer DR16, NYC TLC, and \texttt{Redset-Synth}, plus 70 schema-blinded enterprise queries and 25 locked prospective OOD queries across Seed S7, DSB, and JCC-H skew), we transparently report both zero-shot OOD degradation under extreme skew and verified out-of-sample recovery via lightweight $m=5$ stratified canary calibration ($83.98\% \rightarrow 26.06\%$ mean regret; $346.21\% \rightarrow 72.57\%$ P95 regret; $p_{\mathrm{perm}}=0.00002$).
+  \item \textbf{Full Open-Science Reproducibility:} All SQL workloads, multi-node hardware and NVML energy telemetry logs, Docker replication files, and SHA-256 manifests are publicly archived at \url{https://github.com/preecha-msu/bigquery-olap-benchmark} (Release \texttt{v13.0.0}).
+\end{itemize}
+
+\textbf{Authoritative Manuscript Verification Digests (SHA-256):}\\
+\texttt{bigquery\_olap\_benchmark\_V13\_updated.tex}: \texttt{15b60bfd6ae2a392a089b1a6f17f53b1...}\\
+\texttt{bigquery\_olap\_benchmark\_V13\_updated.pdf}: \texttt{d36b514cd106d8431cd71cbd5a2b51ad...}
+
+This manuscript is original, has not been published previously, and is not under consideration elsewhere. The author declares no competing interests and approves the manuscript for submission.
+
+Sincerely,
+
+\textbf{Preecha Noiumkar}\\
+Faculty of Informatics, Mahasarakham University, Maha Sarakham, Thailand\\
+Repository: \url{https://github.com/preecha-msu/bigquery-olap-benchmark}
+\end{document}

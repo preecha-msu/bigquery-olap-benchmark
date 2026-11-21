@@ -1,0 +1,36 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=0.9in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,xurl}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{hyperref}
+\setlength{\parskip}{0.5em}
+\setlength{\parindent}{0pt}
+\emergencystretch=2em
+\begin{document}
+\begin{center}
+{\LARGE \textbf{Technical Audit \& Revision Verification Summary (\texttt{V13\_updated})}}\\[0.4em]
+\textit{Journal of Big Data} --- Authoritative Manuscript: \texttt{bigquery\_olap\_benchmark\_V13\_updated.pdf}
+\end{center}
+
+\textbf{Cryptographic Audit Anchor (SHA-256):}\\
+{\footnotesize Manuscript Source (\texttt{bigquery\_olap\_benchmark\_V13\_updated.tex}): \texttt{15b60bfd6ae2a392a089b1a6f17f53b1166a46495e54267db5879de14f41bdc8}}\\
+{\footnotesize Compiled PDF (\texttt{bigquery\_olap\_benchmark\_V13\_updated.pdf}): \texttt{d36b514cd106d8431cd71cbd5a2b51ad7ba527229d62c050ee9d7bcecc2486d9}}
+
+\vspace{0.5em}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{@{}p{0.26\textwidth}p{0.69\textwidth}@{}}
+\toprule
+\textbf{Verification Dimension} & \textbf{Implemented Resolution in \texttt{bigquery\_olap\_benchmark\_V13\_updated}} \\
+\midrule
+1. Structured Abstract \& Workload Accounting & Single 4-heading Structured Abstract (\textit{Background, Methods, Results, Conclusions}) strictly within journal word limits; unified 400-query primary workload ledger (plus 25 prospective OOD and 70 blinded enterprise queries = 495 SQL files) reconciled across all tables. \\
+2. Statistical Inference \& Zero Leakage & Seed-clustered permutation and cluster-bootstrap inference ($K=25$ seeds) enforced throughout; all legacy mixed-effects artifacts removed; zero-leakage nested LOSO-CV verified. \\
+3. Four-Node Multi-Scale \& Native GPU Baselines & Empirical execution across $\mathrm{SF}=1, 10, 30, 100\text{ GB}$ on four hardware nodes (including NVIDIA RTX 2050 4\,GB and Server Tesla T4 15\,GB running \texttt{RAPIDS cuDF} and \texttt{cudf-polars}), separating cold-disk ($n=1$) and repeated warm-cache ($R=5$ with CV\% and Student-$t$ 95\% CI) regimes. \\
+4. Transparent Prospective OOD \& Canary Recovery & Full disclosure of zero-shot performance on locked Seed S7, DSB, and JCC-H skew ($346.21\%$ P95 regret), paired with out-of-sample $m=5$ stratified canary calibration recovery ($83.98\% \rightarrow 26.06\%$ mean regret; $346.21\% \rightarrow 72.57\%$ P95 regret; $p_{\mathrm{perm}}=0.00002$). \\
+5. Typography, Captions \& Bibliography Polish & All wide multi-panel tables fitted cleanly within page margins; all table captions positioned consistently above tables; Figures 1--7 captions synchronized 100\% with rendered 300-DPI artwork; DOIs and author diacritics verified. \\
+\bottomrule
+\end{tabular}
+\end{document}
